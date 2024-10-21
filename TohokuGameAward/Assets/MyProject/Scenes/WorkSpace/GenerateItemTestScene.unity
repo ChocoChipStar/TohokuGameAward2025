@@ -567,7 +567,7 @@ MonoBehaviour:
     type: 3}
   miniBombPrefab: {fileID: 7389669469534225289, guid: 8503ee9d05968c34a902b83933092236,
     type: 3}
-  nextSpawnTime: 3
+  nextSpawnTime: 60
   chanceOfNormal: 50
   chanceOfImpulse: 25
   chanceOfMini: 25
