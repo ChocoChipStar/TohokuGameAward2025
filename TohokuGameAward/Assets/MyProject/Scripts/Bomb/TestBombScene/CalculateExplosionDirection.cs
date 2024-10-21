@@ -1,14 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.SceneView;
 
 public class Explosion : MonoBehaviour
 {
-    //[Header("爆風に当たったときに吹っ飛ぶ力の強さ")]
-    //[SerializeField]
-    //private float m_explosionPower;
-
     [Header("爆風の判定が実際に発生するまでのディレイ")]
     [SerializeField]
     private float m_startDelaySeconds = 0.1f;
@@ -27,31 +21,46 @@ public class Explosion : MonoBehaviour
 
     private float m_explosionPower;
 
+    //吹っ飛び判定用Ray
     private Vector3 m_rayOrigin     = new Vector3(0, 0, 0);
     private Vector3 m_rayDirection  = new Vector3(0, 0, 0);
 
     private void Awake()
     {
-        m_effect.Stop();
-        //m_sfx.Stop();
+        if(m_effect != null)
+        {
+            m_effect.Stop();
+        }
+        if(m_sfx != null)
+        {
+            m_sfx.Stop();
+        }
+
         m_collider.enabled = false;
     }
 
     /// <summary>
     /// 爆破する
     /// </summary>
-    public void Explode(float power)
+    public void Explode(float power, float size)
     {
         //爆発の威力の設定
         m_explosionPower = power;
+        m_collider.radius = size;
+
         // 当たり判定管理のコルーチン
         StartCoroutine(ExplodeCoroutine());
         // 爆発エフェクト含めてもろもろを消すコルーチン
         StartCoroutine(StopCoroutine());
-
         // エフェクトと効果音再生
-        m_effect.Play();
-        //m_sfx.Play();
+        if(m_effect != null)
+        {
+            m_effect.Play();
+        }
+        if(m_sfx != null)
+        {
+            m_sfx.Play();
+        }
     }
 
     private IEnumerator ExplodeCoroutine()
@@ -81,8 +90,14 @@ public class Explosion : MonoBehaviour
     {
         // 時間経過後に消す
         yield return new WaitForSeconds(m_stopSeconds);
-        m_effect.Stop();
-        //m_sfx.Stop();
+        if (m_effect != null)
+        {
+            m_effect.Stop();
+        }
+        if (m_sfx != null)
+        {
+            m_sfx.Stop();
+        }
         m_collider.enabled = false;
 
         Destroy(gameObject);
