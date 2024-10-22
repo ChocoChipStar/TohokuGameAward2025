@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 5858436166010014748}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -176,12 +176,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3648145990431739353}
-  - component: {fileID: 2204123464627416334}
+  - component: {fileID: -889027531698724078}
   - component: {fileID: 1201908625565438393}
   - component: {fileID: 3349947653543477314}
   - component: {fileID: 80528019357715917}
   m_Layer: 0
-  m_Name: Bomb
+  m_Name: NormalBomb
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,7 +203,7 @@ Transform:
   - {fileID: 2811866295479686775}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2204123464627416334
+--- !u!114 &-889027531698724078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,13 +215,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4611759eefa1dcd409910e02cd3214fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_time: 3
-  m_power: 30
-  m_size: 10
+  bombGenre: 0
   m_explosionPrefab: {fileID: 4630440467212050021, guid: fc437996f2d7f9a478a1dd031e346f80,
     type: 3}
   m_collider: {fileID: 80528019357715917}
-  m_bombController: {fileID: 0}
+  m_bombModel: {fileID: 5858436166010014748}
+  m_bombController: {fileID: 1201908625565438393}
   isThrown: 0
 --- !u!114 &1201908625565438393
 MonoBehaviour:
@@ -286,4 +285,4 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0, y: -1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}

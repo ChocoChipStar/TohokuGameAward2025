@@ -7,7 +7,7 @@ public class PlayerHoldingManager : MonoBehaviour
     [SerializeField]
     private GameObject m_item;      //手持ちアイテム
 
-    private BombManager m_bombManager;
+    private Bomb m_bomb;
     private BombController m_bombController;
 
     void Start()
@@ -22,7 +22,7 @@ public class PlayerHoldingManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            m_bombManager.ThrowBomb();
+            m_bomb.ThrowBomb();
             m_item = null;
         }
         
@@ -38,13 +38,13 @@ public class PlayerHoldingManager : MonoBehaviour
 
         if (other.gameObject.tag == "Item")
         {
-            m_bombManager = other.gameObject.GetComponent<BombManager>();
+            m_bomb = other.gameObject.GetComponent<Bomb>();
 
             //一度投げられた爆弾でなければ
-            if (!m_bombManager.isThrown)
+            if (!m_bomb.isThrown)
             {
                 m_item = other.gameObject;
-                m_bombManager.FuseOn();
+                m_bomb.FuseOn();
             }
         }
     }
