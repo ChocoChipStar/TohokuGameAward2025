@@ -5,26 +5,26 @@ using System.Linq;
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField]
-    private Transform playerTransform;
+    private Transform m_playerTransform;
+    [SerializeField]
+    private Rigidbody m_playerRigidbody;
+    [SerializeField]
+    public int m_playerNomber;
 
     [SerializeField]
-    private Rigidbody playerRigidbody;
-
+    private float     m_playerMoveSpeed;
     [SerializeField]
-    private int playerNomber;
+    private Vector3   m_playerJumpScale;
 
-    [SerializeField]
-    private float playerMoveSpeed;
+    private bool m_playerGroundChecker = false;
 
-    [SerializeField]
-    private Vector3 playerJumpScale;
+    public static int m_gamepadNomber;
 
-    private bool playerGroundChecker = false;
 
     // Start is called before the first frame update
     void Start()
     {
-    
+        m_gamepadNomber = m_playerNomber;
     }
 
     // Update is called once per frame
@@ -36,33 +36,32 @@ public class PlayerMover : MonoBehaviour
 
         var padCurrent = Gamepad.all.Count;
         Vector2 playerPositionVector2 = transform.position;
-        playerTransform.rotation = Quaternion.identity;
+        m_playerTransform.rotation = Quaternion.identity;
+
         for (int i = 0; i < padCurrent; i++)
         {
-            if(i == playerNomber)
+            if(i == m_playerNomber)
             {
                 //地面に接触したらジャンプ
-                if (Gamepad.all[i].aButton.wasPressedThisFrame && playerGroundChecker == true)
+                if (Gamepad.all[i].aButton.wasPressedThisFrame && m_playerGroundChecker == true)
                 {
-                    Debug.Log(playerNomber);
-                    playerRigidbody.AddForce(playerJumpScale, ForceMode.Impulse);
+                    //Debug.Log(m_playerNomber);
+                    m_playerRigidbody.AddForce(m_playerJumpScale, ForceMode.Impulse);
                 }
-
                 //左右移動
                 var leftStick = Gamepad.all[i].leftStick.ReadValue();
-                playerPositionVector2.x += playerMoveSpeed * leftStick.x * Time.deltaTime;
-                playerTransform.position = playerPositionVector2;
+                playerPositionVector2.x += m_playerMoveSpeed * leftStick.x * Time.deltaTime;
+                m_playerTransform.position = playerPositionVector2;
             }
         }
     }
-    
-    void OnCollisionStay(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if(collision.gameObject.tag == "Stage")
-        playerGroundChecker = true;
+            m_playerGroundChecker = true;
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit()
     {
-        playerGroundChecker = false;
+        m_playerGroundChecker = false;
     }
 }
