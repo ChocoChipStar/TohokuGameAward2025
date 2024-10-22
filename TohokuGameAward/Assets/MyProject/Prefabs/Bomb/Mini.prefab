@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2570174244016540742}
   - component: {fileID: 7452852259075315929}
   - component: {fileID: 6203432066000910434}
-  - component: {fileID: 4961095585037990905}
+  - component: {fileID: 8686293839853116518}
   m_Layer: 0
   m_Name: Mini
   m_TagString: Untagged
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4961095585037990905
+--- !u!114 &8686293839853116518
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,3 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c1ce63e8d428740af3b159605d1291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_itemRb: {fileID: 6203432066000910434}
+  m_fallingSpeed: 0.1

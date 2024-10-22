@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1222961390756339051}
   - component: {fileID: 2441573327999651823}
   - component: {fileID: -706033329533301256}
-  - component: {fileID: 4255261830246356912}
+  - component: {fileID: 2552924664043118637}
   m_Layer: 0
   m_Name: Impulse
   m_TagString: Untagged
@@ -136,7 +136,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4255261830246356912
+--- !u!114 &2552924664043118637
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,3 +148,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c1ce63e8d428740af3b159605d1291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_itemRb: {fileID: -706033329533301256}
+  m_fallingSpeed: 0.1

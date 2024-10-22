@@ -4,35 +4,23 @@ using UnityEngine;
 
 public class ItemGravity : MonoBehaviour
 {
+    [SerializeField]
+    private Rigidbody m_itemRb = null;
 
-    private Rigidbody m_itemRb;
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        m_itemRb = GetComponent<Rigidbody>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    private float m_fallingSpeed = 0.1f;
 
     private void FixedUpdate()
     {
         Vector3 itemTransform = this.transform.position;
-        itemTransform.y -= 0.1f;
+        itemTransform.y -= m_fallingSpeed;
         this.transform.position = itemTransform;
     }
     void OnCollisionEnter(Collision collision)
     {
-
         // èdóÕÇóLå¯Ç…Ç∑ÇÈ
         m_itemRb.useGravity = true;
-        
-       
+
+        Debug.Log("ìñÇΩÇËÇ‹ÇµÇΩ");
     }
 }
