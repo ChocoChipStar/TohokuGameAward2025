@@ -21,6 +21,5 @@ public class ItemGravity : MonoBehaviour
         // d—Í‚ğ—LŒø‚É‚·‚é
         m_itemRb.useGravity = true;
 
-        Debug.Log("“–‚½‚è‚Ü‚µ‚½");
     }
 }
