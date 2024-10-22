@@ -561,16 +561,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 473c2723c625dae41b152015e7f29149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalBombPrefab: {fileID: 8155344090673445339, guid: 7d9d5015c6fbd9f41a259f300e60762a,
+  m_normalBombPrefab: {fileID: 8155344090673445339, guid: 7d9d5015c6fbd9f41a259f300e60762a,
     type: 3}
-  impulseBombPrefab: {fileID: 4920928042384477627, guid: 7009b1f1116ea06439594c41ca199eb8,
+  m_impulseBombPrefab: {fileID: 4920928042384477627, guid: 7009b1f1116ea06439594c41ca199eb8,
     type: 3}
-  miniBombPrefab: {fileID: 7389669469534225289, guid: 8503ee9d05968c34a902b83933092236,
+  m_miniBombPrefab: {fileID: 7389669469534225289, guid: 8503ee9d05968c34a902b83933092236,
     type: 3}
-  nextSpawnTime: 60
-  chanceOfNormal: 50
-  chanceOfImpulse: 25
-  chanceOfMini: 25
+  m_nextSpawnTime: 60
+  m_chanceOfNormal: 50
+  m_chanceOfImpulse: 25
+  m_chanceOfMini: 25
+  m_gravityScale: 1
 --- !u!4 &1856162790
 Transform:
   m_ObjectHideFlags: 0
