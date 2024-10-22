@@ -571,7 +571,6 @@ MonoBehaviour:
   m_chanceOfNormal: 50
   m_chanceOfImpulse: 25
   m_chanceOfMini: 25
-  m_gravityScale: 1
 --- !u!4 &1856162790
 Transform:
   m_ObjectHideFlags: 0
