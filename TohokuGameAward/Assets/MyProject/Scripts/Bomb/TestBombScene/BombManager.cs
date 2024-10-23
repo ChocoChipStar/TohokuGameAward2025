@@ -1,48 +1,36 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BombManager : MonoBehaviour
 {
-    [Header("爆発までの時間[s]")]
-    [SerializeField]
-    private float m_time = 3.0f;
+    // シングルトンのインスタンス
+    public static BombManager Instance { get; private set; }
 
-    [Header("爆風に当たったときに吹っ飛ぶ力の強さ")]
-    [SerializeField]
-    private float m_power = 1;
+    public List<BombData> allBombData;
 
-    [Header("爆発の当たる範囲")]
-    [SerializeField]
-    private float m_size = 2;
-
-    [Header("爆風のPrefab")][SerializeField] private Explosion m_explosionPrefab;
-
-    [Header("爆弾のコライダー")]
-    [SerializeField]
-    private Collider m_collider;
-
-    void Update()
+    void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        // すでにインスタンスが存在している場合は破棄
+        if (Instance != null && Instance != this)
         {
-            //カウントダウンスタート
-            FuseOn();
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // シーンを跨いでも保持する場合
         }
     }
 
-    private void FuseOn()
+    public BombData GetBombDataByGenre(BombData.BombGenre genre)
     {
-        // 一定時間経過後に発火
-        Invoke(nameof(Explode), m_time);
-    }
-
-    private void Explode()
-    {
-        // 爆発を生成
-        var explosion = Instantiate(m_explosionPrefab, m_collider.transform.position, Quaternion.identity);
-        //威力の設定
-        explosion.Explode(m_power, m_size);
-
-        // 自身は消える
-        Destroy(gameObject);
+        foreach (var bombData in allBombData)
+        {
+            if (bombData.bombGenre == genre)
+            {
+                return bombData;
+            }
+        }
+        return null;
     }
 }
