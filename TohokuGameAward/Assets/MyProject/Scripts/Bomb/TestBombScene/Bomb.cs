@@ -12,7 +12,7 @@ public class Bomb : MonoBehaviour
     // Bombへの参照（シーン内のBombオブジェクトを参照）
     private BombManager bombManager;
 
-    [Header("爆風のPrefab")][SerializeField] private Explosion m_explosionPrefab;
+    //[Header("爆風のPrefab")][SerializeField] private Explosion m_explosionPrefab;
 
     [Header("爆弾のコライダー")]
     [SerializeField]
@@ -25,7 +25,7 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     private BombController m_bombController;
 
-    private PlayerMover m_playerMover;
+    //private PlayerMover m_playerMover;
 
     public bool isThrown = false;       //爆弾が投射されたかどうかを追跡
     private bool isRowling = false;     //回転中かどうか
@@ -92,9 +92,9 @@ public class Bomb : MonoBehaviour
     private void Explode()
     {
         // 爆発を生成
-        var explosion = Instantiate(m_explosionPrefab, m_collider.transform.position, Quaternion.identity);
+        //var explosion = Instantiate(m_explosionPrefab, m_collider.transform.position, Quaternion.identity);
         //威力の設定
-        explosion.Explode(m_power, m_size);
+        //explosion.Explode(m_power, m_size);
 
         // 自身は消える
         Destroy(gameObject);
@@ -119,7 +119,7 @@ public class Bomb : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            m_playerMover = other.gameObject.GetComponent<PlayerMover>();
+            //m_playerMover = other.gameObject.GetComponent<PlayerMover>();
             //if (m_playerNumber == -1 || m_playerNumber == m_playerMover.playerNomber)
             //{
             //    m_playerNumber = m_playerMover.playerNomber;
