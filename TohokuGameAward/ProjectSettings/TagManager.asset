@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Stage
+  - Arm
   - Item
   layers:
   - Default
