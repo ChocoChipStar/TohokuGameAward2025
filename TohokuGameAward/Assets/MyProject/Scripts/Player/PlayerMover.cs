@@ -16,7 +16,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField]
     private Vector3   m_playerJumpScale;
 
-    private bool m_playerGroundChecker = false;
+    public bool m_playerGroundChecker = false;
 
     public static int m_gamepadNomber;
 
@@ -50,8 +50,11 @@ public class PlayerMover : MonoBehaviour
                 }
                 //¶‰EˆÚ“®
                 var leftStick = Gamepad.all[i].leftStick.ReadValue();
-                playerPositionVector2.x += m_playerMoveSpeed * leftStick.x * Time.deltaTime;
-                m_playerTransform.position = playerPositionVector2;
+                if (leftStick.x > 0.2f || leftStick.x < -0.2f)
+                {
+                    playerPositionVector2.x += m_playerMoveSpeed * leftStick.x * Time.deltaTime;
+                    m_playerTransform.position = playerPositionVector2;
+                }
             }
         }
     }
