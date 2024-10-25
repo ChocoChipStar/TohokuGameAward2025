@@ -134,7 +134,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 120
   m_CollisionDetection: 3
 --- !u!114 &514374384450543344
 MonoBehaviour:
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_playerNomber: 0
   m_playerMoveSpeed: 4
   m_playerJumpScale: {x: 0, y: 4, z: 0}
+  m_playerGroundChecker: 0
 --- !u!114 &9070937659124636011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +170,7 @@ MonoBehaviour:
   m_playerArmTransform: {fileID: 5832873091613544201}
   m_playerTransform: {fileID: 8628444965691694496}
   m_playerRigidbody: {fileID: 2310023367640186993}
-  m_gamepadNomebr: {fileID: 514374384450543344}
+  m_playerMoverScript: {fileID: 514374384450543344}
   m_playerAttackPower: 8
   m_playerAttackRange: 0.8
   m_playerAttackTime: 0.2
