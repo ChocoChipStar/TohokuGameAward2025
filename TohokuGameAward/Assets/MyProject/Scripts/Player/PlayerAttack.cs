@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private Rigidbody m_playerRigidbody;
     [SerializeField]
-    public PlayerMover m_gamepadNomebr;
+    public PlayerMover m_playerMoverScript;
     [SerializeField]
     private float m_playerAttackPower = 1;
     [SerializeField]
@@ -27,9 +24,11 @@ public class PlayerAttack : MonoBehaviour
 
     private bool m_isAttack = false;
     private bool m_isStun = false;
+    //private bool m_isOnGround = false;
 
     Vector2 m_leftStick;
     Vector2 m_rightStik;
+    Vector2 m_attackVector;
 
     // Start is called before the first frame update
     void Start()
@@ -40,24 +39,22 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_playerArmTransform.position = m_playerTransform.position;
         var gamepad = Gamepad.current;
         if (gamepad == null)
             return;
 
-        var padCurrent = Gamepad.all.Count;
+        m_playerArmTransform.position = m_playerTransform.position;
+     　 var padCurrent = Gamepad.all.Count;
         Vector2 playerPosition = m_playerTransform.position;
         m_playerArmTransform.rotation = Quaternion.identity;
         for (int i = 0; i < padCurrent; i++)
         {
-            if(i == m_gamepadNomebr.m_playerNomber)
+            if(i == m_playerMoverScript.PlayerNumber)
             {
-                //コントローラーのLスティック
-                if (!m_isAttack)
-                {
+                 //コントローラー入力取得
                     m_leftStick = Gamepad.all[i].leftStick.ReadValue();
                     m_rightStik = Gamepad.all[i].rightStick.ReadValue();
-                }
+
                 if (Gamepad.all[i].xButton.wasPressedThisFrame && !m_isAttack && !m_isStun)
                 {
                     m_isAttack = true;
@@ -65,6 +62,7 @@ public class PlayerAttack : MonoBehaviour
                 }
                 if (m_isAttack)
                 {
+                    //パンチの仮オブジェクト判定用
                     var normalizedLeftStick = m_leftStick.normalized;
                     m_playerArmTransform.position = playerPosition + normalizedLeftStick * m_playerAttackRange;
                 }
@@ -81,7 +79,6 @@ public class PlayerAttack : MonoBehaviour
             m_playerRigidbody.AddForce(normalizedPlayerArm.x * m_playerAttackPower, normalizedPlayerArm.y * m_playerAttackPower, 0, ForceMode.Impulse);
             m_isStun = true;
             Invoke(nameof(StopPlayerAttack), m_playerStunTime);
-            //Debug.Log(normalizedPlayerArm);
         }
     }
     private void StopPlayerAttack()
