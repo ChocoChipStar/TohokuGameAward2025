@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06150069de5ab86449a76d7f33b0159a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bomb: {fileID: 6015317307024279286, guid: cbba9a9a351f9c64586947519fff6682, type: 3}
+  m_bomb: {fileID: 6015317307024279286, guid: 31daebd531dbe3741ab98ddb0502a6b2, type: 3}
 --- !u!4 &421654780
 Transform:
   m_ObjectHideFlags: 0

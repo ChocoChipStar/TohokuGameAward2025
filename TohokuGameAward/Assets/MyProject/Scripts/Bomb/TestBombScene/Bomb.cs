@@ -182,6 +182,7 @@ public class Bomb : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
+            m_collider.center = new Vector3(0, 0, 0);
             isPlayerDirectExplode = false;
         }
 

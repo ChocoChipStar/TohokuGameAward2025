@@ -40,7 +40,11 @@ public class PlayerHoldingManager : MonoBehaviour
         {
             m_bomb = other.gameObject.GetComponent<Bomb>();
 
-            m_item = other.gameObject;
+            if(!m_bomb.isThrown)
+            {
+                m_item = other.gameObject;
+            }
+
         }
     }
 }
