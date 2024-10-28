@@ -17,3 +17,5 @@ MonoBehaviour:
   power: 30
   size: 10
   pivot: -1
+  count: 1
+  bomb: {fileID: 0}

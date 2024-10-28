@@ -24,6 +24,7 @@ public class Explosion : MonoBehaviour
     //吹っ飛び判定用Ray
     private Vector3 m_rayOrigin     = new Vector3(0, 0, 0);
     private Vector3 m_rayDirection  = new Vector3(0, 0, 0);
+    private float m_rayDistance = 10;
 
     private void Awake()
     {
@@ -111,26 +112,31 @@ public class Explosion : MonoBehaviour
         // 衝突対象がRigidbodyの配下であるかを調べる
         var rigidBody = other.GetComponentInParent<Rigidbody>();
 
-        // Rigidbodyがついてないなら吹っ飛ばないの終わり
+        // Rigidbodyがついてないなら吹っ飛ばない。終わり
         if (rigidBody == null) return;
 
         //layerMaskの設定
-        LayerMask layerMask = 1 << LayerMask.NameToLayer("Wall");
+        LayerMask layerMask = 1 << LayerMask.NameToLayer("Player");
 
         //rayの開始position
         m_rayOrigin = transform.position;
 
         //rayの目標position
-        m_rayDirection = other.transform.position - transform.position;
+        Vector3 temp = other.transform.position - transform.position;
+        m_rayDirection = temp.normalized;
 
         // Rayを生成
         Ray _ray = new Ray(m_rayOrigin, m_rayDirection);
         RaycastHit _hit;
 
-        Debug.DrawRay(_ray.origin, _ray.direction * 5f, Color.red);
-
         // もしRayを投射してlayerMaskにあるコライダーに衝突したら
-        if (Physics.Raycast(_ray, out _hit, 500, layerMask)) return;
+        if (Physics.Raycast(_ray.origin, _ray.direction * m_rayDistance, out _hit))
+        {
+            if (_hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"))
+            {
+                return;
+            }
+        }
 
         // 対象との距離を計算
         float distance = Vector3.Distance(transform.position, other.transform.position);

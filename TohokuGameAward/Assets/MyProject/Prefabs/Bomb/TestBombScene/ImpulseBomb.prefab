@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 3349947653543477314}
   - component: {fileID: 80528019357715917}
   m_Layer: 0
-  m_Name: NormalBomb
+  m_Name: ImpulseBomb
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4611759eefa1dcd409910e02cd3214fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombGenre: 0
+  bombGenre: 1
   m_explosionPrefab: {fileID: 3764451147331578762, guid: fc437996f2d7f9a478a1dd031e346f80,
     type: 3}
   m_collider: {fileID: 80528019357715917}
