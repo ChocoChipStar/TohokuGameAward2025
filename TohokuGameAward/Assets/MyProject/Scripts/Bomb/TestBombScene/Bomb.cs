@@ -116,13 +116,17 @@ public class Bomb : MonoBehaviour
     private void OnCountdownEnd()
     {
         m_text.text = "0";
+        m_time = 0;
     }
 
     public void FuseOn()
     {
         // àÍíËéûä‘åoâﬂå„Ç…î≠âŒ
-        Invoke(nameof(Explode), m_time);
-        isTimerStart = true;
+        if(m_time > 0)
+        {
+            Invoke(nameof(Explode), m_time);
+            isTimerStart = true;
+        }
     }
 
     public void ThrowBomb()
@@ -130,9 +134,8 @@ public class Bomb : MonoBehaviour
         if (!isThrown)
         {
             m_collider.center = new Vector3(0, m_pivot, 0);
-            m_bombModel.transform.localPosition = new Vector3(0, m_pivot, 0);
+            //m_bombModel.transform.localPosition = new Vector3(0, m_pivot, 0);
             m_bombController.Throw();
-            isPlayerDirectExplode = true;
             isThrown = true;
             isRowling = true;
 
@@ -171,6 +174,11 @@ public class Bomb : MonoBehaviour
     {
         //Ç»Ç…Ç©Ç…êGÇÍÇΩÇÁ
         isRowling = false;
+
+        if (isPlayerDirectExplode && m_time == -1)
+        {
+            Explosion();
+        }
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {

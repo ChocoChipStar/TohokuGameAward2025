@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mini
   m_EditorClassIdentifier: 
   bombGenre: 2
-  time: 3
+  time: -1
   power: 30
   size: 5
   pivot: -1

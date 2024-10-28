@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2383233718305137068}
   - component: {fileID: 1361291264049682028}
   - component: {fileID: 266244397259190469}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2183965125357801346}
   - component: {fileID: 7329394718081583655}
   - component: {fileID: 3156022259923668066}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 2811866295479686775}
   - component: {fileID: 5388047391645823270}
   - component: {fileID: 3856138875556265801}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 1201908625565438393}
   - component: {fileID: 3349947653543477314}
   - component: {fileID: 80528019357715917}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: NormalBomb
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 8363182294297654723}
   - component: {fileID: 1815938847086405884}
   - component: {fileID: 1261296313846949134}
-  m_Layer: 5
+  m_Layer: 12
   m_Name: CountDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
