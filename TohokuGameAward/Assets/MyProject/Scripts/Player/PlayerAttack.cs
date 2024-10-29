@@ -72,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
                     //�󒆂ɂ���ꍇ�U���ɐ��������Ȃ�
                     if (m_isOnGround)
                     {
-                        //m_playerRigidbody.AddForce(m_attackVector * m_playerAttackPower, ForceMode.Impulse);
+                        m_playerRigidbody.AddForce(m_attackVector * m_playerAttackPower, ForceMode.Impulse);
                         m_isOnGround = false;
                     }
                     Invoke(nameof(StopPlayerAttack), m_playerAttackTime);

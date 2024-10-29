@@ -178,6 +178,7 @@ public class Bomb : MonoBehaviour
     {
         //Ç»Ç…Ç©Ç…êGÇÍÇΩÇÁ
         isRowling = false;
+        m_collider.center = new Vector3(0, 0, 0);
 
         if (isPlayerDirectExplode && m_time == -1)
         {

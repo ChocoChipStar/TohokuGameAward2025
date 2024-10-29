@@ -7,13 +7,13 @@ public class BombController : MonoBehaviour
 
     [Header("“Š‚°‚é—Í")]
     [SerializeField]
-    private float m_throwForce = 10f;
+    public float m_throwForce = 1f;
     [Header("ŽÎ‚ß“Š‚°‚ÌŠp“x")]
     [SerializeField]
-    private float m_throwAngle = 45f;
+    public float m_throwAngle = 45f;
     [Header("‰ñ“]‘¬“x")]
     [SerializeField]
-    private float m_rotationSpeed = 10f;
+    public float m_rotationSpeed = 10f;
 
 
     public void Throw()
