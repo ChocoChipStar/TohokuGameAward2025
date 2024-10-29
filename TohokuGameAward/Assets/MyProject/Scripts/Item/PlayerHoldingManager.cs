@@ -40,12 +40,11 @@ public class PlayerHoldingManager : MonoBehaviour
         {
             m_bomb = other.gameObject.GetComponent<Bomb>();
 
-            //ˆê“x“Š‚°‚ç‚ê‚½”š’e‚Å‚È‚¯‚ê‚Î
-            if (!m_bomb.isThrown)
+            if(!m_bomb.isThrown)
             {
                 m_item = other.gameObject;
-                m_bomb.FuseOn();
             }
+
         }
     }
 }

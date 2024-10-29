@@ -1,4 +1,7 @@
+using System.Reflection;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using static BombData;
 
 public class Bomb : MonoBehaviour
@@ -12,7 +15,7 @@ public class Bomb : MonoBehaviour
     // Bombへの参照（シーン内のBombオブジェクトを参照）
     private BombManager bombManager;
 
-    //[Header("爆風のPrefab")][SerializeField] private Explosion m_explosionPrefab;
+    [Header("爆風のPrefab")][SerializeField] private Explosion m_explosionPrefab;
 
     [Header("爆弾のコライダー")]
     [SerializeField]
@@ -25,18 +28,35 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     private BombController m_bombController;
 
-    //private PlayerMover m_playerMover;
+    //仮のカウントダウン
+    [SerializeField]
+    private Text m_text;
 
-    public bool isThrown = false;       //爆弾が投射されたかどうかを追跡
-    private bool isRowling = false;     //回転中かどうか
+    //true = 爆弾が投射された
+    public bool isThrown = false;       
+    
+    //true = playerに当たった時、爆発可能
+    private bool isPlayerDirectExplode = false;
 
-    private int m_playerNumber = -1;    //プレイヤー番号保存用
+    //true = 回転中
+    private bool isRowling = false;
+
+    //true = 着火済み
+    private bool isFuseOn = false;
+
+
+    //デバック用
+    private bool isTimerStart = false;
+    private float m_currentTime;
+    private float m_timer = 0;
 
     //爆弾データ保存用
-    private float m_time;
-    private float m_power;
-    private float m_size;
-    private float m_pivot;
+    private float m_time  = 0;
+    private float m_power = 0;
+    private float m_size  = 0;
+    private float m_pivot = 0;
+    private int   m_count = 0;
+    private GameObject m_bombPrefab;
 
     private void Start()
     {
@@ -45,41 +65,93 @@ public class Bomb : MonoBehaviour
         currentBombData = BombManager.Instance.GetBombDataByGenre(bombGenre);
 
         ApplyBombData(currentBombData);
+
+        m_currentTime = m_time;       // カウントダウン開始時間を設定
+        m_text.text = m_currentTime.ToString();
     }
 
     // 取得したBombDataの値を使って、爆弾の設定を反映するメソッド
     private void ApplyBombData(BombData data)
     {
-        m_time = currentBombData.time;
+        m_time  = currentBombData.time;
         m_power = currentBombData.power;
-        m_size = currentBombData.size;
+        m_size  = currentBombData.size;
         m_pivot = currentBombData.pivot;
+        if(m_count == 0)
+        {
+            m_count = currentBombData.count;
+        }
+        if(currentBombData.bomb != null)
+        {
+            m_bombPrefab = currentBombData.bomb;
+        }
     }
 
     private void Update()
     {
+        m_text.rectTransform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.7f, 0));
+
+        if(isTimerStart)
+        {
+            if (m_currentTime > 0) // カウントが0より大きい場合にのみ実行
+            {
+                m_timer += Time.deltaTime; // 経過時間を加算
+
+                if (m_timer >= 1f) // 1秒経過したら
+                {
+                    m_currentTime--;      // カウントを1減らす
+                    m_text.text = m_currentTime.ToString(); // Textに表示
+                    m_timer = 0f;         // タイマーをリセット
+                }
+            }
+            else
+            {
+                OnCountdownEnd(); // カウントダウンが終了したときの処理
+            }
+        }
+
         if (isRowling)
         {
             m_bombController.Rowling();
         }
     }
 
+    private void OnCountdownEnd()
+    {
+        m_text.text = "0";
+        m_time = 0;
+    }
+
     public void FuseOn()
     {
         // 一定時間経過後に発火
-        Invoke(nameof(Explode), m_time);
+        if(m_time > 0 && !isFuseOn)
+        {
+            Invoke(nameof(Explode), m_time);
+            isTimerStart = true;
+            isFuseOn = true;
+        }
     }
 
     public void ThrowBomb()
     {
         if (!isThrown)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             m_collider.center = new Vector3(0, m_pivot, 0);
-            m_bombModel.transform.localPosition = new Vector3(0, m_pivot, 0);
+            //m_bombModel.transform.localPosition = new Vector3(0, m_pivot, 0);
             m_bombController.Throw();
             isThrown = true;
             isRowling = true;
+
+            if (m_count > 1)
+            {
+                m_count--;
+                var mini = Instantiate(m_bombPrefab, transform.position, Quaternion.identity);
+                Bomb miniBomb = mini.GetComponent<Bomb>();
+                miniBomb.m_count = m_count;
+            }
+            
+            m_count = 1;
         }
     }
 
@@ -92,9 +164,11 @@ public class Bomb : MonoBehaviour
     private void Explode()
     {
         // 爆発を生成
-        //var explosion = Instantiate(m_explosionPrefab, m_collider.transform.position, Quaternion.identity);
+        var explosion = Instantiate(m_explosionPrefab, m_collider.transform.position, Quaternion.identity);
         //威力の設定
-        //explosion.Explode(m_power, m_size);
+        explosion.Explode(m_power, m_size);
+
+        m_count = 0;
 
         // 自身は消える
         Destroy(gameObject);
@@ -105,12 +179,15 @@ public class Bomb : MonoBehaviour
         //なにかに触れたら
         isRowling = false;
 
+        if (isPlayerDirectExplode && m_time == -1)
+        {
+            Explosion();
+        }
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
             m_collider.center = new Vector3(0, 0, 0);
-            m_bombModel.transform.localPosition = new Vector3(0, 0, 0);
-            isThrown = false;
-            m_playerNumber = -1;
+            isPlayerDirectExplode = false;
         }
 
     }
@@ -119,15 +196,26 @@ public class Bomb : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            //m_playerMover = other.gameObject.GetComponent<PlayerMover>();
-            //if (m_playerNumber == -1 || m_playerNumber == m_playerMover.playerNomber)
-            //{
-            //    m_playerNumber = m_playerMover.playerNomber;
-            //}
-            //else
-            //{
-            //    Explosion();
-            //}
+            if (isPlayerDirectExplode)
+            {
+                Explosion();
+            }
+            else if(!isThrown)
+            {
+                FuseOn();
+            }
+        }
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            if (isThrown)
+            {
+                isPlayerDirectExplode = true;
+            }
         }
     }
 }

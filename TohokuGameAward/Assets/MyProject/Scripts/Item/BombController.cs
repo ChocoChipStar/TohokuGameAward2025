@@ -18,12 +18,13 @@ public class BombController : MonoBehaviour
 
     public void Throw()
     {
+        m_bombRigidbody.velocity = Vector3.zero;
+        m_bombRigidbody.rotation = Quaternion.identity;
         // 斜め上に投射するための方向ベクトルを作成
         float radianAngle = m_throwAngle * Mathf.Deg2Rad; // 角度をラジアンに変換
         Vector3 throwDirection = new Vector3(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle), 0); // 斜め方向
 
         // 爆弾を斜め上に投げる
-        m_bombRigidbody.velocity = Vector3.zero;
         m_bombRigidbody.AddForce(throwDirection * m_throwForce, ForceMode.Impulse);
     }
 
