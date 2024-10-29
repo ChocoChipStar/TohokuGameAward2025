@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bombRigidbody: {fileID: 3349947653543477314}
-  m_throwForce: 15
+  m_throwForce: 13
   m_throwAngle: 30
   m_rotationSpeed: 17
 --- !u!54 &3349947653543477314

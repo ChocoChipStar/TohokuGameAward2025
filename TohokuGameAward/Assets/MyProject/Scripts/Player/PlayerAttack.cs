@@ -1,3 +1,4 @@
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,8 @@ public class PlayerAttack : MonoBehaviour
     private float m_playerAttackRange;
     [SerializeField]
     private float m_playerAttackTime;
+    [SerializeField]
+    private float m_playerAttackCoolTime;
     [SerializeField]
     private float m_playerStunTime;
 
@@ -53,12 +56,12 @@ public class PlayerAttack : MonoBehaviour
         {
             if(i == m_playerMoverScript.PlayerNumber)
             {
+                //
                 m_leftStick = Gamepad.all[i].leftStick.ReadValue();
                 m_rightStik = Gamepad.all[i].rightStick.ReadValue();
-                //�R���g���[���[��L�X�e�B�b�N
                 if (Gamepad.all[i].xButton.wasPressedThisFrame && !m_isStun && !m_isAttack)
                 {
-                    //�p���`����
+                    //パンチを十字方向に固定
                     if (Mathf.Abs(m_leftStick.x) > Mathf.Abs(m_leftStick.y))
                     {
                         m_attackVector.x = m_leftStick.normalized.x;
@@ -69,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
                     }
                     m_isAttack = true;
                     
-                    //�󒆂ɂ���ꍇ�U���ɐ��������Ȃ�
+                    //地面についたら1度だけパンチに勢いがつく
                     if (m_isOnGround)
                     {
                         m_playerRigidbody.AddForce(m_attackVector * m_playerAttackPower, ForceMode.Impulse);
@@ -84,7 +87,7 @@ public class PlayerAttack : MonoBehaviour
 
                 if(!m_isStun && !m_isAttack && m_playerMoverScript.IsPlayerGroundChecker)
                 {
-                    //�X�^���ł͂Ȃ��A�U�����ł͂Ȃ��A�n�ʂɂ���ꍇ
+                    //force初期化
                     m_playerRigidbody.AddForce(Vector3.zero);
                 }
                 
@@ -95,7 +98,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if(hitPlayerCollider.gameObject.tag == "Arm")
         {
-            //�U�������r�ƍU�����ꂽ�L�����̈ʒu����x�N�g���𐳋K��
+            //パンチが体に当たったら飛ぶ
             Vector3 normalizedPlayerArm = (m_playerArmTransform.position - hitPlayerCollider.transform.position).normalized;
             m_playerRigidbody.AddForce(normalizedPlayerArm.x * m_playerAttackPower, normalizedPlayerArm.y * m_playerAttackPower, 0, ForceMode.Impulse);
             m_isStun = true;
@@ -104,6 +107,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void StopPlayerAttack()
     {
+        //パンチ終了
         m_attackVector = Vector2.zero;
         m_isAttack = false;
         m_isStun = false;

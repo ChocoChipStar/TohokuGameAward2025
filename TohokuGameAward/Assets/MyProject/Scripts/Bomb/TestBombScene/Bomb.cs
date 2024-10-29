@@ -187,21 +187,21 @@ public class Bomb : MonoBehaviour
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            m_collider.center = new Vector3(0, 0, 0);
             isPlayerDirectExplode = false;
+            isThrown = false;
         }
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             if (isPlayerDirectExplode)
             {
                 Explosion();
             }
-            else if(!isThrown)
+            if (!isFuseOn)
             {
                 FuseOn();
             }

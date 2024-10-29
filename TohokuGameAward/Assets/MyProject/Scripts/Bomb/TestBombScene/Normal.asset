@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bombGenre: 0
   time: 3
-  power: 30
+  power: 10
   size: 10
   pivot: -1
   count: 1
