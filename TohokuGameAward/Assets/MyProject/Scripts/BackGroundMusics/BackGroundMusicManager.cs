@@ -5,10 +5,10 @@ using UnityEngine;
 public class BackGroundMusicManager : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource[] m_audioSource;
+    private AudioSource[] m_audioSources;
 
     [SerializeField]
-    private AudioClip[] m_MusicName;
+    private AudioClip[] m_audioClips;
 
     public enum MusicName
     {
@@ -17,9 +17,10 @@ public class BackGroundMusicManager : MonoBehaviour
 
     public void OnPlay(MusicName musicNum)
     {
-        m_audioSource[(int)musicNum].clip = m_MusicName[(int)musicNum];
-        m_audioSource[(int)musicNum].Play();
+        m_audioSources[(int)musicNum].clip = m_audioClips[(int)musicNum];
+        m_audioSources[(int)musicNum].Play();
     }
+
 
 
 }

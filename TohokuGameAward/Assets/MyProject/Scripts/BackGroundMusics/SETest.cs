@@ -12,7 +12,7 @@ public class SETest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+      
     }
 
     // Update is called once per frame
@@ -20,11 +20,11 @@ public class SETest : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.TestSE);
+            soundEffectManager.OnPlay(SoundEffectManager.SoundEffectName.TestSE);
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            backGroundMusicManager.OnPlay(BackGroundMusicManager.MusicName.TestBGM);
+            soundEffectManager.OnStop(SoundEffectManager.SoundEffectName.TestSE);
         }
     }
 }

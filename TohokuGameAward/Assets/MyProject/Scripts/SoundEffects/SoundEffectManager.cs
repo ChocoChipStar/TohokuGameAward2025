@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static BackGroundMusicManager;
 
 public class SoundEffectManager : MonoBehaviour
 {
     [SerializeField]
-    private AudioSource[] m_audioSource;
+    private AudioSource[] m_audioSources;
 
     [SerializeField]
-    private AudioClip[] m_SoundEffectName;
+    private AudioClip[] m_audioClips;
 
     public enum SoundEffectName
     {
@@ -17,7 +18,20 @@ public class SoundEffectManager : MonoBehaviour
 
     public void OnPlayOneShot(SoundEffectName seNum)
     {
-        m_audioSource[(int)seNum].PlayOneShot(m_SoundEffectName[(int)seNum]);
+        m_audioSources[(int)seNum].PlayOneShot(m_audioClips[(int)seNum]);
+    }
+
+    public void OnPlay(SoundEffectName seNum)
+    {
+        m_audioSources[(int)seNum].clip = m_audioClips[(int)seNum];
+        m_audioSources[(int)seNum].loop = true;
+        m_audioSources[(int)seNum].Play();
+        
+    }
+    public void OnStop(SoundEffectName seNum)
+    {
+      
+        m_audioSources[(int)(seNum)].Stop();
     }
 
 
