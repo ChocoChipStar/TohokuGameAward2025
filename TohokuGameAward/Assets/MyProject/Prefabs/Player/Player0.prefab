@@ -150,10 +150,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerTransform: {fileID: 8628444965691694496}
   m_playerRigidbody: {fileID: 2310023367640186993}
-  m_playerNomber: 0
+  m_playerNumber: 0
   m_playerMoveSpeed: 4
   m_playerJumpScale: {x: 0, y: 4, z: 0}
-  m_playerGroundChecker: 0
+  m_bombRotationSpeed: {x: 17, y: 0, z: 0}
+  m_bombForceAngle: 0
+  m_bombThrowPower: 22
+  m_bombCoolTime: 0.1
+  m_bombThrowSide: 30
+  m_bombThrowUp: 80
+  m_bombThrowDown: -70
 --- !u!114 &9070937659124636011
 MonoBehaviour:
   m_ObjectHideFlags: 0

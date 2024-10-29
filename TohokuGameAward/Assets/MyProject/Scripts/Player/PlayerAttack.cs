@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -42,26 +39,26 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_playerArmTransform.position = m_playerTransform.position;
         var gamepad = Gamepad.current;
         if (gamepad == null)
             return;
 
+        m_playerArmTransform.position = m_playerTransform.position;
         var padCurrent = Gamepad.all.Count;
         Vector2 playerPosition = m_playerTransform.position;
-        if(!m_isOnGround && m_playerMoverScript.m_playerGroundChecker)
+        if(!m_isOnGround && m_playerMoverScript.IsPlayerGroundChecker)
             m_isOnGround =true;
 
         for (int i = 0; i < padCurrent; i++)
         {
-            if(i == m_playerMoverScript.m_playerNomber)
+            if(i == m_playerMoverScript.PlayerNumber)
             {
                 m_leftStick = Gamepad.all[i].leftStick.ReadValue();
                 m_rightStik = Gamepad.all[i].rightStick.ReadValue();
-                //ƒRƒ“ƒgƒ[ƒ‰[‚ÌLƒXƒeƒBƒbƒN
+                //ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½[ï¿½ï¿½Lï¿½Xï¿½eï¿½Bï¿½bï¿½N
                 if (Gamepad.all[i].xButton.wasPressedThisFrame && !m_isStun && !m_isAttack)
                 {
-                    //ƒpƒ“ƒ`ˆ—
+                    //ï¿½pï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½
                     if (Mathf.Abs(m_leftStick.x) > Mathf.Abs(m_leftStick.y))
                     {
                         m_attackVector.x = m_leftStick.normalized.x;
@@ -72,7 +69,7 @@ public class PlayerAttack : MonoBehaviour
                     }
                     m_isAttack = true;
                     
-                    //‹ó’†‚É‚¢‚éê‡UŒ‚‚É¨‚¢‚ªæ‚ç‚È‚¢
+                    //ï¿½ó’†‚É‚ï¿½ï¿½ï¿½ê‡ï¿½Uï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
                     if (m_isOnGround)
                     {
                         //m_playerRigidbody.AddForce(m_attackVector * m_playerAttackPower, ForceMode.Impulse);
@@ -85,9 +82,9 @@ public class PlayerAttack : MonoBehaviour
                     m_playerArmTransform.position = playerPosition + m_attackVector * m_playerAttackRange;
                 }
 
-                if(!m_isStun && !m_isAttack && m_playerMoverScript.m_playerGroundChecker)
+                if(!m_isStun && !m_isAttack && m_playerMoverScript.IsPlayerGroundChecker)
                 {
-                    //ƒXƒ^ƒ“‚Å‚Í‚È‚­AUŒ‚’†‚Å‚Í‚È‚­A’n–Ê‚É‚¢‚éê‡
+                    //ï¿½Xï¿½^ï¿½ï¿½ï¿½Å‚Í‚È‚ï¿½ï¿½Aï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½Å‚Í‚È‚ï¿½ï¿½Aï¿½nï¿½Ê‚É‚ï¿½ï¿½ï¿½ê‡
                     m_playerRigidbody.AddForce(Vector3.zero);
                 }
                 
@@ -98,7 +95,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if(hitPlayerCollider.gameObject.tag == "Arm")
         {
-            //UŒ‚‚µ‚½˜r‚ÆUŒ‚‚³‚ê‚½ƒLƒƒƒ‰‚ÌˆÊ’u‚©‚çƒxƒNƒgƒ‹‚ğ³‹K‰»
+            //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½rï¿½ÆUï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ğ³‹Kï¿½ï¿½
             Vector3 normalizedPlayerArm = (m_playerArmTransform.position - hitPlayerCollider.transform.position).normalized;
             m_playerRigidbody.AddForce(normalizedPlayerArm.x * m_playerAttackPower, normalizedPlayerArm.y * m_playerAttackPower, 0, ForceMode.Impulse);
             m_isStun = true;

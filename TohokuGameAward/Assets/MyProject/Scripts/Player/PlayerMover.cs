@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Linq;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -8,23 +7,53 @@ public class PlayerMover : MonoBehaviour
     private Transform m_playerTransform;
     [SerializeField]
     private Rigidbody m_playerRigidbody;
-    [SerializeField]
-    public int m_playerNomber;
-
+    [Header("ï¿½Rï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½[ï¿½Ôï¿½")]
+    [SerializeField] private int m_playerNumber;
+    public int PlayerNumber { get { return m_playerNumber; } }
+    [Header("ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½x")]
     [SerializeField]
     private float     m_playerMoveSpeed;
+    [Header("ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌƒWï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½")]
     [SerializeField]
     private Vector3   m_playerJumpScale;
+    [Header("ï¿½{ï¿½ï¿½ï¿½Ì‰ï¿½]ï¿½ï¿½ï¿½x")]
+    [SerializeField]
+    private Vector3 m_bombRotationSpeed;
+    [Header("ï¿½{ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ËŠpï¿½x")]
+    [SerializeField]
+    private float m_bombForceAngle;
+    [Header("ï¿½{ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
+    [SerializeField]
+    private float m_bombThrowPower = 44;
+    private Vector3 m_bombThrow;
 
-    public bool m_playerGroundChecker = false;
+    [SerializeField]
+    private float m_bombCoolTime = 0.1f;
 
+    private float m_stickRange = 0.7f;
+
+    public bool IsPlayerGroundChecker { get; private set; }
+    private bool m_isGetBomb = false;
+    private bool m_isThrowBomb = false;
+    private bool m_isPlayerLookLeft = true;
     public static int m_gamepadNomber;
+    [Header("ï¿½{ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½x")]
+    [SerializeField]
+    private float m_bombThrowSide = 30.0f;
+    [Header("ï¿½{ï¿½ï¿½ï¿½Ìã“Šï¿½ï¿½ï¿½pï¿½x")]
+    [SerializeField]
+    private float m_bombThrowUp = 80.0f;
+    [Header("ï¿½{ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½x")]
+    [SerializeField]
+    private float m_bombThrowDown = -70.0f;
 
-
+    private GameObject m_bombObject;
+    private Rigidbody m_bombRigidbody;
+    private Collider m_bombCollider;
     // Start is called before the first frame update
     void Start()
     {
-        m_gamepadNomber = m_playerNomber;
+        m_gamepadNomber = PlayerNumber;
     }
 
     // Update is called once per frame
@@ -33,38 +62,113 @@ public class PlayerMover : MonoBehaviour
         var gamepad = Gamepad.current;
         if (gamepad == null)
             return;
-
-        var padCurrent = Gamepad.all.Count;
-        Vector2 playerPositionVector2 = transform.position;
         m_playerTransform.rotation = Quaternion.identity;
+        var padCurrent = Gamepad.all.Count;
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ê’uï¿½æ“¾
+        Vector2 playerPositionVector2 = transform.position;
 
         for (int i = 0; i < padCurrent; i++)
         {
-            if(i == m_playerNomber)
+            if(i == PlayerNumber)
             {
-                //’n–Ê‚ÉÚG‚µ‚½‚çƒWƒƒƒ“ƒv
-                if (Gamepad.all[i].aButton.wasPressedThisFrame && m_playerGroundChecker == true)
+                //ï¿½ï¿½ï¿½Eï¿½Ú“ï¿½
+                var leftStick = Gamepad.all[i].leftStick.ReadValue();
+                playerPositionVector2.x += m_playerMoveSpeed * leftStick.x * Time.deltaTime;
+                m_playerTransform.position = playerPositionVector2;
+                //ï¿½nï¿½Ê‚ÉÚGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½v
+                if (Gamepad.all[i].aButton.wasPressedThisFrame && IsPlayerGroundChecker == true)
                 {
                     //Debug.Log(m_playerNomber);
                     m_playerRigidbody.AddForce(m_playerJumpScale, ForceMode.Impulse);
                 }
-                //¶‰EˆÚ“®
-                var leftStick = Gamepad.all[i].leftStick.ReadValue();
-                if (leftStick.x > 0.2f || leftStick.x < -0.2f)
+                //ï¿½{ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                if (m_isThrowBomb)
                 {
-                    playerPositionVector2.x += m_playerMoveSpeed * leftStick.x * Time.deltaTime;
-                    m_playerTransform.position = playerPositionVector2;
+                    Vector3 bombPosition = m_playerTransform.position;
+                    bombPosition.y = m_playerTransform.position.y + m_playerTransform.localScale.y;
+                    m_bombObject.transform.position = bombPosition;
+                    if ((Gamepad.all[i].rightTrigger.wasPressedThisFrame))
+                    {
+                        ThrowBomb(leftStick);
+                    }
+                }
+                //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ğ”»’ï¿½
+                if (leftStick.x >= 0.0f)
+                {
+                    m_isPlayerLookLeft = true;
+                }
+                else if (leftStick.x <= 0.0f)
+                {
+                    m_isPlayerLookLeft = false;
+                }
+                //ï¿½{ï¿½ï¿½ï¿½ÌŠpï¿½xï¿½ï¿½ï¿½ï¿½
+                if (leftStick.x >= m_stickRange)
+                {
+                    m_bombForceAngle = m_bombThrowSide;
+                }
+                else if (leftStick.x <= -m_stickRange)
+                {
+                    m_bombForceAngle = 180.0f - m_bombThrowSide;
+                }
+                else if (leftStick.y <= -m_stickRange && !m_isPlayerLookLeft)
+                {
+                    m_bombForceAngle = 180.0f - m_bombThrowDown;
+                }
+                else if (leftStick.y >= m_stickRange && !m_isPlayerLookLeft)
+                {
+                    m_bombForceAngle = 180.0f - m_bombThrowUp;
+                }
+                else if (leftStick.y <= -m_stickRange && m_isPlayerLookLeft)
+                {
+                    m_bombForceAngle = m_bombThrowDown;
+                }
+                else if (leftStick.y >= m_stickRange && m_isPlayerLookLeft)
+                {
+                    m_bombForceAngle = m_bombThrowUp;
                 }
             }
         }
     }
+
+    private void ThrowBomb(Vector2 stickVector)
+    {
+        Invoke(nameof(BombCoolTimeEnd), m_bombCoolTime);
+        m_bombRigidbody.useGravity = true;
+        m_isThrowBomb = false;
+
+        //ï¿½pï¿½xï¿½ï¿½ï¿½ï¿½Wï¿½Aï¿½ï¿½ï¿½lï¿½É•ÏŠï¿½
+        
+        float bombRad = m_bombForceAngle * Mathf.PI / 180f;
+        m_bombThrow.x = Mathf.Cos(bombRad);
+        m_bombThrow.y = Mathf.Sin(bombRad);
+        m_bombRigidbody.AddTorque(m_bombRotationSpeed, ForceMode.VelocityChange);
+        m_bombRigidbody.AddForce(m_bombThrow * m_bombThrowPower, ForceMode.Impulse);
+    }
+    private void BombCoolTimeEnd()
+    {
+        m_bombCollider.enabled = true;
+        m_isGetBomb = false;
+    }
     private void OnCollisionStay(Collision collision)
     {
+        //ï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½É‚ï¿½ï¿½ï¿½Æ‚ï¿½
         if(collision.gameObject.tag == "Stage")
-            m_playerGroundChecker = true;
+            IsPlayerGroundChecker = true;
+        //ï¿½{ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½æ“¾
+        if(collision.gameObject.tag == "Bomb" && !m_isGetBomb)
+        {
+            m_isGetBomb = true;
+            m_isThrowBomb = true;
+            collision.collider.enabled = false;
+            collision.rigidbody.useGravity = false;
+            m_bombObject = collision.gameObject;
+            m_bombRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+            m_bombCollider = collision.gameObject.GetComponent<Collider>();
+        }
     }
     private void OnCollisionExit()
     {
-        m_playerGroundChecker = false;
+        //ï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½É‚ï¿½ï¿½È‚ï¿½ï¿½Æ‚ï¿½
+        IsPlayerGroundChecker = false;
     }
 }
