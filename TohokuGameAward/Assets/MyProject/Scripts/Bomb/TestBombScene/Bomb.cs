@@ -41,6 +41,9 @@ public class Bomb : MonoBehaviour
     //true = 回転中
     private bool isRowling = false;
 
+    //true = 着火済み
+    private bool isFuseOn = false;
+
 
     //デバック用
     private bool isTimerStart = false;
@@ -122,10 +125,11 @@ public class Bomb : MonoBehaviour
     public void FuseOn()
     {
         // 一定時間経過後に発火
-        if(m_time > 0)
+        if(m_time > 0 && !isFuseOn)
         {
             Invoke(nameof(Explode), m_time);
             isTimerStart = true;
+            isFuseOn = true;
         }
     }
 
