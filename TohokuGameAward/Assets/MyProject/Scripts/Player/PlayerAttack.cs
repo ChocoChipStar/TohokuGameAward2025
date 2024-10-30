@@ -1,3 +1,4 @@
+using System.Xml.Serialization;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -109,6 +110,10 @@ public class PlayerAttack : MonoBehaviour
     {
         //パンチ終了
         m_attackVector = Vector2.zero;
+        Invoke(nameof(PlayerAttackCoolTime), m_playerAttackCoolTime);
+    }
+    private void PlayerAttackCoolTime()
+    {
         m_isAttack = false;
         m_isStun = false;
     }

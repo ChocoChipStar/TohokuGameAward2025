@@ -36,10 +36,7 @@ public class Bomb : MonoBehaviour
     public bool isThrown = false;       
     
     //true = playerに当たった時、爆発可能
-    private bool isPlayerDirectExplode = false;
-
-    //true = 回転中
-    private bool isRowling = false;
+    public bool isPlayerDirectExplode = false;
 
     //true = 着火済み
     private bool isFuseOn = false;
@@ -109,11 +106,6 @@ public class Bomb : MonoBehaviour
                 OnCountdownEnd(); // カウントダウンが終了したときの処理
             }
         }
-
-        if (isRowling)
-        {
-            m_bombController.Rowling();
-        }
     }
 
     private void OnCountdownEnd()
@@ -139,9 +131,9 @@ public class Bomb : MonoBehaviour
         {
             m_collider.center = new Vector3(0, m_pivot, 0);
             //m_bombModel.transform.localPosition = new Vector3(0, m_pivot, 0);
-            m_bombController.Throw();
+            //m_bombController.Throw();
             isThrown = true;
-            isRowling = true;
+
 
             if (m_count > 1)
             {
@@ -177,9 +169,7 @@ public class Bomb : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //なにかに触れたら
-        isRowling = false;
         m_collider.center = new Vector3(0, 0, 0);
-
         if (isPlayerDirectExplode && m_time == -1)
         {
             Explosion();
@@ -204,18 +194,6 @@ public class Bomb : MonoBehaviour
             if (!isFuseOn)
             {
                 FuseOn();
-            }
-        }
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
-        {
-            if (isThrown)
-            {
-                isPlayerDirectExplode = true;
             }
         }
     }

@@ -326,6 +326,7 @@ MonoBehaviour:
   m_bombController: {fileID: 1201908625565438393}
   m_text: {fileID: 1261296313846949134}
   isThrown: 0
+  isPlayerDirectExplode: 0
 --- !u!114 &1201908625565438393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,10 +339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e114c9858332b6a4986cb5ece7de8944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bombRigidbody: {fileID: 3349947653543477314}
-  m_throwForce: 13
-  m_throwAngle: 30
-  m_rotationSpeed: 17
 --- !u!54 &3349947653543477314
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -350,7 +347,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6015317307024279286}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}

@@ -147,7 +147,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
@@ -417,6 +417,16 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1062224015963460984, guid: b38c6b9360c29df4da10f93e87acd777,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2229071192147527386, guid: b38c6b9360c29df4da10f93e87acd777,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.14
+      objectReference: {fileID: 0}
     - target: {fileID: 2534595813065072969, guid: b38c6b9360c29df4da10f93e87acd777,
         type: 3}
       propertyPath: m_Layer
@@ -436,6 +446,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 4882532956917261560, guid: b38c6b9360c29df4da10f93e87acd777,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5000529364084024765, guid: b38c6b9360c29df4da10f93e87acd777,
         type: 3}
@@ -510,6 +525,16 @@ PrefabInstance:
       propertyPath: m_playerNumber
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_bombThrowDown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerJumpScale.y
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1359596179845657636, guid: a20941627bdbd604992ddf422f7ca871,
         type: 3}
       propertyPath: m_Name
@@ -570,6 +595,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9070937659124636011, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerAttackCoolTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -591,6 +621,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_playerNumber
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_bombThrowDown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerJumpScale.y
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1359596179845657636, guid: a20941627bdbd604992ddf422f7ca871,
         type: 3}
@@ -652,6 +692,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9070937659124636011, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerAttackCoolTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -687,7 +732,7 @@ Transform:
   m_GameObject: {fileID: 797572316}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -768,13 +813,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
         type: 3}
-      propertyPath: m_bombThrowSide
+      propertyPath: m_bombThrowDown
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_bombThrowSide
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
         type: 3}
       propertyPath: m_bombThrowPower
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerJumpScale.y
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1359596179845657636, guid: a20941627bdbd604992ddf422f7ca871,
         type: 3}
@@ -836,6 +891,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9070937659124636011, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerAttackCoolTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -857,6 +917,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_playerNumber
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_bombThrowDown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 514374384450543344, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerJumpScale.y
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1359596179845657636, guid: a20941627bdbd604992ddf422f7ca871,
         type: 3}
@@ -918,6 +988,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9070937659124636011, guid: a20941627bdbd604992ddf422f7ca871,
+        type: 3}
+      propertyPath: m_playerAttackCoolTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -952,7 +1027,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2, y: 1.2, z: 1.2}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1183214887
 GameObject:
@@ -993,7 +1068,7 @@ Transform:
   m_GameObject: {fileID: 1183214887}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8, z: 0}
+  m_LocalPosition: {x: 0, y: 0.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1024,7 +1099,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1700310658 stripped
 GameObject:
@@ -1051,7 +1126,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
