@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -88,14 +89,24 @@ public class PlayerMover : MonoBehaviour
                 {
                     //もしボムを持っていたらプレイヤーの上に持ってくる
                     Vector3 bombPosition = m_playerTransform.position;
-                    bombPosition.y = m_playerTransform.position.y + m_playerTransform.localScale.y;
+
+                    if (!GetPlayerDirection(leftStick))
+                    {
+                        bombPosition.x = m_playerTransform.position.x - m_playerTransform.localScale.x;
+                    }
+                    else
+                    {
+                        bombPosition.x = m_playerTransform.position.x + m_playerTransform.localScale.x;
+                    }
+
                     m_bombObject.transform.position = bombPosition;
+
                     //投げる
                     if ((Gamepad.all[i].rightTrigger.wasPressedThisFrame))
                     {
                         m_BombRigidbody.useGravity = true;//ボム重力
                         m_bombCollider.enabled = true;    //ボムコライダー
-                        
+
                         ThrowBomb(leftStick);
                         RowlingBomb();
                         m_bombObject = null;
@@ -108,14 +119,8 @@ public class PlayerMover : MonoBehaviour
     private void ThrowBomb(Vector2 leftStick)
     {
         //プレイヤー向き
-        if (leftStick.x >= 0.0f)
-        {
-            m_isPlayerLookLeft = true;
-        }
-        else if (leftStick.x <= 0.0f)
-        {
-            m_isPlayerLookLeft = false;
-        }
+        m_isPlayerLookLeft = GetPlayerDirection(leftStick);
+
         //投げ角度決定
         Vector2 downThrowBombposition = m_playerTransform.position;
         if (leftStick.x >= m_stickRange)
@@ -138,18 +143,18 @@ public class PlayerMover : MonoBehaviour
         {
             //右下投げ
             m_bombForceAngle = 180.0f - m_bombThrowDown;
-            //downThrowBombposition.x += -m_playerTransform.localScale.x;
+            downThrowBombposition.x += -m_playerTransform.localScale.x;
             m_bombObject.transform.position = downThrowBombposition;
         }
         else if (leftStick.y <= -m_stickRange && m_isPlayerLookLeft)
         {
             //左下投げ
             m_bombForceAngle = m_bombThrowDown;
-            //downThrowBombposition.x += m_playerTransform.localScale.x;
+            downThrowBombposition.x += m_playerTransform.localScale.x;
             m_bombObject.transform.position = downThrowBombposition;
         }
         m_bombCollider.enabled = true;
-        m_bombObject.transform.position = downThrowBombposition;
+        // m_bombObject.transform.position = downThrowBombposition;
         //角度受け渡し
         m_BombRigidbody.velocity = Vector3.zero;
         m_BombRigidbody.rotation = Quaternion.identity;
@@ -160,8 +165,23 @@ public class PlayerMover : MonoBehaviour
 
         // 爆弾を斜め上に投げる
         m_BombRigidbody.AddForce(throwDirection * m_bombThrowPower, ForceMode.Impulse);
-
+        m_bombObject.GetComponent<Bomb>().isPlayerDirectExplode = true;
     }
+
+    private bool GetPlayerDirection(Vector2 leftStickValue)
+    {
+        if (leftStickValue.x > 0.0f)
+        {
+            return  true;
+        }
+        else if (leftStickValue.x < 0.0f)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     private void RowlingBomb()
     {
         // Rigidbodyの速度を取得
@@ -187,34 +207,27 @@ public class PlayerMover : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag != "Item")
-        {
-            return;
-        }
-
-        var m_bomb = other.gameObject.GetComponent<Bomb>();
-
-        if (!m_bomb.isPlayerDirectExplode || m_bombObject != null)
-            return;
-
-        m_bombCollider = other.gameObject.GetComponent<Collider>();
-        m_BombRigidbody = other.gameObject.GetComponent<Rigidbody>();
-        m_isGetBomb = true;                 //ボム所持フラグ
-        m_bombCollider.enabled = false;     //ボムコライダーオフ
-        m_BombRigidbody.useGravity = false; //ボムの重力オフ
-        if (!m_bomb.isThrown)
-        {
-            m_bombObject = other.gameObject;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Item")
+        if (other.gameObject.CompareTag(TagData.NameList[(int)TagData.TagsNumber.Item]) && m_bombObject == null)
         {
             var m_bomb = other.gameObject.GetComponent<Bomb>();
-            m_bomb.isPlayerDirectExplode = true;//ボムの接触フラグ
+            
+            m_bombCollider = other.gameObject.GetComponent<Collider>();
+            m_BombRigidbody = other.gameObject.GetComponent<Rigidbody>();
+
+            m_isGetBomb = true;                 //ボム所持フラグ
+            m_bombCollider.enabled = false;     //ボムコライダーオフ
+            m_BombRigidbody.useGravity = false; //ボムの重力オフ
+            m_BombRigidbody.velocity = Vector3.zero;
+            m_BombRigidbody.angularVelocity = Vector3.zero;
+            m_BombRigidbody.rotation = Quaternion.identity;
+
+            if (!m_bomb.isThrown)
+            {
+                m_bombObject = other.gameObject;
+            }
         }
     }
+
     private void OnCollisionExit()
     {
         //地面を離れた

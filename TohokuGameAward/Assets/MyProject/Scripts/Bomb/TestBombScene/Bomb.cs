@@ -1,5 +1,3 @@
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static BombData;
@@ -168,33 +166,42 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //なにかに触れたら
+        // ミニボムの場合はなにかに触れたら
         m_collider.center = new Vector3(0, 0, 0);
-        if (isPlayerDirectExplode && m_time == -1)
+        if (isPlayerDirectExplode && m_time == -1) // ミニボムの場合はtimeを-1に設定されてある
         {
             Explosion();
         }
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
+        if (collision.gameObject.CompareTag(TagData.NameList[(int)TagData.TagsNumber.Stage]))
         {
             isPlayerDirectExplode = false;
             isThrown = false;
         }
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag(TagData.NameList[(int)TagData.TagsNumber.Player]))
         {
             if (isPlayerDirectExplode)
             {
                 Explosion();
             }
+            
             if (!isFuseOn)
             {
                 FuseOn();
+                //isPlayerDirectExplode = true;
             }
         }
     }
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {
+    //        isPlayerDirectExplode = true;
+    //    }
+    //}
 }
