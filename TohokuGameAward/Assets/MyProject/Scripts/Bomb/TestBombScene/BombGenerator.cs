@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BombGenerator : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class BombGenerator : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.B))
         {
             Instantiate(m_bomb, transform.position, Quaternion.identity);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("MainScene");
         }
     }
 }

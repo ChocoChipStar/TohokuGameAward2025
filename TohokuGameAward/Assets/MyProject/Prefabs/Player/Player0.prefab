@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2310023367640186993}
   - component: {fileID: 514374384450543344}
   - component: {fileID: 9070937659124636011}
+  - component: {fileID: 934263558280115031}
   m_Layer: 0
   m_Name: Player0
   m_TagString: Player
@@ -153,10 +154,8 @@ MonoBehaviour:
   m_playerNumber: 0
   m_playerMoveSpeed: 4
   m_playerJumpScale: {x: 0, y: 4, z: 0}
-  m_bombRotationSpeed: {x: 17, y: 0, z: 0}
   m_bombForceAngle: 0
   m_bombThrowPower: 22
-  m_bombCoolTime: 0.1
   m_bombThrowSide: 30
   m_bombThrowUp: 80
   m_bombThrowDown: -70
@@ -180,7 +179,29 @@ MonoBehaviour:
   m_playerAttackPower: 8
   m_playerAttackRange: 0.8
   m_playerAttackTime: 0.2
+  m_playerAttackCoolTime: 0
   m_playerStunTime: 0.2
+--- !u!65 &934263558280115031
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359596179845657636}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5305641495366640599
 GameObject:
   m_ObjectHideFlags: 0
