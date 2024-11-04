@@ -318,15 +318,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4611759eefa1dcd409910e02cd3214fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombGenre: 0
   m_explosionPrefab: {fileID: 3764451147331578762, guid: fc437996f2d7f9a478a1dd031e346f80,
     type: 3}
   m_collider: {fileID: 80528019357715917}
   m_bombModel: {fileID: 5858436166010014748}
   m_bombController: {fileID: 1201908625565438393}
-  m_text: {fileID: 1261296313846949134}
-  isThrown: 0
-  isPlayerDirectExplode: 0
+  m_countDownText: {fileID: 1261296313846949134}
+  bombGenre: 0
 --- !u!114 &1201908625565438393
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -26,7 +26,7 @@ public class BombManager : MonoBehaviour
     {
         foreach (var bombData in allBombData)
         {
-            if (bombData.bombGenre == genre)
+            if (bombData.BombType == genre)
             {
                 return bombData;
             }

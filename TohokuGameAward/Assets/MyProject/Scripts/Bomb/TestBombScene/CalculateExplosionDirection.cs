@@ -41,9 +41,9 @@ public class Explosion : MonoBehaviour
     }
 
     /// <summary>
-    /// ”š”j‚·‚é
+    /// ”š•—ˆĞ—Í‚ğİ’è‚µ
     /// </summary>
-    public void Explode(float power, float size)
+    public void SetBlastPower(float power, float size)
     {
         //”š”­‚ÌˆĞ—Í‚Ìİ’è
         m_explosionPower = power;

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec41faacbe5ae2848a4a75f8a3bfc565, type: 3}
   m_Name: Mini
   m_EditorClassIdentifier: 
-  bombGenre: 2
-  time: -1
-  power: 30
-  size: 5
-  pivot: -1
-  count: 3
-  bomb: {fileID: 6015317307024279286, guid: cbba9a9a351f9c64586947519fff6682, type: 3}
+  m_bombType: 2
+  m_explosionTime: 0
+  m_blastPower: 3
+  m_blastRange: 3
+  m_bombPivot: -1
+  m_bombCount: 3
+  m_otherBombObj: {fileID: 0}

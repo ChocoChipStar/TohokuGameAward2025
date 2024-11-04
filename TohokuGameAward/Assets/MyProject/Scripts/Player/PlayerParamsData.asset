@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec41faacbe5ae2848a4a75f8a3bfc565, type: 3}
-  m_Name: Impulse
+  m_Script: {fileID: 11500000, guid: 9abc437b2e439c049aa10dd709c23274, type: 3}
+  m_Name: PlayerParamsData
   m_EditorClassIdentifier: 
-  m_bombType: 1
-  m_explosionTime: 0
-  m_blastPower: 8
-  m_blastRange: 4
-  m_bombPivot: -1
-  m_bombCount: 1
-  m_otherBombObj: {fileID: 0}
+  m_playerWeight: 1
+  m_frictionalPower: 0
+  m_moveSpeed: 5
+  m_jumpPower: 5
+  m_punchPower: 5
+  m_throwPower: 30
+  m_sideThrowAngle: 30
+  m_upperThrowAngle: 80
+  m_underThrowAngle: 0
