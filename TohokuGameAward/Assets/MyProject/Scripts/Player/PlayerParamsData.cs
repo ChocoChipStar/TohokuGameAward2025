@@ -3,6 +3,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerParamsData", menuName = "ScriptableObjects/PlayerParamsData", order = 1)]
 public class PlayerParamsData : ScriptableObject
 {
+    [SerializeField, Header("ゲームスタート座標（プレイヤー毎）")]
+    private Vector2[] m_startPos = new Vector2[PlayerInputData.PlayerMax];
+
     [SerializeField, Header("重さ（質量）")]
     private int m_playerWeight = 0;
 
@@ -30,6 +33,7 @@ public class PlayerParamsData : ScriptableObject
     [SerializeField, Header("アイテム下投げ角度")]
     private float m_underThrowAngle = 0.0f;
 
+    public Vector2[] StartPos { get { return m_startPos; } private set { value = m_startPos; } }
     public int PlayerWeight { get { return m_playerWeight; } private set { value = m_playerWeight; } }
     public float FrictionalPower { get { return m_frictionalPower; } private set { value = m_frictionalPower; } }
     public float MoveSpeed { get { return m_moveSpeed; } private set { value = m_moveSpeed; } }

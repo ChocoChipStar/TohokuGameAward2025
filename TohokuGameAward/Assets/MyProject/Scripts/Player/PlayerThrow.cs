@@ -15,11 +15,11 @@ public class PlayerThrow : MonoBehaviour
     private const float FixedInverseAngle = 180.0f;
     private const float ThrowingIntervalTime = 0.75f;
 
-    public static bool IsThrow { get; private set; } = false;
+    public bool IsThrow { get; private set; } = false;
 
     private void Update()
     {
-        var stickValue = m_inputData.GetLeftStickValue(PlayerManager.SelfNumber);
+        var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
         if (CanThrow(stickValue) )
         {
             ThrowHoldingItem(stickValue);
@@ -31,8 +31,8 @@ public class PlayerThrow : MonoBehaviour
     /// </summary>
     private bool CanThrow(Vector2 stickValue)
     {
-        var wasPressedRT = m_inputData.WasPressedButton(PlayerInputData.InputButton.Throw, PlayerManager.SelfNumber);
-        if (wasPressedRT && PlayerPickUp.IsHoldingItem)
+        var wasPressedRT = m_inputData.WasPressedButton(PlayerInputData.InputButton.Throw, m_inputData.SelfNumber);
+        if (wasPressedRT && m_playerPickUp.IsHoldingItem)
         {
             return true;
         }
@@ -52,7 +52,6 @@ public class PlayerThrow : MonoBehaviour
         var throwDirection = ConvertAngleToDirection(stickValue) * m_paramsData.ThrowPower;
         rigidbody.AddForce(throwDirection, ForceMode.Impulse);
 
-        Debug.Log(throwDirection);
         StartCoroutine(ResetItemProcess()); // アイテム全般の初期化
     }
 

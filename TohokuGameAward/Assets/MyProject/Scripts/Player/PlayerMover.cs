@@ -28,18 +28,18 @@ public class PlayerMover : MonoBehaviour
 
     private void MoveOperation()
     {
-        var stickValue = m_inputData.GetLeftStickValue(PlayerManager.SelfNumber);
+        var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
         this.transform.position += new Vector3(m_paramsData.MoveSpeed * stickValue.x * Time.deltaTime, 0.0f, 0.0f);
     }
 
     private bool CanMove()
     {
-        if(m_inputData.GetLeftStickValue(PlayerManager.SelfNumber).x > PlayerInputData.MovementDeadZoneRange)
+        if(m_inputData.GetLeftStickValue(m_inputData.SelfNumber).x > PlayerInputData.MovementDeadZoneRange)
         {
             return true;
         }
 
-        if(m_inputData.GetLeftStickValue(PlayerManager.SelfNumber).x < -PlayerInputData.MovementDeadZoneRange)
+        if(m_inputData.GetLeftStickValue(m_inputData.SelfNumber).x < -PlayerInputData.MovementDeadZoneRange)
         {
             return true;
         }
@@ -54,7 +54,7 @@ public class PlayerMover : MonoBehaviour
 
     private bool CanJump()
     {
-        if(m_inputData.WasPressedButton(PlayerInputData.InputButton.Jump,PlayerManager.SelfNumber) && m_isGrounded)
+        if(m_inputData.WasPressedButton(PlayerInputData.InputButton.Jump, m_inputData.SelfNumber) && m_isGrounded)
         {
             return true;
         }

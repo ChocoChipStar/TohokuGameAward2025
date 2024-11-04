@@ -40,6 +40,9 @@ public class Bomb : MonoBehaviour
 
     public BombGenre bombGenre;
 
+    private PlayerPickUp m_playerPickUp = null;
+    private PlayerThrow m_playerThrow = null;
+
     public static bool IsPlayerThrown { get; private set; } = false;
 
     private void Start()
@@ -75,16 +78,21 @@ public class Bomb : MonoBehaviour
     {
         m_countDownText.rectTransform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.7f, 0));
 
-        if(PlayerThrow.IsThrow && !isThrowFlagLastFrameActiveChecker)
+        if(m_playerThrow == null || m_playerPickUp == null)
         {
-            ThrowBomb();
-            isThrowFlagLastFrameActiveChecker = PlayerThrow.IsThrow;
+            return;
         }
 
-        if(PlayerPickUp.IsHoldingItem && !isIgnitedFlagLastFrameActiveChecker)
+        if(m_playerThrow.IsThrow && !isThrowFlagLastFrameActiveChecker)
+        {
+            ThrowBomb();
+            isThrowFlagLastFrameActiveChecker = m_playerThrow.IsThrow;
+        }
+
+        if(m_playerPickUp.IsHoldingItem && !isIgnitedFlagLastFrameActiveChecker)
         {
             IgnitedTheBomb();
-            isIgnitedFlagLastFrameActiveChecker = PlayerPickUp.IsHoldingItem;
+            isIgnitedFlagLastFrameActiveChecker = m_playerPickUp.IsHoldingItem;
         }
 
         if (!m_isIgnited)
@@ -153,25 +161,42 @@ public class Bomb : MonoBehaviour
         // 爆弾が何かと衝突したらPivot位置リセットする
         m_collider.center = new Vector3(0, 0, 0);
 
-        if (IsPlayerThrown && !PlayerThrow.IsThrow && m_bombData.BombType == BombData.BombGenre.Mini)
+        if (m_playerThrow == null)
+        {
+            return;
+        }
+
+        if (collision.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Player]))
+        {
+            if (IsPlayerThrown && !m_playerThrow.IsThrow)
+            {
+                BombExplosion();
+            }
+        }
+
+        if (IsPlayerThrown && !m_playerThrow.IsThrow && m_bombData.BombType == BombData.BombGenre.Mini)
         {
             BombExplosion(); // ミニボムの場合は即起爆させる
         }
 
-        if (collision.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Stage]))
+        if (IsPlayerThrown && !m_playerThrow.IsThrow && collision.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Stage]))
         {
             IsPlayerThrown = false;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void SetPlayerData(PlayerPickUp playerPickUp, PlayerThrow playerThrow)
     {
-        if (other.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Player]))
+        m_playerPickUp = playerPickUp;
+        m_playerThrow = playerThrow;
+        
+        if(m_playerPickUp != null && m_playerThrow != null)
         {
-            if (IsPlayerThrown && !PlayerThrow.IsThrow)
-            {
-                BombExplosion();
-            }
+            Debug.Log("OK!");
+        }
+        else
+        {
+            Debug.Log("Missing!");
         }
     }
 }

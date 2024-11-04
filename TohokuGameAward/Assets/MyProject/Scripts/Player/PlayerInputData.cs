@@ -4,8 +4,11 @@ using UnityEngine.InputSystem;
 public class PlayerInputData : MonoBehaviour
 {
     public static readonly float MovementDeadZoneRange = 0.2f;
-
     public static readonly float ThrowDeadZoneRange = 0.7f;
+
+    public static readonly int PlayerMax = 4;
+
+    public int SelfNumber { get; private set; } = 0;
 
     public enum InputButton
     {
@@ -35,5 +38,10 @@ public class PlayerInputData : MonoBehaviour
             default:
                 return false;
         }
+    }
+
+    public void SetNumber(int playerNum)
+    {
+        SelfNumber = playerNum;
     }
 }

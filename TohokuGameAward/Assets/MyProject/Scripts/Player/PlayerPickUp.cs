@@ -7,6 +7,9 @@ public class PlayerPickUp : MonoBehaviour
     private PlayerThrow m_playerThrow = null;
 
     [SerializeField]
+    private PlayerInputData m_inputData = null;
+
+    [SerializeField]
     private BoxCollider m_detectionCollider = null;
 
     private float m_lastFramePosX = 0.0f;
@@ -18,7 +21,7 @@ public class PlayerPickUp : MonoBehaviour
 
     public GameObject DetectedItemObj { get; private set; } = null;
     public bool IsRight { get; private set; } = false;
-    public static bool IsHoldingItem { get; private set; } = false;
+    public bool IsHoldingItem { get; private set; } = false;
 
     private void Update()
     {
@@ -57,7 +60,7 @@ public class PlayerPickUp : MonoBehaviour
     /// </summary>
     private void HoldingDetectedItem()
     {
-        if(PlayerThrow.IsThrow || DetectedItemObj == null)
+        if(m_playerThrow.IsThrow || DetectedItemObj == null)
         {
             IsHoldingItem = false;
             StartCoroutine(m_playerThrow.ResetItemProcess());
@@ -112,6 +115,9 @@ public class PlayerPickUp : MonoBehaviour
             m_isDetected = true;
             m_isCantPickUp = true;
             DetectedItemObj = other.gameObject;
+
+            var bomb = DetectedItemObj.GetComponent<Bomb>();
+            bomb.SetPlayerData(this, m_playerThrow);
         }
     }
 
