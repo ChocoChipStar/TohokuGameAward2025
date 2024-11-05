@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Globalization;
 using UnityEngine;
 
 public class ItemGenerator : MonoBehaviour
@@ -15,23 +13,31 @@ public class ItemGenerator : MonoBehaviour
     private GameObject m_miniBombPrefab = null;
 
     [SerializeField]
-    private float m_nextSpawnTime = 60.0f;
+    private float m_nextSpawnTime = 0.0f;
 
     [SerializeField]
-    private int m_chanceOfNormal = 50;
+    private int m_chanceOfNormal = 0;
 
     [SerializeField]
-    private int m_chanceOfImpulse = 25;
+    private int m_chanceOfImpulse = 0;
 
     [SerializeField]
-    private int m_chanceOfMini = 25;
+    private int m_chanceOfMini = 0;
+
+    private int m_totalChance = 0;
 
     private float m_spawnTimer = 0.0f;
 
-    private float m_maxRange = 5.0f;
-    private float m_minRange = -5.0f;
-    private float m_itemHeight = 7.6f; //ギリギリ画面外
+    private const float m_maxRange = 5.0f;
 
+    private const float m_minRange = -5.0f;
+
+    private const float m_itemHeight = 7.6f; //ギリギリ画面外
+
+    private void Start()
+    {
+        m_totalChance = m_chanceOfNormal + m_chanceOfImpulse + m_chanceOfMini;
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -39,42 +45,67 @@ public class ItemGenerator : MonoBehaviour
 
         if (m_spawnTimer >= m_nextSpawnTime)
         {
-            //m_nextSpawnTime秒ごとにアイテムのプレハブをランダム生成
-
-            Instantiate(SelectRandomPrefab(), new Vector2(Random.Range(m_minRange, m_maxRange), m_itemHeight), Quaternion.identity,transform);
-            
+            GenerateBomb();            
             m_spawnTimer = 0;
         }
-       
+    }
+    private void GenerateBomb()
+    {
+        Instantiate(SelectRandomPrefab(), new Vector2(Random.Range(m_minRange, m_maxRange), m_itemHeight), Quaternion.identity, transform);
+    }
+    private enum GenreOfBomb
+    {
+        Normal,
+        Impulse,
+        Mini
     }
     private GameObject SelectRandomPrefab()
     {
         GameObject normalBomb = m_normalBombPrefab;
-        GameObject ImpulseBomb = m_impulseBombPrefab;
+        GameObject impulseBomb = m_impulseBombPrefab;
         GameObject miniBomb = m_miniBombPrefab;
 
-        //0～プレハブの出現確率の合計までの数字をランダム生成
-        
-        int totalChance = m_chanceOfNormal + m_chanceOfImpulse + m_chanceOfMini;
-        int numberToSelect = Random.Range(0, totalChance);
+        GenreOfBomb genreOfBomb = SerectGenreOfBomb();
 
-        bool isNormal = 0 <= numberToSelect && numberToSelect < m_chanceOfNormal;
-        bool isImpulse = m_chanceOfNormal <= numberToSelect && numberToSelect < m_chanceOfNormal + m_chanceOfImpulse;
-        bool ismini = m_chanceOfNormal + m_chanceOfImpulse <= numberToSelect && numberToSelect < totalChance; 
-
-        if (isNormal)
+        if (genreOfBomb == GenreOfBomb.Normal)
         {
             return normalBomb;
         }
-        if (isImpulse)
+        if (genreOfBomb == GenreOfBomb.Impulse)
         {
-            return ImpulseBomb;
+            return impulseBomb;
         }
-        if (ismini)
+        if (genreOfBomb == GenreOfBomb.Mini)
         {
             return miniBomb;
         }
 
         return normalBomb;
+    }
+   
+    private GenreOfBomb SerectGenreOfBomb()
+    {
+        int numberToSelect = NumberToSerectBomb();
+
+        bool isNormal = 0 <= numberToSelect && numberToSelect < m_chanceOfNormal;
+        bool isImpulse = m_chanceOfNormal <= numberToSelect && numberToSelect < m_chanceOfNormal + m_chanceOfImpulse;
+        bool isMini = m_chanceOfNormal + m_chanceOfImpulse <= numberToSelect && numberToSelect < m_totalChance;
+
+        if (isNormal)
+        {return GenreOfBomb.Normal;}
+        
+        if (isImpulse)
+        { return GenreOfBomb.Impulse;}
+
+        if (isMini)
+        { return GenreOfBomb.Mini;}
+
+        return GenreOfBomb.Normal;
+    }
+
+    private int NumberToSerectBomb()
+    {
+        int numberToSelect = Random.Range(0, m_totalChance);
+        return numberToSelect;
     }
 }
