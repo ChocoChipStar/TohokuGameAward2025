@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 // 爆弾のデータをScriptableObjectで管理する
@@ -15,24 +16,32 @@ public class BombData : ScriptableObject
         Mini
     }
 
-    // インスペクターでジャンルを指定する
-    public BombGenre bombGenre;
+    [SerializeField]
+    private BombGenre m_bombType;
 
-    [Header("爆発までの時間[s]")]
-    public float time = 3.0f;
+    [SerializeField, Header("爆発までの時間[s]")]
+    private float m_explosionTime = 0.0f;
 
-    [Header("爆風に当たったときに吹っ飛ぶ力の強さ")]
-    public float power = 1;
+    [SerializeField, Header("爆風に当たったときに吹っ飛ぶ力の強さ")]
+    private float m_blastPower = 0.0f;
 
-    [Header("爆発の当たる範囲")]
-    public float size = 2;
+    [SerializeField, Header("爆弾の爆風範囲")]
+    private float m_blastRange = 0.0f;
 
-    [Header("回転の中心点")]
-    public float pivot = -1;
+    [SerializeField, Header("回転の中心点")]
+    private float m_bombPivot = -1.0f;
 
-    [Header("爆弾の数")]
-    public int count = 0;
+    [SerializeField, Header("爆弾の数")]
+    private int m_bombCount = 0;
 
-    [Header("爆弾が複数の場合、出したい爆弾")]
-    public GameObject bomb;
+    [SerializeField, Header("爆弾が複数の場合、出したい爆弾")]
+    private GameObject m_otherBombObj = null;
+
+    public BombGenre BombType { get { return m_bombType; } private set { value = m_bombType; } }
+    public float ExplosionTime { get { return m_explosionTime; } private set { value = m_explosionTime; } }
+    public float BlastPower { get { return m_blastPower; } private set { value = m_blastPower; } }
+    public float BlastRange { get { return m_blastRange; } private set { value = m_blastRange; } }
+    public float BombPivot { get { return m_bombPivot; } private set { value = m_bombPivot; } }
+    public int BombCount { get { return m_bombCount; } private set { value = m_bombCount; } }
+    public GameObject OtherBombObj { get { return m_otherBombObj; } private set { value = m_otherBombObj; } }
 }
