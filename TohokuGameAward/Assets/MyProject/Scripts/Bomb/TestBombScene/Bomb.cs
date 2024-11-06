@@ -1,202 +1,99 @@
 using UnityEngine;
-using UnityEngine.UI;
-using static BombData;
 
 public class Bomb : MonoBehaviour
 {
-    [SerializeField, Header("爆風のPrefab")]
-    private Explosion m_explosionPrefab;
-
-    [SerializeField, Header("爆弾のコライダー")]
-    private SphereCollider m_collider;
-
-    [SerializeField, Header("爆弾のモデル")]
-    private GameObject m_bombModel;
+    [SerializeField]
+    private Rigidbody m_rigidbody = null;
 
     [SerializeField]
-    private BombController m_bombController;
+    private GameObject m_explosionPrefab = null;
 
     [SerializeField]
-    private Text m_countDownText;
+    protected SphereCollider m_bombCollider = null;
 
-    private BombData m_bombData;
-    private BombManager m_bombManager;
+    private int targetNumber = 0;
 
-    private bool m_isIgnited = false;
+    private bool m_isDetected = false;
+    private bool m_isHoldingItem = false;
+    private bool m_isThrow = false;
+    private bool m_isGrounded = false;
 
-    //デバック用
-    private int m_currentExplosionTime;
-    private bool isThrowFlagLastFrameActiveChecker = false;
-    private bool isIgnitedFlagLastFrameActiveChecker = false;
-    private float m_elapsedTime = 0;
-
-    //爆弾データ保存用
-    private float m_time  = 0;
-    private float m_power = 0;
-    private float m_size  = 0;
-    private float m_pivot = 0;
-    private int   m_count = 0;
-    private GameObject m_bombPrefab;
-
-    public BombGenre bombGenre;
-
-    private PlayerPickUp m_playerPickUp = null;
-    private PlayerThrow m_playerThrow = null;
-
-    public static bool IsPlayerThrown { get; private set; } = false;
-
-    private void Start()
+    protected virtual void Awake()
     {
-        // BombManagerからこの爆弾のジャンルに対応するBombDataを取得
-        // シングルトンを使用してBombManagerにアクセス
-        m_bombData = BombManager.Instance.GetBombDataByGenre(bombGenre);
-
-        ApplyBombData(m_bombData);
-
-        m_currentExplosionTime = (int)m_time;       // カウントダウン開始時間を設定
-        m_countDownText.text = m_currentExplosionTime.ToString();
-    }
-
-    // 取得したBombDataの値を使って、爆弾の設定を反映するメソッド
-    private void ApplyBombData(BombData data)
-    {
-        m_time  = m_bombData.ExplosionTime;
-        m_power = m_bombData.BlastPower;
-        m_size  = m_bombData.BlastRange;
-        m_pivot = m_bombData.BombPivot;
-        if(m_count == 0)
-        {
-            m_count = m_bombData.BombCount;
-        }
-        if(m_bombData.OtherBombObj != null)
-        {
-            m_bombPrefab = m_bombData.OtherBombObj;
-        }
+        m_rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        m_countDownText.rectTransform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.7f, 0));
-
-        if(m_playerThrow == null || m_playerPickUp == null)
+        if (m_isDetected)
         {
+            InitializeDetectedItem();
+        }
+
+        if (m_isHoldingItem)
+        {
+            HoldingItem();
+        }
+    }
+
+    protected virtual void InitializeDetectedItem()
+    {
+        m_isDetected = false;
+        m_isHoldingItem = true;
+
+        m_rigidbody.velocity = Vector3.zero;
+        m_rigidbody.angularVelocity = Vector3.zero;
+
+        m_bombCollider.enabled = false;
+    }
+
+    /// <summary>
+    /// アイテムを持たせる処理を実行します
+    /// </summary>
+    protected virtual void HoldingItem()
+    {
+        if (m_isThrow)
+        {
+            m_isHoldingItem = false;
             return;
-        }
-
-        if(m_playerThrow.IsThrow && !isThrowFlagLastFrameActiveChecker)
-        {
-            ThrowBomb();
-            isThrowFlagLastFrameActiveChecker = m_playerThrow.IsThrow;
-        }
-
-        if(m_playerPickUp.IsHoldingItem && !isIgnitedFlagLastFrameActiveChecker)
-        {
-            IgnitedTheBomb();
-            isIgnitedFlagLastFrameActiveChecker = m_playerPickUp.IsHoldingItem;
-        }
-
-        if (!m_isIgnited)
-        {
-            return;
-        }
-
-        if (m_currentExplosionTime == 0)
-        {
-            // 計測時間を超えたら初期化する
-            m_countDownText.text = "0";
-            m_isIgnited = false;
-        }
-
-        m_elapsedTime += Time.deltaTime;
-        if (m_elapsedTime >= 1.0f)
-        {
-            m_currentExplosionTime--;
-            m_countDownText.text = m_currentExplosionTime.ToString();
-            m_elapsedTime = 0.0f;
         }
     }
 
     /// <summary>
-    /// 爆弾を着火させる処理を行います
+    /// 爆弾の爆発を引き起こす処理をします
     /// </summary>
-    public void IgnitedTheBomb()
+    protected virtual void CauseAnExplosion()
     {
-        // 一定時間経過後に発火
-        if(m_bombData.BombType != BombData.BombGenre.Mini && !m_isIgnited)
-        {
-            Invoke(nameof(BombExplosion), m_time);
-            m_isIgnited = true;
-        }
-    }
-
-    public void ThrowBomb()
-    {
-        m_collider.center = new Vector3(0, m_pivot, 0);
-        IsPlayerThrown = true;
-
-        if (m_bombData.BombType == BombData.BombGenre.Mini)
-        {
-            m_count--;
-            var mini = Instantiate(m_bombPrefab, transform.position, Quaternion.identity);
-            Bomb miniBomb = mini.GetComponent<Bomb>();
-            miniBomb.m_count = m_count;
-        }
-        m_count = 1;
-    }
-
-    private void BombExplosion()
-    {
-        var instanceObj = Instantiate(m_explosionPrefab, m_collider.transform.position, Quaternion.identity);
-        instanceObj.SetBlastPower(m_power, m_size); // 爆弾の爆発威力を反映させる
-
-        m_count = 0;
-        isThrowFlagLastFrameActiveChecker = false;
-        isIgnitedFlagLastFrameActiveChecker = false;
-        IsPlayerThrown = false;
-        Destroy(this.gameObject);
+        var instanceObj = Instantiate(m_explosionPrefab, this.transform.position, Quaternion.identity);
+        
+        var explosion = instanceObj.GetComponent<Explosion>();
+        // explosion.SetBlastPower();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // 爆弾が何かと衝突したらPivot位置リセットする
-        m_collider.center = new Vector3(0, 0, 0);
-
-        if (m_playerThrow == null)
+        var isHitPlayer = collision.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Player]);
+        if (isHitPlayer && m_isThrow && !m_isGrounded)
         {
-            return;
+
         }
 
-        if (collision.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Player]))
+        var isHitStage = collision.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Stage]);
+        if (isHitStage && m_isThrow)
         {
-            if (IsPlayerThrown && !m_playerThrow.IsThrow)
-            {
-                BombExplosion();
-            }
-        }
-
-        if (IsPlayerThrown && !m_playerThrow.IsThrow && m_bombData.BombType == BombData.BombGenre.Mini)
-        {
-            BombExplosion(); // ミニボムの場合は即起爆させる
-        }
-
-        if (IsPlayerThrown && !m_playerThrow.IsThrow && collision.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Stage]))
-        {
-            IsPlayerThrown = false;
+            m_isThrow = false;
+            m_isGrounded = true;
         }
     }
 
-    public void SetPlayerData(PlayerPickUp playerPickUp, PlayerThrow playerThrow)
+    private void OnTriggerEnter(Collider other)
     {
-        m_playerPickUp = playerPickUp;
-        m_playerThrow = playerThrow;
-        
-        if(m_playerPickUp != null && m_playerThrow != null)
+        if (other.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Player]))
         {
-            Debug.Log("OK!");
-        }
-        else
-        {
-            Debug.Log("Missing!");
+            m_isDetected = true;
+
+            var inputData = other.gameObject.GetComponent<PlayerInputData>();
+            targetNumber = inputData.SelfNumber;
         }
     }
 }
