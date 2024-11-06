@@ -1,28 +1,15 @@
-using System.Globalization;
 using UnityEngine;
 
 public class ItemGenerator : MonoBehaviour
 {
     [SerializeField]
-    private GameObject m_normalBombPrefab = null;
+    private GameObject[] m_BombPrefab = null;
 
     [SerializeField]
-    private GameObject m_impulseBombPrefab = null;
-
-    [SerializeField]
-    private GameObject m_miniBombPrefab = null;
+    private int[] ChanceByGanre = null;
 
     [SerializeField]
     private float m_nextSpawnTime = 0.0f;
-
-    [SerializeField]
-    private int m_chanceOfNormal = 0;
-
-    [SerializeField]
-    private int m_chanceOfImpulse = 0;
-
-    [SerializeField]
-    private int m_chanceOfMini = 0;
 
     private int m_totalChance = 0;
 
@@ -36,7 +23,7 @@ public class ItemGenerator : MonoBehaviour
 
     private void Start()
     {
-        m_totalChance = m_chanceOfNormal + m_chanceOfImpulse + m_chanceOfMini;
+        CalculateTotalChance();
     }
     // Update is called once per frame
     private void Update()
@@ -49,63 +36,51 @@ public class ItemGenerator : MonoBehaviour
             m_spawnTimer = 0;
         }
     }
+    private void CalculateTotalChance()
+    {
+        for(int i = 0; i < ChanceByGanre.Length;i++)
+        {
+            m_totalChance += ChanceByGanre[i];
+        }
+    }
     private void GenerateBomb()
     {
-        Instantiate(SelectRandomPrefab(), new Vector2(Random.Range(m_minRange, m_maxRange), m_itemHeight), Quaternion.identity, transform);
+        Instantiate(SerectGenreOfBomb(), new Vector2(Random.Range(m_minRange, m_maxRange), m_itemHeight), Quaternion.identity, transform);
     }
-    private enum GenreOfBomb
+     private GameObject SerectGenreOfBomb()
     {
-        Normal,
-        Impulse,
-        Mini
+        int numberToSelect = ChooseGanre(RandomNumber());
+        return m_BombPrefab[numberToSelect];
     }
-    private GameObject SelectRandomPrefab()
+    private int ChooseGanre(int numberToChoose)
     {
-        GameObject normalBomb = m_normalBombPrefab;
-        GameObject impulseBomb = m_impulseBombPrefab;
-        GameObject miniBomb = m_miniBombPrefab;
-
-        GenreOfBomb genreOfBomb = SerectGenreOfBomb();
-
-        if (genreOfBomb == GenreOfBomb.Normal)
+        int numberToChoose_ = numberToChoose;
+        for (int i = 0; i < ChanceByGanre.Length; i++)
         {
-            return normalBomb;
+            if(numberToChoose_ < ChanceByGanre[i])
+            {
+                return i;
+            }
+            else
+            {
+                numberToChoose_ -= ChanceByGanre[i];
+            }
         }
-        if (genreOfBomb == GenreOfBomb.Impulse)
-        {
-            return impulseBomb;
-        }
-        if (genreOfBomb == GenreOfBomb.Mini)
-        {
-            return miniBomb;
-        }
-
-        return normalBomb;
+        return ChanceByGanre.Length;
     }
-   
-    private GenreOfBomb SerectGenreOfBomb()
-    {
-        int numberToSelect = NumberToSerectBomb();
-
-        bool isNormal = 0 <= numberToSelect && numberToSelect < m_chanceOfNormal;
-        bool isImpulse = m_chanceOfNormal <= numberToSelect && numberToSelect < m_chanceOfNormal + m_chanceOfImpulse;
-        bool isMini = m_chanceOfNormal + m_chanceOfImpulse <= numberToSelect && numberToSelect < m_totalChance;
-
-        if (isNormal)
-        {return GenreOfBomb.Normal;}
-        
-        if (isImpulse)
-        { return GenreOfBomb.Impulse;}
-
-        if (isMini)
-        { return GenreOfBomb.Mini;}
-
-        return GenreOfBomb.Normal;
+private int RandomNumber()
+    {  
+        int randomNumber = Random.Range(0, m_totalChance);
+        return randomNumber;
     }
-
-    private int NumberToSerectBomb()
+    private void OnValidate()
     {
-        int numberToSelect = Random.Range(0, m_totalChance);
-        return numberToSelect;
+        if (ChanceByGanre == null || m_BombPrefab == null)
+        { return; }
+     //インスペクターにプレハブをひとつ登録すると確率の欄も自動で増えます。
+        if(ChanceByGanre.Length != m_BombPrefab.Length)
+        {
+            System.Array.Resize(ref ChanceByGanre, m_BombPrefab.Length);
+        }
     }
 }

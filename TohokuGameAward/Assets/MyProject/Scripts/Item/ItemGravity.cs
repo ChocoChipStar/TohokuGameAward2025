@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemGravity : MonoBehaviour
@@ -18,8 +16,6 @@ public class ItemGravity : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        // d—Í‚ğ—LŒø‚É‚·‚é
         m_itemRb.useGravity = true;
-
     }
 }
