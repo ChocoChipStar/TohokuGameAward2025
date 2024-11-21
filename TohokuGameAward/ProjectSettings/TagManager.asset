@@ -4,10 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Stage
-  - Arm
+  - Ground
+  - Wall
   - Bomb
-  - Item
+  - Detected
   layers:
   - Default
   - TransparentFX

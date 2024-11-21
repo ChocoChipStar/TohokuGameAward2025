@@ -1,131 +1,142 @@
-//using System.Collections;
-//using UnityEngine;
+ï»¿using System.Collections;
+using UnityEngine;
 
-//public class PlayerPickUp : MonoBehaviour
-//{
-//    [SerializeField]
-//    private PlayerThrow m_playerThrow = null;
+public class PlayerPickup : MonoBehaviour
+{
+    [SerializeField]
+    private PlayerThrow m_playerThrow = null;
 
-//    [SerializeField]
-//    private PlayerInputData m_inputData = null;
+    [SerializeField]
+    private PlayerInputData m_inputData = null;
 
-//    [SerializeField]
-//    private BoxCollider m_detectionCollider = null;
+    [SerializeField]
+    private BoxCollider m_detectionCollider = null;
 
-//    private float m_lastFramePosX = 0.0f;
+    private float m_lastFramePosX = 0.0f;
 
-//    private bool m_isCantPickUp = false;
-//    private bool m_isDetected = false;
+    private bool m_isPickup = false;
+    private bool m_isDetected = false;
 
-//    private const float DiffDetectionRange = 0.01f;
+    private const float DiffDetectionRange = 0.01f;
 
-//    public GameObject DetectedItemObj { get; private set; } = null;
-//    public bool IsRight { get; private set; } = false;
-//    public bool IsHoldingItem { get; private set; } = false;
+    public GameObject DetectedItemObj { get; private set; } = null;
+    public bool IsRight { get; private set; } = false;
+    public bool IsHoldingItem { get; private set; } = false;
 
-//    private void Update()
-//    {
-//        if(m_isDetected)
-//        {
-//            InitializeDetectedItem();
-//        }
+    private void Update()
+    {
+        if (DetectedItemObj == null)
+        {
+            m_isPickup = false;
+            return;
+        }
 
-//        if(IsHoldingItem)
-//        {
-//            HoldingDetectedItem();
-//        }
+        if (m_isDetected)
+        {
+            InitializeDetectedItem();
+        }
 
-//        m_lastFramePosX = this.transform.position.x;
-//    }
+        if (IsHoldingItem)
+        {
+            HoldingDetectedItem();
+        }
 
-//    /// <summary>
-//    /// E‚Á‚½ƒAƒCƒeƒ€‚ğ‚½‚¹‚é‚½‚ß‚Ì‰Šú‰»ˆ—‚ğÀs‚µ‚Ü‚·
-//    /// </summary>
-//    private void InitializeDetectedItem()
-//    {
-//        IsHoldingItem = true;
-//        m_isDetected = false;
+        m_lastFramePosX = this.transform.position.x;
+    }
 
-//        var rigidbody = DetectedItemObj.GetComponent<Rigidbody>();
-//        rigidbody.useGravity = false;
-//        rigidbody.velocity = Vector3.zero;
-//        rigidbody.angularVelocity = Vector3.zero;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (m_isPickup)
+        {
+            return;
+        }
 
-//        var sphereCollider = DetectedItemObj.GetComponent<SphereCollider>();
-//        sphereCollider.enabled = false;
-//    }
+        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Bomb)))
+        {
+            var bombBase = other.gameObject.GetComponentInParent<BombBase>();
+            if(bombBase.currentState == BombBase.BombState.Throw)
+            {
+                return;
+            }
 
-//    /// <summary>
-//    /// E‚Á‚½ƒAƒCƒeƒ€‚ğ‚½‚¹‘±‚¯‚éˆ—‚ğÀs‚µ‚Ü‚·
-//    /// </summary>
-//    private void HoldingDetectedItem()
-//    {
-//        if(m_playerThrow.IsThrow || DetectedItemObj == null)
-//        {
-//            IsHoldingItem = false;
-//            StartCoroutine(m_playerThrow.ResetItemProcess());
-//            return;
-//        }
+            m_isDetected = true;
+            m_isPickup = true;
+            DetectedItemObj = other.gameObject.transform.parent.gameObject;
+        }
+    }
 
-//        if (GetDirection())
-//        {
-//            var holdingItemPosR = this.transform.position.x + this.transform.localScale.x;
-//            DetectedItemObj.transform.position = new Vector3(holdingItemPosR, this.transform.position.y, 0.0f);
-//            return;
-//        }
+    private void OnTriggerExit(Collider other)
+    {
+        var parentObj = other.gameObject.transform.parent.gameObject;
+        if (parentObj != DetectedItemObj)
+        {
+            return;
+        }
 
-//        var holdingItemPosL = this.transform.position.x - this.transform.lossyScale.x;
-//        DetectedItemObj.transform.position = new Vector3(holdingItemPosL, this.transform.position.y, 0.0f);
-//    }
+        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Detected)))
+        {
+            m_isPickup = false;
+        }
+    }
 
-//    /// <summary>
-//    /// Œ»İ‚ÌŒü‚«‚ğæ“¾o—ˆ‚Ü‚·
-//    /// </summary>
-//    /// <returns> true->‰EŒü‚« false->¶Œü‚« </returns>
-//    private bool GetDirection()
-//    {
-//        var diffValue = this.transform.position.x - m_lastFramePosX;
-//        if (diffValue >= -DiffDetectionRange && diffValue <= DiffDetectionRange)
-//        {
-//            return IsRight;
-//        }
+    /// <summary>
+    /// æ‹¾ã£ãŸã‚¢ã‚¤ãƒ†ãƒ ã‚’æŒãŸã›ã‚‹ãŸã‚ã®åˆæœŸåŒ–å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™
+    /// </summary>
+    private void InitializeDetectedItem()
+    {
+        IsHoldingItem = true;
+        m_isDetected = false;
 
-//        if (diffValue > DiffDetectionRange)
-//        {
-//            IsRight = true;
-//        }
+        var bombBase = DetectedItemObj.GetComponent<BombBase>();
+        bombBase.OnHolding(m_inputData.SelfNumber);
+    }
 
-//        if(diffValue < DiffDetectionRange)
-//        {
-//            IsRight = false;
-//        }
+    /// <summary>
+    /// æ‹¾ã£ãŸã‚¢ã‚¤ãƒ†ãƒ ã‚’æŒãŸã›ç¶šã‘ã‚‹å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™
+    /// </summary>
+    private void HoldingDetectedItem()
+    {
+        if (GetDirection())
+        {
+            var holdingItemPosR = this.transform.position.x + this.transform.localScale.x;
+            DetectedItemObj.transform.position = new Vector3(holdingItemPosR, this.transform.position.y, 0.0f);
+            return;
+        }
 
-//        return IsRight;
-//    }
+        var holdingItemPosL = this.transform.position.x - this.transform.lossyScale.x;
+        DetectedItemObj.transform.position = new Vector3(holdingItemPosL, this.transform.position.y, 0.0f);
+    }
 
-//    private void OnTriggerEnter(Collider other)
-//    {
-//        if(m_isCantPickUp || Bomb.IsPlayerThrown)
-//        {
-//            return;
-//        }
+    /// <summary>
+    /// ç¾åœ¨ã®å‘ãã‚’å–å¾—å‡ºæ¥ã¾ã™
+    /// </summary>
+    /// <returns> true->å³å‘ã false->å·¦å‘ã </returns>
+    private bool GetDirection()
+    {
+        var diffValue = this.transform.position.x - m_lastFramePosX;
+        if (diffValue >= -DiffDetectionRange && diffValue <= DiffDetectionRange)
+        {
+            return IsRight;
+        }
 
-//        if (other.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Item]))
-//        {
-//            m_isDetected = true;
-//            m_isCantPickUp = true;
-//            DetectedItemObj = other.gameObject;
+        if (diffValue > DiffDetectionRange)
+        {
+            IsRight = true;
+        }
 
-//            var bomb = DetectedItemObj.GetComponent<Bomb>();
-//            bomb.SetPlayerData(this, m_playerThrow);
-//        }
-//    }
+        if (diffValue < DiffDetectionRange)
+        {
+            IsRight = false;
+        }
 
-//    /// <summary>
-//    /// ƒAƒCƒeƒ€E‚¢ˆ—‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·
-//    /// </summary>
-//    public void InitializedPickUp()
-//    {
-//        m_isCantPickUp = false;
-//    }
-//}
+        return IsRight;
+    }
+
+    /// <summary>
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’æ‹¾ã†å‡¦ç†ã®åˆæœŸåŒ–ã‚’è¡Œã„ã¾ã™
+    /// </summary>
+    public void InitializedPickup()
+    {
+        IsHoldingItem = false;
+    }
+}

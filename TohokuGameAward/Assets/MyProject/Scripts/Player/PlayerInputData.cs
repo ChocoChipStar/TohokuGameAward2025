@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputData : MonoBehaviour
@@ -10,7 +10,7 @@ public class PlayerInputData : MonoBehaviour
 
     public int SelfNumber { get; private set; } = 0;
 
-    public enum InputButton
+    public enum ActionsName
     {
         Jump,
         Attack,
@@ -22,17 +22,17 @@ public class PlayerInputData : MonoBehaviour
         return Gamepad.all[playerNum].leftStick.ReadValue();
     }
 
-    public bool WasPressedButton(InputButton buttonNum, int playerNum)
+    public bool WasPressedButton(ActionsName actionNum, int playerNum)
     {
-        switch(buttonNum)
+        switch(actionNum)
         {
-            case InputButton.Jump:
+            case ActionsName.Jump:
                 return Gamepad.all[playerNum].aButton.wasPressedThisFrame;
 
-            case InputButton.Attack:
+            case ActionsName.Attack:
                 return Gamepad.all[playerNum].xButton.wasPressedThisFrame;
 
-            case InputButton.Throw:
+            case ActionsName.Throw:
                 return Gamepad.all[playerNum].rightTrigger.wasPressedThisFrame;
 
             default:
