@@ -1,37 +1,51 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class PlayerThrow : MonoBehaviour
 {
     [SerializeField]
-    private PlayerPickUp m_playerPickUp = null;
+    private PlayerPickup m_playerPickUp = null;
 
     [SerializeField]
     private PlayerInputData m_inputData = null;
 
     [SerializeField]
-    private PlayerParamsData m_paramsData = null;
+    private PlayerData m_playerData = null;
+
+    private float m_throwPower = 0.0f;
 
     private const float FixedInverseAngle = 180.0f;
     private const float ThrowingIntervalTime = 0.75f;
 
     public bool IsThrow { get; private set; } = false;
 
+    public enum ThrowDirection
+    {
+        Upper,
+        Side,
+        Under
+    }
+
     private void Update()
     {
         var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
-        if (CanThrow(stickValue) )
+        if (CanThrow(stickValue))
         {
             ThrowHoldingItem(stickValue);
         }
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ª“Š‚°‚ê‚éó‘Ô‚©Šm”F‚µ‚Ü‚·
+    /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ‰‹æŒã¡ã‚¢ã‚¤ãƒ†ãƒ ã‚’æŠ•ã’ã‚Œã‚‹çŠ¶æ…‹ã‹ç¢ºèªã—ã¾ã™
     /// </summary>
     private bool CanThrow(Vector2 stickValue)
     {
-        var wasPressedRT = m_inputData.WasPressedButton(PlayerInputData.InputButton.Throw, m_inputData.SelfNumber);
+        if (m_playerPickUp.DetectedItemObj == null)
+        {
+            return false;
+        }
+
+        var wasPressedRT = m_inputData.WasPressedButton(PlayerInputData.ActionsName.Throw, m_inputData.SelfNumber);
         if (wasPressedRT && m_playerPickUp.IsHoldingItem)
         {
             return true;
@@ -41,42 +55,31 @@ public class PlayerThrow : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒAƒCƒeƒ€‚ğ“Š‚°‚éˆ—‚ğÀs‚µ‚Ü‚·
+    /// æ‰‹ã«æŒã£ã¦ã„ã‚‹ã‚¢ã‚¤ãƒ†ãƒ ã‚’æŠ•ã’ã‚‹å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™
     /// </summary>
     private void ThrowHoldingItem(Vector2 stickValue)
     {
-        IsThrow = true;
-        var rigidbody = m_playerPickUp.DetectedItemObj.GetComponent<Rigidbody>();
-        RestoreHoldingItem(rigidbody);
+        m_playerPickUp.InitializedPickup();
 
-        var throwDirection = ConvertAngleToDirection(stickValue) * m_paramsData.ThrowPower;
-        rigidbody.AddForce(throwDirection, ForceMode.Impulse);
+        var throwDirection = GetThrowDirection(stickValue);
+        var throwMomentum = throwDirection * m_throwPower; 
 
-        StartCoroutine(ResetItemProcess()); // ƒAƒCƒeƒ€‘S”Ê‚Ì‰Šú‰»
+        var bombBase = m_playerPickUp.DetectedItemObj.GetComponent<BombBase>();
+        bombBase.OnThrow(throwMomentum);
+
     }
 
     /// <summary>
-    /// E‚Á‚Ä‚¢‚½ƒAƒCƒeƒ€‚Ìó‘Ô‚ğŒ³‚Ìó‘Ô‚É–ß‚·ˆ—‚ğÀs‚µ‚Ü‚·
+    /// æŠ•ã’è§’åº¦ã‚’æ–¹å‘ã«å¤‰æ›ã—å–å¾—ã—ã¾ã™
     /// </summary>
-    private void RestoreHoldingItem(Rigidbody rigidbody)
-    {
-        rigidbody.useGravity = true;
-
-        var sphereCollider = m_playerPickUp.DetectedItemObj.GetComponent<SphereCollider>();
-        sphereCollider.enabled = true;
-    }
-
-    /// <summary>
-    /// Šp“x‚ğ•ûŒü‚É•ÏŠ·‚·‚éˆ—‚ğs‚¢‚Ü‚·
-    /// </summary>
-    private Vector3 ConvertAngleToDirection(Vector2 stickValue)
+    private Vector3 GetThrowDirection(Vector2 stickValue)
     {
         var radian = GetThrowAngle(stickValue) * Mathf.Deg2Rad;
         return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0.0f);
     }
 
     /// <summary>
-    /// ƒRƒ“ƒgƒ[ƒ‰[‚Ì“ü—Í’l‚ğŠî‚É“Š‚°Šp“x‚ğæ“¾‚µ‚Ü‚·
+    /// ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å…¥åŠ›å€¤ã‹ã‚‰æŠ•ã’è§’åº¦ã‚’æ±ºå®šã—ã¾ã™
     /// </summary>
     private float GetThrowAngle(Vector2 stickValue)
     {
@@ -91,30 +94,34 @@ public class PlayerThrow : MonoBehaviour
             fixedDirectionValue = FixedInverseAngle;
         }
 
-        if (stickValue.y > deadZone) // ã“Š‚°
+        if (stickValue.y > deadZone)
         {
-            return Mathf.Abs(m_paramsData.UpperThrowAngle - fixedDirectionValue);
+            SavedThrowPower(m_playerData.Throw.PowerUpper);
+            return Mathf.Abs(m_playerData.Throw.AngleUpper - fixedDirectionValue);
         }
-        else if (stickValue.y < -deadZone) // ‰º“Š‚°
+        else if (stickValue.y < -deadZone)
         {
-            return Mathf.Abs(m_paramsData.UnderThrowAngle - fixedDirectionValue);
+            SavedThrowPower(m_playerData.Throw.PowerUnder);
+            return Mathf.Abs(m_playerData.Throw.AngleUnder - fixedDirectionValue);
         }
 
-        if (m_playerPickUp.IsRight) // ‰E“Š‚°
+        SavedThrowPower(m_playerData.Throw.PowerSide);
+        if (m_playerPickUp.IsRight)
         {
-            return m_paramsData.SideThrowAngle;
+            return m_playerData.Throw.AngleSide;
         }
-        else // ¶“Š‚°
+        else
         {
-            return FixedInverseAngle - m_paramsData.SideThrowAngle;
+            return FixedInverseAngle - m_playerData.Throw.AngleSide;
         }
     }
 
-    public IEnumerator ResetItemProcess()
+    /// <summary>
+    /// æŠ•ã’è§’åº¦ã«åˆã‚ã›ã¦æŠ•ã’å¨åŠ›ã‚’å†è¨­å®šã—ã¾ã™
+    /// </summary>
+    /// <param name="powerValue"></param>
+    private void SavedThrowPower(float powerValue)
     {
-        yield return new WaitForSeconds(ThrowingIntervalTime);
-
-        m_playerPickUp.InitializedPickUp();
-        IsThrow = false;
+        m_throwPower = powerValue;
     }
 }

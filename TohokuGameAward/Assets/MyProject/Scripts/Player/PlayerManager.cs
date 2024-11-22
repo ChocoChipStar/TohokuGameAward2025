@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor.Timeline.Actions;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
@@ -10,30 +7,26 @@ public class PlayerManager : MonoBehaviour
     private GameObject m_playerPrefab = null;
 
     [SerializeField]
-    private PlayerParamsData m_paramsData = null;
-
-    private List<GameObject> m_players = new List<GameObject>();
+    private PlayerData m_playerData = null;
 
     private void Awake()
     {
-        CreatePlayerBasedOnControllers();
+       CreatePlayerBasedOnControllers();
     }
 
     private void CreatePlayerBasedOnControllers()
     {
         var gamepads = Gamepad.all;
-        for(int i = 0; i < gamepads.Count; i++)
+        for (int i = 0; i < gamepads.Count; i++)
         {
-            var playerInstance = Instantiate(m_playerPrefab, m_paramsData.StartPos[i], Quaternion.identity);
-            m_players.Add(playerInstance);
+            var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity);
+            instance.name = "Player" + (i + 1);
 
-            playerInstance.name = "Player" + (i + 1);
-
-            var inputData = playerInstance.GetComponent<PlayerInputData>();
-            if(inputData != null)
+            var inputData = instance.GetComponent<PlayerInputData>();
+            if (inputData != null)
             {
                 inputData.SetNumber(i);
-            }    
+            }
         }
     }
 }

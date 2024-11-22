@@ -1,7 +1,7 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
-public class PlayerPickUp : MonoBehaviour
+public class PlayerPickup : MonoBehaviour
 {
     [SerializeField]
     private PlayerThrow m_playerThrow = null;
@@ -14,7 +14,7 @@ public class PlayerPickUp : MonoBehaviour
 
     private float m_lastFramePosX = 0.0f;
 
-    private bool m_isCantPickUp = false;
+    private bool m_isPickup = false;
     private bool m_isDetected = false;
 
     private const float DiffDetectionRange = 0.01f;
@@ -25,12 +25,18 @@ public class PlayerPickUp : MonoBehaviour
 
     private void Update()
     {
-        if(m_isDetected)
+        if (DetectedItemObj == null)
+        {
+            m_isPickup = false;
+            return;
+        }
+
+        if (m_isDetected)
         {
             InitializeDetectedItem();
         }
 
-        if(IsHoldingItem)
+        if (IsHoldingItem)
         {
             HoldingDetectedItem();
         }
@@ -38,35 +44,58 @@ public class PlayerPickUp : MonoBehaviour
         m_lastFramePosX = this.transform.position.x;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (m_isPickup)
+        {
+            return;
+        }
+
+        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Bomb)))
+        {
+            var bombBase = other.gameObject.GetComponentInParent<BombBase>();
+            if(bombBase.currentState == BombBase.BombState.Throw)
+            {
+                return;
+            }
+
+            m_isDetected = true;
+            m_isPickup = true;
+            DetectedItemObj = other.gameObject.transform.parent.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var parentObj = other.gameObject.transform.parent.gameObject;
+        if (parentObj != DetectedItemObj)
+        {
+            return;
+        }
+
+        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Detected)))
+        {
+            m_isPickup = false;
+        }
+    }
+
     /// <summary>
-    /// E‚Á‚½ƒAƒCƒeƒ€‚ğ‚½‚¹‚é‚½‚ß‚Ì‰Šú‰»ˆ—‚ğÀs‚µ‚Ü‚·
+    /// æ‹¾ã£ãŸã‚¢ã‚¤ãƒ†ãƒ ã‚’æŒãŸã›ã‚‹ãŸã‚ã®åˆæœŸåŒ–å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™
     /// </summary>
     private void InitializeDetectedItem()
     {
         IsHoldingItem = true;
         m_isDetected = false;
 
-        var rigidbody = DetectedItemObj.GetComponent<Rigidbody>();
-        rigidbody.useGravity = false;
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
-
-        var sphereCollider = DetectedItemObj.GetComponent<SphereCollider>();
-        sphereCollider.enabled = false;
+        var bombBase = DetectedItemObj.GetComponent<BombBase>();
+        bombBase.OnHolding(m_inputData.SelfNumber);
     }
 
     /// <summary>
-    /// E‚Á‚½ƒAƒCƒeƒ€‚ğ‚½‚¹‘±‚¯‚éˆ—‚ğÀs‚µ‚Ü‚·
+    /// æ‹¾ã£ãŸã‚¢ã‚¤ãƒ†ãƒ ã‚’æŒãŸã›ç¶šã‘ã‚‹å‡¦ç†ã‚’å®Ÿè¡Œã—ã¾ã™
     /// </summary>
     private void HoldingDetectedItem()
     {
-        if(m_playerThrow.IsThrow || DetectedItemObj == null)
-        {
-            IsHoldingItem = false;
-            StartCoroutine(m_playerThrow.ResetItemProcess());
-            return;
-        }
-
         if (GetDirection())
         {
             var holdingItemPosR = this.transform.position.x + this.transform.localScale.x;
@@ -79,9 +108,9 @@ public class PlayerPickUp : MonoBehaviour
     }
 
     /// <summary>
-    /// Œ»İ‚ÌŒü‚«‚ğæ“¾o—ˆ‚Ü‚·
+    /// ç¾åœ¨ã®å‘ãã‚’å–å¾—å‡ºæ¥ã¾ã™
     /// </summary>
-    /// <returns> true->‰EŒü‚« false->¶Œü‚« </returns>
+    /// <returns> true->å³å‘ã false->å·¦å‘ã </returns>
     private bool GetDirection()
     {
         var diffValue = this.transform.position.x - m_lastFramePosX;
@@ -95,7 +124,7 @@ public class PlayerPickUp : MonoBehaviour
             IsRight = true;
         }
 
-        if(diffValue < DiffDetectionRange)
+        if (diffValue < DiffDetectionRange)
         {
             IsRight = false;
         }
@@ -103,29 +132,11 @@ public class PlayerPickUp : MonoBehaviour
         return IsRight;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(m_isCantPickUp || Bomb.IsPlayerThrown)
-        {
-            return;
-        }
-
-        if (other.gameObject.CompareTag(TagData.NameList[(int)TagData.Number.Item]))
-        {
-            m_isDetected = true;
-            m_isCantPickUp = true;
-            DetectedItemObj = other.gameObject;
-
-            var bomb = DetectedItemObj.GetComponent<Bomb>();
-            bomb.SetPlayerData(this, m_playerThrow);
-        }
-    }
-
     /// <summary>
-    /// ƒAƒCƒeƒ€E‚¢ˆ—‚Ì‰Šú‰»‚ğs‚¢‚Ü‚·
+    /// ã‚¢ã‚¤ãƒ†ãƒ ã‚’æ‹¾ã†å‡¦ç†ã®åˆæœŸåŒ–ã‚’è¡Œã„ã¾ã™
     /// </summary>
-    public void InitializedPickUp()
+    public void InitializedPickup()
     {
-        m_isCantPickUp = false;
+        IsHoldingItem = false;
     }
 }
