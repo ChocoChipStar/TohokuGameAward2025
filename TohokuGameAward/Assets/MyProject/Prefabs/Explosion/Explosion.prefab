@@ -48,11 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_explosionEffect: {fileID: 176099843092402227}
+  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
   m_audioSource: {fileID: 5177735853400296777}
   m_explosionCollider: {fileID: 2304225458212194025}
-  m_colliderActivateDelayTime: 0.1
-  m_durationFrameCount: 1
-  m_stopSeconds: 2
 --- !u!135 &2304225458212194025
 SphereCollider:
   m_ObjectHideFlags: 0

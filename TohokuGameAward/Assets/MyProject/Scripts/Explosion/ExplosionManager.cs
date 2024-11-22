@@ -7,19 +7,13 @@ public class ExplosionManager : MonoBehaviour
     private ParticleSystem m_explosionEffect = null;
 
     [SerializeField]
+    private ExplosionData m_explosionData = null;
+
+    [SerializeField]
     private AudioSource m_audioSource = null;
 
     [SerializeField]
     private SphereCollider m_explosionCollider = null;
-
-    [SerializeField, Header("爆風の判定が実際に発生するまでのディレイ")]
-    private float m_colliderActivateDelayTime = 0.1f;
-
-    [SerializeField, Header("爆風の持続フレーム数")]
-    private int m_durationFrameCount = 1;
-
-    [SerializeField, Header("エフェクト含めすべての再生が終了するまでの時間")]
-    private float m_stopSeconds = 2f;
 
     private BombData m_bombData = null;
 
@@ -46,7 +40,7 @@ public class ExplosionManager : MonoBehaviour
     /// </summary>
     private IEnumerator ActivateExplosionColliderDuration()
     {
-        var elapseTimer = m_colliderActivateDelayTime;
+        var elapseTimer = m_explosionData.Params.ColliderActivateDelayTime;
         while (elapseTimer > 0.0f)
         {
             yield return new WaitForFixedUpdate();
@@ -54,7 +48,7 @@ public class ExplosionManager : MonoBehaviour
         }
 
         m_explosionCollider.enabled = true;
-        for (int i = 0; i < m_durationFrameCount; i++)
+        for (int i = 0; i < m_explosionData.Params.DurationFrameCount; i++)
         {
             yield return new WaitForFixedUpdate(); // 1秒間待機（FixedDeltaTime)
         }
@@ -82,13 +76,12 @@ public class ExplosionManager : MonoBehaviour
         var direction = Vector3.zero;
         GetRayOriginAndDirection(this.transform.position, other.transform.position, out origin, out direction);
 
-        if (IsHittedWall(origin, direction))
+        if (IsHittedStage(origin, direction))
         {
             return;
         }
 
-        var targetPos = other.transform.position;
-        BlowOffTarget(rigidbody, direction, targetPos);
+        BlowOfTarget(rigidbody, other.transform.position);
     }
 
     /// <summary>
@@ -102,18 +95,34 @@ public class ExplosionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Rayが壁に衝突したかを検知します
+    /// Rayがステージに衝突したかを検知します
     /// </summary>
     /// <returns> true->衝突を検知 false->検知無し </returns>
-    private bool IsHittedWall(Vector3 origin, Vector3 direction)
+    private bool IsHittedStage(Vector3 origin, Vector3 direction)
     {
         Physics.Raycast(origin, direction * RayDistance, out hitInfo);
         if(hitInfo.collider != null)
         {
-            return hitInfo.collider.gameObject.layer == LayerMask.NameToLayer("Wall");
+            var hitTrans = hitInfo.collider.transform;
+            var hitParentObj = hitTrans.parent.gameObject;
+            if(hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)) 
+            || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall)))
+            {
+                return true;
+            }
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// 爆風で触れた物体が吹き飛ぶ方向を計算します
+    /// </summary>
+    private Vector3 GetExplosionDirection(Rigidbody rigidbody)
+    {
+        // 吹き飛びの処理をここに記述↓
+
+        return new Vector3(1.0f, 0.75f, 0.0f).normalized; // 現在は適当な数値を代入中
     }
 
     /// <summary>
@@ -126,12 +135,12 @@ public class ExplosionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 爆風範囲内に入ったプレイヤーを吹き飛ばす処理を行います
+    /// 爆発による影響を受けた物体を吹き飛ばす処理を実行します。
     /// </summary>
-    private void BlowOffTarget(Rigidbody rigidbody, Vector3 direction, Vector3 targetPos)
+    private void BlowOfTarget(Rigidbody rigidbody, Vector3 targetPos)
     {
-        var blownPower = direction * CalculateExplosionPower(targetPos);
-        rigidbody.AddForce(blownPower, ForceMode.VelocityChange);
+        var explosionDirectionPower = GetExplosionDirection(rigidbody) * CalculateExplosionPower(targetPos);
+        rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
     }
 
     /// <summary>
@@ -158,7 +167,7 @@ public class ExplosionManager : MonoBehaviour
     public void OnPlayExplosionEffect()
     {
         StartCoroutine(ActivateExplosionColliderDuration());
-        Invoke(nameof(InitializedExplosionEffect), m_stopSeconds);
+        Invoke(nameof(InitializedExplosionEffect), m_explosionData.Params.EffectEndTime);
 
         if (m_explosionEffect != null)
         {
