@@ -120,8 +120,6 @@ public class ExplosionManager : MonoBehaviour
     /// </summary>
     private Vector3 GetExplosionDirection(Rigidbody rigidbody)
     {
-        // 吹き飛びの処理をここに記述↓
-
         return new Vector3(1.0f, 0.75f, 0.0f).normalized; // 現在は適当な数値を代入中
     }
 
@@ -139,6 +137,11 @@ public class ExplosionManager : MonoBehaviour
     /// </summary>
     private void BlowOfTarget(Rigidbody rigidbody, Vector3 targetPos)
     {
+        // 吹き飛びの処理をここに記述↓
+        // 爆発の食らう位置で方向が変わるようであれば GetExplosionDirection関数を変更
+        // 爆発を食らう位置での威力減衰が異なる計算式になる場合は　CalculateExplosionPower関数を変更
+        // 爆発で実際に吹き飛ばす処理の実行命令を出す場合は　BlowOfTarget関数を変更する
+
         var explosionDirectionPower = GetExplosionDirection(rigidbody) * CalculateExplosionPower(targetPos);
         rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
     }
