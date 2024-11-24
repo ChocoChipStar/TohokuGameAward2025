@@ -41,7 +41,7 @@ public abstract class BombBase : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
     }
 
     private void OnCollisionEnter(Collision collision)

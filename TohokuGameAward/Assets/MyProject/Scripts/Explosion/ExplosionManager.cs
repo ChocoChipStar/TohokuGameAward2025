@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class ExplosionManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class ExplosionManager : MonoBehaviour
     private ExplosionData m_explosionData = null;
 
     [SerializeField]
+    private PlayerMover m_playerMover = null;
+
+    [SerializeField]
     private AudioSource m_audioSource = null;
 
     [SerializeField]
@@ -17,9 +21,27 @@ public class ExplosionManager : MonoBehaviour
 
     private BombData m_bombData = null;
 
+    private Rigidbody m_targetRigidbody = null;
+
     private RaycastHit hitInfo;
 
     private const float RayDistance = 10.0f;
+
+    private float m_fallTime = 0.0f;            //X軸減速処理の経過時間
+
+    private float m_fallTimeLimit = 1.5f;       //X軸減速処理にかける時間
+
+    private const float m_fallTimeMax = 0.4f;   //X軸減速処理の最大値
+
+    float m_decreaseForceTime = 3.2f;           //爆弾の威力に応じて速度減少が始まる時間の基準
+
+    private float m_playerCanMoveTime = 0.0f;   //プレイヤーが操作できない時間
+
+    private const float m_decreasePower = 0.5f;
+
+    private bool m_isGetExplosion = false;      //爆風を受けているか
+
+    public bool IsGetExplosion { get { return m_isGetExplosion; } }
 
     private void Awake()
     {
@@ -33,6 +55,35 @@ public class ExplosionManager : MonoBehaviour
         }
 
         m_explosionCollider.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (m_isGetExplosion)       //爆風を受けた
+        {
+            if (GetInputPlayerCheck())
+            {
+                m_playerMover.GetExplosion(false);
+                m_isGetExplosion = false;
+            }
+            if (m_playerCanMoveTime > 0.0f)
+            {
+                m_playerCanMoveTime -= Time.deltaTime * 0.7f;
+            }
+        }
+
+        if (m_fallTime < m_fallTimeMax)
+        {
+            m_fallTime += Time.deltaTime * (m_fallTimeMax / m_fallTimeLimit);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(m_fallTime < m_fallTimeMax && IsGetExplosion)
+        {
+            AfterDecreasePower();
+        }
     }
 
     /// <summary>
@@ -63,7 +114,11 @@ public class ExplosionManager : MonoBehaviour
         {
             return;
         }
-
+        m_playerMover = other.GetComponentInParent<PlayerMover>();
+        if (m_playerMover == null)
+        {
+            return;
+        }
         GenerateExplosion(other, rigidbody);
     }
 
@@ -118,9 +173,12 @@ public class ExplosionManager : MonoBehaviour
     /// <summary>
     /// 爆風で触れた物体が吹き飛ぶ方向を計算します
     /// </summary>
-    private Vector3 GetExplosionDirection(Rigidbody rigidbody)
+    private Vector3 GetExplosionDirection(Vector3 targetPos)
     {
-        return new Vector3(1.0f, 0.75f, 0.0f).normalized; // 現在は適当な数値を代入中
+        var direction = targetPos - transform.position;
+        float xDirection = direction.x;
+        float yDirection = Mathf.Abs(direction.x) + Mathf.Abs(direction.y);
+        return new Vector3(xDirection, yDirection, 0.0f).normalized;
     }
 
     /// <summary>
@@ -137,13 +195,50 @@ public class ExplosionManager : MonoBehaviour
     /// </summary>
     private void BlowOfTarget(Rigidbody rigidbody, Vector3 targetPos)
     {
-        // 吹き飛びの処理をここに記述↓
-        // 爆発の食らう位置で方向が変わるようであれば GetExplosionDirection関数を変更
-        // 爆発を食らう位置での威力減衰が異なる計算式になる場合は　CalculateExplosionPower関数を変更
-        // 爆発で実際に吹き飛ばす処理の実行命令を出す場合は　BlowOfTarget関数を変更する
-
-        var explosionDirectionPower = GetExplosionDirection(rigidbody) * CalculateExplosionPower(targetPos);
+        var explosionDirectionPower = GetExplosionDirection(targetPos) * CalculateExplosionPower(targetPos);
         rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
+        m_targetRigidbody = rigidbody;
+        m_playerCanMoveTime = 0.0f;
+        m_playerMover.GetExplosion(true);
+        float foeceTime = m_decreaseForceTime / CalculateExplosionPower(targetPos);
+        Invoke(nameof(FirstDecreasePower), foeceTime);
+    }
+
+    /// <summary>
+    /// 最初の大きな減速を行います。
+    /// </summary>
+    private void FirstDecreasePower()
+    {
+        if (!m_isGetExplosion)
+        {
+            var playerVelocity = m_targetRigidbody.velocity;
+            m_fallTime = 0.0f;
+            m_targetRigidbody.AddForce(-playerVelocity.x * m_decreasePower, -playerVelocity.y * m_decreasePower, 0.0f, ForceMode.Impulse);
+        }
+        m_isGetExplosion = true;
+    }
+
+    /// <summary>
+    /// 徐々に大きな力で減速がかかります。
+    /// </summary>
+    private void AfterDecreasePower()
+    {
+        var targetVelocity = m_targetRigidbody.velocity;
+        m_targetRigidbody.AddForce(-targetVelocity.x * m_fallTime, 0.0f, 0.0f, ForceMode.Impulse);
+    }
+
+    /// <summary>
+    /// プレイヤーが操作可能になる条件
+    /// </summary>
+    /// <returns> true->一定時間経過+落下した </returns>
+    private bool GetInputPlayerCheck()      
+    {
+        var playerVelocity = m_targetRigidbody.velocity;
+        if (playerVelocity.y < 0.0f && m_playerCanMoveTime <= 0.0f)
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
