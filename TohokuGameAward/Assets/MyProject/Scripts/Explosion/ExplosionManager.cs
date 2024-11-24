@@ -25,23 +25,17 @@ public class ExplosionManager : MonoBehaviour
 
     private RaycastHit hitInfo;
 
+    private float m_fallTime = 0.0f;                    //X軸減速処理の経過時間
+    private float m_fallTimeLimit = 1.5f;               //X軸減速処理にかける時間
+    private float m_decreaseForceTime = 3.2f;           //爆弾の威力に応じて速度減少が始まる時間の基準
+    private float m_playerCantMoveTime = 0.0f;          //プレイヤーが操作できない時間
+
     private const float RayDistance = 10.0f;
+    private const float DecreasePower = 0.5f;
+    private const float FallTimeMax = 0.2f;           //X軸減速処理の最大値
+    private const float PlayerCantMoveTimeMax = 1.0f;
 
-    private float m_fallTime = 0.0f;            //X軸減速処理の経過時間
-
-    private float m_fallTimeLimit = 1.5f;       //X軸減速処理にかける時間
-
-    private const float m_fallTimeMax = 0.4f;   //X軸減速処理の最大値
-
-    float m_decreaseForceTime = 3.2f;           //爆弾の威力に応じて速度減少が始まる時間の基準
-
-    private float m_playerCanMoveTime = 0.0f;   //プレイヤーが操作できない時間
-
-    private const float m_decreasePower = 0.5f;
-
-    private bool m_isGetExplosion = false;      //爆風を受けているか
-
-    public bool IsGetExplosion { get { return m_isGetExplosion; } }
+    private bool m_isGetExplosion = false;              //爆風を受けているか
 
     private void Awake()
     {
@@ -66,21 +60,21 @@ public class ExplosionManager : MonoBehaviour
                 m_playerMover.GetExplosion(false);
                 m_isGetExplosion = false;
             }
-            if (m_playerCanMoveTime > 0.0f)
+            if (m_playerCantMoveTime > 0.0f)
             {
-                m_playerCanMoveTime -= Time.deltaTime * 0.7f;
+                m_playerCantMoveTime -= Time.deltaTime;
             }
         }
 
-        if (m_fallTime < m_fallTimeMax)
+        if (m_fallTime < FallTimeMax)
         {
-            m_fallTime += Time.deltaTime * (m_fallTimeMax / m_fallTimeLimit);
+            m_fallTime += Time.deltaTime * (FallTimeMax / m_fallTimeLimit);
         }
     }
 
     private void FixedUpdate()
     {
-        if(m_fallTime < m_fallTimeMax && IsGetExplosion)
+        if(m_fallTime < FallTimeMax && m_isGetExplosion)
         {
             AfterDecreasePower();
         }
@@ -198,10 +192,10 @@ public class ExplosionManager : MonoBehaviour
         var explosionDirectionPower = GetExplosionDirection(targetPos) * CalculateExplosionPower(targetPos);
         rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
         m_targetRigidbody = rigidbody;
-        m_playerCanMoveTime = 0.0f;
         m_playerMover.GetExplosion(true);
-        float foeceTime = m_decreaseForceTime / CalculateExplosionPower(targetPos);
-        Invoke(nameof(FirstDecreasePower), foeceTime);
+        m_playerCantMoveTime = PlayerCantMoveTimeMax;
+        float forceTime = m_decreaseForceTime / CalculateExplosionPower(targetPos);
+        Invoke(nameof(FirstDecreasePower), forceTime);
     }
 
     /// <summary>
@@ -213,7 +207,7 @@ public class ExplosionManager : MonoBehaviour
         {
             var playerVelocity = m_targetRigidbody.velocity;
             m_fallTime = 0.0f;
-            m_targetRigidbody.AddForce(-playerVelocity.x * m_decreasePower, -playerVelocity.y * m_decreasePower, 0.0f, ForceMode.Impulse);
+            m_targetRigidbody.AddForce(-playerVelocity.x * DecreasePower, -playerVelocity.y * DecreasePower, 0.0f, ForceMode.Impulse);
         }
         m_isGetExplosion = true;
     }
@@ -234,7 +228,7 @@ public class ExplosionManager : MonoBehaviour
     private bool GetInputPlayerCheck()      
     {
         var playerVelocity = m_targetRigidbody.velocity;
-        if (playerVelocity.y < 0.0f && m_playerCanMoveTime <= 0.0f)
+        if (playerVelocity.y < 0.0f && m_playerCantMoveTime <= 0.0f)
         {
             return true;
         }
