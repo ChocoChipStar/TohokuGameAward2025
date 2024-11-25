@@ -16,10 +16,21 @@ public class ExplosionManager : MonoBehaviour
     private SphereCollider m_explosionCollider = null;
 
     private BombData m_bombData = null;
+    private PlayerMover m_playerMover = null;
+    private Rigidbody m_targetRigidbody = null;
 
     private RaycastHit hitInfo;
 
+    /// <summary> X軸減速処理の経過時間 </summary>
+    private float m_decelerationElapsedTime = 0.0f;
+
+    /// <summary> プレイヤー操作不能時間 </summary>
+    private float m_cantInputElpasedTime = 0.0f;
+
+    private bool m_isDecrease = false;
+
     private const float RayDistance = 10.0f;
+    private const float DecreaseTimeMax = 0.2f;
 
     private void Awake()
     {
@@ -33,6 +44,45 @@ public class ExplosionManager : MonoBehaviour
         }
 
         m_explosionCollider.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (m_decelerationElapsedTime < DecreaseTimeMax)
+        {
+            m_decelerationElapsedTime += Time.deltaTime * (DecreaseTimeMax / m_explosionData.Blow.DecelerationTime);
+        }
+
+        // 吹き飛びの減速中じゃない場合
+        if (!m_isDecrease)
+        {
+            return;
+        }
+
+        if (!InoperableChecker())
+        {
+            m_playerMover.GetExplosion(false);
+            m_isDecrease = false;
+        }
+
+        // プレイヤー操作不能時間を測る
+        if (m_cantInputElpasedTime > 0.0f)
+        {
+            m_cantInputElpasedTime += -Time.deltaTime;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(m_targetRigidbody == null)
+        {
+            return;
+        }
+
+        if(m_decelerationElapsedTime < DecreaseTimeMax && m_isDecrease)
+        {
+            AfterDecreasePower();
+        }
     }
 
     /// <summary>
@@ -64,6 +114,11 @@ public class ExplosionManager : MonoBehaviour
             return;
         }
 
+        if (m_playerMover == null)
+        {
+            m_playerMover = other.GetComponentInParent<PlayerMover>();
+            return;
+        }
         GenerateExplosion(other, rigidbody);
     }
 
@@ -81,7 +136,7 @@ public class ExplosionManager : MonoBehaviour
             return;
         }
 
-        BlowOfTarget(rigidbody, other.transform.position);
+        BlowOfTarget(rigidbody, other.transform.position, other);
     }
 
     /// <summary>
@@ -118,11 +173,12 @@ public class ExplosionManager : MonoBehaviour
     /// <summary>
     /// 爆風で触れた物体が吹き飛ぶ方向を計算します
     /// </summary>
-    private Vector3 GetExplosionDirection(Rigidbody rigidbody)
+    private Vector3 GetExplosionDirection(Vector3 targetPos)
     {
-        // 吹き飛びの処理をここに記述↓
-
-        return new Vector3(1.0f, 0.75f, 0.0f).normalized; // 現在は適当な数値を代入中
+        var direction = targetPos - transform.position;
+        float xDirection = direction.x;
+        float yDirection = Mathf.Abs(direction.x) + Mathf.Abs(direction.y);
+        return new Vector3(xDirection, yDirection, 0.0f).normalized;
     }
 
     /// <summary>
@@ -137,10 +193,69 @@ public class ExplosionManager : MonoBehaviour
     /// <summary>
     /// 爆発による影響を受けた物体を吹き飛ばす処理を実行します。
     /// </summary>
-    private void BlowOfTarget(Rigidbody rigidbody, Vector3 targetPos)
+    private void BlowOfTarget(Rigidbody rigidbody, Vector3 targetPos, Collider other)
     {
-        var explosionDirectionPower = GetExplosionDirection(rigidbody) * CalculateExplosionPower(targetPos);
+        var explosionDirectionPower = GetExplosionDirection(targetPos) * CalculateExplosionPower(targetPos);
         rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
+        m_targetRigidbody = rigidbody;
+
+        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player)))
+        {
+            m_playerMover.GetExplosion(true);
+        }
+        
+        m_cantInputElpasedTime = m_explosionData.Blow.CantInputTime;
+        float forceTime = m_explosionData.Blow.DecelerationStartTime / CalculateExplosionPower(targetPos);
+        
+        Invoke(nameof(FirstDecreasePower), forceTime);
+    }
+
+    /// <summary>
+    /// 最初の大きな減速を行います。
+    /// </summary>
+    private void FirstDecreasePower()
+    {
+        if (m_isDecrease || m_targetRigidbody == null)
+        {
+            return;
+        }
+
+        var playerVelocity = m_targetRigidbody.velocity;
+        m_decelerationElapsedTime = 0.0f;
+
+        var decelerationRateX = -playerVelocity.x * m_explosionData.Blow.DecelerationRate;
+        var decelerationRateY = -playerVelocity.y * m_explosionData.Blow.DecelerationRate;
+        m_targetRigidbody.AddForce(decelerationRateX, decelerationRateY, 0.0f, ForceMode.Impulse);
+
+        m_isDecrease = true;
+    }
+
+    /// <summary>
+    /// 徐々に大きな力で減速がかかります。
+    /// </summary>
+    private void AfterDecreasePower()
+    {
+        var targetVelocity = m_targetRigidbody.velocity;
+        m_targetRigidbody.AddForce(-targetVelocity.x * m_decelerationElapsedTime, 0.0f, 0.0f, ForceMode.Impulse);
+    }
+
+    /// <summary>
+    /// 現在プレイヤーが操作不能状態かを調べます
+    /// </summary>
+    /// <returns> true->操作不能 false->操作可能 </returns>
+    private bool InoperableChecker()      
+    {
+        if(m_targetRigidbody == null)
+        {
+            return true;
+        }
+
+        var playerVelocity = m_targetRigidbody.velocity;
+        if (playerVelocity.y <= 0.0f && m_cantInputElpasedTime <= 0.0f)
+        {
+            return false;
+        }
+        return true;
     }
 
     /// <summary>

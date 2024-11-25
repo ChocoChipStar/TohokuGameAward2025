@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class BombBase : MonoBehaviour
@@ -12,8 +13,17 @@ public abstract class BombBase : MonoBehaviour
     [SerializeField]
     protected SphereCollider m_bombCollider = null;
 
-    private int holdingPlayerNum = 0;
+    [SerializeField]
+    private Canvas m_timerCanvas = null;
 
+    [SerializeField]
+    private TextMeshProUGUI m_explosionTimerText = null;
+
+    private int m_holdingPlayerNum = 0;
+
+    private float m_explosionTimer = 0.0f;
+
+    private bool m_isIgnited = false;
     private bool m_isGrounded = false;
     private bool m_isNotPlayer = false;
 
@@ -36,12 +46,26 @@ public abstract class BombBase : MonoBehaviour
 
     private void Awake()
     {
+        m_timerCanvas.worldCamera = Camera.main;
         currentState = BombState.Dropped;
     }
 
     private void Update()
     {
-        Debug.Log(currentState);
+        if(!m_isIgnited)
+        {
+            return;
+        }
+
+        m_explosionTimer += Time.deltaTime;
+        var remainingTime = m_bombData.Params.ExplosionDelayTime - m_explosionTimer;
+        m_explosionTimerText.SetText(((int)remainingTime + 1).ToString());
+        if(m_explosionTimer >= m_bombData.Params.ExplosionDelayTime)
+        {
+            m_isIgnited = false;
+            m_explosionTimer = 0.0f;
+            CauseAnExplosion();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -52,7 +76,7 @@ public abstract class BombBase : MonoBehaviour
         }
 
         var isHitPlayer = collision.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player));
-        var isThrowingPlayer = collision.gameObject.name == TagData.GetTag(TagData.Names.Player) + (holdingPlayerNum + 1);
+        var isThrowingPlayer = collision.gameObject.name == TagData.GetTag(TagData.Names.Player) + (m_holdingPlayerNum + 1);
         // プレイヤーに接触していて且つ、投げた本人以外であれば
         if (isHitPlayer && !isThrowingPlayer)
         {
@@ -88,7 +112,7 @@ public abstract class BombBase : MonoBehaviour
     /// </summary>
     private void InitializeHoldingState(int playerNum)
     {
-        holdingPlayerNum = playerNum;
+        m_holdingPlayerNum = playerNum;
 
         m_bombbody.useGravity = false;
         m_bombbody.velocity = Vector3.zero;
@@ -125,10 +149,10 @@ public abstract class BombBase : MonoBehaviour
     public void OnHolding(int holdingPlayerNumber)
     {
         currentState = BombState.Holding;
-        InitializeHoldingState(holdingPlayerNum);
+        InitializeHoldingState(m_holdingPlayerNum);
 
         // 爆弾に火を付け着火させます。
-        Invoke(nameof(CauseAnExplosion), m_bombData.Params.ExplosionDelayTime);
+        m_isIgnited = true;
     }
 
     /// <summary>

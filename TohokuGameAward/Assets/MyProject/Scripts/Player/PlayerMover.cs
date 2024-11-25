@@ -19,10 +19,12 @@ public class PlayerMover : MonoBehaviour
 
     private bool m_isGrounded = false;
 
+    private bool m_isGetExplosion = false;
+
     private void Update()
     {
         var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
-        if(CanMove(stickValue))
+        if(CanMove(stickValue) && !m_isGetExplosion)
         {
             MoveOperation(stickValue);
         }
@@ -102,5 +104,10 @@ public class PlayerMover : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void GetExplosion(bool ifGetExplosion)
+    {
+        m_isGetExplosion = ifGetExplosion;
     }
 }

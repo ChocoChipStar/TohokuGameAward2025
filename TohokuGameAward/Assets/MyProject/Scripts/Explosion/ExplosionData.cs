@@ -6,7 +6,11 @@ public class ExplosionData : ScriptableObject
     [SerializeField]
     private ParamsData m_paramsData = null;
 
+    [SerializeField]
+    private BlowData m_blowData = new BlowData();
+
     public ParamsData Params { get {  return m_paramsData; } private set { value = m_paramsData; } }
+    public BlowData Blow { get { return m_blowData; } private set { value = m_blowData; } }
 
     [System.Serializable]
     public class ParamsData
@@ -23,5 +27,26 @@ public class ExplosionData : ScriptableObject
         public float ColliderActivateDelayTime { get { return m_colliderActivateDelayTime; } private set { value = m_colliderActivateDelayTime; } }
         public int DurationFrameCount { get { return m_durationFrameCount; } private set { value = DurationFrameCount; } }
         public float EffectEndTime { get { return m_effectEndTime; } private set { value = m_effectEndTime; } }
+    }
+
+    [System.Serializable]
+    public class BlowData
+    {
+        [SerializeField, Header("吹き飛び後の減速開始するまでの時間")]
+        private float m_decelerationStartTime = 3.2f;
+
+        [SerializeField, Header("吹き飛び後の減速しきるまでの時間")]
+        private float m_decelerationTime = 1.5f;
+
+        [SerializeField, Header("吹き飛び中に操作が効かない時間")]
+        private float m_cantInputTime = 1.0f;
+
+        [SerializeField, Header("吹き飛び中の減速率")]
+        private float m_decelerationRate = 0.5f;
+
+        public float DecelerationStartTime { get { return m_decelerationStartTime; } private set { value = m_decelerationStartTime; } }
+        public float DecelerationTime { get { return m_decelerationTime; } private set { value = m_decelerationTime; } }
+        public float CantInputTime { get { return m_cantInputTime; } private set { value = m_cantInputTime; } }
+        public float DecelerationRate { get { return m_decelerationRate; } private set { value = m_decelerationRate; } }
     }
 }
