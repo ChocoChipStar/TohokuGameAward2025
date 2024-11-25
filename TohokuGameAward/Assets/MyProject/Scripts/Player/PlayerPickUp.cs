@@ -67,8 +67,14 @@ public class PlayerPickup : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        var parentObj = other.gameObject.transform.parent.gameObject;
-        if (parentObj != DetectedItemObj)
+        // 手持ちアイテムが爆発して無くなっているか、まだ手持ちにアイテムを持っている場合はReturnする
+        if(DetectedItemObj == null || IsHoldingItem)
+        {
+            return;
+        }
+
+        var parentObj = other.gameObject.transform.parent.gameObject.GetInstanceID();
+        if (parentObj != DetectedItemObj.GetInstanceID())
         {
             return;
         }
@@ -103,7 +109,7 @@ public class PlayerPickup : MonoBehaviour
             return;
         }
 
-        var holdingItemPosL = this.transform.position.x - this.transform.lossyScale.x;
+        var holdingItemPosL = this.transform.position.x - this.transform.localScale.x;
         DetectedItemObj.transform.position = new Vector3(holdingItemPosL, this.transform.position.y, 0.0f);
     }
 
