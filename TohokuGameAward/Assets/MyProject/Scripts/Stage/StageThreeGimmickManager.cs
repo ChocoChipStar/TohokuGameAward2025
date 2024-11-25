@@ -9,7 +9,6 @@ public class StageThreeGimmickManager : MonoBehaviour
     {
         RotateStage();
     }
-
     private void RotateStage()
     {
         this.transform.Rotate(0, 0, m_speedOfRotate);
