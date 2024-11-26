@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
     private GameObject[] m_Players = null;
 
     [SerializeField]
@@ -17,12 +16,14 @@ public class GameManager : MonoBehaviour
 
     private int m_currentPlayerCount = 0;
 
-    
-
-    //ステージ範囲設定用
+    //ステージ範囲設定用変数
     private Bounds m_bounds = new Bounds(Vector3.zero,Vector3.zero);
     private Vector3 m_center = Vector3.zero;
 
+    private void Awake()
+    {
+        m_Players = GameObject.FindGameObjectsWithTag("Player");
+    }
     private void Start()
     {
        m_bounds = new Bounds(m_center, m_stageRange);
@@ -90,5 +91,3 @@ public class GameManager : MonoBehaviour
     }
 }
 
-/*
-③完了したGameManagerをPrefab化し、PrefabsフォルダにGameCircleフォルダを作成しそこ*/
