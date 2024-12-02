@@ -3,10 +3,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private GameObject[] m_Players = null;
-
     [SerializeField]
-    Text m_gameSetText = null;
+    private Text m_gameSetText = null;
 
     [SerializeField]
     private string m_winText = null;
@@ -14,26 +12,28 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Vector3 m_stageRange = Vector3.zero;
 
-    private int m_currentPlayerCount = 0;
+    [SerializeField]
+    private PlayerManager m_playerManager = null;
+
+    private GameObject[] m_Players = null;
 
     //ステージ範囲設定用変数
-    private Bounds m_bounds = new Bounds(Vector3.zero,Vector3.zero);
+    private Bounds m_bounds = new Bounds(Vector3.zero, Vector3.zero);
+
     private Vector3 m_center = Vector3.zero;
 
-    private void Awake()
-    {
-        m_Players = GameObject.FindGameObjectsWithTag("Player");
-    }
     private void Start()
     {
-       m_bounds = new Bounds(m_center, m_stageRange);
+        m_Players = GameObject.FindGameObjectsWithTag("Player");
+        m_bounds = new Bounds(m_center, m_stageRange);
+
     }
+
     private void Update()
     {
-        m_currentPlayerCount = CountPlayers();
         CheckPlayerOut();
 
-        if (m_currentPlayerCount <= 1)
+        if (m_playerManager.isOnlyOnePlayer())
         {
             GameSet();
         }
@@ -41,34 +41,26 @@ public class GameManager : MonoBehaviour
         //デバッグ用 スペースボタンでデストロイ
         DestroyPlayers();
     }
-    private void CheckPlayerOut()
-        {
-            for (int i = 0; i < m_Players.Length; i++)
-            {
-                if(m_Players[i] != null && !m_bounds.Contains(m_Players[i].transform.position))
-                {
-                    Destroy(m_Players[i]);
-                    m_Players[i] = null;
 
-                }
-            }
-        }
-    private int CountPlayers()
+    private void CheckPlayerOut()
     {
-        int count = 0;
-        for(int i = 0;i < m_Players.Length; i++)
+        for (int i = 0; i < m_Players.Length; i++)
         {
-            if (m_Players[i] != null)
+            if (m_Players[i] != null && !m_bounds.Contains(m_Players[i].transform.position))
             {
-                count++;
+                Destroy(m_Players[i]);
+                m_Players[i] = null;
+
             }
         }
-        return count;
     }
+
     private void GameSet()
     {
         if (m_gameSetText.gameObject.activeSelf)
-        { return; }
+        {
+            return;
+        }
 
         foreach (GameObject player in m_Players)
         {
@@ -81,7 +73,8 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-  private void DestroyPlayers()
+
+    private void DestroyPlayers()
     {
         string tagName = "Player";
         if (Input.GetKeyDown(KeyCode.Space))
@@ -90,4 +83,3 @@ public class GameManager : MonoBehaviour
         }
     }
 }
-
