@@ -15,9 +15,8 @@ public class ExplosionManager : MonoBehaviour
     [SerializeField]
     private SphereCollider m_explosionCollider = null;
 
-    [SerializeField]
-    private BlowMover m_blowMover = null;
 
+    private BlowMover m_blowMover = null;
     private BombData m_bombData = null;
     private PlayerMover m_playerMover = null;
 
@@ -68,9 +67,10 @@ public class ExplosionManager : MonoBehaviour
             return;
         }
 
-        if (m_playerMover == null)
+        if (m_playerMover == null && m_blowMover == null)
         {
             m_playerMover = other.GetComponentInParent<PlayerMover>();
+            m_blowMover = other.GetComponentInParent<BlowMover>();
             return;
         }
 
@@ -91,7 +91,7 @@ public class ExplosionManager : MonoBehaviour
             return;
         }
 
-        m_blowMover.BlowOfTarget(rigidbody, other.transform.position, other, m_bombData, m_playerMover);
+        m_blowMover.BlowOfTarget(rigidbody, transform.position, other, m_bombData, m_playerMover);
     }
 
     /// <summary>

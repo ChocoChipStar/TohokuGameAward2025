@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class BlowMover : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class BlowMover : MonoBehaviour
     private const float PlayerMagnitudeMax = 1.0f;  //値は現在適当な数値
     private const float RateOfForceReduction = 0.9f;
     private const float RayDistance = 1.0f;
-    private const float ReflectionDistanceMin = 0.2f;
+    private const float ReflectionDistanceMin = 0.4f;
 
 
     private void Update()
@@ -83,7 +84,10 @@ public class BlowMover : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        ReflectionOperation(collision);
+        if(m_isDecrease)
+        {
+            ReflectionOperation(collision);
+        }
     }
 
     private void VelocityStorage()
@@ -93,14 +97,14 @@ public class BlowMover : MonoBehaviour
         Debug.DrawRay(transform.position, velocity * 10.0f);
         if (hitRaycast.collider != null)
         {
-            Debug.Log("1");
             var hitTrans = hitRaycast.collider.transform;
             var hitParentObj = hitTrans.parent.gameObject;
-            if (hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground))
-            || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall)))
+
+            //Debug.Log(hitParentObj.tag);
+            if (hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall))
+            || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)))
             {
-                Debug.Log("2");
-                if (ReflectionDistanceMin > Vector3.Distance(this.transform.position, hitTrans.position))
+                if (ReflectionDistanceMin < Vector3.Distance(this.transform.position, hitTrans.position))
                 {
                     m_reflectionVelocity = m_playerRigidbody.velocity;
                     Debug.Log(m_reflectionVelocity);
@@ -111,12 +115,9 @@ public class BlowMover : MonoBehaviour
 
     private void ReflectionOperation(Collision collision)
     {
-        var inDirection = m_reflectionVelocity;
         var inNormal = collision.contacts[0].normal;
-        var forceRisult = Vector3.Reflect(inDirection, inNormal) * RateOfForceReduction;
+        var forceRisult = Vector3.Reflect(m_reflectionVelocity, inNormal) * RateOfForceReduction;
         m_playerRigidbody.velocity = forceRisult;
-        //Debug.Log(forceRisult);
-        //m_playerRigidbody.AddForce(forceRisult, ForceMode.VelocityChange);
     }
 
     /// <summary>
@@ -124,7 +125,7 @@ public class BlowMover : MonoBehaviour
     /// </summary>
     private Vector3 GetExplosionDirection(Vector3 targetPos)
     {
-        var direction = targetPos - transform.position;
+        var direction = transform.position - targetPos;
         float xDirection = direction.x;
         float yDirection = Mathf.Abs(direction.x) + Mathf.Abs(direction.y);
         return new Vector3(xDirection, yDirection, 0.0f).normalized;
@@ -133,23 +134,23 @@ public class BlowMover : MonoBehaviour
     /// <summary>
     /// 爆弾が最大距離範囲内でどれだけ離れているかを調べ、爆風の威力を決めます
     /// </summary>
-    private float CalculateExplosionPower(Vector3 targetPos, BombData bombDeta)
+    private float CalculateExplosionPower(Vector3 BombPos, BombData bombDeta)
     {
-        var bombToPlayerDistance = Vector3.Distance(this.transform.position, targetPos);
+        var bombToPlayerDistance = Vector3.Distance(this.transform.position, BombPos);
         return bombDeta.Params.ExplosionPower * Mathf.Clamp01(1 - (bombToPlayerDistance / bombDeta.Params.ExplosionRange));
     }
 
     /// <summary>
     /// 爆発による影響を受けた物体を吹き飛ばす処理を実行します。
     /// </summary>
-    public void BlowOfTarget(Rigidbody rigidbody, Vector3 targetPos, Collider other, BombData bombDeta, PlayerMover playerMover)
+    public void BlowOfTarget(Rigidbody rigidbody, Vector3 BombPos, Collider other, BombData bombDeta, PlayerMover playerMover)
     {
         
-        var explosionDirectionPower = GetExplosionDirection(targetPos) * CalculateExplosionPower(targetPos, bombDeta);
+        var explosionDirectionPower = GetExplosionDirection(BombPos) * CalculateExplosionPower(BombPos, bombDeta);
         rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
         m_playerRigidbody = rigidbody;
         m_playerMover = playerMover;
-        m_playerPosition = targetPos;
+        VelocityStorage();
 
         if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player)))
         {
@@ -157,7 +158,7 @@ public class BlowMover : MonoBehaviour
         }
 
         m_cantInputElpasedTime = m_explosionData.Blow.CantInputTime;
-        float forceTime = m_explosionData.Blow.DecelerationStartTime / CalculateExplosionPower(targetPos, bombDeta);
+        float forceTime = m_explosionData.Blow.DecelerationStartTime / CalculateExplosionPower(BombPos, bombDeta);
 
         Invoke(nameof(FirstDecreasePower), forceTime);
     }
