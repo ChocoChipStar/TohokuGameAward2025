@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9032936148594108527}
   - component: {fileID: 3531959718964464345}
+  - component: {fileID: 2246027891108856691}
   - component: {fileID: 2304225458212194025}
   - component: {fileID: 5177735853400296777}
   m_Layer: 0
@@ -51,6 +52,22 @@ MonoBehaviour:
   m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
   m_audioSource: {fileID: 5177735853400296777}
   m_explosionCollider: {fileID: 2304225458212194025}
+  m_blowMover: {fileID: 2246027891108856691}
+--- !u!114 &2246027891108856691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736533305220200575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44fea4c7f6b8bb4d879ad13a587689a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
+  m_playerCollider: {fileID: 0}
+  m_playerRigidbody: {fileID: 0}
 --- !u!135 &2304225458212194025
 SphereCollider:
   m_ObjectHideFlags: 0
