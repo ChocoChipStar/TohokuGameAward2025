@@ -106,7 +106,7 @@ public abstract class BombBase : MonoBehaviour
     /// <summary>
     /// 爆弾の爆発を引き起こす処理をします
     /// </summary>
-    private void CauseAnExplosion()
+    public void CauseAnExplosion()
     {
         currentState = BombState.Explosion;
 
