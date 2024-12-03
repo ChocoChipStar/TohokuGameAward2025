@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 
 public abstract class BombBase : MonoBehaviour
@@ -13,13 +14,13 @@ public abstract class BombBase : MonoBehaviour
     protected SphereCollider m_bombCollider = null;
 
     [SerializeField]
-    private Canvas m_timerCanvas = null;
-
-    [SerializeField]
-    private TextMeshProUGUI m_explosionTimerText = null;
-
-    [SerializeField]
     private Renderer m_bombRenderer = null;
+
+    [SerializeField] 
+    private Material[] m_baseBombMaterials = new Material[2];
+
+    [SerializeField]
+    private Animator m_animator = null;
 
     private MaterialPropertyBlock m_materialPropertyBlock;
 
@@ -35,13 +36,14 @@ public abstract class BombBase : MonoBehaviour
 
     private bool m_isActiveFlashMaterial = false;
 
-    private Color m_visibilityMaterial   = new Color(1, 1, 1, 0.9f);
+    private Color m_visibilityMaterial   = new Color(1, 1, 1, 0.6f);
     private Color m_invisibilityMaterial = new Color(1, 1, 1, 0);
 
-    private static readonly int[] FlushSpan = new int[] { 0, 3, 7 };
-
+    private static readonly int[] FlushSpan = new int[] { 0, 3, 6 };
 
     private const float SpanLimit = 1.0f;
+
+    private const int FlushMaterialIndex = 1;
 
     protected BombData m_bombData = null;
     public BombState currentState { get; private set; }
@@ -61,7 +63,6 @@ public abstract class BombBase : MonoBehaviour
 
     private void Awake()
     {
-        m_timerCanvas.worldCamera = Camera.main;
         currentState = BombState.Dropped;
     }
 
@@ -73,6 +74,10 @@ public abstract class BombBase : MonoBehaviour
         }
 
         StartExplosionCountDown();
+        if(m_animator != null)
+        {
+            m_animator.Play("bomb_anime");
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -180,7 +185,6 @@ public abstract class BombBase : MonoBehaviour
     {
         m_explosionTimer += Time.deltaTime;
         var remainingTime = m_bombData.Params.ExplosionDelayTime - m_explosionTimer;
-        m_explosionTimerText.SetText(((int)remainingTime + 1).ToString());
 
         SwitchCurrentFlashMaterial(remainingTime);
 
@@ -203,10 +207,12 @@ public abstract class BombBase : MonoBehaviour
         }
         else if (remainingTime > 1)
         {
+            m_bombRenderer.material = m_baseBombMaterials[0];
             SetFlashMaterial(FlushSpan[1]);
         }
         else if (remainingTime > 0)
         {
+            m_bombRenderer.material = m_baseBombMaterials[1];
             SetFlashMaterial(FlushSpan[2]);
         }
     }
@@ -234,7 +240,7 @@ public abstract class BombBase : MonoBehaviour
         {
             m_materialPropertyBlock = new MaterialPropertyBlock();
             m_materialPropertyBlock.SetColor("_BaseColor", m_visibilityMaterial);
-            m_bombRenderer.SetPropertyBlock(m_materialPropertyBlock);
+            m_bombRenderer.SetPropertyBlock(m_materialPropertyBlock, FlushMaterialIndex);
             m_isActiveFlashMaterial = true;
             return;
         }
@@ -242,7 +248,7 @@ public abstract class BombBase : MonoBehaviour
         {
             m_materialPropertyBlock = new MaterialPropertyBlock();
             m_materialPropertyBlock.SetColor("_BaseColor", m_invisibilityMaterial);
-            m_bombRenderer.SetPropertyBlock(m_materialPropertyBlock);
+            m_bombRenderer.SetPropertyBlock(m_materialPropertyBlock, FlushMaterialIndex);
             m_isActiveFlashMaterial = false;
             return;
         }
