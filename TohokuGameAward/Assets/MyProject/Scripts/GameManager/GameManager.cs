@@ -26,14 +26,13 @@ public class GameManager : MonoBehaviour
     {
         m_Players = GameObject.FindGameObjectsWithTag("Player");
         m_bounds = new Bounds(m_center, m_stageRange);
-
     }
 
     private void Update()
     {
         CheckPlayerOut();
 
-        if (m_playerManager.isOnlyOnePlayer())
+        if (m_playerManager.GetOnlyOnePlayer())
         {
             GameSet();
         }
@@ -50,7 +49,6 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(m_Players[i]);
                 m_Players[i] = null;
-
             }
         }
     }

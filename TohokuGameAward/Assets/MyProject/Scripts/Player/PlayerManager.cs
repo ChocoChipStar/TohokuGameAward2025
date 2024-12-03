@@ -49,7 +49,7 @@ public class PlayerManager : MonoBehaviour
         return count;
     }
 
-    public bool isOnlyOnePlayer()
+    public bool GetOnlyOnePlayer()
     {
         return m_isOnlyOnePlayer;
     }
