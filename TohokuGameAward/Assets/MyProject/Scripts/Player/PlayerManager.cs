@@ -9,7 +9,14 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private PlayerData m_playerData = null;
 
+    private GameObject[] m_playerCount = null;
+
     private bool m_isOnlyOnePlayer = false;
+
+    public GameObject[] PlayerCount
+    {
+        get { return m_playerCount; }
+    }
 
     private void Awake()
     {
@@ -24,11 +31,13 @@ public class PlayerManager : MonoBehaviour
     private void CreatePlayerBasedOnControllers()
     {
         var gamepads = Gamepad.all;
+        m_playerCount = new GameObject[gamepads.Count];
         for (int i = 0; i < gamepads.Count; i++)
         {
             var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
             instance.name = "Player" + (i + 1);
-
+            m_playerCount[i] = instance;
+            
             var inputData = instance.GetComponent<PlayerInputData>();
             if (inputData != null)
             {

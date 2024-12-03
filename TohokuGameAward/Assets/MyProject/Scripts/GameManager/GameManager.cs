@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerManager m_playerManager = null;
 
-    private GameObject[] m_Players = null;
-
     //ステージ範囲設定用変数
     private Bounds m_bounds = new Bounds(Vector3.zero, Vector3.zero);
 
@@ -24,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        m_Players = GameObject.FindGameObjectsWithTag("Player");
         m_bounds = new Bounds(m_center, m_stageRange);
     }
 
@@ -36,19 +33,18 @@ public class GameManager : MonoBehaviour
         {
             GameSet();
         }
-
         //デバッグ用 スペースボタンでデストロイ
         DestroyPlayers();
     }
 
     private void CheckPlayerOut()
     {
-        for (int i = 0; i < m_Players.Length; i++)
+        for (int i = 0; i < m_playerManager.PlayerCount.Length; i++)
         {
-            if (m_Players[i] != null && !m_bounds.Contains(m_Players[i].transform.position))
+            if (m_playerManager.PlayerCount[i] != null && !m_bounds.Contains(m_playerManager.PlayerCount[i].transform.position))
             {
-                Destroy(m_Players[i]);
-                m_Players[i] = null;
+                Destroy(m_playerManager.PlayerCount[i]);
+                m_playerManager.PlayerCount[i] = null;
             }
         }
     }
@@ -60,7 +56,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        foreach (GameObject player in m_Players)
+        foreach (GameObject player in m_playerManager.PlayerCount)
         {
             if (player != null)
             {
