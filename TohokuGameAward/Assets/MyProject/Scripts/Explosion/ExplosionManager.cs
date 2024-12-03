@@ -34,11 +34,11 @@ public class ExplosionManager : MonoBehaviour
 
     private void Awake()
     {
-        if (m_explosionEffect != null)
+        if(m_explosionEffect != null)
         {
             m_explosionEffect.Stop();
         }
-        if (m_audioSource != null)
+        if(m_audioSource != null)
         {
             m_audioSource.Stop();
         }
@@ -74,12 +74,12 @@ public class ExplosionManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_targetRigidbody == null)
+        if(m_targetRigidbody == null)
         {
             return;
         }
 
-        if (m_decelerationElapsedTime < DecreaseTimeMax && m_isDecrease)
+        if(m_decelerationElapsedTime < DecreaseTimeMax && m_isDecrease)
         {
             AfterDecreasePower();
         }
@@ -164,11 +164,11 @@ public class ExplosionManager : MonoBehaviour
     private bool IsHittedStage(Vector3 origin, Vector3 direction)
     {
         Physics.Raycast(origin, direction * RayDistance, out hitInfo);
-        if (hitInfo.collider != null)
+        if(hitInfo.collider != null)
         {
             var hitTrans = hitInfo.collider.transform;
             var hitParentObj = hitTrans.parent.gameObject;
-            if (hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground))
+            if(hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)) 
             || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall)))
             {
                 return true;
@@ -211,10 +211,10 @@ public class ExplosionManager : MonoBehaviour
         {
             m_playerMover.GetExplosion(true);
         }
-
+        
         m_cantInputElpasedTime = m_explosionData.Blow.CantInputTime;
         float forceTime = m_explosionData.Blow.DecelerationStartTime / CalculateExplosionPower(targetPos);
-
+        
         Invoke(nameof(FirstDecreasePower), forceTime);
     }
 
@@ -251,9 +251,9 @@ public class ExplosionManager : MonoBehaviour
     /// 現在プレイヤーが操作不能状態かを調べます
     /// </summary>
     /// <returns> true->操作不能 false->操作可能 </returns>
-    private bool InoperableChecker()
+    private bool InoperableChecker()      
     {
-        if (m_targetRigidbody == null)
+        if(m_targetRigidbody == null)
         {
             return true;
         }
