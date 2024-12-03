@@ -552,12 +552,12 @@ PrefabInstance:
     - target: {fileID: 1934044628476217407, guid: 37cc08d527c803c46a3f39ffd1033fce,
         type: 3}
       propertyPath: m_chanceOfNormal
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1934044628476217407, guid: 37cc08d527c803c46a3f39ffd1033fce,
         type: 3}
       propertyPath: m_chanceOfImpulse
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
