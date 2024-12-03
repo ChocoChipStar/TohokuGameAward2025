@@ -9,9 +9,16 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private PlayerData m_playerData = null;
 
+    private bool m_isOnlyOnePlayer = false;
+
     private void Awake()
     {
-       CreatePlayerBasedOnControllers();
+        CreatePlayerBasedOnControllers();
+    }
+
+    private void Update()
+    {
+        CountPlayers();
     }
 
     private void CreatePlayerBasedOnControllers()
@@ -19,7 +26,7 @@ public class PlayerManager : MonoBehaviour
         var gamepads = Gamepad.all;
         for (int i = 0; i < gamepads.Count; i++)
         {
-            var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity);
+            var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
             instance.name = "Player" + (i + 1);
 
             var inputData = instance.GetComponent<PlayerInputData>();
@@ -28,5 +35,22 @@ public class PlayerManager : MonoBehaviour
                 inputData.SetNumber(i);
             }
         }
+    }
+
+    private int CountPlayers()
+    {
+        int count = this.transform.childCount;
+
+        if (count <= 1)
+        {
+            m_isOnlyOnePlayer = true;
+        }
+
+        return count;
+    }
+
+    public bool GetOnlyOnePlayer()
+    {
+        return m_isOnlyOnePlayer;
     }
 }
