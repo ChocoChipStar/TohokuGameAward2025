@@ -39,15 +39,19 @@ public abstract class BombBase : MonoBehaviour
     private Color m_visibilityMaterial   = new Color(1, 1, 1, 0.6f);
     private Color m_invisibilityMaterial = new Color(1, 1, 1, 0);
 
-    private static readonly int[] FlushSpan = new int[] { 0, 3, 6 };
+    private static readonly int[] FlushSpan = new int[] { 6, 3, 0 };
 
     private const float SpanLimit = 1.0f;
 
     private const int FlushMaterialIndex = 1;
 
-    protected BombData m_bombData = null;
-    public BombState currentState { get; private set; }
+    private const int ThreeSecondsIndex = 2;
+    private const int TwoSecondsIndex = 1;
+    private const int OneSecondsIndex = 0;
 
+    protected BombData m_bombData = null;
+
+    public BombState currentState { get; private set; }
     public Rigidbody Bombbody { get { return m_bombbody; } private set { value = m_bombbody; } }
     public SphereCollider BombCollider { get { return m_bombCollider; } private set { value = m_bombCollider; } }
 
@@ -201,56 +205,66 @@ public abstract class BombBase : MonoBehaviour
     /// </summary>
     private void SwitchCurrentFlashMaterial(float remainingTime)
     {
-        if (remainingTime > 2)
+        if (remainingTime >= ThreeSecondsIndex)
         {
-            SetFlashMaterial(FlushSpan[0]);
+            if(IsElapsedFlushSpan(FlushSpan[ThreeSecondsIndex]))
+            {
+                SetFlushMaterial();
+            }
         }
-        else if (remainingTime > 1)
+        else if (remainingTime >= TwoSecondsIndex)
         {
-            m_bombRenderer.material = m_baseBombMaterials[0];
-            SetFlashMaterial(FlushSpan[1]);
+            m_bombRenderer.material = m_baseBombMaterials[TwoSecondsIndex];
+            if(IsElapsedFlushSpan(FlushSpan[TwoSecondsIndex]))
+            {
+                SetFlushMaterial();
+            }
         }
-        else if (remainingTime > 0)
+        else if (remainingTime >= OneSecondsIndex)
         {
-            m_bombRenderer.material = m_baseBombMaterials[1];
-            SetFlashMaterial(FlushSpan[2]);
+            m_bombRenderer.material = m_baseBombMaterials[OneSecondsIndex];
+            if(IsElapsedFlushSpan(FlushSpan[OneSecondsIndex]))
+            {
+                SetFlushMaterial();
+            }
         }
     }
 
     ///<summary>
     ///フラッシュマテリアルの切り替えタイミングを計算
     /// </summary>
-    private void SetFlashMaterial(float changeSpan)
+    private bool IsElapsedFlushSpan(float changeSpan)
     {
         m_elapsedTime += Time.deltaTime;
-        float repeatSpan = SpanLimit / (float)(changeSpan + changeSpan);
+        var repeatSpan = SpanLimit / (float)(changeSpan + changeSpan);
         if (m_elapsedTime >= repeatSpan)
         {
-            SetActiveFlashMaterial();
-            m_elapsedTime = 0;
+            m_elapsedTime = 0.0f;
+            return true;
         }
+
+        return false;
     }
 
     ///<summary>
     ///フラッシュマテリアルの表示、非表示
     /// </summary>
-    private void SetActiveFlashMaterial()
+    private void SetFlushMaterial()
     {
         if(!m_isActiveFlashMaterial)
         {
-            m_materialPropertyBlock = new MaterialPropertyBlock();
-            m_materialPropertyBlock.SetColor("_BaseColor", m_visibilityMaterial);
-            m_bombRenderer.SetPropertyBlock(m_materialPropertyBlock, FlushMaterialIndex);
-            m_isActiveFlashMaterial = true;
+            InitializedFlushMaterial(m_visibilityMaterial, true);
             return;
         }
-        else
-        {
-            m_materialPropertyBlock = new MaterialPropertyBlock();
-            m_materialPropertyBlock.SetColor("_BaseColor", m_invisibilityMaterial);
-            m_bombRenderer.SetPropertyBlock(m_materialPropertyBlock, FlushMaterialIndex);
-            m_isActiveFlashMaterial = false;
-            return;
-        }
+
+        InitializedFlushMaterial(m_invisibilityMaterial, false);
+    }
+
+    private void InitializedFlushMaterial(Color material, bool isActive)
+    {
+        m_materialPropertyBlock = new MaterialPropertyBlock();
+        m_materialPropertyBlock.SetColor("_BaseColor", material);
+        m_bombRenderer.SetPropertyBlock(m_materialPropertyBlock, FlushMaterialIndex);
+        m_isActiveFlashMaterial = isActive;
     }
 }
