@@ -114,11 +114,19 @@ public class ExplosionManager : MonoBehaviour
             return;
         }
 
+        if (other.gameObject.transform.parent.CompareTag(TagData.GetTag(TagData.Names.Bomb)))
+        {
+            var bombBase = other.GetComponentInParent<BombBase>();
+            bombBase.CauseAnExplosion();
+            GenerateExplosion(other, rigidbody);
+        }
+
         if (m_playerMover == null)
         {
             m_playerMover = other.GetComponentInParent<PlayerMover>();
             return;
         }
+
         GenerateExplosion(other, rigidbody);
     }
 
