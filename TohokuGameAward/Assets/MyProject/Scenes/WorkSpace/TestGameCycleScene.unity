@@ -950,11 +950,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
+    - target: {fileID: 3490382917339648059, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
-      propertyPath: PlayerManager
+      propertyPath: m_AnchoredPosition.x
+      value: 70.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3490382917339648059, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 147.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 4206110489220438668, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_text
       value: 
-      objectReference: {fileID: 1741602048}
+      objectReference: {fileID: 0}
+    - target: {fileID: 4206110489220438668, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 4206110489220438668, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 48
+      objectReference: {fileID: 0}
     - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_playerManager
