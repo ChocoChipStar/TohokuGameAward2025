@@ -15,6 +15,8 @@ public class ExplosionManager : MonoBehaviour
     [SerializeField]
     private SphereCollider m_explosionCollider = null;
 
+    private BlowMover m_blowMover = null;
+
     private BombData m_bombData = null;
     private PlayerMover m_playerMover = null;
     private Rigidbody m_targetRigidbody = null;
