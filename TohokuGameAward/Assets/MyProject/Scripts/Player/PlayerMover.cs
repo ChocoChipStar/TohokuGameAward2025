@@ -98,7 +98,8 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private bool CanJump()
     {
-        if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Jump, m_inputData.SelfNumber) && m_isGrounded)
+        if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Jump, m_inputData.SelfNumber) 
+        && m_isGrounded && !m_isGetExplosion)
         {
            return true;
         }

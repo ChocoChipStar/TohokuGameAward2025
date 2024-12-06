@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 8002681167706481826}
   - component: {fileID: 7163019421322361095}
   - component: {fileID: 5286550003958549445}
+  - component: {fileID: 2317007520261670163}
   - component: {fileID: 234677848321282988}
   - component: {fileID: 6658028852423634333}
   m_Layer: 0
@@ -390,6 +391,22 @@ MonoBehaviour:
   m_playerPickUp: {fileID: 7163019421322361095}
   m_inputData: {fileID: 234677848321282988}
   m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
+--- !u!114 &2317007520261670163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497014825113209656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44fea4c7f6b8bb4d879ad13a587689a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerPosition: {fileID: 3612249107959219224}
+  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
+  m_playerCollider: {fileID: 8059289049950973207}
+  m_playerRigidbody: {fileID: 6658028852423634333}
 --- !u!114 &234677848321282988
 MonoBehaviour:
   m_ObjectHideFlags: 0

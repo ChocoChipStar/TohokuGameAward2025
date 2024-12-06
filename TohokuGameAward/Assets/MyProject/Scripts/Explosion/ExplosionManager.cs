@@ -127,6 +127,8 @@ public class ExplosionManager : MonoBehaviour
             return;
         }
 
+        m_blowMover = other.GetComponentInParent<BlowMover>();
+
         GenerateExplosion(other, rigidbody);
     }
 
@@ -143,8 +145,7 @@ public class ExplosionManager : MonoBehaviour
         {
             return;
         }
-
-        BlowOfTarget(rigidbody, other.transform.position, other);
+        m_blowMover.BlowOfTarget(rigidbody, transform.position, other, m_bombData, m_playerMover);
     }
 
     /// <summary>
