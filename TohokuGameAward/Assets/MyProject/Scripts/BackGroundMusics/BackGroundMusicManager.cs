@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BackGroundMusicManager : MonoBehaviour
@@ -14,13 +12,9 @@ public class BackGroundMusicManager : MonoBehaviour
     {
         TestBGM
     }
-
     public void OnPlay(MusicName musicNum)
     {
         m_audioSources[(int)musicNum].clip = m_audioClips[(int)musicNum];
         m_audioSources[(int)musicNum].Play();
     }
-
-
-
 }

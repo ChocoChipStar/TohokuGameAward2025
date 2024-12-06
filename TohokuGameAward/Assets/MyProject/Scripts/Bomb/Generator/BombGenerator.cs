@@ -1,25 +1,35 @@
-﻿using UnityEngine;
+using UnityEngine;
+using System.Linq;
+using System;
 
 public class BombGenerator : MonoBehaviour
 {
     [SerializeField]
-    private GameObject[] m_bombPrefab = new GameObject[BombData.BombMax];
+    private GameObject[] m_bombPrefab = null;
 
     [SerializeField]
-    private float m_nextSpawnTime = 60.0f;
+    private int[] m_chanceByGanre = null;
 
     [SerializeField]
-    private int m_chanceOfNormal = 50;
+    private float m_nextSpawnTime = 0.0f;
 
-    [SerializeField]
-    private int m_chanceOfImpulse = 25;
+    private int m_totalChance = 0;
 
     private float m_spawnTimer = 0.0f;
 
-    private float m_maxRange = 5.0f;
-    private float m_minRange = -5.0f;
-    private float m_itemHeight = 7.6f; //ギリギリ画面外
+    private const float m_maxRange = 5.0f;
 
+    private const float m_minRange = -5.0f;
+
+    private const float m_itemHeight = 7.6f; //�M���M����ʊO
+
+    private Tuple<GameObject, int>[] m_bombData = null;
+
+    private void Start()
+    {
+        CalculateTotalChance();
+        m_bombData = MakebombData();//m_bombPrefab��m_chanceByGanre�̒l��܂Ƃ߁A�m�����������ɕ��ёւ���B
+    }
     // Update is called once per frame
     private void Update()
     {
@@ -27,36 +37,58 @@ public class BombGenerator : MonoBehaviour
 
         if (m_spawnTimer >= m_nextSpawnTime)
         {
-            //m_nextSpawnTime秒ごとにアイテムのプレハブをランダム生成
-
-            Instantiate(SelectRandomPrefab(), new Vector2(Random.Range(m_minRange, m_maxRange), m_itemHeight), Quaternion.identity,transform);
-            
+            GenerateBomb();            
             m_spawnTimer = 0;
         }
-       
     }
-    private GameObject SelectRandomPrefab()
+    private void CalculateTotalChance()
     {
-        GameObject normalBomb = m_bombPrefab[(int)BombData.BombType.Normal];
-        GameObject ImpulseBomb = m_bombPrefab[(int)BombData.BombType.Impulse];
-
-        //0～プレハブの出現確率の合計までの数字をランダム生成
-        
-        int totalChance = m_chanceOfNormal + m_chanceOfImpulse;
-        int numberToSelect = Random.Range(0, totalChance);
-
-        bool isNormal = 0 <= numberToSelect && numberToSelect < m_chanceOfNormal;
-        bool isImpulse = m_chanceOfNormal <= numberToSelect && numberToSelect < m_chanceOfNormal + m_chanceOfImpulse;
-
-        if (isNormal)
+        for(int i = 0; i < m_chanceByGanre.Length;i++)
         {
-            return normalBomb;
+            m_totalChance += m_chanceByGanre[i];
         }
-        if (isImpulse)
-        {
-            return ImpulseBomb;
-        }
+    }
+    private void GenerateBomb()
+    {
+        Instantiate(ChooseGanre(RandomNumber()), new Vector2(UnityEngine.Random.Range(m_minRange, m_maxRange), m_itemHeight), Quaternion.identity, transform);
+    }
+    private int RandomNumber()
+    {  
+        int randomNumber = UnityEngine.Random.Range(0, m_totalChance);
+        return randomNumber;
+    }
+    private GameObject ChooseGanre(int numberToChoose)
+    {
+        int numberToChoose_ = numberToChoose;
 
-        return normalBomb;
+        for (int i = 0; i < m_bombData.Length; i++)
+        {
+            if (numberToChoose_ < m_bombData[i].Item2)
+            {
+                return m_bombData[i].Item1;
+            }
+            else
+            {
+                numberToChoose_ -= m_bombData[i].Item2;
+            }
+        }
+        return m_bombData[^1].Item1;
+    }
+    private Tuple<GameObject,int>[] MakebombData()
+    {
+        var makeTuple = m_bombPrefab.Zip(m_chanceByGanre, (prefab, chance) => Tuple.Create(prefab, chance));
+        makeTuple.OrderByDescending(item => item.Item2);
+        var maketupleArray = makeTuple.ToArray();
+        return maketupleArray;
+    }
+    private void OnValidate()
+    {
+        if (m_chanceByGanre == null || m_bombPrefab == null)
+        { return; }
+     //�C���X�y�N�^�[�Ƀv���n�u��ЂƂo�^����Ɗm���̗�������ő�����B
+        if(m_chanceByGanre.Length != m_bombPrefab.Length)
+        {
+            System.Array.Resize(ref m_chanceByGanre, m_bombPrefab.Length);
+        }
     }
 }
