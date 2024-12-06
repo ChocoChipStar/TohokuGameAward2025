@@ -27,15 +27,13 @@ public class BlowMover : MonoBehaviour
 
     private Vector3 m_playerPosition = Vector3.zero;
 
-    private bool m_isDecrease = false;
+    private bool m_isBlow = false;
 
-    private const float DecreaseTimeMax = 0.2f;
+    private const float DecreaseTimeMax = 0.15f;
     private const float PlayerBlowSpeed = 10.0f;
-    private const float PlayerMagnitudeMax = 1.0f;  //値は現在適当な数値
-    private const float RateOfForceReduction = 0.9f;
-    private const float RayDistance = 1.0f;
-    private const float ReflectionDistanceMin = 0.4f;
-
+    private const float PlayerMagnitudeMax = 1.0f;      //値は目安
+    private const float RateOfForceReduction = 0.9f;    //反射時の減少率
+    private const float ReflectionDistanceMin = 1.8f;   //Rayの判定距離の最低値
 
     private void Update()
     {
@@ -45,7 +43,7 @@ public class BlowMover : MonoBehaviour
         }
 
         // 吹き飛びの減速中じゃない場合
-        if (!m_isDecrease)
+        if (!m_isBlow)
         {
             return;
         }
@@ -53,7 +51,7 @@ public class BlowMover : MonoBehaviour
         if (!InoperableChecker())
         {
             m_playerMover.GetExplosion(false);
-            m_isDecrease = false;
+            m_isBlow = false;
         }
 
         // プレイヤー操作不能時間を測る
@@ -76,7 +74,7 @@ public class BlowMover : MonoBehaviour
             return;
         }
 
-        if (m_decelerationElapsedTime < DecreaseTimeMax && m_isDecrease)
+        if (m_decelerationElapsedTime < DecreaseTimeMax && m_isBlow)
         {
             AfterDecreasePower();
         }
@@ -84,7 +82,7 @@ public class BlowMover : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(m_isDecrease)
+        if(m_isBlow)
         {
             ReflectionOperation(collision);
         }
@@ -93,21 +91,18 @@ public class BlowMover : MonoBehaviour
     private void VelocityStorage()
     {
         var velocity = m_playerRigidbody.velocity.normalized;
-        Physics.Raycast(transform.position, velocity * 10.0f, out hitRaycast);
-        Debug.DrawRay(transform.position, velocity * 10.0f);
+        Physics.Raycast(transform.position + velocity, velocity, out hitRaycast);
+        Debug.DrawRay(transform.position + velocity, velocity);
         if (hitRaycast.collider != null)
         {
             var hitTrans = hitRaycast.collider.transform;
             var hitParentObj = hitTrans.parent.gameObject;
-
-            //Debug.Log(hitParentObj.tag);
             if (hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall))
             || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)))
             {
-                if (ReflectionDistanceMin < Vector3.Distance(this.transform.position, hitTrans.position))
+                if (ReflectionDistanceMin < Vector3.Distance(this.transform.position, hitRaycast.point))
                 {
                     m_reflectionVelocity = m_playerRigidbody.velocity;
-                    Debug.Log(m_reflectionVelocity);
                 }
             }
         }
@@ -140,18 +135,22 @@ public class BlowMover : MonoBehaviour
         return bombDeta.Params.ExplosionPower * Mathf.Clamp01(1 - (bombToPlayerDistance / bombDeta.Params.ExplosionRange));
     }
 
+
     /// <summary>
     /// 爆発による影響を受けた物体を吹き飛ばす処理を実行します。
     /// </summary>
     public void BlowOfTarget(Rigidbody rigidbody, Vector3 BombPos, Collider other, BombData bombDeta, PlayerMover playerMover)
     {
-        
+        if (rigidbody == null || m_isBlow)
+        {
+            return;
+        }
         var explosionDirectionPower = GetExplosionDirection(BombPos) * CalculateExplosionPower(BombPos, bombDeta);
         rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
+        m_isBlow = true;
         m_playerRigidbody = rigidbody;
         m_playerMover = playerMover;
-        VelocityStorage();
-
+        m_reflectionVelocity = explosionDirectionPower;
         if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player)))
         {
             m_playerMover.GetExplosion(true);
@@ -168,18 +167,15 @@ public class BlowMover : MonoBehaviour
     /// </summary>
     private void FirstDecreasePower()
     {
-        if (m_isDecrease || m_playerRigidbody == null)
+        if (m_playerRigidbody == null)
         {
             return;
         }
         var playerVelocity = m_playerRigidbody.velocity;
         m_decelerationElapsedTime = 0.0f;
-
         var decelerationRateX = -playerVelocity.x * m_explosionData.Blow.DecelerationRate;
         var decelerationRateY = -playerVelocity.y * m_explosionData.Blow.DecelerationRate;
         m_playerRigidbody.AddForce(decelerationRateX, decelerationRateY, 0.0f, ForceMode.Impulse);
-
-        m_isDecrease = true;
     }
 
     /// <summary>

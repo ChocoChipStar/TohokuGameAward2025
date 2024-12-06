@@ -61,18 +61,20 @@ public class ExplosionManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         var rigidbody = other.GetComponentInParent<Rigidbody>();
         if (rigidbody == null)
         {
             return;
         }
 
-        if (m_playerMover == null && m_blowMover == null)
+        if (m_playerMover == null)
         {
             m_playerMover = other.GetComponentInParent<PlayerMover>();
-            m_blowMover = other.GetComponentInParent<BlowMover>();
             return;
         }
+
+        m_blowMover = other.GetComponentInParent<BlowMover>();
 
         GenerateExplosion(other, rigidbody);
     }
@@ -90,7 +92,6 @@ public class ExplosionManager : MonoBehaviour
         {
             return;
         }
-
         m_blowMover.BlowOfTarget(rigidbody, transform.position, other, m_bombData, m_playerMover);
     }
 
