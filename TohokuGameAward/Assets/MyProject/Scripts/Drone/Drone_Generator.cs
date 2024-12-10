@@ -33,7 +33,7 @@ public class Drone_Generator : MonoBehaviour
     private void Start()
     {
         m_totalCrownChance = TotalCrownChance();
-        m_crownData = MakebombData();
+        m_crownData = MakecrownData();
     }
     void Update()
     {
@@ -80,7 +80,7 @@ public class Drone_Generator : MonoBehaviour
         return totalChance;
     }
 
-    private Tuple<GameObject, int>[] MakebombData()
+    private Tuple<GameObject, int>[] MakecrownData()
     {
         var makeTuple = m_crownPrefabs.Zip(m_chanceOfCrowns, (prefab, chance) => Tuple.Create(prefab, chance));
         makeTuple.OrderByDescending(item => item.Item2);
