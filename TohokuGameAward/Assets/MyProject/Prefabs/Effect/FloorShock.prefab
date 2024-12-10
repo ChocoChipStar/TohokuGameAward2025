@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8662895590212843622}
   - component: {fileID: 7186089805072455367}
   m_Layer: 0
-  m_Name: Effect_FloorShockl
+  m_Name: FloorShock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
