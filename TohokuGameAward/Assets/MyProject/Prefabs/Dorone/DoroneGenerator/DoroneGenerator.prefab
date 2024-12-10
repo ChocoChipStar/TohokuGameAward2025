@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3589502920114362523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7894896522536937630}
+  - component: {fileID: 6803403657844224194}
+  m_Layer: 0
+  m_Name: DoroneGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7894896522536937630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589502920114362523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6803403657844224194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3589502920114362523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc17602dacf1ff04aa7e6efe4a71d8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_doronePrefab: {fileID: 459827952489616789, guid: 26669b67b98b18e40921252ff1024963,
+    type: 3}
+  m_crownPrefabs:
+  - {fileID: 1856810272732450885, guid: ad86d6e9ff3c84341a9a423925f0c8bc, type: 3}
+  - {fileID: 4469781371517159566, guid: c08ae6ed653c0764e9b74c0611fb98fe, type: 3}
+  - {fileID: 4157960415026225100, guid: 8092ae7b20704de43bfcc75a34bbfe7c, type: 3}
+  - {fileID: 7260500623351799288, guid: b309d1b077ae22e4cbb99c3c042c3c26, type: 3}
+  m_chanceOfCrowns: 32000000230000000f00000000000000
+  m_doroneSpawnTime: 2
+  m_doroneSpawnPosition: {x: 0, y: 0}
+  m_crownSpawnPosition: {x: 0, y: 0}
