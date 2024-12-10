@@ -92,4 +92,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_leftEndOfTheStage_x: -2
   m_rightEndOfTheStage_x: 2
-  m_speed: 0.1
+  m_speed: 0.01
