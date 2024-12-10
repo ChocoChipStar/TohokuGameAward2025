@@ -7,11 +7,9 @@ public class BlowMover : MonoBehaviour
     private ExplosionData m_explosionData = null;
 
     [SerializeField]
-    private Collider m_playerCollider = null;
-
-    [SerializeField]
     private Rigidbody m_playerRigidbody = null;
 
+    private BombData m_bombData = null;
     private PlayerMover m_playerMover = null;
 
     private RaycastHit hitRaycast;
@@ -30,25 +28,27 @@ public class BlowMover : MonoBehaviour
     private bool m_isBlow = false;
 
     private const float DecreaseTimeMax = 0.15f;
-    private const float PlayerBlowSpeed = 10.0f;
-    private const float PlayerMagnitudeMax = 1.0f;      //値は目安
-    private const float RateOfForceReduction = 0.9f;    //反射時の減少率
-    private const float ReflectionDistanceMin = 1.8f;   //Rayの判定距離の最低値
+    private const float BasisInputElpasedTime = 60.0f;  //タイマー基準値
+    private const float PlayerBlowSpeed = 10.0f;        
+    private const float PlayerMagnitudeLimit = 1.2f;      //値は目安
+    private const float RateOfForceReduction = 0.8f;    //反射時の減少率
+    private const float ReflectionDistanceMin = 0.8f;   //Rayの判定距離の最低値
+    private const float BlowCheckerVelocityMin = 2.0f;  //この値よりVelocityが小さくなったら吹き飛びが終わる
 
     private void Update()
     {
-        if (m_decelerationElapsedTime < DecreaseTimeMax)
-        {
-            m_decelerationElapsedTime += Time.deltaTime * (DecreaseTimeMax / m_explosionData.Blow.DecelerationTime);
-        }
-
         // 吹き飛びの減速中じゃない場合
         if (!m_isBlow)
         {
             return;
         }
 
-        if (!InoperableChecker())
+        if (m_decelerationElapsedTime < DecreaseTimeMax)
+        {
+            m_decelerationElapsedTime += Time.deltaTime * (DecreaseTimeMax / m_explosionData.Blow.DecelerationTime);
+        }
+
+        if (!PlayerBlowChecker())
         {
             m_playerMover.GetExplosion(false);
             m_isBlow = false;
@@ -57,14 +57,11 @@ public class BlowMover : MonoBehaviour
         // プレイヤー操作不能時間を測る
         if (m_cantInputElpasedTime > 0.0f)
         {
-            m_cantInputElpasedTime += -Time.deltaTime;
+            m_cantInputElpasedTime += -Time.deltaTime * (BasisInputElpasedTime / m_bombData.Params.ExplosionPower);
         }
 
-        //一定速度以上でRayを出し、速度を記憶。
-        if(m_playerRigidbody.velocity.magnitude > PlayerMagnitudeMax)
-        {
-            VelocityStorage();
-        }
+        //吹き飛び中にRayがでる。
+        BlowOutProcess();
     }
 
     private void FixedUpdate()
@@ -82,34 +79,35 @@ public class BlowMover : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(m_isBlow)
+        //ステージに当たると跳ね返る
+        if (m_isBlow)
         {
             ReflectionOperation(collision);
         }
     }
 
-    private void VelocityStorage()
+    private void BlowOutProcess()
     {
+        //Rayを飛ばして速度を記録
         var velocity = m_playerRigidbody.velocity.normalized;
         Physics.Raycast(transform.position + velocity, velocity, out hitRaycast);
-        Debug.DrawRay(transform.position + velocity, velocity);
-        if (hitRaycast.collider != null)
+
+        if (hitRaycast.collider != null &&
+            ReflectionDistanceMin < Vector3.Distance(this.transform.position, hitRaycast.point))
         {
             var hitTrans = hitRaycast.collider.transform;
-            var hitParentObj = hitTrans.parent.gameObject;
+            var hitParentObj = hitTrans.gameObject;
             if (hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall))
-            || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)))
+             || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)))
             {
-                if (ReflectionDistanceMin < Vector3.Distance(this.transform.position, hitRaycast.point))
-                {
-                    m_reflectionVelocity = m_playerRigidbody.velocity;
-                }
+                 m_reflectionVelocity = m_playerRigidbody.velocity;
             }
         }
     }
 
     private void ReflectionOperation(Collision collision)
     {
+        //反射する
         var inNormal = collision.contacts[0].normal;
         var forceRisult = Vector3.Reflect(m_reflectionVelocity, inNormal) * RateOfForceReduction;
         m_playerRigidbody.velocity = forceRisult;
@@ -147,11 +145,14 @@ public class BlowMover : MonoBehaviour
         }
         var explosionDirectionPower = GetExplosionDirection(BombPos) * CalculateExplosionPower(BombPos, bombDeta);
         rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
+
         m_isBlow = true;
         m_playerRigidbody = rigidbody;
         m_playerMover = playerMover;
+        m_bombData = bombDeta;
         m_reflectionVelocity = explosionDirectionPower;
-        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player)))
+
+        if (other.transform.parent.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player)))
         {
             m_playerMover.GetExplosion(true);
         }
@@ -171,6 +172,7 @@ public class BlowMover : MonoBehaviour
         {
             return;
         }
+
         var playerVelocity = m_playerRigidbody.velocity;
         m_decelerationElapsedTime = 0.0f;
         var decelerationRateX = -playerVelocity.x * m_explosionData.Blow.DecelerationRate;
@@ -188,10 +190,10 @@ public class BlowMover : MonoBehaviour
     }
 
     /// <summary>
-    /// 現在プレイヤーが操作不能状態かを調べます
+    /// 現在プレイヤーが吹き飛び状態かを調べます
     /// </summary>a
     /// <returns> true->操作不能 false->操作可能 </returns>
-    private bool InoperableChecker()
+    private bool PlayerBlowChecker()
     {
         if (m_playerRigidbody == null)
         {
@@ -199,7 +201,7 @@ public class BlowMover : MonoBehaviour
         }
 
         var playerVelocity = m_playerRigidbody.velocity;
-        if (playerVelocity.y <= 0.0f && m_cantInputElpasedTime <= 0.0f)
+        if (playerVelocity.x <= BlowCheckerVelocityMin && m_cantInputElpasedTime <= 0.0f)
         {
             return false;
         }
