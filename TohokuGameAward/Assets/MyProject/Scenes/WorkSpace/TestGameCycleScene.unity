@@ -133,7 +133,18 @@ PrefabInstance:
     - target: {fileID: 3589502920114362523, guid: 883ae4e6ea15b0b47888a36307b4d0ff,
         type: 3}
       propertyPath: m_Name
-      value: DoroneGenerator
+      value: DroneGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6803403657844224194, guid: 883ae4e6ea15b0b47888a36307b4d0ff,
+        type: 3}
+      propertyPath: m_dronePrefab
+      value: 
+      objectReference: {fileID: 459827952489616789, guid: 26669b67b98b18e40921252ff1024963,
+        type: 3}
+    - target: {fileID: 6803403657844224194, guid: 883ae4e6ea15b0b47888a36307b4d0ff,
+        type: 3}
+      propertyPath: m_droneSpawnTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7894896522536937630, guid: 883ae4e6ea15b0b47888a36307b4d0ff,
         type: 3}

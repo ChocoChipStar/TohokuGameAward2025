@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Dorone_Moover : MonoBehaviour
+public class Drone_Moover : MonoBehaviour
 {
     [SerializeField]
     private float m_leftEndOfTheStage_x = 0.0f;
@@ -16,10 +16,10 @@ public class Dorone_Moover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DoroneMove();
+        DroneMove();
     }
 
-    private void DoroneMove()
+    private void DroneMove()
     {
         m_currentPos = this.transform.position;
 

@@ -2,10 +2,10 @@
 using System.Linq;
 using UnityEngine;
 
-public class Dorone_Generator : MonoBehaviour
+public class Drone_Generator : MonoBehaviour
 {
     [SerializeField]
-    GameObject m_doronePrefab = null;
+    GameObject m_dronePrefab = null;
 
     [SerializeField]
     GameObject[] m_crownPrefabs = null;
@@ -14,10 +14,10 @@ public class Dorone_Generator : MonoBehaviour
     private int[] m_chanceOfCrowns = null;
 
     [SerializeField]
-    float m_doroneSpawnTime = 0.0f;
+    float m_droneSpawnTime = 0.0f;
 
     [SerializeField]
-    Vector2 m_doroneSpawnPosition = Vector2.zero;
+    Vector2 m_droneSpawnPosition = Vector2.zero;
 
     [SerializeField]
     Vector2 m_crownSpawnPosition = Vector2.zero;
@@ -39,29 +39,29 @@ public class Dorone_Generator : MonoBehaviour
     {
         if(IsSpawnTimeReached())
         {
-            m_parentObject = CreateDorone();
+            m_parentObject = CreateDrone();
 
             CreateCrown(m_parentObject);
         }
     }
 
-    private GameObject CreateDorone()
+    private GameObject CreateDrone()
     {
-        GameObject dorone = null;
-        dorone = Instantiate(m_doronePrefab, m_doroneSpawnPosition, Quaternion.identity,this.transform);
-        return dorone;
+        GameObject drone = null;
+        drone = Instantiate(m_dronePrefab, m_droneSpawnPosition, Quaternion.identity,this.transform);
+        return drone;
     }
 
-    private void CreateCrown(GameObject dorone)
+    private void CreateCrown(GameObject drone)
     {
-        Instantiate(ChooseCrownGanre(MakeRandomNumber()), m_crownSpawnPosition, Quaternion.identity, dorone.transform);
+        Instantiate(ChooseCrownGanre(MakeRandomNumber()), m_crownSpawnPosition, Quaternion.identity, drone.transform);
     }
 
     private bool IsSpawnTimeReached()
     {
         m_spawnTimer += Time.deltaTime;
 
-        if(m_doroneSpawnTime < m_spawnTimer)
+        if(m_droneSpawnTime < m_spawnTimer)
         {
             m_spawnTimer = 0.0f;
 
