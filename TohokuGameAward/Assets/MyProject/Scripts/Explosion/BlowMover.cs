@@ -33,6 +33,7 @@ public class BlowMover : MonoBehaviour
     private const float PlayerMagnitudeLimit = 1.2f;      //値は目安
     private const float RateOfForceReduction = 0.8f;    //反射時の減少率
     private const float ReflectionDistanceMin = 0.8f;   //Rayの判定距離の最低値
+    private const float BlowCheckerVelocityMin = 2.0f;  //この値よりVelocityが小さくなったら吹き飛びが終わる
 
     private void Update()
     {
@@ -200,7 +201,7 @@ public class BlowMover : MonoBehaviour
         }
 
         var playerVelocity = m_playerRigidbody.velocity;
-        if (playerVelocity.x <= 2.0f && m_cantInputElpasedTime <= 0.0f)
+        if (playerVelocity.x <= BlowCheckerVelocityMin && m_cantInputElpasedTime <= 0.0f)
         {
             return false;
         }
