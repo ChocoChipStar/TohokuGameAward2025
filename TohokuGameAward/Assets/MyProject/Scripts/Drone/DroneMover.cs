@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Drone_Moover : MonoBehaviour
+public class DroneMover : MonoBehaviour
 {
     [SerializeField]
     private float m_leftEndOfTheStage_x = 0.0f;
@@ -13,7 +13,6 @@ public class Drone_Moover : MonoBehaviour
 
     private Vector3 m_currentPos = Vector3.zero;
 
-    // Update is called once per frame
     void Update()
     {
         DroneMove();
