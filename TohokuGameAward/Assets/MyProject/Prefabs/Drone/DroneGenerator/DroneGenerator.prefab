@@ -47,11 +47,11 @@ MonoBehaviour:
   m_dronePrefab: {fileID: 459827952489616789, guid: 26669b67b98b18e40921252ff1024963,
     type: 3}
   m_crownPrefabs:
-  - {fileID: 1856810272732450885, guid: ad86d6e9ff3c84341a9a423925f0c8bc, type: 3}
-  - {fileID: 4469781371517159566, guid: c08ae6ed653c0764e9b74c0611fb98fe, type: 3}
-  - {fileID: 4157960415026225100, guid: 8092ae7b20704de43bfcc75a34bbfe7c, type: 3}
-  - {fileID: 7260500623351799288, guid: b309d1b077ae22e4cbb99c3c042c3c26, type: 3}
+  - {fileID: 8692977012096120762, guid: 988b7d9783c39e14d8af25ba00262125, type: 3}
+  - {fileID: 939692661246546596, guid: 400b3c3e5bce33a4592f53c57f3f0528, type: 3}
+  - {fileID: 6256349466917889835, guid: 945abd11b640c8e40bff1b803cc78608, type: 3}
+  - {fileID: 1634612723641014221, guid: cc0fd0f59f730894981e38f520584320, type: 3}
   m_chanceOfCrowns: 32000000230000000f00000000000000
-  m_droneSpawnTime: 0
+  m_droneSpawnTime: 2
   m_droneSpawnPosition: {x: 0, y: 0}
   m_crownSpawnPosition: {x: 0, y: 0}

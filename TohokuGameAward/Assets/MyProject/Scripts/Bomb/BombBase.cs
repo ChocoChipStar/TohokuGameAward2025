@@ -91,6 +91,13 @@ public abstract class BombBase : MonoBehaviour
             return;
         }
 
+        if (collision.gameObject.transform.parent.CompareTag(TagData.GetTag(TagData.Names.Drone)))
+        {
+            var drone = collision.gameObject.GetComponent<DroneDestroy>();
+            drone.SetDestroy();
+            CauseAnExplosion();
+        }
+
         var isHitPlayer = collision.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player));
         var isThrowingPlayer = collision.gameObject.name == TagData.GetTag(TagData.Names.Player) + (m_holdingPlayerNum + 1);
         // プレイヤーに接触していて且つ、投げた本人以外であれば

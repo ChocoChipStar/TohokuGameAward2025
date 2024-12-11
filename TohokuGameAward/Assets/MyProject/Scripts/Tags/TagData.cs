@@ -3,7 +3,7 @@
 public static class TagData
 {
     // 「Player」タグは必ず配列の末尾にすること
-    public static readonly string[] TagList = new string[] { "Ground", "Wall", "Bomb", "Detected", "Player" };
+    public static readonly string[] TagList = new string[] { "Ground", "Wall", "Bomb", "Detected", "Drone", "Crown" ,"Player" };
 
     public enum Names
     {
@@ -11,6 +11,8 @@ public static class TagData
         Wall,
         Bomb,
         Detected,
+        Drone,
+        Crown,
         Player
     }
 
