@@ -6,15 +6,15 @@ public class CrownFalling : MonoBehaviour
     private float m_fallSpeed = 0.0f;
 
     [SerializeField]
-    GameObject m_detectCollider = null;
+    private GameObject m_detectCollider = null;
 
     private Vector3 m_currentPos = Vector3.zero;
 
     private bool m_isFall = false;
 
-    private Rigidbody m_rigidbody = null;
+    private Rigidbody m_rigidBody = null;
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if(m_isFall)
         {
@@ -40,7 +40,7 @@ public class CrownFalling : MonoBehaviour
     public void SetCrownFall()
     {
         //ドローン側でドローンがデストロイされるときに呼び出します。
-        m_rigidbody = GetComponent<Rigidbody>();
+        m_rigidBody = GetComponent<Rigidbody>();
         m_isFall = true;
     }
 

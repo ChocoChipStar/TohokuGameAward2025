@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_fallSpeed: 1
-  m_detectCollider: {fileID: 0}
+  m_detectCollider: {fileID: 5426879924108732502}
 --- !u!54 &-2448129433249343899
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -4,11 +4,11 @@ public class DroneDestroy : MonoBehaviour
 {
     private bool m_isDestroy = false;
 
-    GameObject m_crown = null;
+    private GameObject m_crown = null;
 
-    Rigidbody m_crownRigidbody = null;
+    private Rigidbody m_crownRigidbody = null;
 
-    void Update()
+    private void Update()
     {
         if(m_isDestroy)
         {
@@ -36,6 +36,7 @@ public class DroneDestroy : MonoBehaviour
             // 子オブジェクトを親から切り離す
             m_crown.transform.SetParent(null);
         }
+
         Destroy(this.gameObject);
     }
 
