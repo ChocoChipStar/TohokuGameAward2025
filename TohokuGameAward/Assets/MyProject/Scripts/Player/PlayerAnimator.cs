@@ -16,6 +16,7 @@ public class PlayerAnimator : MonoBehaviour
         Idle,
         Move,
         Jump,
+        Pickup,
         PickupIdle,
         PickupMove,
         PickupJump,
