@@ -1,73 +1,88 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+//using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private Text m_gameSetText = null;
+    //[SerializeField]
+    //private TextMeshProUGUI m_gameSetText = null;
 
-    [SerializeField]
-    private string m_winText = null;
-
-    [SerializeField]
-    private Vector3 m_stageRange = Vector3.zero;
+    //[SerializeField]
+    //private string m_winText = null;
 
     [SerializeField]
     private PlayerManager m_playerManager = null;
 
-    //ステージ範囲設定用変数
-    private Bounds m_bounds = new Bounds(Vector3.zero, Vector3.zero);
-
-    private Vector3 m_center = Vector3.zero;
-
-    private void Start()
-    {
-        m_bounds = new Bounds(m_center, m_stageRange);
-    }
+    [SerializeField]
+    private StageData m_stageData = null;
 
     private void Update()
     {
-        CheckPlayerOut();
+        DestroyPlayerIFOutOfStage();
 
-        if (m_playerManager.GetOnlyOnePlayer())
-        {
-            GameSet();
-        }
+        //if (m_playerManager.GetOnlyOnePlayer())
+        //{
+        //    ActiveGameSetText();
+        //}
+
         //デバッグ用 スペースボタンでデストロイ
         DestroyPlayers();
     }
 
-    private void CheckPlayerOut()
+    private void DestroyPlayerIFOutOfStage()
     {
         for (int i = 0; i < m_playerManager.PlayerCount.Length; i++)
         {
-            if (m_playerManager.PlayerCount[i] != null && !m_bounds.Contains(m_playerManager.PlayerCount[i].transform.position))
+            if (IsPlayerOut(m_playerManager.PlayerCount[i]))
             {
+                m_playerManager.SwitchDeadFlug(i,true); 
                 Destroy(m_playerManager.PlayerCount[i]);
                 m_playerManager.PlayerCount[i] = null;
             }
         }
     }
 
-    private void GameSet()
+    private bool IsPlayerOut(GameObject targetPlayer)
     {
-        if (m_gameSetText.gameObject.activeSelf)
+        GameObject target = targetPlayer;
+
+        if(targetPlayer == null)
         {
-            return;
+            return false;
         }
 
-        foreach (GameObject player in m_playerManager.PlayerCount)
-        {
-            if (player != null)
-            {
-                string winnerName = player.name;
-                m_gameSetText.text = winnerName + m_winText;
-                m_gameSetText.gameObject.SetActive(true);
-                return;
-            }
+        if (target.transform.position.x < m_stageData.Size.LeftLimit ||
+           target.transform.position.x > m_stageData.Size.RightLimit ||
+           target.transform.position.y < m_stageData.Size.Bottom)
+        { 
+            //ステージ外に出ていればtrue
+            return true; 
         }
+
+        return false;
     }
 
+    //private void ActiveGameSetText()
+    //{
+    //    if (m_gameSetText.gameObject.activeSelf)
+    //    {
+    //        return;
+    //    }
+
+    //    foreach (GameObject player in m_playerManager.PlayerCount)
+    //    {
+    //        if (player != null)
+    //        {
+    //            string winnerName = player.name;
+    //            m_gameSetText.text = winnerName + m_winText;
+    //            m_gameSetText.gameObject.SetActive(true);
+    //            return;
+    //        }
+    //    }
+    //}
+
+    /// <summary>
+    /// デバッグ用　スペースボタンでデストロイ
+    /// </summary>
     private void DestroyPlayers()
     {
         string tagName = "Player";
