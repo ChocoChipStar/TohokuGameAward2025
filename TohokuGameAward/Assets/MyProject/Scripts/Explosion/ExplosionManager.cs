@@ -25,6 +25,8 @@ public class ExplosionManager : MonoBehaviour
     private const float RayDistance = 10.0f;
     private const float DecreaseTimeMax = 0.2f;
 
+    private bool m_isDestroy = false;
+
     private void Awake()
     {
         if(m_explosionEffect != null)
@@ -62,6 +64,12 @@ public class ExplosionManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
+        {
+            var drone = other.GetComponent<DroneDestroy>();
+            drone.SetDestroy();
+        }
+
         var rigidbody = other.GetComponentInParent<Rigidbody>();
         if (rigidbody == null)
         {

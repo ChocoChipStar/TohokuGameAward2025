@@ -8,6 +8,9 @@ TagManager:
   - Wall
   - Bomb
   - Detected
+  - Stage
+  - Drone
+  - Crown
   layers:
   - Default
   - TransparentFX

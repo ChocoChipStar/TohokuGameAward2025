@@ -27,7 +27,7 @@ public class DroneMover : MonoBehaviour
             m_speed *= -1;
         }
 
-        m_currentPos.x += m_speed;
+        m_currentPos.x += m_speed * Time.deltaTime;
 
         this.transform.position = m_currentPos;
     }
