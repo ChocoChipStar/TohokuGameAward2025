@@ -37,7 +37,7 @@ public class PlayerMover : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(TagData.GetTag(TagData.Names.Ground)))
+        if (TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Ground))
         {
             m_isGrounded = true;
         }
@@ -45,7 +45,7 @@ public class PlayerMover : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag(TagData.GetTag(TagData.Names.Ground)))
+        if (TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Ground))
         {
             m_isGrounded = false;
         }

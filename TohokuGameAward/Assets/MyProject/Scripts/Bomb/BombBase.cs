@@ -88,15 +88,15 @@ public abstract class BombBase : MonoBehaviour
             return;
         }
 
-        var isHitPlayer = collision.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player));
-        var isThrowingPlayer = collision.gameObject.name == TagData.GetTag(TagData.Names.Player) + (m_holdingPlayerNum + 1);
+        var isHitPlayer = TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Player);
+        var isThrowingPlayer = collision.gameObject.name == TagManager.Instance.GetTagName(TagManager.Type.Player) + (m_holdingPlayerNum + 1);
         // プレイヤーに接触していて且つ、投げた本人以外であれば
         if (isHitPlayer && !isThrowingPlayer)
         {
             CauseAnExplosion();
         }
 
-        var isHitStage = collision.gameObject.CompareTag(TagData.GetTag(TagData.Names.Ground));
+        var isHitStage = TagManager.Instance.SearchedTagName(collision.gameObject,TagManager.Type.Ground);
         if (isHitStage)
         {
             currentState = BombState.Rolling;

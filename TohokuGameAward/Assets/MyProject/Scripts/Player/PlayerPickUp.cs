@@ -51,7 +51,7 @@ public class PlayerPickup : MonoBehaviour
             return;
         }
 
-        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Bomb)))
+        if (TagManager.Instance.SearchedTagName(other.gameObject,TagManager.Type.Bomb))
         {
             var bombBase = other.gameObject.GetComponentInParent<BombBase>();
             if(bombBase.currentState == BombBase.BombState.Throw)
@@ -73,13 +73,19 @@ public class PlayerPickup : MonoBehaviour
             return;
         }
 
-        var parentObj = other.gameObject.transform.parent.gameObject.GetInstanceID();
+        var otherObj = other.gameObject;
+        if(TagManager.Instance.SearchedTagName(otherObj, TagManager.Type.Ground, TagManager.Type.Wall))
+        {
+            return;
+        }
+
+        var parentObj = otherObj.transform.parent.gameObject.GetInstanceID();
         if (parentObj != DetectedItemObj.GetInstanceID())
         {
             return;
         }
 
-        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Detected)))
+        if (TagManager.Instance.SearchedTagName(otherObj, TagManager.Type.Detected))
         {
             m_isPickup = false;
         }

@@ -6,7 +6,7 @@ public class WallDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Wall)))
+        if (TagManager.Instance.SearchedTagName(other.gameObject,TagManager.Type.Wall))
         {
             m_isDetected = true;
         }    
@@ -14,7 +14,7 @@ public class WallDetector : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag(TagData.GetTag(TagData.Names.Wall)))
+        if (TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Wall))
         {
             m_isDetected = false;
         }

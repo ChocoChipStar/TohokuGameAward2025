@@ -97,8 +97,7 @@ public class BlowMover : MonoBehaviour
         {
             var hitTrans = hitRaycast.collider.transform;
             var hitParentObj = hitTrans.gameObject;
-            if (hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall))
-             || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)))
+            if (TagManager.Instance.SearchedTagName(hitParentObj, TagManager.Type.Wall, TagManager.Type.Ground))
             {
                  m_reflectionVelocity = m_playerRigidbody.velocity;
             }
@@ -152,7 +151,8 @@ public class BlowMover : MonoBehaviour
         m_bombData = bombDeta;
         m_reflectionVelocity = explosionDirectionPower;
 
-        if (other.transform.parent.gameObject.CompareTag(TagData.GetTag(TagData.Names.Player)))
+        var parentObj = other.transform.parent.gameObject;
+        if (TagManager.Instance.SearchedTagName(parentObj,TagManager.Type.Player))
         {
             m_playerMover.GetExplosion(true);
         }

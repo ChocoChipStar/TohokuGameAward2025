@@ -68,22 +68,28 @@ public class ExplosionManager : MonoBehaviour
             return;
         }
 
-        if (other.gameObject.transform.parent.CompareTag(TagData.GetTag(TagData.Names.Bomb)))
-        {
-            var bombBase = other.GetComponentInParent<BombBase>();
-            bombBase.CauseAnExplosion();
-            GenerateExplosion(other, rigidbody);
-        }
-
         if (m_playerMover == null)
         {
             m_playerMover = other.GetComponentInParent<PlayerMover>();
             return;
         }
 
-        m_blowMover = other.GetComponentInParent<BlowMover>();
-
+        InducedExplosion(other, rigidbody);
         GenerateExplosion(other, rigidbody);
+    }
+
+    /// <summary>
+    /// 爆弾の爆発に巻き込まれた爆弾を爆発させる誘爆処理を行います
+    /// 
+    private void InducedExplosion(Collider other, Rigidbody rigidbody)
+    {
+        var parentObj = other.gameObject.transform.parent.gameObject;
+        if (TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Bomb)) // 爆風に爆弾が接触したか判定します
+        {
+            var bombBase = parentObj.GetComponent<BombBase>();
+            bombBase.CauseAnExplosion();
+            GenerateExplosion(other, rigidbody);
+        }
     }
 
     /// <summary>
@@ -95,11 +101,14 @@ public class ExplosionManager : MonoBehaviour
         var direction = Vector3.zero;
         GetRayOriginAndDirection(this.transform.position, other.transform.position, out origin, out direction);
 
-        if (IsHittedStage(origin, direction) ||
-            other.gameObject.transform.parent.CompareTag(TagData.GetTag(TagData.Names.Bomb)))
+        var parentObj = other.gameObject.transform.parent.gameObject;
+        var isParentObjTagBomb = TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Bomb);
+        if (IsHittedStage(origin, direction) || isParentObjTagBomb)
         {
             return;
         }
+
+        m_blowMover = other.GetComponentInParent<BlowMover>();
         m_blowMover.BlowOfTarget(rigidbody, transform.position, other, m_bombData, m_playerMover);
     }
 
@@ -122,9 +131,8 @@ public class ExplosionManager : MonoBehaviour
         Physics.Raycast(origin, direction * RayDistance, out hitInfo);
         if(hitInfo.collider != null)
         {
-            var hitObj = hitInfo.collider;
-            if(hitObj.CompareTag(TagData.GetTag(TagData.Names.Ground)) 
-            || hitObj.CompareTag(TagData.GetTag(TagData.Names.Wall)))
+            var hitObj = hitInfo.collider.gameObject;
+            if (TagManager.Instance.SearchedTagName(hitObj, TagManager.Type.Ground, TagManager.Type.Wall))
             {
                 return true;
             }
@@ -142,12 +150,13 @@ public class ExplosionManager : MonoBehaviour
         {
             m_explosionEffect.Stop();
         }
+
         if (m_audioSource != null)
         {
             m_audioSource.Stop();
         }
-        m_explosionCollider.enabled = false;
 
+        m_explosionCollider.enabled = false;
         Destroy(this.gameObject);
     }
 
