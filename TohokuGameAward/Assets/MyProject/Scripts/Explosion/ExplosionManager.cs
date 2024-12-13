@@ -122,10 +122,9 @@ public class ExplosionManager : MonoBehaviour
         Physics.Raycast(origin, direction * RayDistance, out hitInfo);
         if(hitInfo.collider != null)
         {
-            var hitTrans = hitInfo.collider.transform;
-            var hitParentObj = hitTrans.parent.gameObject;
-            if(hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Ground)) 
-            || hitParentObj.CompareTag(TagData.GetTag(TagData.Names.Wall)))
+            var hitObj = hitInfo.collider;
+            if(hitObj.CompareTag(TagData.GetTag(TagData.Names.Ground)) 
+            || hitObj.CompareTag(TagData.GetTag(TagData.Names.Wall)))
             {
                 return true;
             }
