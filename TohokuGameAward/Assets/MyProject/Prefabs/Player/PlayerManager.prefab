@@ -47,3 +47,4 @@ MonoBehaviour:
   m_playerPrefab: {fileID: 5497014825113209656, guid: e8c61d18646ad4c419cf93b40a41ecac,
     type: 3}
   m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
+  m_respawnTime: 5
