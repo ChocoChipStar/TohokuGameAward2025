@@ -31,6 +31,14 @@ public class TagManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 指定タグが存在する場合のみタグが一致するか調べる
+    /// </summary>
+    private bool IsExistTag(GameObject gameObject, Type? tag)
+    {
+        return tag != null && gameObject.CompareTag(NameLists[(int)tag]);
+    }
+
     public string GetTagName(Type name)
     {
         return NameLists[(int)name];
@@ -41,21 +49,6 @@ public class TagManager : MonoBehaviour
     /// </summary>
     public bool SearchedTagName(GameObject gameObject, Type verifyTag0, Type? verifyTag1 = null, Type? verifyTag2 = null)
     {
-        if (gameObject.CompareTag(NameLists[(int)verifyTag0]))
-        {
-            return true;
-        }
-
-        if(gameObject.CompareTag(NameLists[(int)verifyTag1]) && verifyTag1 != null)
-        {
-            return true;
-        }
-
-        if (gameObject.CompareTag(NameLists[(int)verifyTag2]) && verifyTag2 != null)
-        {
-            return true;
-        }
-
-        return false;
+        return IsExistTag(gameObject, verifyTag0) || IsExistTag(gameObject,verifyTag1) || IsExistTag(gameObject,verifyTag2);
     }
 }
