@@ -4,7 +4,10 @@ using UnityEngine;
 public class PlayerThrow : MonoBehaviour
 {
     [SerializeField]
-    private PlayerPickup m_playerPickUp = null;
+    private PlayerPickup m_pickup = null;
+
+    [SerializeField]
+    private PlayerAnimator m_animator = null;
 
     [SerializeField]
     private PlayerInputData m_inputData = null;
@@ -40,13 +43,13 @@ public class PlayerThrow : MonoBehaviour
     /// </summary>
     private bool CanThrow(Vector2 stickValue)
     {
-        if (m_playerPickUp.DetectedItemObj == null)
+        if (m_pickup.DetectedItemObj == null)
         {
             return false;
         }
 
         var wasPressedRT = m_inputData.WasPressedButton(PlayerInputData.ActionsName.Throw, m_inputData.SelfNumber);
-        if (wasPressedRT && m_playerPickUp.IsHoldingItem)
+        if (wasPressedRT && m_pickup.IsHoldingItem)
         {
             return true;
         }
@@ -59,14 +62,13 @@ public class PlayerThrow : MonoBehaviour
     /// </summary>
     private void ThrowHoldingItem(Vector2 stickValue)
     {
-        m_playerPickUp.InitializedPickup();
+        m_pickup.InitializedPickup();
 
         var throwDirection = GetThrowDirection(stickValue);
         var throwMomentum = throwDirection * m_throwPower; 
 
-        var bombBase = m_playerPickUp.DetectedItemObj.GetComponent<BombBase>();
+        var bombBase = m_pickup.DetectedItemObj.GetComponent<BombBase>();
         bombBase.OnThrow(throwMomentum);
-
     }
 
     /// <summary>
@@ -85,7 +87,7 @@ public class PlayerThrow : MonoBehaviour
     {
         var deadZone = PlayerInputData.ThrowDeadZoneRange;
         var fixedDirectionValue = 0.0f;
-        if (m_playerPickUp.IsRight)
+        if (m_pickup.IsRight)
         {
             fixedDirectionValue = 0.0f;
         }
@@ -97,16 +99,19 @@ public class PlayerThrow : MonoBehaviour
         if (stickValue.y > deadZone)
         {
             SavedThrowPower(m_playerData.Throw.PowerUpper);
+            m_animator.ChangeTopState(PlayerAnimator.TopState.ThrowUpper);
             return Mathf.Abs(m_playerData.Throw.AngleUpper - fixedDirectionValue);
         }
         else if (stickValue.y < -deadZone)
         {
             SavedThrowPower(m_playerData.Throw.PowerUnder);
+            m_animator.ChangeTopState(PlayerAnimator.TopState.ThrowUnder);
             return Mathf.Abs(m_playerData.Throw.AngleUnder - fixedDirectionValue);
         }
 
         SavedThrowPower(m_playerData.Throw.PowerSide);
-        if (m_playerPickUp.IsRight)
+        m_animator.ChangeTopState(PlayerAnimator.TopState.ThrowFront);
+        if (m_pickup.IsRight)
         {
             return m_playerData.Throw.AngleSide;
         }

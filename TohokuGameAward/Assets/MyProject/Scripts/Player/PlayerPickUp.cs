@@ -1,18 +1,33 @@
 ﻿using System.Collections;
 using UnityEngine;
+using static PlayerAnimator;
 
 public class PlayerPickup : MonoBehaviour
 {
     [SerializeField]
-    private PlayerThrow m_playerThrow = null;
+    private Transform m_modelTransform = null;
+
+    [SerializeField]
+    private Transform m_modelLeftArmTransform = null;
+
+    [SerializeField]
+    private Transform m_modelRightArmTranform = null;
+
+    [SerializeField]
+    private PlayerAnimator m_animator = null;
 
     [SerializeField]
     private PlayerInputData m_inputData = null;
 
     [SerializeField]
+    private PlayerData m_playerData = null;
+
+    [SerializeField]
     private BoxCollider m_detectionCollider = null;
 
     private float m_lastFramePosX = 0.0f;
+
+    private Vector3 intermediateArmPos = Vector3.zero;
 
     private bool m_isPickup = false;
     private bool m_isDetected = false;
@@ -27,6 +42,7 @@ public class PlayerPickup : MonoBehaviour
     {
         if (DetectedItemObj == null)
         {
+            m_animator.TransferableState(TopState.Pickup);
             m_isPickup = false;
             return;
         }
@@ -40,8 +56,6 @@ public class PlayerPickup : MonoBehaviour
         {
             HoldingDetectedItem();
         }
-
-        m_lastFramePosX = this.transform.position.x;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,8 +74,10 @@ public class PlayerPickup : MonoBehaviour
             }
 
             m_isDetected = true;
-            m_isPickup = true;
             DetectedItemObj = other.gameObject.transform.parent.gameObject;
+            
+            m_isPickup = true;
+            m_animator.ChangeTopState(TopState.Pickup);
         }
     }
 
@@ -87,6 +103,7 @@ public class PlayerPickup : MonoBehaviour
 
         if (TagManager.Instance.SearchedTagName(otherObj, TagManager.Type.Detected))
         {
+            m_animator.TransferableState(TopState.Pickup);
             m_isPickup = false;
         }
     }
@@ -108,39 +125,44 @@ public class PlayerPickup : MonoBehaviour
     /// </summary>
     private void HoldingDetectedItem()
     {
+        intermediateArmPos = Vector3.Lerp(m_modelLeftArmTransform.position, m_modelRightArmTranform.position, 0.5f);
         if (GetDirection())
-        {
+        {    
             var holdingItemPosR = this.transform.position.x + this.transform.localScale.x;
-            DetectedItemObj.transform.position = new Vector3(holdingItemPosR, this.transform.position.y, 0.0f);
+            DetectedItemObj.transform.position = intermediateArmPos;
             return;
         }
 
         var holdingItemPosL = this.transform.position.x - this.transform.localScale.x;
-        DetectedItemObj.transform.position = new Vector3(holdingItemPosL, this.transform.position.y, 0.0f);
+        DetectedItemObj.transform.position = intermediateArmPos;
     }
 
     /// <summary>
     /// 現在の向きを取得出来ます
     /// </summary>
     /// <returns> true->右向き false->左向き </returns>
-    private bool GetDirection()
+    public bool GetDirection()
     {
         var diffValue = this.transform.position.x - m_lastFramePosX;
         if (diffValue >= -DiffDetectionRange && diffValue <= DiffDetectionRange)
         {
+            m_lastFramePosX = this.transform.position.x;
             return IsRight;
         }
 
         if (diffValue > DiffDetectionRange)
         {
+            m_modelTransform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.RightFacingAngle, 0.0f);
             IsRight = true;
         }
 
         if (diffValue < DiffDetectionRange)
         {
+            m_modelTransform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.LeftFacingAngle, 0.0f);
             IsRight = false;
         }
 
+        m_lastFramePosX = this.transform.position.x;
         return IsRight;
     }
 

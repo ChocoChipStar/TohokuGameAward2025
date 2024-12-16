@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -183,6 +184,16 @@ public abstract class BombBase : MonoBehaviour
     /// </summary>
     public void OnThrow(Vector3 direction)
     {
+        StartCoroutine(StandbyThrowAnimation(direction));
+    }
+
+    private IEnumerator StandbyThrowAnimation(Vector3 direction)
+    {
+        for(int i = 0; i < 10; i++)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
         currentState = BombState.Throw;
         InitializeThrowState();
 

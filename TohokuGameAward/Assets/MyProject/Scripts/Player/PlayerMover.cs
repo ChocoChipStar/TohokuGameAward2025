@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static PlayerAnimator;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -12,23 +13,31 @@ public class PlayerMover : MonoBehaviour
     private PlayerInputData m_inputData = null;
 
     [SerializeField]
+    private PlayerAnimator m_animator = null;
+
+    [SerializeField]
     private WallDetector m_detectorR = null;
 
     [SerializeField]
     private WallDetector m_detectorL = null;
 
-    private bool m_isGrounded = false;
+    public bool IsGrounded { get; private set; } = false;
 
     private bool m_isGetExplosion = false;
 
     private void Update()
     {
         var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
-        if(CanMove(stickValue) && !m_isGetExplosion)
+        if (CanMove(stickValue) && !m_isGetExplosion)
         {
             MoveOperation(stickValue);
         }
-        
+        else
+        {
+            m_animator.TransferableState(top: TopState.Move);
+            m_animator.TransferableState(under: UnderState.Move);
+        }
+
         if(CanJump())
         {
             JumpOperation();
@@ -39,7 +48,9 @@ public class PlayerMover : MonoBehaviour
     {
         if (TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Ground))
         {
-            m_isGrounded = true;
+            m_animator.TransferableState(top: TopState.Jump);
+            m_animator.TransferableState(under: UnderState.Jump);
+            IsGrounded = true;
         }
     }
 
@@ -47,7 +58,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Ground))
         {
-            m_isGrounded = false;
+            IsGrounded = false;
         }
     }
 
@@ -58,6 +69,9 @@ public class PlayerMover : MonoBehaviour
     {
         var speedX = m_playerData.Params.MoveSpeed * stickValue.x;
         this.transform.position += new Vector3(speedX, 0.0f, 0.0f) * Time.deltaTime;
+
+        m_animator.ChangeTopState(TopState.Move);
+        m_animator.ChangeUnderState(UnderState.Move);
     }
 
     /// <summary>
@@ -91,6 +105,9 @@ public class PlayerMover : MonoBehaviour
     private void JumpOperation()
     {
         m_rigidbody.AddForce(new Vector3(0.0f, m_playerData.Params.PowerJump, 0.0f), ForceMode.Impulse);
+
+        m_animator.ChangeTopState(TopState.Jump);
+        m_animator.ChangeUnderState(UnderState.Jump);
     }
 
     /// <summary>
@@ -99,9 +116,9 @@ public class PlayerMover : MonoBehaviour
     private bool CanJump()
     {
         if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Jump, m_inputData.SelfNumber) 
-        && m_isGrounded && !m_isGetExplosion)
+        && IsGrounded && !m_isGetExplosion)
         {
-           return true;
+            return true;
         }
 
         return false;

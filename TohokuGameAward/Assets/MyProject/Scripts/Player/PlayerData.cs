@@ -40,10 +40,18 @@ public class PlayerData : ScriptableObject
         [SerializeField, Header("ジャンプの強さ（高さ）")]
         private float m_powerJump = 0.0f;
 
+        [SerializeField, Header("右向いた時の角度")]
+        private float m_rightFacingAngle = 0.0f;
+
+        [SerializeField, Header("左向いた時の角度")]
+        private float m_leftFacingAngle = 0.0f;
+
         public int Weight { get { return m_weight; } private set { value = m_weight; } }
         public float PowerFrictional { get { return m_powerFrictional; } private set { value = m_powerFrictional; } }
         public float MoveSpeed { get { return m_moveSpeed; } private set { value = m_moveSpeed; } }
         public float PowerJump { get { return m_powerJump; } private set { value = m_powerJump; } }
+        public float RightFacingAngle { get { return m_rightFacingAngle; } private set { value = m_rightFacingAngle; } }
+        public float LeftFacingAngle { get { return m_leftFacingAngle; } private set { value = m_leftFacingAngle; } }
     }
 
     [System.Serializable]
