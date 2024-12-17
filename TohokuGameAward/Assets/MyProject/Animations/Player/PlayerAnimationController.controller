@@ -284,7 +284,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.05
   m_TransitionOffset: 0
-  m_ExitTime: 0.85
+  m_ExitTime: 0.68
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -332,8 +332,8 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -524,9 +524,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 1
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.05
   m_TransitionOffset: 0
-  m_ExitTime: 0.7457627
+  m_ExitTime: 1
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -706,7 +706,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Throw Under Ground Second
+  m_Name: ThrowUnder 02
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -720,8 +720,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1121782202447619669, guid: 26ec3377127f8ef4ea32b88dac2f758d,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 654dd39b607389249a1680f702b2fa5d, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: IsMirror
@@ -997,11 +996,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.05
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
+  m_ExitTime: 1
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -1099,7 +1098,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Throw Front First
+  m_Name: ThrowFront 01
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1265,8 +1264,8 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.75
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
+  m_HasExitTime: 0
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -1354,7 +1353,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Throw Under Ground First
+  m_Name: ThrowUnder 01
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1368,8 +1367,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -4662987580548025734, guid: 468fa0de2e7fe854e878ff9abc187bcb,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: d7ef2671a9069084290767addea15d42, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: IsMirror
@@ -1465,7 +1463,7 @@ AnimatorStateTransition:
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
-  m_HasFixedDuration: 1
+  m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -1669,7 +1667,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Throw Front Second
+  m_Name: ThrowFront  02
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1683,8 +1681,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -3983829971782052819, guid: 2000e6e6e8ffbef4a837dae8a56367c6,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 3d68a5765a7ab10449335dcaadca562e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: IsMirror
