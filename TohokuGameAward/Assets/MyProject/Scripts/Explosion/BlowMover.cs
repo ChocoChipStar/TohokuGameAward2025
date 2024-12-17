@@ -34,6 +34,7 @@ public class BlowMover : MonoBehaviour
     private const float RateOfForceReduction = 0.8f;    //反射時の減少率
     private const float ReflectionDistanceMin = 0.8f;   //Rayの判定距離の最低値
     private const float BlowCheckerVelocityMin = 2.0f;  //この値よりVelocityが小さくなったら吹き飛びが終わる
+    public bool IsBlow { get { return m_isBlow;} }
 
     private void Update()
     {

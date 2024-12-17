@@ -14,7 +14,8 @@ public class PlayerInputData : MonoBehaviour
     {
         Jump,
         Attack,
-        Throw
+        Throw,
+        Produce
     }
 
     public Vector2 GetLeftStickValue(int playerNum)
@@ -34,6 +35,9 @@ public class PlayerInputData : MonoBehaviour
 
             case ActionsName.Throw:
                 return Gamepad.all[playerNum].rightTrigger.wasPressedThisFrame;
+
+            case ActionsName.Produce:
+                return Gamepad.all[playerNum].rightShoulder.isPressed;
 
             default:
                 return false;
