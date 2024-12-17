@@ -22,6 +22,7 @@ public class PlayerPickup : MonoBehaviour
     public GameObject DetectedItemObj { get; private set; } = null;
     public bool IsRight { get; private set; } = false;
     public bool IsHoldingItem { get; private set; } = false;
+    public bool IsPuckUp { get { return m_isPickup; }  }
 
     private void Update()
     {

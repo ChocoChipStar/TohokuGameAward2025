@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/PlayerData", order = 1)]
 public class PlayerData : ScriptableObject
@@ -40,10 +41,14 @@ public class PlayerData : ScriptableObject
         [SerializeField, Header("ジャンプの強さ（高さ）")]
         private float m_powerJump = 0.0f;
 
+        [SerializeField, Header("爆弾生成の時間（秒）")]
+        private float m_bombGenerateTime = 0.0f;
+
         public int Weight { get { return m_weight; } private set { value = m_weight; } }
         public float PowerFrictional { get { return m_powerFrictional; } private set { value = m_powerFrictional; } }
         public float MoveSpeed { get { return m_moveSpeed; } private set { value = m_moveSpeed; } }
         public float PowerJump { get { return m_powerJump; } private set { value = m_powerJump; } }
+        public float BombGenereareTime { get { return m_bombGenerateTime;} private set { value = m_bombGenerateTime; } }
     }
 
     [System.Serializable]

@@ -12,6 +12,9 @@ public class PlayerMover : MonoBehaviour
     private PlayerInputData m_inputData = null;
 
     [SerializeField]
+    private PlayerProduceBomb m_produceBomb = null;
+
+    [SerializeField]
     private WallDetector m_detectorR = null;
 
     [SerializeField]
@@ -24,7 +27,7 @@ public class PlayerMover : MonoBehaviour
     private void Update()
     {
         var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
-        if(CanMove(stickValue) && !m_isGetExplosion)
+        if(CanMove(stickValue))
         {
             MoveOperation(stickValue);
         }
@@ -65,6 +68,12 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private bool CanMove(Vector2 stickValue)
     {
+        // ボムを生成している。または、爆発を受けている
+        if(m_produceBomb.isGenerating && !m_isGetExplosion)
+        {
+            return false;
+        }
+
         // 右の壁に衝突していたら右への移動入力を不可にする
         if (stickValue.x > PlayerInputData.MovementDeadZoneRange && m_detectorR.IsHitWall())
         {
