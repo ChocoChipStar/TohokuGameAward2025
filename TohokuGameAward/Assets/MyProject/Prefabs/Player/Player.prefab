@@ -1928,7 +1928,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerInputDeta: {fileID: 234677848321282988}
   m_playerDeta: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
+  m_playerMover: {fileID: 6800665573880325553}
   m_playerPickup: {fileID: 7163019421322361095}
+  m_blowMover: {fileID: 2317007520261670163}
   m_bombObject: {fileID: 6015317307024279286, guid: 31daebd531dbe3741ab98ddb0502a6b2,
     type: 3}
   m_generatePosition: {x: 1, y: 0.5, z: 0}

@@ -10,7 +10,13 @@ public class PlayerProduceBomb : MonoBehaviour
     private PlayerData m_playerDeta = null;
 
     [SerializeField]
+    private PlayerMover m_playerMover = null;
+
+    [SerializeField]
     private PlayerPickup m_playerPickup = null;
+
+    [SerializeField]
+    private BlowMover m_blowMover = null;
 
     [SerializeField]
     private GameObject m_bombObject = null;
@@ -72,7 +78,9 @@ public class PlayerProduceBomb : MonoBehaviour
     private bool CanGenerateBomb()
     {
         if(m_playerInputDeta.WasPressedButton(PlayerInputData.ActionsName.Produce, m_playerInputDeta.SelfNumber)
-        && !m_playerPickup.IsPuckUp)
+        && !m_playerPickup.IsPuckUp 
+        && !m_blowMover.IsBlow 
+        && m_playerMover.IsGrounded)
         {
             return true;
         }

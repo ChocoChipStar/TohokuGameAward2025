@@ -21,8 +21,9 @@ public class PlayerMover : MonoBehaviour
     private WallDetector m_detectorL = null;
 
     private bool m_isGrounded = false;
-
     private bool m_isGetExplosion = false;
+
+    public bool IsGrounded { get {  return m_isGrounded; } }
 
     private void Update()
     {
@@ -108,7 +109,7 @@ public class PlayerMover : MonoBehaviour
     private bool CanJump()
     {
         if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Jump, m_inputData.SelfNumber) 
-        && m_isGrounded && !m_isGetExplosion)
+        && m_isGrounded && !m_isGetExplosion && !m_produceBomb.isGenerating)
         {
            return true;
         }
