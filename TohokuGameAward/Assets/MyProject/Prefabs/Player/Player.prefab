@@ -1681,6 +1681,7 @@ GameObject:
   - component: {fileID: 7163019421322361095}
   - component: {fileID: 5286550003958549445}
   - component: {fileID: 2317007520261670163}
+  - component: {fileID: 6089115517237329361}
   - component: {fileID: 234677848321282988}
   - component: {fileID: 4712289192772221461}
   m_Layer: 0
@@ -1809,6 +1810,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
   m_playerRigidbody: {fileID: 6658028852423634333}
+--- !u!114 &6089115517237329361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497014825113209656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500e3501f38450f44931ae96a8e87612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerManager: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
+    type: 3}
 --- !u!114 &234677848321282988
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private float m_respawnTime = 0.0f;
 
+    [SerializeField]
+    private int[] m_playerScore = null;
+
     private GameObject[] m_playerCount = null;
 
     //private bool m_isOnlyOnePlayer = false;
@@ -92,6 +95,7 @@ public class PlayerManager : MonoBehaviour
         var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[playerNum], Quaternion.identity, this.transform);
         instance.name = "Player" + (number + 1);
         m_playerCount[number] = instance;
+
     }
 
     /// <summary>
@@ -100,6 +104,18 @@ public class PlayerManager : MonoBehaviour
     public void SwitchDeadFlug(int playerNum,bool isDead)
     {
         m_isDead[playerNum] = isDead;
+    }
+
+    public void ScoreControl(int totalScore, GameObject gameObject)
+    {
+        for (int i = 0; i < m_playerCount.Length + 1; i++)
+        {
+            Debug.Log(totalScore);
+
+            m_playerScore[0] += totalScore;
+            
+           
+        }
     }
 
     //private int CountPlayers()
