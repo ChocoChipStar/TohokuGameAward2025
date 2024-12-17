@@ -45,9 +45,10 @@ public abstract class BombBase : MonoBehaviour
 
     private const int FlushMaterialIndex = 1;
 
-    private const int ThreeSecondsIndex = 2;
-    private const int TwoSecondsIndex = 1;
-    private const int OneSecondsIndex = 0;
+    private const int ThreeSecondsIndex = 3;
+    private const int TwoSecondsIndex = 2;
+    private const int OneSecondsIndex = 1;
+    private const int ZeroSecondsIndex = 0;
 
     protected BombData m_bombData = null;
 
@@ -78,10 +79,6 @@ public abstract class BombBase : MonoBehaviour
         }
 
         StartExplosionCountDown();
-        if(m_animator != null)
-        {
-            m_animator.Play("bomb_anime");
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -197,6 +194,13 @@ public abstract class BombBase : MonoBehaviour
         m_explosionTimer += Time.deltaTime;
         var remainingTime = m_bombData.Params.ExplosionDelayTime - m_explosionTimer;
 
+        if (remainingTime <= ThreeSecondsIndex)
+        {
+            if (m_animator != null)
+            {
+                m_animator.Play("bomb_anime");
+            }
+        }
         SwitchCurrentFlashMaterial(remainingTime);
 
         if (m_explosionTimer >= m_bombData.Params.ExplosionDelayTime)
@@ -212,16 +216,8 @@ public abstract class BombBase : MonoBehaviour
     /// </summary>
     private void SwitchCurrentFlashMaterial(float remainingTime)
     {
-        if (remainingTime >= ThreeSecondsIndex)
+        if (remainingTime >= TwoSecondsIndex)
         {
-            if(IsElapsedFlushSpan(FlushSpan[ThreeSecondsIndex]))
-            {
-                SetFlushMaterial();
-            }
-        }
-        else if (remainingTime >= TwoSecondsIndex)
-        {
-            m_bombRenderer.material = m_baseBombMaterials[TwoSecondsIndex];
             if(IsElapsedFlushSpan(FlushSpan[TwoSecondsIndex]))
             {
                 SetFlushMaterial();
@@ -231,6 +227,14 @@ public abstract class BombBase : MonoBehaviour
         {
             m_bombRenderer.material = m_baseBombMaterials[OneSecondsIndex];
             if(IsElapsedFlushSpan(FlushSpan[OneSecondsIndex]))
+            {
+                SetFlushMaterial();
+            }
+        }
+        else if (remainingTime >= ZeroSecondsIndex)
+        {
+            m_bombRenderer.material = m_baseBombMaterials[ZeroSecondsIndex];
+            if(IsElapsedFlushSpan(FlushSpan[ZeroSecondsIndex]))
             {
                 SetFlushMaterial();
             }
