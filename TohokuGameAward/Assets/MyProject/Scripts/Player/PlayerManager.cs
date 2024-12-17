@@ -108,13 +108,13 @@ public class PlayerManager : MonoBehaviour
 
     public void ScoreControl(int totalScore, GameObject gameObject)
     {
-        for (int i = 0; i < m_playerCount.Length + 1; i++)
+        //プレイヤーのポイントをマネージャーに反映します
+        for (int i = 0; i < m_playerCount.Length; i++)
         {
-            Debug.Log(totalScore);
-
-            m_playerScore[0] += totalScore;
-            
-           
+            if (m_playerCount[i].name == gameObject.name)
+            {
+                m_playerScore[i] += totalScore;
+            }
         }
     }
 
