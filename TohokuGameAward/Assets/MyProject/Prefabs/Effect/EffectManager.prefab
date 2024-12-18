@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3029600286465198957}
   - component: {fileID: 1963939849256699234}
+  - component: {fileID: 8157858391688787761}
   m_Layer: 0
   m_Name: EffectManager
   m_TagString: Untagged
@@ -46,3 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_effectPrefab:
   - {fileID: 2618796573245405997, guid: 5064630c80fb1904887ca5cf39b6b1e7, type: 3}
+  - {fileID: 405784217282196436, guid: b503c007532b00f49ba84c6fa8c4892c, type: 3}
+--- !u!114 &8157858391688787761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241257324559520248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694d72d36b81a5f4ab4610075af88487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

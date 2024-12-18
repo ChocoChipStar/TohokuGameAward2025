@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private StageData m_stageData = null;
 
+    [SerializeField]
+    private EffectManager m_effectManager = null;
+
     private void Update()
     {
         DestroyPlayerIFOutOfStage();
@@ -36,6 +39,7 @@ public class GameManager : MonoBehaviour
             {
                 m_playerManager.SwitchDeadFlug(i,true); 
                 Destroy(m_playerManager.PlayerCount[i]);
+                m_effectManager.OnPlayStageOutEffect(m_playerManager.PlayerCount[i].transform.position, EffectManager.EffectType.StageOut);
                 m_playerManager.PlayerCount[i] = null;
             }
         }
