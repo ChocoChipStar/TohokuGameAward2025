@@ -12550,9 +12550,10 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.11666667
-    functionName: 
+    functionName: PlayerAnimator/Methods/EndOfThrowAnimationDetection(bool)
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 5497014825113209656, guid: e8c61d18646ad4c419cf93b40a41ecac,
+      type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

@@ -584,6 +584,7 @@ GameObject:
   - component: {fileID: 3400207722130086997}
   - component: {fileID: 8777474150091933231}
   - component: {fileID: 4771560504350015192}
+  - component: {fileID: 8253847011687564896}
   m_Layer: 0
   m_Name: Models
   m_TagString: Untagged
@@ -651,6 +652,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.2, z: 0.5}
   m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!114 &8253847011687564896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622262956983502575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fff46b66cb8444ca7e052089de6ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_animator: {fileID: 8777474150091933231}
+  m_playerPickup: {fileID: 7163019421322361095}
 --- !u!1 &2636622773693827041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,7 +1693,7 @@ GameObject:
   - component: {fileID: 3612249107959219224}
   - component: {fileID: 6658028852423634333}
   - component: {fileID: 6800665573880325553}
-  - component: {fileID: 4712289192772221461}
+  - component: {fileID: 7698825414231409093}
   - component: {fileID: 7163019421322361095}
   - component: {fileID: 5286550003958549445}
   - component: {fileID: 2317007520261670163}
@@ -1752,10 +1767,10 @@ MonoBehaviour:
   m_rigidbody: {fileID: 6658028852423634333}
   m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
   m_inputData: {fileID: 234677848321282988}
-  m_animator: {fileID: 4712289192772221461}
+  m_animator: {fileID: 8253847011687564896}
   m_detectorR: {fileID: 5493103671532895295}
   m_detectorL: {fileID: 6942322652930575667}
---- !u!114 &4712289192772221461
+--- !u!114 &7698825414231409093
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1784,7 +1799,7 @@ MonoBehaviour:
   m_modelTransform: {fileID: 3400207722130086997}
   m_modelLeftArmTransform: {fileID: 4574787600916764657}
   m_modelRightArmTranform: {fileID: 6259414566062885829}
-  m_animator: {fileID: 4712289192772221461}
+  m_animator: {fileID: 8253847011687564896}
   m_inputData: {fileID: 234677848321282988}
   m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
   m_detectionCollider: {fileID: 1579356239520598097}
@@ -1801,7 +1816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pickup: {fileID: 7163019421322361095}
-  m_animator: {fileID: 4712289192772221461}
+  m_animator: {fileID: 8253847011687564896}
   m_inputData: {fileID: 234677848321282988}
   m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
 --- !u!114 &2317007520261670163

@@ -10,6 +10,8 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField]
     private PlayerPickup m_playerPickup = null;
 
+    private bool m_isEndAnimation = false;
+
     private static readonly string[] StateNames = new string[] 
     { 
         "TopBodyState", "UnderBodyState"
@@ -239,4 +241,13 @@ public class PlayerAnimator : MonoBehaviour
             m_isTransferableUnderState[under.Value] = false;
         }
     }
+
+    public bool EndOfThrowAnimationDetection(bool? isActive = null)
+    {
+        if(isActive.HasValue)
+        {
+            m_isEndAnimation = isActive.Value;
+        }
+        return m_isEndAnimation;
+    }    
 }
