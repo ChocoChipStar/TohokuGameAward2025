@@ -242,12 +242,11 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
-    public bool EndOfThrowAnimationDetection(bool? isActive = null)
+    /// <summary>
+    /// 投げアニメーション終了時イベントが呼び出され、遷移可能状態が変更されます
+    /// </summary>
+    public void InitializeThrowAnimationState(TopState state)
     {
-        if(isActive.HasValue)
-        {
-            m_isEndAnimation = isActive.Value;
-        }
-        return m_isEndAnimation;
-    }    
+        TransferableState(top: state);
+    }
 }

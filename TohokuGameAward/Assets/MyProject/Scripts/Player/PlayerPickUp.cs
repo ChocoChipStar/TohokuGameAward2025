@@ -5,13 +5,10 @@ using static PlayerAnimator;
 public class PlayerPickup : MonoBehaviour
 {
     [SerializeField]
-    private Transform m_modelTransform = null;
+    private Transform m_leftArmTransform = null;
 
     [SerializeField]
-    private Transform m_modelLeftArmTransform = null;
-
-    [SerializeField]
-    private Transform m_modelRightArmTranform = null;
+    private Transform m_rightArmTranform = null;
 
     [SerializeField]
     private PlayerAnimator m_animator = null;
@@ -125,7 +122,7 @@ public class PlayerPickup : MonoBehaviour
     /// </summary>
     private void HoldingDetectedItem()
     {
-        intermediateArmPos = Vector3.Lerp(m_modelLeftArmTransform.position, m_modelRightArmTranform.position, 0.5f);
+        intermediateArmPos = Vector3.Lerp(m_leftArmTransform.position, m_rightArmTranform.position, 0.5f);
         if (GetDirection())
         {    
             var holdingItemPosR = this.transform.position.x + this.transform.localScale.x;
@@ -152,13 +149,13 @@ public class PlayerPickup : MonoBehaviour
 
         if (diffValue > DiffDetectionRange)
         {
-            m_modelTransform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.RightFacingAngle, 0.0f);
+            this.transform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.RightFacingAngle, 0.0f);
             IsRight = true;
         }
 
         if (diffValue < DiffDetectionRange)
         {
-            m_modelTransform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.LeftFacingAngle, 0.0f);
+            this.transform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.LeftFacingAngle, 0.0f);
             IsRight = false;
         }
 
