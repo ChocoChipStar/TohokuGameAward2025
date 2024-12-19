@@ -23,8 +23,8 @@ MonoBehaviour:
     m_powerFrictional: 0
     m_moveSpeed: 5
     m_powerJump: 17
-    m_rightFacingAngle: 130
-    m_leftFacingAngle: 230
+    m_rightBodyAngle: 140
+    m_leftBodyAngle: 230
   m_throwData:
     m_angleSide: 45
     m_powerSide: 35

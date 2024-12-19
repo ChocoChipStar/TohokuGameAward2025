@@ -1016,12 +1016,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_playerPrefab
       value: 
-      objectReference: {fileID: 6166742352282190294, guid: c064dacdb25b880428e33b966e58fa91,
+      objectReference: {fileID: 5497014825113209656, guid: e8c61d18646ad4c419cf93b40a41ecac,
         type: 3}
     - target: {fileID: 8274386607292376071, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}
       propertyPath: m_Name
       value: PlayerManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274386607292376071, guid: 6b2433e84fd7b87488e93fe954dea34e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -182,22 +182,11 @@ public abstract class BombBase : MonoBehaviour
     /// <summary>
     /// 投げ状態の処理を実行します
     /// </summary>
-    public void OnThrow(Vector3 direction)
+    public void OnThrow(Vector3 forceVector)
     {
-        StartCoroutine(StandbyThrowAnimation(direction));
-    }
-
-    private IEnumerator StandbyThrowAnimation(Vector3 direction)
-    {
-        for(int i = 0; i < 10; i++)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-
         currentState = BombState.Throw;
         InitializeThrowState();
-
-        CalculateThrowMovement(direction);
+        CalculateThrowMovement(forceVector);
     }
 
     ///<summary>

@@ -10,10 +10,11 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField]
     private PlayerPickup m_playerPickup = null;
 
-    private bool m_isEndAnimation = false;
+    private bool m_isMirror = false;
+    private bool m_isCalledAnimationEvent = false;
 
-    private static readonly string[] StateNames = new string[] 
-    { 
+    private static readonly string[] StateNames = new string[]
+    {
         "TopBodyState", "UnderBodyState"
     };
 
@@ -82,7 +83,9 @@ public class PlayerAnimator : MonoBehaviour
         Jump
     }
 
-    // intのステート実装するには難しい　状態管理しつつ、優先度を設定しアニメーションを終了が取れない
+    public bool IsFinishedThrowFirst { get; private set; } = false;
+    public bool IsPlaybackThrow { get; private set; } = false;
+
     private void Start()
     {
         m_currentTopState.Subscribe(SwitchTopState).AddTo(this);
@@ -93,8 +96,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         ChangeTopState(TopState.Idle);
         ChangeUnderState(UnderState.Idle);
-
-        m_animator.SetBool("IsMirror", m_playerPickup.GetDirection());
+        
     }
 
     /// <summary>
@@ -107,7 +109,7 @@ public class PlayerAnimator : MonoBehaviour
         {
             return true; // 今のより優先度の高いアニメーションなら
         }
-        
+
         if (!m_isTransferableTopState[m_currentTopState.Value])
         {
             return true; // 優先度の低いアニメーションでも再生が終了していれば
@@ -207,7 +209,7 @@ public class PlayerAnimator : MonoBehaviour
     /// </summary>
     public void ChangeTopState(TopState newState)
     {
-        if(CanChangeTopState(newState))
+        if (CanChangeTopState(newState))
         {
             InitializeTransferableTopState(newState);
             m_currentTopState.Value = newState;
@@ -219,11 +221,20 @@ public class PlayerAnimator : MonoBehaviour
     /// </summary>
     public void ChangeUnderState(UnderState newState)
     {
-        if(CanChangeUnderState(newState))
+        if (CanChangeUnderState(newState))
         {
             InitializeTransferableUnderState(newState);
             m_currentUnderState.Value = newState;
         }
+    }
+
+    /// <summary>
+    /// アニメーションのミラーと通常を切り替える処理を行います
+    /// </summary>
+    public void SwitchMirroring()
+    {
+        m_animator.SetBool("IsMirror", m_isMirror);
+        m_isMirror = !m_isMirror;
     }
 
     /// <summary>
@@ -236,17 +247,70 @@ public class PlayerAnimator : MonoBehaviour
             m_isTransferableTopState[top.Value] = false;
         }
 
-        if(under.HasValue)
+        if (under.HasValue)
         {
             m_isTransferableUnderState[under.Value] = false;
         }
     }
 
     /// <summary>
-    /// 投げアニメーション終了時イベントが呼び出され、遷移可能状態が変更されます
+    /// アイテムを投げた後の初期化を行います
+    /// </summary>
+    public void InitializeThrowFirst()
+    {
+        IsFinishedThrowFirst = false;
+    }
+
+    /// <summary>
+    /// 投げアニメーション開始時イベントが呼び出されます
+    /// </summary>
+    public void StartThrowAnimation()
+    {
+        if (!m_isCalledAnimationEvent)
+        {
+            return;
+        }
+        m_isCalledAnimationEvent = false;
+
+        IsPlaybackThrow = true;
+    }
+
+    /// <summary>
+    /// 投げアニメーション終了時イベントが呼び出されます（フォロースルー含まない）
+    /// </summary>
+    public void FinishedThrowFirstAnimation()
+    {
+        if (!m_isCalledAnimationEvent)
+        {
+            return;
+        }
+        m_isCalledAnimationEvent = false;
+
+        IsFinishedThrowFirst = true;
+    }
+
+    /// <summary>
+    /// フォロースルーアニメーション終了時イベントが呼び出されます
     /// </summary>
     public void InitializeThrowAnimationState(TopState state)
     {
+        if (!m_isCalledAnimationEvent)
+        {
+            return;
+        }
+        m_isCalledAnimationEvent = false;
+
         TransferableState(top: state);
+        IsPlaybackThrow = false;
     }
+
+    /// <summary>
+    /// アニメーションイベントの呼び出し用関数です
+    /// アニメーションイベント以外での呼び出しはNGです
+    /// </summary>
+    public void OnAnimationEvent()
+    {
+        m_isCalledAnimationEvent = true;
+    }
+    
 }

@@ -11434,6 +11434,13 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.11666667
+    functionName: OnAnimationEvent
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 6
+    messageOptions: 0
+  - time: 0.11666667
     functionName: InitializeThrowAnimationState
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -10,6 +10,9 @@ public class PlayerThrow : MonoBehaviour
     private PlayerAnimator m_animator = null;
 
     [SerializeField]
+    private PlayerDirectionRotator m_directionRotator = null;
+
+    [SerializeField]
     private PlayerInputData m_inputData = null;
 
     [SerializeField]
@@ -17,8 +20,9 @@ public class PlayerThrow : MonoBehaviour
 
     private float m_throwPower = 0.0f;
 
+    private Vector3 m_forceVector = Vector3.zero;
+
     private const float FixedInverseAngle = 180.0f;
-    private const float ThrowingIntervalTime = 0.75f;
 
     public bool IsThrow { get; private set; } = false;
 
@@ -31,44 +35,61 @@ public class PlayerThrow : MonoBehaviour
 
     private void Update()
     {
-        var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
-        if (CanThrow(stickValue))
+        if(!IsThrow)
         {
-            ThrowHoldingItem(stickValue);
+            CanThrow();
+            return;
+        }
+        
+        if (m_animator.IsFinishedThrowFirst)
+        {
+            ThrowHoldingItem();
         }
     }
 
     /// <summary>
     /// プレイヤーが手持ちアイテムを投げれる状態か確認します
     /// </summary>
-    private bool CanThrow(Vector2 stickValue)
+    private void CanThrow()
     {
         if (m_pickup.DetectedItemObj == null)
         {
-            return false;
+            return;
         }
 
         var wasPressedRT = m_inputData.WasPressedButton(PlayerInputData.ActionsName.Throw, m_inputData.SelfNumber);
         if (wasPressedRT && m_pickup.IsHoldingItem)
         {
-            return true;
+            m_forceVector = CalculateForceVector();
+            IsThrow = true;
         }
+    }
 
-        return false;
+    /// <summary>
+    /// 投げ威力と投げ角度から力のベクトルを計算します
+    /// </summary>
+    private Vector3 CalculateForceVector()
+    {
+        var stickValue = m_inputData.GetLeftStickValue(m_inputData.SelfNumber);
+        return GetThrowDirection(stickValue) * m_throwPower;
     }
 
     /// <summary>
     /// 手に持っているアイテムを投げる処理を実行します
     /// </summary>
-    private void ThrowHoldingItem(Vector2 stickValue)
+    private void ThrowHoldingItem()
     {
         m_pickup.InitializedPickup();
+        m_animator.InitializeThrowFirst();
+        IsThrow = false;
 
-        var throwDirection = GetThrowDirection(stickValue);
-        var throwMomentum = throwDirection * m_throwPower; 
+        if(m_pickup.DetectedItemObj == null)
+        {
+            return;
+        }
 
         var bombBase = m_pickup.DetectedItemObj.GetComponent<BombBase>();
-        bombBase.OnThrow(throwMomentum);
+        bombBase.OnThrow(m_forceVector);
     }
 
     /// <summary>
@@ -86,47 +107,58 @@ public class PlayerThrow : MonoBehaviour
     private float GetThrowAngle(Vector2 stickValue)
     {
         var deadZone = PlayerInputData.ThrowDeadZoneRange;
-        var fixedDirectionValue = 0.0f;
-        if (m_pickup.IsRight)
-        {
-            fixedDirectionValue = 0.0f;
-        }
-        else
-        {
-            fixedDirectionValue = FixedInverseAngle;
-        }
-
         if (stickValue.y > deadZone)
         {
-            SavedThrowPower(m_playerData.Throw.PowerUpper);
-            m_animator.ChangeTopState(PlayerAnimator.TopState.ThrowUpper);
-            return Mathf.Abs(m_playerData.Throw.AngleUpper - fixedDirectionValue);
+            InitializeThrow(m_playerData.Throw.PowerUpper, PlayerAnimator.TopState.ThrowUpper);
+            return ModifiedAngleByDirection(m_playerData.Throw.AngleUpper);
         }
-        else if (stickValue.y < -deadZone)
+        
+        if (stickValue.y < -deadZone)
         {
-            SavedThrowPower(m_playerData.Throw.PowerUnder);
-            m_animator.ChangeTopState(PlayerAnimator.TopState.ThrowUnder);
-            return Mathf.Abs(m_playerData.Throw.AngleUnder - fixedDirectionValue);
+            InitializeThrow(m_playerData.Throw.PowerUnder, PlayerAnimator.TopState.ThrowUnder);
+            return ModifiedAngleByDirection(m_playerData.Throw.AngleUnder);
         }
 
-        SavedThrowPower(m_playerData.Throw.PowerSide);
-        m_animator.ChangeTopState(PlayerAnimator.TopState.ThrowFront);
-        if (m_pickup.IsRight)
+        InitializeThrow(m_playerData.Throw.PowerSide, PlayerAnimator.TopState.ThrowFront);
+        return ModifiedAngleByDirection(m_playerData.Throw.AngleSide);
+    }
+
+    /// <summary>
+    /// 投げ処理の初期化処理を行います
+    /// </summary>
+    private void InitializeThrow(float throwPower, PlayerAnimator.TopState throwState)
+    {
+        SavedThrowPower(throwPower);
+        m_animator.ChangeTopState(throwState);
+    }
+
+    /// <summary>
+    /// プレイヤーの向きによる投げ角度の値を算出
+    /// </summary>
+    private float ModifiedAngleByDirection(float currentThrowAngle)
+    {
+        if (m_directionRotator.IsRight.Value)
         {
-            return m_playerData.Throw.AngleSide;
+            return currentThrowAngle;
         }
-        else
-        {
-            return FixedInverseAngle - m_playerData.Throw.AngleSide;
-        }
+
+        return Mathf.Abs(currentThrowAngle - FixedInverseAngle);
     }
 
     /// <summary>
     /// 投げ角度に合わせて投げ威力を再設定します
     /// </summary>
-    /// <param name="powerValue"></param>
     private void SavedThrowPower(float powerValue)
     {
         m_throwPower = powerValue;
+    }
+
+
+    /// <summary>
+    /// 現在プレイヤーが投げ動作を行っているか否か
+    /// </summary>
+    public bool IsPlaybackThrow()
+    {
+        return IsThrow || m_animator.IsPlaybackThrow;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static PlayerAnimator;
 
 public class PlayerPickup : MonoBehaviour
@@ -14,25 +15,17 @@ public class PlayerPickup : MonoBehaviour
     private PlayerAnimator m_animator = null;
 
     [SerializeField]
+    private PlayerDirectionRotator m_directionRotator = null;
+
+    [SerializeField]
     private PlayerInputData m_inputData = null;
-
-    [SerializeField]
-    private PlayerData m_playerData = null;
-
-    [SerializeField]
-    private BoxCollider m_detectionCollider = null;
-
-    private float m_lastFramePosX = 0.0f;
 
     private Vector3 intermediateArmPos = Vector3.zero;
 
     private bool m_isPickup = false;
     private bool m_isDetected = false;
 
-    private const float DiffDetectionRange = 0.01f;
-
     public GameObject DetectedItemObj { get; private set; } = null;
-    public bool IsRight { get; private set; } = false;
     public bool IsHoldingItem { get; private set; } = false;
 
     private void Update()
@@ -123,44 +116,12 @@ public class PlayerPickup : MonoBehaviour
     private void HoldingDetectedItem()
     {
         intermediateArmPos = Vector3.Lerp(m_leftArmTransform.position, m_rightArmTranform.position, 0.5f);
-        if (GetDirection())
+        if (m_directionRotator.IsRight.Value)
         {    
-            var holdingItemPosR = this.transform.position.x + this.transform.localScale.x;
             DetectedItemObj.transform.position = intermediateArmPos;
             return;
         }
-
-        var holdingItemPosL = this.transform.position.x - this.transform.localScale.x;
         DetectedItemObj.transform.position = intermediateArmPos;
-    }
-
-    /// <summary>
-    /// 現在の向きを取得出来ます
-    /// </summary>
-    /// <returns> true->右向き false->左向き </returns>
-    public bool GetDirection()
-    {
-        var diffValue = this.transform.position.x - m_lastFramePosX;
-        if (diffValue >= -DiffDetectionRange && diffValue <= DiffDetectionRange)
-        {
-            m_lastFramePosX = this.transform.position.x;
-            return IsRight;
-        }
-
-        if (diffValue > DiffDetectionRange)
-        {
-            this.transform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.RightFacingAngle, 0.0f);
-            IsRight = true;
-        }
-
-        if (diffValue < DiffDetectionRange)
-        {
-            this.transform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.LeftFacingAngle, 0.0f);
-            IsRight = false;
-        }
-
-        m_lastFramePosX = this.transform.position.x;
-        return IsRight;
     }
 
     /// <summary>
