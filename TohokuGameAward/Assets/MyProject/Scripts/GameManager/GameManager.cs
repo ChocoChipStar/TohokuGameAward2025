@@ -18,10 +18,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private EffectManager m_effectManager = null;
 
+    [SerializeField]
+    private SoundEffectManager m_seManager = null;
+
     private void Update()
     {
         DestroyPlayerIFOutOfStage();
-
         //if (m_playerManager.GetOnlyOnePlayer())
         //{
         //    ActiveGameSetText();
@@ -40,6 +42,7 @@ public class GameManager : MonoBehaviour
                 m_playerManager.SwitchDeadFlug(i,true); 
                 Destroy(m_playerManager.PlayerCount[i]);
                 m_effectManager.OnPlayStageOutEffect(m_playerManager.PlayerCount[i].transform.position, EffectManager.EffectType.StageOut);
+                m_seManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOutSE);
                 m_playerManager.PlayerCount[i] = null;
             }
         }
