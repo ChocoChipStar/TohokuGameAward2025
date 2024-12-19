@@ -15,6 +15,12 @@ public class ExplosionManager : MonoBehaviour
     [SerializeField]
     private SphereCollider m_explosionCollider = null;
 
+    [SerializeField]
+    private float m_cameraShakeDuration = 0.0f;
+
+    [SerializeField]
+    private float m_cameraShakeMagnitude = 0.0f;
+
     private BlowMover m_blowMover = null;
 
     private BombData m_bombData = null;
@@ -26,6 +32,8 @@ public class ExplosionManager : MonoBehaviour
     private const float DecreaseTimeMax = 0.2f;
 
     private bool m_isDestroy = false;
+
+    private CameraShake m_cameraShake = null;
 
     private void Awake()
     {
@@ -39,6 +47,8 @@ public class ExplosionManager : MonoBehaviour
         }
 
         m_explosionCollider.enabled = false;
+
+        m_cameraShake = Camera.main.gameObject.GetComponent<CameraShake>();
     }
 
     /// <summary>
@@ -84,6 +94,7 @@ public class ExplosionManager : MonoBehaviour
 
         InducedExplosion(other, rigidbody);
         GenerateExplosion(other, rigidbody);
+        StartCoroutine(m_cameraShake.Shake(m_cameraShakeDuration, m_cameraShakeMagnitude));
     }
 
     /// <summary>

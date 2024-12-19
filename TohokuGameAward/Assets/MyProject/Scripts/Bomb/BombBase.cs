@@ -22,6 +22,12 @@ public abstract class BombBase : MonoBehaviour
     [SerializeField]
     private Animator m_animator = null;
 
+    [SerializeField]
+    private float m_cameraShakeDuration = 0.0f;
+
+    [SerializeField]
+    private float m_cameraShakeMagnitude = 0.0f;
+
     private MaterialPropertyBlock m_materialPropertyBlock;
 
     private int m_holdingPlayerNum = 0;
@@ -49,6 +55,8 @@ public abstract class BombBase : MonoBehaviour
     private const int TwoSecondsIndex = 1;
     private const int OneSecondsIndex = 0;
 
+    private CameraShake m_cameraShake = null;
+
     protected BombData m_bombData = null;
 
     public BombState currentState { get; private set; }
@@ -67,6 +75,7 @@ public abstract class BombBase : MonoBehaviour
 
     private void Awake()
     {
+        m_cameraShake = Camera.main.GetComponent<CameraShake>();
         currentState = BombState.Dropped;
     }
 
@@ -96,6 +105,7 @@ public abstract class BombBase : MonoBehaviour
             var drone = collision.gameObject.GetComponent<DroneDestroy>();
             drone.SetDestroy();
             CauseAnExplosion();
+            StartCoroutine(m_cameraShake.Shake(m_cameraShakeDuration, m_cameraShakeMagnitude));
         }
 
         var isHitPlayer = TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Player);
@@ -104,6 +114,7 @@ public abstract class BombBase : MonoBehaviour
         if (isHitPlayer && !isThrowingPlayer)
         {
             CauseAnExplosion();
+            StartCoroutine(m_cameraShake.Shake(m_cameraShakeDuration, m_cameraShakeMagnitude));
         }
 
         var isHitStage = TagManager.Instance.SearchedTagName(collision.gameObject,TagManager.Type.Ground);
