@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -178,12 +179,11 @@ public abstract class BombBase : MonoBehaviour
     /// <summary>
     /// 投げ状態の処理を実行します
     /// </summary>
-    public void OnThrow(Vector3 direction)
+    public void OnThrow(Vector3 forceVector)
     {
         currentState = BombState.Throw;
         InitializeThrowState();
-
-        CalculateThrowMovement(direction);
+        CalculateThrowMovement(forceVector);
     }
 
     ///<summary>

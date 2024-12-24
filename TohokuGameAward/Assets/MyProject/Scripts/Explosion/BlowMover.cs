@@ -7,6 +7,9 @@ public class BlowMover : MonoBehaviour
     private ExplosionData m_explosionData = null;
 
     [SerializeField]
+    private PlayerAnimator m_animator = null;
+
+    [SerializeField]
     private Rigidbody m_playerRigidbody = null;
 
     private BombData m_bombData = null;
@@ -53,6 +56,10 @@ public class BlowMover : MonoBehaviour
         {
             m_playerMover.GetExplosion(false);
             m_isBlow = false;
+
+            // アニメーション遷移可能状態にする
+            m_animator.TransferableState(top: PlayerAnimator.TopState.Blow);
+            m_animator.TransferableState(under: PlayerAnimator.UnderState.Blow);
         }
 
         // プレイヤー操作不能時間を測る
@@ -156,6 +163,10 @@ public class BlowMover : MonoBehaviour
         if (TagManager.Instance.SearchedTagName(parentObj,TagManager.Type.Player))
         {
             m_playerMover.GetExplosion(true);
+
+            // 吹き飛びアニメーション開始
+            m_animator.ChangeTopState(PlayerAnimator.TopState.Blow);
+            m_animator.ChangeUnderState(PlayerAnimator.UnderState.Blow);
         }
 
         m_cantInputElpasedTime = m_explosionData.Blow.CantInputTime;

@@ -43,12 +43,19 @@ public class PlayerData : ScriptableObject
 
         [SerializeField, Header("爆弾生成の時間（秒）")]
         private float m_bombGenerateTime = 0.0f;
+        [SerializeField, Header("右向いた時の角度")]
+        private float m_rightBodyAngle = 0.0f;
+
+        [SerializeField, Header("左向いた時の角度")]
+        private float m_leftBodyAngle = 0.0f;
 
         public int Weight { get { return m_weight; } private set { value = m_weight; } }
         public float PowerFrictional { get { return m_powerFrictional; } private set { value = m_powerFrictional; } }
         public float MoveSpeed { get { return m_moveSpeed; } private set { value = m_moveSpeed; } }
         public float PowerJump { get { return m_powerJump; } private set { value = m_powerJump; } }
         public float BombGenereareTime { get { return m_bombGenerateTime;} private set { value = m_bombGenerateTime; } }
+        public float RightBodyAngle { get { return m_rightBodyAngle; } private set { value = m_rightBodyAngle; } }
+        public float LeftBodyAngle { get { return m_leftBodyAngle; } private set { value = m_leftBodyAngle; } }
     }
 
     [System.Serializable]

@@ -1,26 +1,31 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
+using static PlayerAnimator;
 
 public class PlayerPickup : MonoBehaviour
 {
     [SerializeField]
-    private PlayerThrow m_playerThrow = null;
+    private Transform m_leftArmTransform = null;
+
+    [SerializeField]
+    private Transform m_rightArmTranform = null;
+
+    [SerializeField]
+    private PlayerAnimator m_animator = null;
+
+    [SerializeField]
+    private PlayerDirectionRotator m_directionRotator = null;
 
     [SerializeField]
     private PlayerInputData m_inputData = null;
 
-    [SerializeField]
-    private BoxCollider m_detectionCollider = null;
-
-    private float m_lastFramePosX = 0.0f;
+    private Vector3 intermediateArmPos = Vector3.zero;
 
     private bool m_isPickup = false;
     private bool m_isDetected = false;
 
-    private const float DiffDetectionRange = 0.01f;
-
     public GameObject DetectedItemObj { get; private set; } = null;
-    public bool IsRight { get; private set; } = false;
     public bool IsHoldingItem { get; private set; } = false;
     public bool IsPuckUp { get { return m_isPickup; }  }
 
@@ -28,6 +33,7 @@ public class PlayerPickup : MonoBehaviour
     {
         if (DetectedItemObj == null)
         {
+            m_animator.TransferableState(TopState.Pickup);
             m_isPickup = false;
             return;
         }
@@ -41,8 +47,6 @@ public class PlayerPickup : MonoBehaviour
         {
             HoldingDetectedItem();
         }
-
-        m_lastFramePosX = this.transform.position.x;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,8 +65,10 @@ public class PlayerPickup : MonoBehaviour
             }
 
             m_isDetected = true;
-            m_isPickup = true;
             DetectedItemObj = other.gameObject.transform.parent.gameObject;
+            
+            m_isPickup = true;
+            m_animator.ChangeTopState(TopState.Pickup);
         }
     }
 
@@ -88,6 +94,7 @@ public class PlayerPickup : MonoBehaviour
 
         if (TagManager.Instance.SearchedTagName(otherObj, TagManager.Type.Detected))
         {
+            m_animator.TransferableState(TopState.Pickup);
             m_isPickup = false;
         }
     }
@@ -109,40 +116,13 @@ public class PlayerPickup : MonoBehaviour
     /// </summary>
     private void HoldingDetectedItem()
     {
-        if (GetDirection())
-        {
-            var holdingItemPosR = this.transform.position.x + this.transform.localScale.x;
-            DetectedItemObj.transform.position = new Vector3(holdingItemPosR, this.transform.position.y, 0.0f);
+        intermediateArmPos = Vector3.Lerp(m_leftArmTransform.position, m_rightArmTranform.position, 0.5f);
+        if (m_directionRotator.IsRight.Value)
+        {    
+            DetectedItemObj.transform.position = intermediateArmPos;
             return;
         }
-
-        var holdingItemPosL = this.transform.position.x - this.transform.localScale.x;
-        DetectedItemObj.transform.position = new Vector3(holdingItemPosL, this.transform.position.y, 0.0f);
-    }
-
-    /// <summary>
-    /// 現在の向きを取得出来ます
-    /// </summary>
-    /// <returns> true->右向き false->左向き </returns>
-    private bool GetDirection()
-    {
-        var diffValue = this.transform.position.x - m_lastFramePosX;
-        if (diffValue >= -DiffDetectionRange && diffValue <= DiffDetectionRange)
-        {
-            return IsRight;
-        }
-
-        if (diffValue > DiffDetectionRange)
-        {
-            IsRight = true;
-        }
-
-        if (diffValue < DiffDetectionRange)
-        {
-            IsRight = false;
-        }
-
-        return IsRight;
+        DetectedItemObj.transform.position = intermediateArmPos;
     }
 
     /// <summary>
