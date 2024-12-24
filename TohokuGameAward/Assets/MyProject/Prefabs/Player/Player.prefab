@@ -1844,6 +1844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
+  m_animator: {fileID: 2021427367427975607}
   m_playerRigidbody: {fileID: 6658028852423634333}
 --- !u!1 &5512459343323414739
 GameObject:

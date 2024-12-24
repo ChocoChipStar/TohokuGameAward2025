@@ -29,17 +29,21 @@ public class PlayerAnimator : MonoBehaviour
         { TopState.Idle,       false },
         { TopState.Move,       false },
         { TopState.Jump,       false },
+        { TopState.Falling,    false },
         { TopState.Pickup,     false },
         { TopState.ThrowFront, false },
         { TopState.ThrowUpper, false },
-        { TopState.ThrowUnder, false }
+        { TopState.ThrowUnder, false },
+        { TopState.Blow,       false }
     };
     /// <summary> 下半身アニメーションの遷移可能状態を管理 </summary>
     private Dictionary<UnderState, bool> m_isTransferableUnderState = new Dictionary<UnderState, bool>()
     {
         { UnderState.Idle, false },
         { UnderState.Move, false },
-        { UnderState.Jump, false }
+        { UnderState.Jump, false },
+        { UnderState.Falling, false },
+        { UnderState.Blow, false }
     };
 
     /// <summary> 上半身アニメーションの優先度 </summary>
@@ -48,17 +52,21 @@ public class PlayerAnimator : MonoBehaviour
         { TopState.Idle,       0 },
         { TopState.Move,       1 },
         { TopState.Jump,       2 },
-        { TopState.Pickup,     3 },
-        { TopState.ThrowFront, 4 },
-        { TopState.ThrowUpper, 5 },
-        { TopState.ThrowUnder, 6 }
+        { TopState.Falling,    3 },
+        { TopState.Pickup,     4 },
+        { TopState.ThrowFront, 5 },
+        { TopState.ThrowUpper, 6 },
+        { TopState.ThrowUnder, 7 },
+        { TopState.Blow,       8 }
     };
     /// <summary> 下半身アニメーションの優先度 </summary>
     private Dictionary<UnderState, int> m_underStatePriority = new Dictionary<UnderState, int>()
     {
-        { UnderState.Idle, 0 },
-        { UnderState.Move, 1 },
-        { UnderState.Jump, 2 }
+        { UnderState.Idle,    0 },
+        { UnderState.Move,    1 },
+        { UnderState.Jump,    2 },
+        { UnderState.Falling, 3 },
+        { UnderState.Blow,    4 }
     };
 
     public enum StateType
@@ -71,16 +79,20 @@ public class PlayerAnimator : MonoBehaviour
         Idle,
         Move,
         Jump,
+        Falling,
         Pickup,
         ThrowFront,
         ThrowUpper,
-        ThrowUnder
+        ThrowUnder,
+        Blow
     }
     public enum UnderState
     {
         Idle,
         Move,
-        Jump
+        Jump,
+        Falling,
+        Blow
     }
 
     public bool IsFinishedThrowFirst { get; private set; } = false;
@@ -96,7 +108,6 @@ public class PlayerAnimator : MonoBehaviour
     {
         ChangeTopState(TopState.Idle);
         ChangeUnderState(UnderState.Idle);
-        
     }
 
     /// <summary>
@@ -153,6 +164,10 @@ public class PlayerAnimator : MonoBehaviour
                 m_animator.SetInteger(StateNames[(int)StateType.Top], (int)TopState.Jump);
                 break;
 
+            case TopState.Falling:
+                m_animator.SetInteger(StateNames[(int)StateType.Top], (int)TopState.Falling);
+                break;
+
             case TopState.Pickup:
                 m_animator.SetInteger(StateNames[(int)StateType.Top], (int)TopState.Pickup);
                 break;
@@ -167,6 +182,10 @@ public class PlayerAnimator : MonoBehaviour
 
             case TopState.ThrowUnder:
                 m_animator.SetInteger(StateNames[(int)StateType.Top], (int)TopState.ThrowUnder);
+                break;
+
+            case TopState.Blow:
+                m_animator.SetInteger(StateNames[(int)StateType.Top], (int)TopState.Blow);
                 break;
 
             default:
@@ -188,6 +207,14 @@ public class PlayerAnimator : MonoBehaviour
 
             case UnderState.Jump:
                 m_animator.SetInteger(StateNames[(int)StateType.Under], (int)UnderState.Jump);
+                break;
+
+            case UnderState.Falling:
+                m_animator.SetInteger(StateNames[(int)StateType.Under], (int)UnderState.Falling);
+                break;
+
+            case UnderState.Blow:
+                m_animator.SetInteger(StateNames[(int)StateType.Under], (int)TopState.Blow);
                 break;
         }
     }
@@ -259,6 +286,8 @@ public class PlayerAnimator : MonoBehaviour
     public void InitializeThrowFirst()
     {
         IsFinishedThrowFirst = false;
+        TransferableState(top: m_currentTopState.Value);
+        TransferableState(under: m_currentUnderState.Value);
     }
 
     /// <summary>
