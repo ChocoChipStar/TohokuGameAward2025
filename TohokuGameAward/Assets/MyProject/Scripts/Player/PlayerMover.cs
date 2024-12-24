@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using static PlayerAnimator;
 
 public class PlayerMover : MonoBehaviour
@@ -12,8 +13,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField]
     private PlayerInputData m_inputData = null;
 
-    [SerializeField]
-    private PlayerProduceBomb m_produceBomb = null;
+    // [SerializeField]
+    // private PlayerProduceBomb m_produceBomb = null;
     
     [SerializeField]
     private PlayerAnimator m_animator = null;
@@ -27,6 +28,8 @@ public class PlayerMover : MonoBehaviour
     public bool IsGrounded { get; private set; } = false;
 
     private bool m_isGetExplosion = false;
+
+    private const float FallingMinValue = 0.1f;
 
     private void Update()
     {
@@ -45,14 +48,20 @@ public class PlayerMover : MonoBehaviour
         {
             JumpOperation();
         }
+
+        if(!IsGrounded && m_rigidbody.velocity.y <= FallingMinValue)
+        {
+            m_animator.ChangeTopState(TopState.Falling);
+            m_animator.ChangeUnderState(UnderState.Falling);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Ground))
         {
-            m_animator.TransferableState(top: TopState.Jump);
-            m_animator.TransferableState(under: UnderState.Jump);
+            m_animator.TransferableState(top: TopState.Falling);
+            m_animator.TransferableState(under: UnderState.Falling);
             IsGrounded = true;
         }
     }
@@ -83,10 +92,10 @@ public class PlayerMover : MonoBehaviour
     private bool CanMove(Vector2 stickValue)
     {
         // ボムを生成している。または、爆発を受けている
-        if(m_produceBomb.isGenerating && !m_isGetExplosion)
-        {
-            return false;
-        }
+        //if(m_produceBomb.isGenerating && !m_isGetExplosion)
+        //{
+        //    return false;
+        //}
 
         // 右の壁に衝突していたら右への移動入力を不可にする
         if (stickValue.x > PlayerInputData.MovementDeadZoneRange && m_detectorR.IsHitWall())
@@ -125,7 +134,7 @@ public class PlayerMover : MonoBehaviour
     private bool CanJump()
     {
         if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Jump, m_inputData.SelfNumber) 
-        && m_isGrounded && !m_isGetExplosion && !m_produceBomb.isGenerating)
+        && IsGrounded && !m_isGetExplosion /*&& !m_produceBomb.isGenerating*/)
         {
             return true;
         }
