@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6505357305837549286
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8727824486401761457}
+  - component: {fileID: 4228440935033071189}
+  - component: {fileID: 2668083813038100569}
+  - component: {fileID: 5903952608472755844}
+  m_Layer: 0
+  m_Name: PointItemGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8727824486401761457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505357305837549286}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4228440935033071189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505357305837549286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d20f5f2983c6c42bd38439983593ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pointItemSelector: {fileID: 2668083813038100569}
+  m_rotatingItemPos: []
+  m_itemAngle: 0
+  m_staticItemPos: []
+  m_maxItems: 0
+  m_spawnInterval: 0
+  m_itemLifetime: 0
+--- !u!114 &2668083813038100569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505357305837549286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18882233a57df554f9b47c2223d90ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pointItemPrefab:
+  - {fileID: 7314725359114612865, guid: a7ba7799104ebf348ba999e5cbbfa7ac, type: 3}
+  - {fileID: 7314725359114612865, guid: a958493666a60f0499404c7e7f9fd3de, type: 3}
+  - {fileID: 7314725359114612865, guid: e96a0b14535fa1740a2b8130fca1c8e7, type: 3}
+  m_chanceOfPointItem:
+  - 50
+  - 40
+  - 10
+--- !u!114 &5903952608472755844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505357305837549286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292c34226ab64d2438ef73f8298c1bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerManager: {fileID: 0}
+  m_score: 

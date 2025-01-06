@@ -103,6 +103,20 @@ public class PlayerManager : MonoBehaviour
         m_isDead[playerNum] = isDead;
     }
 
+    public int GetPlayerIndex(GameObject player)
+    {
+
+        for (int i = 0; i < m_playerCount.Length; i++)
+        {
+            if (m_playerCount[i] == player)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     //private int CountPlayers()
     //{
     //    int count = this.transform.childCount;
