@@ -7,22 +7,7 @@ public class PointItemGenerator : MonoBehaviour
     PointItemSelector m_pointItemSelector = null;
 
     [SerializeField]
-    List<Vector3> m_rotatingItemPos = null;
-
-    [SerializeField]
-    float m_itemAngle = 0;
-
-    [SerializeField]
-    List<Vector3> m_staticItemPos = null;
-
-    [SerializeField]
-    int m_maxItems = 0;
-
-    [SerializeField]
-    float m_spawnInterval = 0;
-
-    [SerializeField]
-    float m_itemLifetime = 0;
+    PointData m_pointData = null;  
 
     float m_timeCounter = 0;
 
@@ -30,11 +15,11 @@ public class PointItemGenerator : MonoBehaviour
 
     void Update()
     {
-        if (m_timeCounter > m_spawnInterval && !m_isItemActive)
+        if (m_timeCounter > m_pointData.Params.SpawnInterval && !m_isItemActive)
         {
             GeneratePointItem();
         }
-        if (m_timeCounter > m_itemLifetime && m_isItemActive)
+        if (m_timeCounter > m_pointData.Params.ItemLifeTime && m_isItemActive)
         {
             DestroyPointItem();
         }
@@ -43,10 +28,10 @@ public class PointItemGenerator : MonoBehaviour
 
     private void GeneratePointItem()
     {
-        List<Vector3> rotatingItemPosCopy = new List<Vector3>(m_rotatingItemPos);
-        List<Vector3> staticItemPosCopy = new List<Vector3>(m_staticItemPos);
+        List<Vector3> rotatingItemPosCopy = new List<Vector3>(m_pointData.Positions.RotatingItemPos);
+        List<Vector3> staticItemPosCopy = new List<Vector3>(m_pointData.Positions.StaticItemPos);
 
-        for (int i = 0; i < m_maxItems; i++)
+        for (int i = 0; i < m_pointData.Params.MaxItem; i++)
         {
             GameObject randomItemPrefab = m_pointItemSelector.ChoosePointItem();
             int totalSpawnPos = rotatingItemPosCopy.Count + staticItemPosCopy.Count;
@@ -85,7 +70,7 @@ public class PointItemGenerator : MonoBehaviour
 
     private void GenerateRotatingItem(GameObject ringPrefab,Vector3 pos)
     {
-        Instantiate(ringPrefab, pos, Quaternion.Euler(0, m_itemAngle, 0), transform);
+        Instantiate(ringPrefab, pos, Quaternion.Euler(0, m_pointData.Params.RotatingAngle, 0), transform);
     }
 
     private void GenerateStaticItem(GameObject ringPrefab, Vector3 pos)

@@ -47,12 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_pointItemSelector: {fileID: 2668083813038100569}
-  m_rotatingItemPos: []
-  m_itemAngle: 0
-  m_staticItemPos: []
-  m_maxItems: 0
-  m_spawnInterval: 0
-  m_itemLifetime: 0
+  m_pointData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
 --- !u!114 &2668083813038100569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,14 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18882233a57df554f9b47c2223d90ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_pointItemPrefab:
-  - {fileID: 7314725359114612865, guid: a7ba7799104ebf348ba999e5cbbfa7ac, type: 3}
-  - {fileID: 7314725359114612865, guid: a958493666a60f0499404c7e7f9fd3de, type: 3}
-  - {fileID: 7314725359114612865, guid: e96a0b14535fa1740a2b8130fca1c8e7, type: 3}
-  m_chanceOfPointItem:
-  - 50
-  - 40
-  - 10
+  m_pointData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
 --- !u!114 &5903952608472755844
 MonoBehaviour:
   m_ObjectHideFlags: 0

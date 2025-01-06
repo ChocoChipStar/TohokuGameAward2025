@@ -5,10 +5,7 @@ using UnityEngine;
 public class PointItemSelector : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] m_pointItemPrefab = null;
-
-    [SerializeField]
-    private float[] m_chanceOfPointItem = null;
+    PointData m_pointData = null;
 
     private Tuple<GameObject, float>[] m_pointItemData = null;
 
@@ -27,7 +24,7 @@ public class PointItemSelector : MonoBehaviour
     /// <returns></returns>
     private Tuple<GameObject, float>[] MakeRingPointItemData()
     {
-        var makeTuple = m_pointItemPrefab.Zip(m_chanceOfPointItem, (prefab, chance) => Tuple.Create(prefab, chance));
+        var makeTuple = m_pointData.Items.Prefab.Zip(m_pointData.Chances.ChanceOfItem, (prefab, chance) => Tuple.Create(prefab, chance));
         makeTuple.OrderByDescending(item => item.Item2);
         var maketupleArray = makeTuple.ToArray();
         return maketupleArray;
@@ -37,17 +34,17 @@ public class PointItemSelector : MonoBehaviour
     {
         float total = 0;
 
-        for (int i = 0; i < m_chanceOfPointItem.Length; i++)
+        for (int i = 0; i < m_pointData.Chances.ChanceOfItem.Length; i++)
         {
-            total += m_chanceOfPointItem[i];
+            total += m_pointData.Chances.ChanceOfItem[i];
         }
 
         return total;
     }
     public GameObject ChoosePointItem()
     {
-        //m_pointItemData[i].Item1にはm_pointItemPrefab[i]と同じ値が入っています。
-        //m_pointItemData[i].Item2にはm_chanceOfPointItem[i]と同じ値が入っています。
+        //m_pointItemData[i].Item1にはPointDataのm_pointItemPrefab[i]と同じ値が入っています。
+        //m_pointItemData[i].Item2にはPointDataのm_chanceOfPointItem[i]と同じ値が入っています。
 
         float numberToChoose = UnityEngine.Random.Range(0, m_totalChanceOfPointItem);
 
