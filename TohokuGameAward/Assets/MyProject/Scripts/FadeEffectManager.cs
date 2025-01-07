@@ -5,6 +5,9 @@ using UnityEngine;
 public class FadeEffectManager : MonoBehaviour
 {
     [SerializeField]
+    private SceneChanger m_sceneChanger = null;
+
+    [SerializeField]
     private RectTransform m_unMaskRectTrans = null;
 
     [SerializeField]
@@ -15,20 +18,14 @@ public class FadeEffectManager : MonoBehaviour
 
     private Vector3 m_subtractValue = Vector3.zero;
 
+    private const float CircleMax = 25.0f;
     private static readonly Vector3 CircleScaleMax = new Vector3(25.0f, 25.0f, 25.0f);
+
 
     private void Start()
     {
         m_unMaskRectTrans.localScale = CircleScaleMax;
         m_subtractValue = -ConvertScaleValueToScaleRate(m_fadeRate);
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            m_isFadeOut = true;
-        }
     }
 
     private void FixedUpdate()
@@ -44,25 +41,80 @@ public class FadeEffectManager : MonoBehaviour
         }
     }
 
-    public void OnPlayFadeIn()
+    private void FadingIn()
     {
-
+        if (GreaterThanVector((Vector2)m_unMaskRectTrans.localScale,CircleMax))
+        {
+            InitializeFinishedFadeInMask();
+            m_sceneChanger.TransitionScene(SceneChanger.SceneName.Tutorial);
+            return;
+        }
     }
 
-    public void OnPlayFadeOut()
+    private void FadingOut()
     {
-        if (m_unMaskRectTrans.localScale.x <= 0.0f)
+        if (LessThanVector((Vector2)m_unMaskRectTrans.localScale,0.0f))
         {
-            m_unMaskRectTrans.localScale = Vector3.zero;
-            m_isFadeOut = false;
+            InitializeFinishedFadeOutMask();
+            m_sceneChanger.TransitionScene(SceneChanger.SceneName.Tutorial);
             return;
         }
 
         m_unMaskRectTrans.localScale += m_subtractValue;
     }
 
+    private void InitializeFinishedFadeInMask()
+    {
+        m_unMaskRectTrans.localScale = Vector3.zero;
+        m_isFadeIn = false;
+    }
+
+    private void InitializeFinishedFadeOutMask()
+    {
+        m_unMaskRectTrans.localScale = Vector3.zero;
+        m_isFadeOut = false;
+    }
+
     private Vector3 ConvertScaleValueToScaleRate(float percentage = 1.0f)
     {
         return CircleScaleMax / 100.0f * percentage;
+    }
+
+    /// <summary>
+    /// Vector2値のXとY両方が検証する値以下であるかを調べます
+    /// </summary>
+    /// <returns> true->検証値以下 false->検証値以下ではない </returns>
+    private bool LessThanVector(Vector2 verifyVector, float verifyValue)
+    {
+        if(verifyVector.x <= verifyValue && verifyVector.y <= verifyValue)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Vector2値のXとY両方が検証する値以上であるかを調べます
+    /// </summary>
+    /// <returns> true->検証値以上 false->検証値以上ではない </returns>
+    private bool GreaterThanVector(Vector2 verifyVector, float verifyValue)
+    {
+        if(verifyVector.x >= verifyValue && verifyVector.y >= verifyValue)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void OnPlayFadeIn()
+    {
+        m_isFadeIn = true;
+    }
+
+    public void OnPlayFadeOut()
+    {
+        m_isFadeOut = true;
     }
 }
