@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def0cf1c230e6304e8ac6864101d7b1e, type: 3}
+  m_Name: PointData
+  m_EditorClassIdentifier: 
+  m_posData:
+    m_rotatingItemPos:
+    - {x: 0, y: 0, z: 0}
+    m_staticItemPos:
+    - {x: 1, y: 0, z: 0}
+  m_paramsData:
+    m_rotatingAngle: 0
+    m_maxItem: 2
+    m_spawnInterval: 2
+    m_itemLifetime: 3
+  m_itemData:
+    m_pointItemPrefab:
+    - {fileID: 7314725359114612865, guid: a7ba7799104ebf348ba999e5cbbfa7ac, type: 3}
+    - {fileID: 7314725359114612865, guid: a958493666a60f0499404c7e7f9fd3de, type: 3}
+    - {fileID: 7314725359114612865, guid: e96a0b14535fa1740a2b8130fca1c8e7, type: 3}
+  m_chanceData:
+    m_chanceOfPointItem:
+    - 50
+    - 40
+    - 10
