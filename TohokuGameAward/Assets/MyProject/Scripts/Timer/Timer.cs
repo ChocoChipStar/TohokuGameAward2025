@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Timer : MonoBehaviour
@@ -15,7 +16,12 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private string m_timeLimitText = null;
 
+    [SerializeField]
+    private float m_sceneChangeDelay = 0.0f;
+
     private bool m_isTimeLimit = false;
+
+    public bool IsTimeLimit { get { return m_isTimeLimit; } } 
 
     private void Update()
     {
@@ -24,6 +30,7 @@ public class Timer : MonoBehaviour
         if (m_isTimeLimit)
         {
             RenderTimeLimitText();
+            LoadResultScene();
         }
     }
 
@@ -43,5 +50,12 @@ public class Timer : MonoBehaviour
     private void RenderTimeLimitText()
     {
         m_limitTextField.text = m_timeLimitText;
+    }
+
+    private void LoadResultScene()
+    {
+        m_sceneChangeDelay -= Time.deltaTime;
+        if (m_sceneChangeDelay < 0)
+        { SceneManager.LoadScene("ResultScene"); }
     }
 }

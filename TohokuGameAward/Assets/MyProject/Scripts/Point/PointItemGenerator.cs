@@ -82,7 +82,10 @@ public class PointItemGenerator : MonoBehaviour
     {
         foreach (Transform child in this.transform)
         {
-            Destroy(child.gameObject); 
+            if (child.CompareTag(TagManager.Instance.GetTagName(TagManager.Type.Crown)))
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         m_timeCounter = 0;

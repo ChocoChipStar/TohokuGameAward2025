@@ -475,6 +475,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_playerManager
+      value: 
+      objectReference: {fileID: 1741602048}
+    - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_timer
+      value: 
+      objectReference: {fileID: 1403572740}
     - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_playerManager
@@ -713,6 +723,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385141199}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1403572740 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3526640093867363154, guid: 53b62dd7922e91d4db1947cb135e78d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 6161389786470749272}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aed24a6915073b4db99cb3b765e069f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1413842988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5466601539235748598, guid: b38c6b9360c29df4da10f93e87acd777,
@@ -1279,7 +1301,7 @@ PrefabInstance:
     - target: {fileID: 2745671595426879529, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3490382917339648059, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
@@ -1290,6 +1312,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 147.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526640093867363154, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_limitTime
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526640093867363154, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_sceneChangeDelay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4206110489220438668, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
