@@ -48,7 +48,7 @@ public class CannonBombGenerator : MonoBehaviour
     //※クールタイムなどの処理を追加予定
     private bool CanShootBomb()
     {
-        if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Jump, m_inputData.SelfNumber))
+        if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Shoot, m_inputData.SelfNumber))
         {
             return true;
         }
