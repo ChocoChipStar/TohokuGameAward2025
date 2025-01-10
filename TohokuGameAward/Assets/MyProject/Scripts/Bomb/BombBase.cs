@@ -84,32 +84,34 @@ public abstract class BombBase : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (currentState != BombState.Throw)
-        {
-            return;
-        }
+        CauseAnExplosion();
 
-        if (TagManager.Instance.SearchedTagName(collision.gameObject,TagManager.Type.Drone))
-        {
-            var drone = collision.gameObject.GetComponent<DroneDestroy>();
-            drone.SetDestroy();
-            CauseAnExplosion();
-        }
+        //if (currentState != BombState.Throw)
+        //{
+        //    return;
+        //}
 
-        var isHitPlayer = TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Player);
-        var isThrowingPlayer = collision.gameObject.name == TagManager.Instance.GetTagName(TagManager.Type.Player) + (m_holdingPlayerNum + 1);
-        // プレイヤーに接触していて且つ、投げた本人以外であれば
-        if (isHitPlayer && !isThrowingPlayer)
-        {
-            CauseAnExplosion();
-        }
+        //if (TagManager.Instance.SearchedTagName(collision.gameObject,TagManager.Type.Drone))
+        //{
+        //    var drone = collision.gameObject.GetComponent<DroneDestroy>();
+        //    drone.SetDestroy();
+        //    CauseAnExplosion();
+        //}
 
-        var isHitStage = TagManager.Instance.SearchedTagName(collision.gameObject,TagManager.Type.Ground);
-        if (isHitStage)
-        {
-            currentState = BombState.Rolling;
-            m_isGrounded = true;
-        }
+        //var isHitPlayer = TagManager.Instance.SearchedTagName(collision.gameObject, TagManager.Type.Player);
+        //var isThrowingPlayer = collision.gameObject.name == TagManager.Instance.GetTagName(TagManager.Type.Player) + (m_holdingPlayerNum + 1);
+        //// プレイヤーに接触していて且つ、投げた本人以外であれば
+        //if (isHitPlayer && !isThrowingPlayer)
+        //{
+        //    CauseAnExplosion();
+        //}
+
+        //var isHitStage = TagManager.Instance.SearchedTagName(collision.gameObject,TagManager.Type.Ground);
+        //if (isHitStage)
+        //{
+        //    currentState = BombState.Rolling;
+        //    m_isGrounded = true;
+        //}
     }
 
     /// <summary>
