@@ -130,6 +130,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
+        type: 3}
+      propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[0].Position.x
+      value: -14
+      objectReference: {fileID: 0}
+    - target: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
+        type: 3}
+      propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[0].Position.y
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
+        type: 3}
+      propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[6].Position.y
+      value: -2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3557950938094352148, guid: 5ba7af40e738cf64ebb6a2d762b80665,
         type: 3}
       propertyPath: m_Name
@@ -957,7 +972,7 @@ PrefabInstance:
     - target: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}
       propertyPath: m_cannonPlayerNumber
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8274386607292376071, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}
