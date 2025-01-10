@@ -15,7 +15,9 @@ public class PlayerInputData : MonoBehaviour
         Jump,
         Attack,
         Throw,
-        Produce
+        RightRail,
+        LeftRail,
+        Shoot
     }
 
     public Vector2 GetLeftStickValue(int playerNum)
@@ -36,8 +38,14 @@ public class PlayerInputData : MonoBehaviour
             case ActionsName.Throw:
                 return Gamepad.all[playerNum].rightTrigger.wasPressedThisFrame;
 
-            case ActionsName.Produce:
+            case ActionsName.RightRail:
                 return Gamepad.all[playerNum].rightShoulder.isPressed;
+
+            case ActionsName.LeftRail:
+                return Gamepad.all[playerNum].leftShoulder.isPressed;
+
+            case ActionsName.Shoot:
+                return Gamepad.all[playerNum].bButton.wasPressedThisFrame;
 
             default:
                 return false;

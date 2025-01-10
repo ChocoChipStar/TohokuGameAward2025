@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Splines;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,12 +11,22 @@ public class PlayerManager : MonoBehaviour
     private GameObject m_playerPrefab = null;
 
     [SerializeField]
+    private GameObject m_CannonPrefab = null;
+
+    [SerializeField]
+    private CannonManager m_cannonManager = null;
+
+    [SerializeField]
     private PlayerData m_playerData = null;
 
     [SerializeField]
     private float m_respawnTime = 0.0f;
 
+    [SerializeField]
+    private int m_cannonPlayerNumber = 0;
+
     private GameObject[] m_playerCount = null;
+    private GameObject instance = null;
 
     //private bool m_isOnlyOnePlayer = false;
 
@@ -45,7 +57,9 @@ public class PlayerManager : MonoBehaviour
         m_playerCount = new GameObject[gamepads.Count];
         for (int i = 0; i < gamepads.Count; i++)
         {
-            var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
+
+            //var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
+            PlayerCountJudg(i, out instance);
             instance.name = "Player" + (i + 1);
             m_playerCount[i] = instance;
             var inputData = instance.GetComponent<PlayerInputData>();
@@ -83,6 +97,20 @@ public class PlayerManager : MonoBehaviour
                 RespawnPlayer(i);
                 m_respawnCount[i] = 0.0f;
             }
+        }
+    }
+
+    private void PlayerCountJudg(int i, out GameObject player)
+    {
+        if(m_cannonPlayerNumber <= i + 1)
+        {
+            m_cannonManager.GenerateCannon(m_CannonPrefab, out instance);
+            player = instance;
+        }
+        else
+        {
+            var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
+            player = instance;
         }
     }
 
