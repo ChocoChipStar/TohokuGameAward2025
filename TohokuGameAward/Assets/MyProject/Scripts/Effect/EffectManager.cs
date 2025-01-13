@@ -7,7 +7,8 @@ public class EffectManager : MonoBehaviour
 
     public enum EffectType
     {
-        test
+        test,
+        StageOut
     }
 
     private void Update()

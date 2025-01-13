@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_stageSize:
     m_bottom: -10
+    m_upLimit: 10
     m_leftLimit: -10
     m_rightLimit: 10

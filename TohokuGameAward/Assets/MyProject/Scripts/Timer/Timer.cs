@@ -19,15 +19,31 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private float m_sceneChangeDelay = 0.0f;
 
+    [SerializeField]
+    private  int m_finalRound = 0;
+
     private bool m_isTimeLimit = false;
 
-    public bool IsTimeLimit { get { return m_isTimeLimit; } } 
+    private static int m_round = 0;
+
+    private bool m_isAddRound = false;
+
+    public bool IsTimeLimit { get { return m_isTimeLimit; } }
+
+    public  int FinalRound { get { return m_finalRound; } }
+
+    public static int Round { get { return m_round; } }
 
     private void Update()
     {
         ShowCountDown();
 
-        if (m_isTimeLimit)
+        if (m_isTimeLimit && m_round < m_finalRound)
+        {
+            RenderTimeLimitText();
+            LoadNewRound();
+        }
+        if(m_isTimeLimit && m_round >= m_finalRound)
         {
             RenderTimeLimitText();
             LoadResultScene();
@@ -52,10 +68,35 @@ public class Timer : MonoBehaviour
         m_limitTextField.text = m_timeLimitText;
     }
 
+    private void LoadNewRound()
+    {
+        m_sceneChangeDelay -= Time.deltaTime;
+
+        if (m_sceneChangeDelay < 0)
+        {
+            AddRound();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
     private void LoadResultScene()
     {
         m_sceneChangeDelay -= Time.deltaTime;
         if (m_sceneChangeDelay < 0)
-        { SceneManager.LoadScene("ResultScene"); }
+        {
+            AddRound();
+            SceneManager.LoadScene("ResultScene");
+        }
+    }
+
+    private void AddRound()
+    {
+        if(m_isAddRound)
+        {
+            return;
+        }    
+
+        m_round += 1;
+        m_isAddRound = true;
     }
 }

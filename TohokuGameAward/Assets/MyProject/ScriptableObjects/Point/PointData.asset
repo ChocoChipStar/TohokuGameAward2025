@@ -20,7 +20,7 @@ MonoBehaviour:
   m_paramsData:
     m_rotatingAngle: 0
     m_maxItem: 2
-    m_spawnInterval: 2
+    m_spawnInterval: 1
     m_itemLifetime: 3
   m_itemData:
     m_pointItemPrefab:

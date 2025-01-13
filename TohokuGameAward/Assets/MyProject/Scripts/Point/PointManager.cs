@@ -16,64 +16,62 @@ public class PointManager : MonoBehaviour
 
     private int[] m_defencesIndex = null;
 
-    private int m_defencesScore = 0;
-
     private int[] m_offencesIndex = null;
 
-    private int m_offencesScore = 0;
+    static private int[] m_defroundScore = null;
 
-    static public int m_finaldefScore = 0;
+    static private int[] m_offroundScore = null;
 
-    static public int m_finaloffScore = 0;
+    public static int[] DefRoundScore { get { return m_defroundScore; } }
 
-    public int DefencesScore { get { return m_defencesScore; } }
-
-    public int OffencesScore { get { return m_offencesScore; } }
-
-    public static int FinalDefScore { get { return m_finaldefScore; } }
-
-    public static int FinalOffScore { get {return m_finaloffScore; } }
+    public static int[] OffRoundScore { get { return m_offroundScore; } }
 
     void Start()
     {
         Array.Resize(ref m_score, m_playerManager.PlayerCount.Length);
+        if (Timer.Round == 0)
+        {
+            m_defroundScore = new int[m_timer.FinalRound];
+            m_offroundScore = new int[m_timer.FinalRound];
+        }
         m_defencesIndex = new int[m_score.Length];
         m_offencesIndex = new int [m_score.Length];
     }
     private void Update()
     {
         AddPoint();
-
-        m_defencesScore = m_score[0];
-
-        if (m_timer.IsTimeLimit)
-        {
-            SaveScore();
-        }
     }
 
     void AddPoint()
     {
+        if(Timer.Round >= m_timer.FinalRound)
+        {
+            return;
+        }
+
+        //↑ここでPlayerManagerから逃げる側か大砲側かを受け取り、
+        //その値をもとにポイントを追加しようと考えています。
+
         for (int i = 0; i < m_score.Length; i++)
         {
-            if (i < 2)
+            if (true)//逃げる側だったら
             {
-                m_defencesIndex[i] = i + 1;
+                m_defencesIndex[i] = i;//こちらにインデックスを格納
             }
-            else
+            else//大砲側だったら
             {
-                m_offencesIndex[i] = i + 1;
+                m_offencesIndex[i] = i;//こちらにインデックスを格納
             }
 
         }
-        //↑ここでm_defencesIndexとm_offencesIndexに攻守のIndexを入れ、
-        //その値をもとにポイントを追加しようと考えています。
-            int defencesScore = 0;
-            int offencesScore = 0;
+        
+        int defencesScore = 0;
+        int offencesScore = 0;
 
         for (int i = 0;i < m_score.Length; i++)
         {
             bool existsInDef = Array.Exists(m_defencesIndex, element => element == i);
+
             if(existsInDef)
             {
                 defencesScore += m_score[i];
@@ -86,19 +84,18 @@ public class PointManager : MonoBehaviour
                 continue;
             }
         }
-            m_defencesScore = defencesScore;
-            m_offencesScore = offencesScore;
+        m_defroundScore[Timer.Round] = defencesScore;
+        m_offroundScore[Timer.Round] = offencesScore;
     }
 
-    private void SaveScore()
+    public int GetTotalScore(int[] Score)
     {
-        m_finaldefScore = m_defencesScore;
-        m_finaloffScore = m_offencesScore;
-    }
-
-    public int[] GetScore()
-    {
-        return m_score; 
+        int totalScore = 0;
+        for (int i = 0; i < Score.Length; i++)
+        {
+            totalScore += Score[i];
+        }
+        return totalScore;
     }
 
     public void AddScore(int playerIndex,int score)

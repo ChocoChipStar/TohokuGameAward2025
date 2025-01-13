@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using UniRx.Triggers;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -34,6 +36,8 @@ public class PlayerManager : MonoBehaviour
 
     private float[] m_respawnCount = null;
 
+    public bool[] IsDead {  get { return m_isDead; } }
+
     public GameObject[] PlayerCount
     {
         get { return m_playerCount; }
@@ -47,7 +51,6 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        //CountPlayers();
         RespawnAfterDelay();
     }
 
@@ -57,9 +60,15 @@ public class PlayerManager : MonoBehaviour
         m_playerCount = new GameObject[gamepads.Count];
         for (int i = 0; i < gamepads.Count; i++)
         {
-
             //var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
-            PlayerCountJudg(i, out instance);
+            if (Timer.Round % 2 == 0)
+            {
+                PlayerCountJudg(i, out instance);
+            }
+            if (Timer.Round % 2 == 1)
+            {
+                SwapCannonAndPlayer(i, out instance);
+            }
             instance.name = "Player" + (i + 1);
             m_playerCount[i] = instance;
             var inputData = instance.GetComponent<PlayerInputData>();
@@ -84,16 +93,14 @@ public class PlayerManager : MonoBehaviour
     {
         for (int i = 0; i < m_playerCount.Length; i++)
         {
-            if (m_isDead[i] == false)
+            if (m_isDead[i])
             {
-                continue;
+               m_respawnCount[i] += Time.deltaTime; 
             }
 
-            m_respawnCount[i] += Time.deltaTime;
-
-            if (m_respawnCount[i] > m_respawnTime)
+            if (m_respawnCount[i] > m_respawnTime )
             {
-                SwitchDeadFlug(i,false);
+               SwitchDeadFlug(i,false);
                 RespawnPlayer(i);
                 m_respawnCount[i] = 0.0f;
             }
@@ -114,13 +121,33 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    private void SwapCannonAndPlayer(int i, out GameObject player)
+    {
+        if (m_cannonPlayerNumber <= i + 1)
+        {
+            var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
+            player = instance;
+        }
+        else
+        {
+            m_cannonManager.GenerateCannon(m_CannonPrefab, out instance);
+            player = instance;
+        }
+    }
+
     private void RespawnPlayer(int playerNum)
     {
-        int number = playerNum;
+        m_playerCount[playerNum].gameObject.transform.position = m_playerData.Positions.RespawnPos[playerNum];
 
-        var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[playerNum], Quaternion.identity, this.transform);
-        instance.name = "Player" + (number + 1);
-        m_playerCount[number] = instance;
+        foreach (Transform child in m_playerCount[playerNum].transform)
+        {
+            child.GetComponent<Collider>().enabled = true;
+        }
+
+        Rigidbody rb = m_playerCount[playerNum].gameObject.GetComponentInParent<Rigidbody>();
+        rb.isKinematic = false;
+
+
     }
 
     /// <summary>
@@ -128,7 +155,18 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void SwitchDeadFlug(int playerNum,bool isDead)
     {
-        m_isDead[playerNum] = isDead;
+      m_isDead[playerNum] = isDead;
+    }
+
+    public void DisablePhysics(int playerNum)
+    {
+        Rigidbody rb = m_playerCount[playerNum].gameObject.GetComponentInParent  <Rigidbody>();
+        rb.isKinematic = true;
+
+        foreach (Transform child in m_playerCount[playerNum].transform)
+        {
+           child.GetComponent<Collider>().enabled = false;
+        }
     }
 
     public int GetPlayerIndex(GameObject player)

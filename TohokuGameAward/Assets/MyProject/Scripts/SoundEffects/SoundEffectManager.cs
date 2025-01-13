@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundEffectManager : MonoBehaviour
 {
@@ -10,7 +10,7 @@ public class SoundEffectManager : MonoBehaviour
 
     public enum SoundEffectName
     {
-        TestSE
+        StageOut
     }
     public void OnPlayOneShot(SoundEffectName seNum)
     {

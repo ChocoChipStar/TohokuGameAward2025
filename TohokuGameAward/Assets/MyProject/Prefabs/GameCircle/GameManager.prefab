@@ -67,8 +67,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 330d02bfe36bfcc40892a7276dbc6e29, type: 2}
+  m_sharedMaterial: {fileID: -5918701107358102925, guid: 330d02bfe36bfcc40892a7276dbc6e29,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -285,6 +286,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerManager: {fileID: 0}
   m_stageData: {fileID: 11400000, guid: 6bcff8c8c9a207641a3d60b111342677, type: 2}
+  m_effectManager: {fileID: 0}
+  m_soundEffectManager: {fileID: 0}
 --- !u!114 &3526640093867363154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,8 +302,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_timerTextField: {fileID: 4206110489220438668}
   m_limitTextField: {fileID: 3148286591168513344}
-  m_limitTime: 10
+  m_limitTime: 90
   m_timeLimitText: Finish
+  m_sceneChangeDelay: 1
+  m_finalRound: 2
 --- !u!1 &8557798544382121615
 GameObject:
   m_ObjectHideFlags: 0
