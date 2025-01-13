@@ -36,10 +36,21 @@ public class CannonData : ScriptableObject
         [SerializeField, Header("爆弾発射速度")]
         private float m_shootSpeed = 0.0f;
 
+        [SerializeField, Header("爆弾ストック数")]
+        private int m_cannonBombStock = 0;
+
+        [SerializeField,Header("爆弾のリロード時間")]
+        private float m_bombReroadTime = 0.0f;
+
+        [SerializeField, Header("爆弾の発射クールタイム")]
+        private float m_bombCoolTime = 0.0f;
+
         public int CannonCount { get { return m_cannonCount; } private set { value = m_cannonCount; } }
         public float CannonDictance { get { return m_cannonDictance; } private set { value = m_cannonDictance; } }
         public float MoveSpeed { get { return m_moveSpeed; } private set { value = m_moveSpeed; } }
         public float ShootSpeed { get { return m_shootSpeed; } private set { value = m_shootSpeed; } }
-
+        public int CannonBombStock { get { return m_cannonBombStock; } private set { value = m_cannonBombStock; } }
+        public float BombReroadTime { get { return m_bombReroadTime; } private set { value = m_bombReroadTime; } }
+        public float BombCoolTime { get { return m_bombCoolTime; } private set { value = m_bombCoolTime; } }
     }
 }

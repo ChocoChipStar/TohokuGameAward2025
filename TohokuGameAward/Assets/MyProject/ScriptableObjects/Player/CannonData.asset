@@ -21,3 +21,6 @@ MonoBehaviour:
     m_cannonDictance: 0.02
     m_moveSpeed: 5
     m_shootSpeed: 5
+    m_cannonBombStock: 3
+    m_bombReroadTime: 1
+    m_bombCoolTime: 1

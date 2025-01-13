@@ -15,6 +15,9 @@ public class CannonMover : MonoBehaviour
     [SerializeField]
     private SplineContainer m_gameObject = null;
 
+    [SerializeField]
+    private Canvas m_canvas = null;
+
     [SerializeField, Range(0.0f, 100.0f)]
     private float m_cannonPosition = 0.0f;
 
@@ -24,6 +27,8 @@ public class CannonMover : MonoBehaviour
 
     private const float m_oneFrame = 60.0f;
     private const float m_percentage = 100.0f;
+
+    private const float m_canvasRotation = 270.0f;
 
     public float CannonPosition { get { return m_cannonPosition; } private set { } }
 
@@ -35,6 +40,8 @@ public class CannonMover : MonoBehaviour
         {
             CannonMoveOperation();
         }
+
+        CanvasRotationFix();
     }
 
     //大砲の移動処理
@@ -85,5 +92,12 @@ public class CannonMover : MonoBehaviour
         m_splineAnimate.Container = m_gameObject;
         m_cannonPosition = m_cannonData.Positions.StartPosition[playerNum];
         m_splineAnimate.NormalizedTime = m_cannonData.Positions.StartPosition[playerNum];
+    }
+
+    private void CanvasRotationFix()
+    {
+        var rotation = m_canvas.transform.rotation;
+        rotation.x = m_canvasRotation - this.transform.rotation.x;
+        m_canvas.transform.rotation = rotation;
     }
 }
