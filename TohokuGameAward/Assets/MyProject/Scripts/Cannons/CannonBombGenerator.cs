@@ -27,6 +27,7 @@ public class CannonBombGenerator : MonoBehaviour
     private void Awake()
     {
         m_cannonSlider.maxValue = m_cannonData.Params.CannonBombStock;
+        m_bombStock = m_cannonData.Params.CannonBombStock;
     }
 
     // Update is called once per frame
