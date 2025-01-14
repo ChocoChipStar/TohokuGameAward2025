@@ -28,16 +28,18 @@ public class BlowMover : MonoBehaviour
 
     private Vector3 m_playerPosition = Vector3.zero;
 
+    private Vector3 m_playerGetoutVelocity = Vector3.zero;
+
     private bool m_isBlow = false;
 
     private const float DecreaseTimeMax = 0.15f;
     private const float BasisInputElpasedTime = 60.0f;  //タイマー基準値
-    private const float PlayerBlowSpeed = 10.0f;        
+    private const float PlayerBlowSpeed = 10.0f;
     private const float PlayerMagnitudeLimit = 1.2f;      //値は目安
     private const float RateOfForceReduction = 0.8f;    //反射時の減少率
     private const float ReflectionDistanceMin = 0.8f;   //Rayの判定距離の最低値
     private const float BlowCheckerVelocityMin = 2.0f;  //この値よりVelocityが小さくなったら吹き飛びが終わる
-    public bool IsBlow { get { return m_isBlow;} }
+    public bool IsBlow { get { return m_isBlow; } }
 
     private void Update()
     {
@@ -47,6 +49,9 @@ public class BlowMover : MonoBehaviour
             return;
         }
 
+        //移動
+        GetOutMover();
+
         if (m_decelerationElapsedTime < DecreaseTimeMax)
         {
             m_decelerationElapsedTime += Time.deltaTime * (DecreaseTimeMax / m_explosionData.Blow.DecelerationTime);
@@ -54,8 +59,8 @@ public class BlowMover : MonoBehaviour
 
         if (!PlayerBlowChecker())
         {
-            m_playerMover.GetExplosion(false);
-            m_isBlow = false;
+            //m_playerMover.GetExplosion(false);
+            //m_isBlow = false;
 
             // アニメーション遷移可能状態にする
             m_animator.TransferableState(top: PlayerAnimator.TopState.Blow);
@@ -68,57 +73,57 @@ public class BlowMover : MonoBehaviour
             m_cantInputElpasedTime += -Time.deltaTime * (BasisInputElpasedTime / m_bombData.Params.ExplosionPower);
         }
 
-        //吹き飛び中にRayがでる。
-        BlowOutProcess();
+        ////吹き飛び中にRayがでる。
+        //BlowOutProcess();
     }
 
-    private void FixedUpdate()
-    {
-        if (m_playerRigidbody == null)
-        {
-            return;
-        }
+    //private void FixedUpdate()
+    //{
+    //    if (m_playerRigidbody == null)
+    //    {
+    //        return;
+    //    }
 
-        if (m_decelerationElapsedTime < DecreaseTimeMax && m_isBlow)
-        {
-            AfterDecreasePower();
-        }
-    }
+    //    if (m_decelerationElapsedTime < DecreaseTimeMax && m_isBlow)
+    //    {
+    //        AfterDecreasePower();
+    //    }
+    //}
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        //ステージに当たると跳ね返る
-        if (m_isBlow)
-        {
-            ReflectionOperation(collision);
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    //ステージに当たると跳ね返る
+    //    if (m_isBlow)
+    //    {
+    //        ReflectionOperation(collision);
+    //    }
+    //}
 
-    private void BlowOutProcess()
-    {
-        //Rayを飛ばして速度を記録
-        var velocity = m_playerRigidbody.velocity.normalized;
-        Physics.Raycast(transform.position + velocity, velocity, out hitRaycast);
+    //private void BlowOutProcess()
+    //{
+    //    //Rayを飛ばして速度を記録
+    //    var velocity = m_playerRigidbody.velocity.normalized;
+    //    Physics.Raycast(transform.position + velocity, velocity, out hitRaycast);
 
-        if (hitRaycast.collider != null &&
-            ReflectionDistanceMin < Vector3.Distance(this.transform.position, hitRaycast.point))
-        {
-            var hitTrans = hitRaycast.collider.transform;
-            var hitParentObj = hitTrans.gameObject;
-            if (TagManager.Instance.SearchedTagName(hitParentObj, TagManager.Type.Wall, TagManager.Type.Ground))
-            {
-                 m_reflectionVelocity = m_playerRigidbody.velocity;
-            }
-        }
-    }
+    //    if (hitRaycast.collider != null &&
+    //        ReflectionDistanceMin < Vector3.Distance(this.transform.position, hitRaycast.point))
+    //    {
+    //        var hitTrans = hitRaycast.collider.transform;
+    //        var hitParentObj = hitTrans.gameObject;
+    //        if (TagManager.Instance.SearchedTagName(hitParentObj, TagManager.Type.Wall, TagManager.Type.Ground))
+    //        {
+    //             m_reflectionVelocity = m_playerRigidbody.velocity;
+    //        }
+    //    }
+    //}
 
-    private void ReflectionOperation(Collision collision)
-    {
-        //反射する
-        var inNormal = collision.contacts[0].normal;
-        var forceRisult = Vector3.Reflect(m_reflectionVelocity, inNormal) * RateOfForceReduction;
-        m_playerRigidbody.velocity = forceRisult;
-    }
+    //private void ReflectionOperation(Collision collision)
+    //{
+    //    //反射する
+    //    var inNormal = collision.contacts[0].normal;
+    //    var forceRisult = Vector3.Reflect(m_reflectionVelocity, inNormal) * RateOfForceReduction;
+    //    m_playerRigidbody.velocity = forceRisult;
+    //}
 
     /// <summary>
     /// 爆風で触れた物体が吹き飛ぶ方向を計算します
@@ -151,7 +156,12 @@ public class BlowMover : MonoBehaviour
             return;
         }
         var explosionDirectionPower = GetExplosionDirection(BombPos) * CalculateExplosionPower(BombPos, bombDeta);
-        rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
+
+        m_playerGetoutVelocity = explosionDirectionPower;
+        other.enabled = false;
+        rigidbody.useGravity = false;
+
+        //rigidbody.AddForce(explosionDirectionPower, ForceMode.Impulse);
 
         m_isBlow = true;
         m_playerRigidbody = rigidbody;
@@ -160,7 +170,7 @@ public class BlowMover : MonoBehaviour
         m_reflectionVelocity = explosionDirectionPower;
 
         var parentObj = other.transform.parent.gameObject;
-        if (TagManager.Instance.SearchedTagName(parentObj,TagManager.Type.Player))
+        if (TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Player))
         {
             m_playerMover.GetExplosion(true);
 
@@ -172,41 +182,47 @@ public class BlowMover : MonoBehaviour
         m_cantInputElpasedTime = m_explosionData.Blow.CantInputTime;
         float forceTime = m_explosionData.Blow.DecelerationStartTime / CalculateExplosionPower(BombPos, bombDeta);
 
-        Invoke(nameof(FirstDecreasePower), forceTime);
+        //Invoke(nameof(FirstDecreasePower), forceTime);
+    }
+
+    private void GetOutMover()
+    {
+        this.transform.position += m_playerGetoutVelocity * Time.deltaTime;
     }
 
     /// <summary>
     /// 最初の大きな減速を行います。
     /// </summary>
-    private void FirstDecreasePower()
-    {
-        if (m_playerRigidbody == null)
-        {
-            return;
-        }
+    //private void FirstDecreasePower()
+    //{
+    //    if (m_playerRigidbody == null)
+    //    {
+    //        return;
+    //    }
 
-        var playerVelocity = m_playerRigidbody.velocity;
-        m_decelerationElapsedTime = 0.0f;
-        var decelerationRateX = -playerVelocity.x * m_explosionData.Blow.DecelerationRate;
-        var decelerationRateY = -playerVelocity.y * m_explosionData.Blow.DecelerationRate;
-        m_playerRigidbody.AddForce(decelerationRateX, decelerationRateY, 0.0f, ForceMode.Impulse);
-    }
+    //    var playerVelocity = m_playerRigidbody.velocity;
+    //    m_decelerationElapsedTime = 0.0f;
+    //    var decelerationRateX = -playerVelocity.x * m_explosionData.Blow.DecelerationRate;
+    //    var decelerationRateY = -playerVelocity.y * m_explosionData.Blow.DecelerationRate;
+    //    m_playerRigidbody.AddForce(decelerationRateX, decelerationRateY, 0.0f, ForceMode.Impulse);
+    //}
 
     /// <summary>
     /// 徐々に大きな力で減速がかかります。
-    /// </summary>
-    private void AfterDecreasePower()
-    {
-        var targetVelocity = m_playerRigidbody.velocity;
-        m_playerRigidbody.AddForce(-targetVelocity.x * m_decelerationElapsedTime, 0.0f, 0.0f, ForceMode.Impulse);
-    }
+    ///// </summary>
+    //private void AfterDecreasePower()
+    //{
+    //    var targetVelocity = m_playerRigidbody.velocity;
+    //    m_playerRigidbody.AddForce(-targetVelocity.x * m_decelerationElapsedTime, 0.0f, 0.0f, ForceMode.Impulse);
+    //}
 
     /// <summary>
     /// 現在プレイヤーが吹き飛び状態かを調べます
     /// </summary>a
     /// <returns> true->操作不能 false->操作可能 </returns>
+    /// 
     private bool PlayerBlowChecker()
-    {
+    { 
         if (m_playerRigidbody == null)
         {
             return true;
