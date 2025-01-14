@@ -16,7 +16,7 @@ public class FadeEffectManager : MonoBehaviour
     private bool m_isFadeIn = false;
     private bool m_isFadeOut = false;
 
-    private Vector3 m_subtractValue = Vector3.zero;
+    private Vector3 m_varianceValue = Vector3.zero;
 
     private const float CircleMax = 25.0f;
     private static readonly Vector3 CircleScaleMax = new Vector3(25.0f, 25.0f, 25.0f);
@@ -25,7 +25,7 @@ public class FadeEffectManager : MonoBehaviour
     private void Start()
     {
         m_unMaskRectTrans.localScale = CircleScaleMax;
-        m_subtractValue = -ConvertScaleValueToScaleRate(m_fadeRate);
+        m_varianceValue = -ConvertScaleValueToScaleRate(m_fadeRate);
     }
 
     private void FixedUpdate()
@@ -49,6 +49,8 @@ public class FadeEffectManager : MonoBehaviour
             m_sceneChanger.TransitionScene(SceneChanger.SceneName.Tutorial);
             return;
         }
+
+        m_unMaskRectTrans.localScale += m_varianceValue;
     }
 
     private void FadingOut()
@@ -60,7 +62,7 @@ public class FadeEffectManager : MonoBehaviour
             return;
         }
 
-        m_unMaskRectTrans.localScale += m_subtractValue;
+        m_unMaskRectTrans.localScale += -m_varianceValue;
     }
 
     private void InitializeFinishedFadeInMask()
