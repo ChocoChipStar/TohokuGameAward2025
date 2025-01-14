@@ -1,10 +1,10 @@
 ﻿using TMPro;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ResultText : MonoBehaviour
 {
-
-
     [SerializeField]
     private TextMeshProUGUI m_defeTotalText = null;
 
@@ -17,6 +17,15 @@ public class ResultText : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI[] m_offeScoreText = null;
 
+    [SerializeField]
+    private float WaitForSecondsOfRender = 0;
+
+    [SerializeField]
+    private float WaitForSecondsOfEffect = 0;
+
+    [SerializeField]
+    int effectIncrement = 0;
+
     private int m_defTotalScore = 0;
 
     private int m_offTotalScore = 0;
@@ -25,17 +34,22 @@ public class ResultText : MonoBehaviour
 
     private int[] m_offencesScore = null;
 
-    // Start is called before the first frame update
-    void Start()
+    private bool[] m_appeared = null;
+
+    private bool m_isResultEnded = false;
+
+    public bool IsResultEnded { get { return m_isResultEnded; } }
+
+    IEnumerator Start()
     {
+        m_appeared = new bool[2];
         GetFinalScore();
+        yield return StartCoroutine(RenderRoundScore());
+        yield return StartCoroutine(TotalScoreTeamOne());
+        yield return new WaitForSeconds(WaitForSecondsOfRender);
+        yield return StartCoroutine(TotalScoreTeamTwo());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        DrawResult();
-    }
     private void GetFinalScore()
     {
         m_deffencesScore = PointManager.DefRoundScore;
@@ -53,20 +67,46 @@ public class ResultText : MonoBehaviour
         }
         return TotalScore;
     }
-    private void DrawResult()
-    {
-        m_defeTotalText.text = m_defTotalScore.ToString();
-        m_offeTotalText.text = m_offTotalScore.ToString();
 
-        for(int i = 0;i < m_deffencesScore.Length;i++)
+    IEnumerator RenderRoundScore()
+    {
+        for (int i = 0; i < m_deffencesScore.Length; i++)
         {
             m_defeScoreText[i].text = m_deffencesScore[i].ToString();
-        }
-        for (int i = 0; i < m_offencesScore.Length; i++)
-        {
             m_offeScoreText[i].text = m_offencesScore[i].ToString();
+            yield return new WaitForSeconds(WaitForSecondsOfRender);
         }
     }
+   IEnumerator TotalScoreTeamOne()
+   {
+       int effectNumber = 0;
+       while (effectNumber < m_defTotalScore - effectIncrement)
+       {
+           effectNumber += effectIncrement;
+           m_defeTotalText.text = effectNumber.ToString();
+            yield return new WaitForSeconds(WaitForSecondsOfEffect);
+       }
+       m_appeared[0] = true; //m_appeared チームごとに「トータルスコアが表示されているか」を管理している。
+       if (m_appeared[0])
+       {
+           m_defeTotalText.text = m_defTotalScore.ToString(); 
+       }
+   }
 
-
+    IEnumerator TotalScoreTeamTwo()
+    {
+        int effectNumber = 0;
+        while (effectNumber < m_offTotalScore - effectIncrement)
+        {
+            effectNumber += effectIncrement;
+            m_offeTotalText.text = effectNumber.ToString();
+            yield return new WaitForSeconds(WaitForSecondsOfEffect);
+        }
+        m_appeared[1] = true; //m_appeared チームごとに「トータルスコアが表示されているか」を管理している。
+        if (m_appeared[1])
+        {
+            m_offeTotalText.text = m_offTotalScore.ToString();
+        }
+        m_isResultEnded = true;
+    }
 }
