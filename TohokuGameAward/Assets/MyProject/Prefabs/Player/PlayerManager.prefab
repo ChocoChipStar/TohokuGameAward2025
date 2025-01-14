@@ -51,4 +51,4 @@ MonoBehaviour:
   m_cannonManager: {fileID: 0}
   m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
   m_respawnTime: 5
-  m_cannonPlayerNumber: 0
+  m_cannonPlayerNumber: 3

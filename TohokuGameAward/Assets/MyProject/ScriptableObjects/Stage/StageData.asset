@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StageData
   m_EditorClassIdentifier: 
   m_stageSize:
-    m_bottom: -10
+    m_bottom: -5
+    m_upLimit: 5
     m_leftLimit: -10
     m_rightLimit: 10

@@ -23,7 +23,12 @@ public class PlayerData : ScriptableObject
         [SerializeField, Header("ゲーム開始時座標を設定 P1~P4")]
         private Vector3[] m_startPos = new Vector3[4];
 
+        [SerializeField, Header("リスポーン座標を設定 P1~P4")]
+        private Vector3[] m_respawnPos = new Vector3[4];
+
         public Vector3[] StartPos { get { return m_startPos; } private set { value = m_startPos; } }
+
+        public Vector3[] RespawnPos { get { return m_respawnPos; } private set { value = m_respawnPos; } }
     }
 
     [System.Serializable]

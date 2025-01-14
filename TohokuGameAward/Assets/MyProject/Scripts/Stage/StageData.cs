@@ -15,6 +15,9 @@ public class StageSize
     [SerializeField, Header("ステージの底(y座標)")]
     private float m_bottom = 0.0f;
 
+    [SerializeField, Header("ステージの上端(x座標)")]
+    private float m_upLimit = 0.0f;
+
     [SerializeField, Header("ステージの左端(x座標)")]
     private float m_leftLimit = 0.0f;
 
@@ -22,6 +25,7 @@ public class StageSize
     private float m_rightLimit = 0.0f;
 
     public float Bottom { get { return m_bottom; } private set { m_bottom = value; } }
+    public float UpLimit { get { return m_upLimit; } private set { m_upLimit = value; } }
 
     public float LeftLimit { get { return m_leftLimit; } private set { m_leftLimit = value; } }
 

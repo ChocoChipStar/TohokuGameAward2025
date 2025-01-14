@@ -5,6 +5,10 @@ public class EffectPlayer : MonoBehaviour
     private ParticleSystem[] m_particleSystems = null;
     private void Update()
     {
+        if(m_particleSystems == null)
+        {
+            return;
+        }
         bool m_stoppedAll = true;
         foreach (ParticleSystem particleSystem in m_particleSystems)
         {

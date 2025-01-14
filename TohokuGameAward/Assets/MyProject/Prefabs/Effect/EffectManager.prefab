@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3029600286465198957}
-  - component: {fileID: 1963939849256699234}
+  - component: {fileID: 8933879402395359304}
   m_Layer: 0
   m_Name: EffectManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1963939849256699234
+--- !u!114 &8933879402395359304
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_effectPrefab:
   - {fileID: 2618796573245405997, guid: 5064630c80fb1904887ca5cf39b6b1e7, type: 3}
+  - {fileID: 405784217282196436, guid: b503c007532b00f49ba84c6fa8c4892c, type: 3}
