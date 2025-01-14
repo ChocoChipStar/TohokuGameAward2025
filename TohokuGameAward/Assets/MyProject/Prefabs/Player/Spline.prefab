@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5643248994680749839}
   - component: {fileID: 709490324930384521}
+  - component: {fileID: 6967784821757616043}
   m_Layer: 0
   m_Name: Spline
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3557950938094352148}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -62,7 +63,7 @@ MonoBehaviour:
     m_Knots:
     - Position:
         x: -14
-        y: -2
+        y: -2.5
         z: 0
       TangentIn:
         x: 0
@@ -170,7 +171,7 @@ MonoBehaviour:
           w: 0.5
     - Position:
         x: 14
-        y: -2
+        y: -2.5
         z: 0
       TangentIn:
         x: 0
@@ -217,3 +218,19 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &6967784821757616043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557950938094352148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44fa8e26ce10e95448526b1fb19103c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerRailMover:
+  - {fileID: 0}
+  - {fileID: 0}
+  m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}

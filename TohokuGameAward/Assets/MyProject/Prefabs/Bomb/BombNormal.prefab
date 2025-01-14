@@ -100,14 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344ea8da4fd9899429b4f3a299bebc9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_explosionPrefab: {fileID: 736533305220200575, guid: fc437996f2d7f9a478a1dd031e346f80,
+  m_explosionPrefab: {fileID: 2083922939837167772, guid: 646cdb2680a787348a46574ecec74c36,
     type: 3}
   m_bombbody: {fileID: 3349947653543477314}
   m_bombCollider: {fileID: 8825022915557785972}
   m_bombRenderer: {fileID: 1701948448197186486}
-  m_baseBombMaterials:
-  - {fileID: 2100000, guid: ecf95092087c013489dceee6de76ce48, type: 2}
-  - {fileID: 2100000, guid: 23d603458e0da6e48a5e1cc62e0f375a, type: 2}
+  m_baseBombMaterials: []
   m_animator: {fileID: 4401138293158971157}
 --- !u!54 &3349947653543477314
 Rigidbody:

@@ -32,11 +32,13 @@ public class PlayerManager : MonoBehaviour
 
     //private bool m_isOnlyOnePlayer = false;
 
-    private bool[] m_isDead = null;
+    private bool[] m_isDead = new bool[4];
+    private bool[] m_isCannon = new bool[4];
 
     private float[] m_respawnCount = null;
 
     public bool[] IsDead {  get { return m_isDead; } }
+    public bool[] IsCannon { get {  return m_isCannon; } }
 
     public GameObject[] PlayerCount
     {
@@ -111,11 +113,13 @@ public class PlayerManager : MonoBehaviour
     {
         if(m_cannonPlayerNumber <= i + 1)
         {
+            m_isCannon[i] = true;
             m_cannonManager.GenerateCannon(m_CannonPrefab, out instance);
             player = instance;
         }
         else
         {
+            m_isCannon[i] = false;
             var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
             player = instance;
         }
@@ -125,11 +129,13 @@ public class PlayerManager : MonoBehaviour
     {
         if (m_cannonPlayerNumber <= i + 1)
         {
+            m_isCannon[i] = false;
             var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
             player = instance;
         }
         else
         {
+            m_isCannon[i] = true;
             m_cannonManager.GenerateCannon(m_CannonPrefab, out instance);
             player = instance;
         }
@@ -146,8 +152,6 @@ public class PlayerManager : MonoBehaviour
 
         Rigidbody rb = m_playerCount[playerNum].gameObject.GetComponentInParent<Rigidbody>();
         rb.isKinematic = false;
-
-
     }
 
     /// <summary>
@@ -160,12 +164,12 @@ public class PlayerManager : MonoBehaviour
 
     public void DisablePhysics(int playerNum)
     {
-        Rigidbody rb = m_playerCount[playerNum].gameObject.GetComponentInParent  <Rigidbody>();
+        Rigidbody rb = m_playerCount[playerNum].gameObject.GetComponentInParent<Rigidbody>();
         rb.isKinematic = true;
 
         foreach (Transform child in m_playerCount[playerNum].transform)
         {
-           child.GetComponent<Collider>().enabled = false;
+            child.GetComponent<Collider>().enabled = false;
         }
     }
 
