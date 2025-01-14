@@ -203,8 +203,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 0}
+  m_AnchoredPosition: {x: -2.4999967, y: 0}
+  m_SizeDelta: {x: 4.9999933, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8609533175539025448
 CanvasRenderer:
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -692,6 +692,7 @@ MonoBehaviour:
   m_cannonSlider: {fileID: 5682983618426239743}
   m_shootTransform: {fileID: 6561087655519887246}
   m_bombStock: 0
+  m_bombCoolTime: 0
 --- !u!114 &1223132130783986126
 MonoBehaviour:
   m_ObjectHideFlags: 0
