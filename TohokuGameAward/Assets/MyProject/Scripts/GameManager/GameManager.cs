@@ -3,12 +3,6 @@
 
 public class GameManager : MonoBehaviour
 {
-    //[SerializeField]
-    //private TextMeshProUGUI m_gameSetText = null;
-
-    //[SerializeField]
-    //private string m_winText = null;
-
     [SerializeField]
     private PlayerManager m_playerManager = null;
 
@@ -53,7 +47,7 @@ public class GameManager : MonoBehaviour
     {
         m_playerManager.SwitchDeadFlug(playerNum, true);
         m_playerManager.DisablePhysics(playerNum);
-        m_effectManager.OnPlayEffect(m_playerManager.PlayerCount[playerNum].transform.position, EffectManager.EffectType.StageOut);
+        m_effectManager.OnPlayStageOutEffect(m_playerManager.PlayerCount[playerNum].transform.position, EffectManager.EffectType.StageOut);
         m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
         m_playerManager.PlayerCount[playerNum].transform.position = m_penartyPos;
     }
