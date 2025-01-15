@@ -18,7 +18,7 @@ public class PlayerPickup : MonoBehaviour
     private PlayerDirectionRotator m_directionRotator = null;
 
     [SerializeField]
-    private PlayerInputData m_inputData = null;
+    private InputData m_inputData = null;
 
     private Vector3 intermediateArmPos = Vector3.zero;
 

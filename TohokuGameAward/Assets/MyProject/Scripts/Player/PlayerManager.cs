@@ -55,6 +55,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        //CountPlayers();
         RespawnAfterDelay();
     }
 
@@ -77,7 +78,7 @@ public class PlayerManager : MonoBehaviour
             m_playerCount[i] = instance;
 
             m_playerInvincible[i] = GetComponentInChildren<PlayerInvincible>();
-            var inputData = instance.GetComponent<PlayerInputData>();
+            var inputData = instance.GetComponent<InputData>();
 
             if (inputData != null)
             {

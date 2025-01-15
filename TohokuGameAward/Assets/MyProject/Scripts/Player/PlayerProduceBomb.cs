@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerProduceBomb : MonoBehaviour
 {
     [SerializeField]
-    private PlayerInputData m_playerInputDeta = null;
+    private InputData m_playerInputDeta = null;
 
     [SerializeField]
     private PlayerData m_playerDeta = null;
@@ -35,16 +35,16 @@ public class PlayerProduceBomb : MonoBehaviour
 
     private void Update()
     {
-        if (CanGenerateBomb())
-        {
-            GenerateBomb();
-        }
-        else
-        {
-            m_canvas.enabled = false;   //デバッグ用
-            m_isGenerating = false;
-            m_generateTime = 0.0f;
-        }
+        //if (CanGenerateBomb())
+        //{
+        //    GenerateBomb();
+        //}
+        //else
+        //{
+        //    m_canvas.enabled = false;   //デバッグ用
+        //    m_isGenerating = false;
+        //    m_generateTime = 0.0f;
+        //}
     }
 
     /// <summary>
@@ -75,15 +75,15 @@ public class PlayerProduceBomb : MonoBehaviour
     /// ボムが生成できるか調べます
     /// </summary>
     /// <returns>true->爆弾生成可能 </returns>false->不可能
-    private bool CanGenerateBomb()
-    {
-        if(m_playerInputDeta.WasPressedButton(PlayerInputData.ActionsName.RightRail, m_playerInputDeta.SelfNumber)
-        && !m_playerPickup.IsPuckUp 
-        && !m_blowMover.IsBlow 
-        && m_playerMover.IsGrounded)
-        {
-            return true;
-        }
-        return false;
-    }
+    //private bool CanGenerateBomb()
+    //{
+    //    if(m_playerInputDeta.WasPressedActionButton(InputData.ActionsName.Produce, m_playerInputDeta.SelfNumber)
+    //    && !m_playerPickup.IsPuckUp 
+    //    && !m_blowMover.IsBlow 
+    //    && m_playerMover.IsGrounded)
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 }

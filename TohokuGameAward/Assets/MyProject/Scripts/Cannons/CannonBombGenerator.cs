@@ -7,7 +7,7 @@ public class CannonBombGenerator : MonoBehaviour
     private GameObject m_bombPrehab = null;
 
     [SerializeField]
-    private PlayerInputData m_inputData = null;
+    private InputData m_inputData = null;
 
     [SerializeField]
     private CannonData m_cannonData = null;
@@ -87,7 +87,7 @@ public class CannonBombGenerator : MonoBehaviour
     //※クールタイムなどの処理を追加予定
     private bool CanShootBomb()
     {
-        if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Shoot, m_inputData.SelfNumber)
+        if(m_inputData.WasPressedActionButton(InputData.ActionsName.Shoot, m_inputData.SelfNumber)
         && m_bombStock > 1.0f
         && m_bombCoolTime > 1.0f) 
         {

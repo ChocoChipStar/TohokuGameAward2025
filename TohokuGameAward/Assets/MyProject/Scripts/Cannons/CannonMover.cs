@@ -4,7 +4,7 @@ using UnityEngine.Splines;
 public class CannonMover : MonoBehaviour
 {
     [SerializeField]
-    private PlayerInputData m_inputData = null;
+    private InputData m_inputData = null;
 
     [SerializeField]
     private CannonData m_cannonData = null;
@@ -47,12 +47,12 @@ public class CannonMover : MonoBehaviour
     //大砲の移動処理
     private void CannonMoveOperation()
     {
-        if (m_inputData.WasPressedButton(PlayerInputData.ActionsName.RightRail, m_inputData.SelfNumber)
+        if (m_inputData.WasPressedActionButton(InputData.ActionsName.RightRail, m_inputData.SelfNumber)
          && m_moveMax > m_cannonPosition)
         {
             m_cannonPosition += CannonSpeedPercent(m_cannonData.Params.MoveSpeed);
         }
-        if (m_inputData.WasPressedButton(PlayerInputData.ActionsName.LeftRail, m_inputData.SelfNumber)
+        if (m_inputData.WasPressedActionButton(InputData.ActionsName.LeftRail, m_inputData.SelfNumber)
          && m_moveMin < m_cannonPosition)
         {
             m_cannonPosition -= CannonSpeedPercent(m_cannonData.Params.MoveSpeed);
@@ -70,8 +70,8 @@ public class CannonMover : MonoBehaviour
     //大砲が移動可能かどうかを調べる
     private bool CannonCanMove()
     {
-        if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.RightRail, m_inputData.SelfNumber)
-          || m_inputData.WasPressedButton(PlayerInputData.ActionsName.LeftRail, m_inputData.SelfNumber))
+        if(m_inputData.WasPressedActionButton(InputData.ActionsName.RightRail, m_inputData.SelfNumber)
+          || m_inputData.WasPressedActionButton(InputData.ActionsName.LeftRail, m_inputData.SelfNumber))
         {
             return true;            
         }
