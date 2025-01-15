@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class FadeManager : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class FadeManager : MonoBehaviour
     private SceneChanger m_sceneChanger = null;
 
     [SerializeField]
-    private float m_fadeStartInterval = 0.0f;
+    private float m_interval = 0.0f;
 
     [SerializeField]
     private float m_fadeSpeed = 0.0f;
@@ -118,13 +119,19 @@ public class FadeManager : MonoBehaviour
         return false;
     }
 
-    public void StartFadeIn()
+    public IEnumerator StartFadeIn()
     {
+        yield return new WaitForSeconds(m_interval);
+
+        m_unMaskRectTrans.localScale = Vector3.zero;
         m_isFadeIn = true;
     }
 
-    public void StartFadeOut()
+    public IEnumerator StartFadeOut()
     {
+        yield return new WaitForSeconds(m_interval);
+
+        m_unMaskRectTrans.localScale = CircleScaleMax;
         m_isFadeOut = true;
     }
 }

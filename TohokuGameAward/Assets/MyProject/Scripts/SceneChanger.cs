@@ -1,7 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static SceneChanger;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -40,7 +39,7 @@ public class SceneChanger : MonoBehaviour
         {
             return;
         }
-        m_fadeManager.StartFadeIn();
+        StartCoroutine(m_fadeManager.StartFadeIn());
     }
 
 #if UNITY_EDITOR
@@ -81,7 +80,7 @@ public class SceneChanger : MonoBehaviour
             m_isSpecified = true;
             m_specifiedName = sceneNum;
 
-            m_fadeManager.StartFadeOut();
+            StartCoroutine(m_fadeManager.StartFadeOut());
             return;
         }
 
@@ -95,7 +94,7 @@ public class SceneChanger : MonoBehaviour
     {
         if(m_onPlayFadeOut)
         {
-            m_fadeManager.StartFadeOut();
+            StartCoroutine(m_fadeManager.StartFadeOut());
             return;
         }
 
