@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputData : MonoBehaviour
+public class InputData : MonoBehaviour
 {
     public static readonly float MovementDeadZoneRange = 0.2f;
     public static readonly float ThrowDeadZoneRange = 0.7f;
@@ -18,12 +18,19 @@ public class PlayerInputData : MonoBehaviour
         Produce
     }
 
+    public enum UserInterfaceName
+    {
+        Decision,
+        SwitchLeft,
+        SwitchRight,
+    }
+
     public Vector2 GetLeftStickValue(int playerNum)
     {
         return Gamepad.all[playerNum].leftStick.ReadValue();
     }
 
-    public bool WasPressedButton(ActionsName actionNum, int playerNum)
+    public bool WasPressedActionButton(ActionsName actionNum, int playerNum)
     {
         switch(actionNum)
         {
@@ -38,6 +45,24 @@ public class PlayerInputData : MonoBehaviour
 
             case ActionsName.Produce:
                 return Gamepad.all[playerNum].rightShoulder.isPressed;
+
+            default:
+                return false;
+        }
+    }
+
+    public bool WasPressedUIButton(UserInterfaceName uiNum, int index)
+    {
+        switch(uiNum)
+        {
+            case UserInterfaceName.Decision:
+                return Gamepad.all[index].bButton.wasPressedThisFrame;
+
+            case UserInterfaceName.SwitchLeft:
+                return Gamepad.all[index].leftShoulder.wasPressedThisFrame;
+
+            case UserInterfaceName.SwitchRight:
+                return Gamepad.all[index].rightShoulder.wasPressedThisFrame;
 
             default:
                 return false;

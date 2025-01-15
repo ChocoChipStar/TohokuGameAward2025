@@ -11,7 +11,7 @@ public class PlayerMover : MonoBehaviour
     private PlayerData m_playerData = null;
 
     [SerializeField]
-    private PlayerInputData m_inputData = null;
+    private InputData m_inputData = null;
 
     // [SerializeField]
     // private PlayerProduceBomb m_produceBomb = null;
@@ -98,18 +98,18 @@ public class PlayerMover : MonoBehaviour
         //}
 
         // 右の壁に衝突していたら右への移動入力を不可にする
-        if (stickValue.x > PlayerInputData.MovementDeadZoneRange && m_detectorR.IsHitWall())
+        if (stickValue.x > InputData.MovementDeadZoneRange && m_detectorR.IsHitWall())
         {
             return false;
         }
 
         // 左の壁に衝突していたら左への移動入力を不可にする
-        if (stickValue.x < -PlayerInputData.MovementDeadZoneRange && m_detectorL.IsHitWall())
+        if (stickValue.x < -InputData.MovementDeadZoneRange && m_detectorL.IsHitWall())
         {
             return false;
         }
 
-        if (stickValue.x > PlayerInputData.MovementDeadZoneRange || stickValue.x < -PlayerInputData.MovementDeadZoneRange)
+        if (stickValue.x > InputData.MovementDeadZoneRange || stickValue.x < -InputData.MovementDeadZoneRange)
         {
             return true;
         }
@@ -133,7 +133,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private bool CanJump()
     {
-        if(m_inputData.WasPressedButton(PlayerInputData.ActionsName.Jump, m_inputData.SelfNumber) 
+        if(m_inputData.WasPressedActionButton(InputData.ActionsName.Jump, m_inputData.SelfNumber) 
         && IsGrounded && !m_isGetExplosion /*&& !m_produceBomb.isGenerating*/)
         {
             return true;

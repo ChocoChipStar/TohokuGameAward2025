@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerProduceBomb : MonoBehaviour
 {
     [SerializeField]
-    private PlayerInputData m_playerInputDeta = null;
+    private InputData m_playerInputDeta = null;
 
     [SerializeField]
     private PlayerData m_playerDeta = null;
@@ -77,7 +77,7 @@ public class PlayerProduceBomb : MonoBehaviour
     /// <returns>true->爆弾生成可能 </returns>false->不可能
     private bool CanGenerateBomb()
     {
-        if(m_playerInputDeta.WasPressedButton(PlayerInputData.ActionsName.Produce, m_playerInputDeta.SelfNumber)
+        if(m_playerInputDeta.WasPressedActionButton(InputData.ActionsName.Produce, m_playerInputDeta.SelfNumber)
         && !m_playerPickup.IsPuckUp 
         && !m_blowMover.IsBlow 
         && m_playerMover.IsGrounded)

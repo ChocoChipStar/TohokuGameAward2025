@@ -13,7 +13,7 @@ public class PlayerThrow : MonoBehaviour
     private PlayerDirectionRotator m_directionRotator = null;
 
     [SerializeField]
-    private PlayerInputData m_inputData = null;
+    private InputData m_inputData = null;
 
     [SerializeField]
     private PlayerData m_playerData = null;
@@ -57,7 +57,7 @@ public class PlayerThrow : MonoBehaviour
             return;
         }
 
-        var wasPressedRT = m_inputData.WasPressedButton(PlayerInputData.ActionsName.Throw, m_inputData.SelfNumber);
+        var wasPressedRT = m_inputData.WasPressedActionButton(InputData.ActionsName.Throw, m_inputData.SelfNumber);
         if (wasPressedRT && m_pickup.IsHoldingItem)
         {
             m_forceVector = CalculateForceVector();
@@ -106,7 +106,7 @@ public class PlayerThrow : MonoBehaviour
     /// </summary>
     private float GetThrowAngle(Vector2 stickValue)
     {
-        var deadZone = PlayerInputData.ThrowDeadZoneRange;
+        var deadZone = InputData.ThrowDeadZoneRange;
         if (stickValue.y > deadZone)
         {
             InitializeThrow(m_playerData.Throw.PowerUpper, PlayerAnimator.TopState.ThrowUpper);

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
@@ -37,8 +36,10 @@ public class SceneChanger : MonoBehaviour
     {
         if(!m_onPlayFadeIn)
         {
+            m_fadeManager.InitializeFadeIn();
             return;
         }
+
         StartCoroutine(m_fadeManager.StartFadeIn());
     }
 

@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour
             var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
             instance.name = "Player" + (i + 1);
             m_playerCount[i] = instance;
-            var inputData = instance.GetComponent<PlayerInputData>();
+            var inputData = instance.GetComponent<InputData>();
 
             if (inputData != null)
             {

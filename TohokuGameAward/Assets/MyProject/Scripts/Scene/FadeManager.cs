@@ -69,13 +69,6 @@ public class FadeManager : MonoBehaviour
         m_unMaskRectTrans.localScale += -m_varianceValue;
     }
 
-    private void InitializeFadeIn()
-    {
-        m_unMaskRectTrans.localScale = CircleScaleMax;
-        m_isFadeIn = false;
-        IsFinishFadeIn = true;
-    }
-
     private void InitializeFadeOut()
     {
         m_unMaskRectTrans.localScale = Vector3.zero;
@@ -121,17 +114,24 @@ public class FadeManager : MonoBehaviour
 
     public IEnumerator StartFadeIn()
     {
-        yield return new WaitForSeconds(m_interval);
-
         m_unMaskRectTrans.localScale = Vector3.zero;
+
+        yield return new WaitForSeconds(m_interval);
         m_isFadeIn = true;
     }
 
     public IEnumerator StartFadeOut()
     {
-        yield return new WaitForSeconds(m_interval);
-
         m_unMaskRectTrans.localScale = CircleScaleMax;
+
+        yield return new WaitForSeconds(m_interval);
         m_isFadeOut = true;
+    }
+
+    public void InitializeFadeIn()
+    {
+        m_unMaskRectTrans.localScale = CircleScaleMax;
+        m_isFadeIn = false;
+        IsFinishFadeIn = true;
     }
 }

@@ -137,8 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a5e27dc5c8fe94d8ed73588a8900a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_onPlayFadeIn: 0
-  m_onPlayFadeOut: 1
+  m_onPlayFadeIn: 1
+  m_onPlayFadeOut: 0
   m_fadeManager: {fileID: 3986289350882196040}
 --- !u!114 &3986289350882196040
 MonoBehaviour:
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_unMaskRectTrans: {fileID: 5141958258088984740}
   m_sceneChanger: {fileID: 4291571347791682426}
-  m_fadeStartInterval: 1
+  m_interval: 1
   m_fadeSpeed: 3.5
 --- !u!1 &3521398779504148867
 GameObject:
