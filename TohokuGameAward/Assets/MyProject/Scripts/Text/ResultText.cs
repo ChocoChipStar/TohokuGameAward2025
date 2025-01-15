@@ -1,11 +1,12 @@
 ﻿using TMPro;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ResultText : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI m_defeTotalText = null;
+    private TextMeshProUGUI m_alphaTotalText = null;
 
     [SerializeField]
     private TextMeshProUGUI m_offeTotalText = null;
@@ -16,6 +17,15 @@ public class ResultText : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI[] m_offeScoreText = null;
 
+    [SerializeField]
+    private Image m_winnerTexture = null;
+
+    [SerializeField]
+    private Sprite m_bravoWinSprite = null;
+
+    [SerializeField]
+    private Sprite m_alphaWinSprite = null;
+    
     [SerializeField]
     private float[] m_waitForNextRender = null;
 
@@ -28,8 +38,11 @@ public class ResultText : MonoBehaviour
     [SerializeField]
     private int m_randomMax = 0;
 
-    private int[] m_deffencesScore = null;
+    [SerializeField]
+    private float m_renderWinnerDelay = 0;
 
+    private int[] m_deffencesScore = null;
+ 
     private int[] m_offencesScore = null;
 
     private int m_defTotalScore = 0;
@@ -55,6 +68,9 @@ public class ResultText : MonoBehaviour
         m_RenderingRound++;
 
         yield return StartCoroutine(RenderTotalAfterDelay());
+
+        yield return StartCoroutine(RenderWinnerAfterDelay());
+
         yield return StartCoroutine(SetResultEndFlig());
     }
 
@@ -89,17 +105,31 @@ public class ResultText : MonoBehaviour
         {
             revealDelay -= Time.deltaTime;
             m_offeTotalText.text = MakeRandomNum();
-            m_defeTotalText.text = MakeRandomNum();
+            m_alphaTotalText.text = MakeRandomNum();
             yield return null;
         }
-        m_offeTotalText.text = m_defTotalScore.ToString();
-        m_defeTotalText.text = m_offTotalScore.ToString();
+        m_offeTotalText.text = m_offTotalScore.ToString();
+        m_alphaTotalText.text = m_defTotalScore.ToString();
     }
     private string MakeRandomNum()
     {
         int random;
         random = Random.Range(m_randomMin, m_randomMax);
         return random.ToString();
+    }
+
+    IEnumerator RenderWinnerAfterDelay()
+    {
+        yield return new WaitForSeconds(m_renderWinnerDelay);
+        if (m_defTotalScore > m_offTotalScore)
+        {
+            m_winnerTexture.sprite = m_alphaWinSprite;
+        }
+        else
+        {
+            m_winnerTexture.sprite = m_bravoWinSprite;
+        }
+        m_winnerTexture.gameObject.SetActive(true);
     }
 
     private int TotalScore(int[] Score)
@@ -117,4 +147,5 @@ public class ResultText : MonoBehaviour
         m_isResultEnded = true;
         yield return null;
     }
+
 }
