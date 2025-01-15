@@ -48,7 +48,7 @@ public class PlayerMaterials : MonoBehaviour
     {
         for (int i = 0; i < m_playerMeshCount; i++)
         {
-            m_playerMesh[i].enabled = false;
+            m_playerMesh[i].enabled = true;
         }
     }
 }

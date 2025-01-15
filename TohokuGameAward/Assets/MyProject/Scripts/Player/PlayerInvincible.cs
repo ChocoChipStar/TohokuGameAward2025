@@ -25,11 +25,12 @@ public class PlayerInvincible : MonoBehaviour
         if (m_invincibleTime < 0.0f)
         {
             PlayerInvincibleEnd();
+            return;
         }
 
         m_invincibleTime -= Time.deltaTime;
         m_materialsTime += Time.deltaTime * m_playerData.Params.InvinceibleSpeed;
-        if ((int)m_materialsTime % 2 == 1)
+        if ((int)m_materialsTime % 2 == 1) // 奇数の秒数でマテリアルをチカチカさせる
         {
             m_materialsTime = 0.0f;
             m_materials.PlayerInvincibleMesh();
@@ -47,6 +48,6 @@ public class PlayerInvincible : MonoBehaviour
     private void PlayerInvincibleEnd()
     {
         m_materials.PlayerInvincibleMeshEnd();
-        m_isInvincible = true;
+        m_isInvincible = false;
     }
 }
