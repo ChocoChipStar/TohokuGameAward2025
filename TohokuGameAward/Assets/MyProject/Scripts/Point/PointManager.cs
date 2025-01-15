@@ -49,22 +49,37 @@ public class PointManager : MonoBehaviour
             return;
         }
 
-        //↑ここでPlayerManagerから逃げる側か大砲側かを受け取り、
-        //その値をもとにポイントを追加しようと考えています。
+        for (int i = 0; i < m_score.Length; i++)
+        {
+            if (Timer.Round == 0)
+            {
+
+                if (!m_playerManager.IsCannon[i])//逃げる側だったら
+                {
+                    m_defencesIndex[i] = i;//こちらにインデックスを格納
+                }
+                else//大砲側だったら
+                {
+                    m_offencesIndex[i] = i;//こちらにインデックスを格納
+                }
+            }
+        }
 
         for (int i = 0; i < m_score.Length; i++)
         {
-            if (true)//逃げる側だったら
+            if (Timer.Round == 1)
             {
-                m_defencesIndex[i] = i;//こちらにインデックスを格納
+                if (!m_playerManager.IsCannon[i])//逃げる側だったら
+                {
+                    m_offencesIndex[i] = i;//こちらにインデックスを格納
+                }
+                else//大砲側だったら
+                {
+                    m_defencesIndex[i] = i;//こちらにインデックスを格納
+                }
             }
-            else//大砲側だったら
-            {
-                m_offencesIndex[i] = i;//こちらにインデックスを格納
-            }
-
         }
-        
+
         int defencesScore = 0;
         int offencesScore = 0;
 
@@ -77,7 +92,7 @@ public class PointManager : MonoBehaviour
                 defencesScore += m_score[i];
                 continue;
             }
-            bool existsInOff = Array.Exists(m_defencesIndex, element => element == i);
+            bool existsInOff = Array.Exists(m_offencesIndex, element => element == i);
             if(existsInOff)
             {
                 offencesScore += m_score[i];

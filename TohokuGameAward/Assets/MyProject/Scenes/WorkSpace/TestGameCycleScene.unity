@@ -628,6 +628,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 730657043577764126, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 560
+      objectReference: {fileID: 0}
+    - target: {fileID: 730657043577764126, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -345
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003788949241303285, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Text_BravoScore '
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066845664704453236, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_text
+      value: Alpha
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335845136126891997, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: BravoText
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380711711001408608, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -575
+      objectReference: {fileID: 0}
+    - target: {fileID: 4380711711001408608, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -410
+      objectReference: {fileID: 0}
     - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_timer
@@ -638,6 +673,31 @@ PrefabInstance:
       propertyPath: m_playerManager
       value: 
       objectReference: {fileID: 1741602048}
+    - target: {fileID: 5206014426517542664, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 595
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206014426517542664, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -410
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285131633939411816, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 595
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285131633939411816, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -475
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447920891584063819, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_text
+      value: Bravo
+      objectReference: {fileID: 0}
     - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_timer
@@ -673,10 +733,55 @@ PrefabInstance:
       propertyPath: m_score.Array.data[3]
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 5926142509902482009, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Text_BravoTotaScore  '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383259975573504752, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: Text_AlphaScore
+      objectReference: {fileID: 0}
     - target: {fileID: 6505357305837549286, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_Name
       value: PointItemGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172686064145754061, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: AlphaText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7600647310870233653, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: Text_Alpha
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849350851662953372, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -618
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849350851662953372, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -345
+      objectReference: {fileID: 0}
+    - target: {fileID: 8230560951074729736, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Text_AlphaTotalScore '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8243510633896635178, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -575
+      objectReference: {fileID: 0}
+    - target: {fileID: 8243510633896635178, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -467
       objectReference: {fileID: 0}
     - target: {fileID: 8727824486401761457, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
@@ -727,6 +832,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152870909267464290, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: Text_Bravo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1497,7 +1607,7 @@ PrefabInstance:
     - target: {fileID: 3526640093867363154, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_limitTime
-      value: 90
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
