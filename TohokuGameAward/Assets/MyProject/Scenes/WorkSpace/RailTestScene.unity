@@ -130,21 +130,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
-        type: 3}
-      propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[0].Position.x
-      value: -14
-      objectReference: {fileID: 0}
-    - target: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
-        type: 3}
-      propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[0].Position.y
-      value: -2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
-        type: 3}
-      propertyPath: m_Splines.Array.data[0].m_Knots.Array.data[6].Position.y
-      value: -2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 3557950938094352148, guid: 5ba7af40e738cf64ebb6a2d762b80665,
         type: 3}
       propertyPath: m_Name
@@ -203,34 +188,20 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3557950938094352148, guid: 5ba7af40e738cf64ebb6a2d762b80665,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 679166262}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ba7af40e738cf64ebb6a2d762b80665, type: 3}
---- !u!1 &679166261 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3557950938094352148, guid: 5ba7af40e738cf64ebb6a2d762b80665,
+--- !u!114 &679166262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6967784821757616043, guid: 5ba7af40e738cf64ebb6a2d762b80665,
     type: 3}
   m_PrefabInstance: {fileID: 429113298}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &679166262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 679166261}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44fa8e26ce10e95448526b1fb19103c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerRailMover:
-  - {fileID: 0}
-  - {fileID: 0}
-  m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
 --- !u!1001 &1019871095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -972,7 +943,7 @@ PrefabInstance:
     - target: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}
       propertyPath: m_cannonPlayerNumber
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8274386607292376071, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}

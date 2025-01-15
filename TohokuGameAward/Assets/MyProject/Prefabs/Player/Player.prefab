@@ -1698,6 +1698,7 @@ GameObject:
   - component: {fileID: 7163019421322361095}
   - component: {fileID: 5286550003958549445}
   - component: {fileID: 2317007520261670163}
+  - component: {fileID: 4489965637871046548}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1846,6 +1847,30 @@ MonoBehaviour:
   m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
   m_animator: {fileID: 2021427367427975607}
   m_playerRigidbody: {fileID: 6658028852423634333}
+--- !u!114 &4489965637871046548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497014825113209656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0694aaae8db4e489c902e1d8a7dd05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerMaterial:
+  - {fileID: 2100000, guid: 1b6a4671848c97947be022bc0a93cafc, type: 2}
+  - {fileID: 2100000, guid: dde47356d87d58548a678bc92e8c3dfa, type: 2}
+  - {fileID: 2100000, guid: ec2dd9b081f1c544ebc67793a58edacc, type: 2}
+  - {fileID: 2100000, guid: bbca5fc117f4aca42a36a6e5df5d0cea, type: 2}
+  m_playerMesh:
+  - {fileID: 48824979890439636}
+  - {fileID: 2441806367705523372}
+  - {fileID: 8092322799526620583}
+  - {fileID: 3376441322421795223}
+  - {fileID: 6163545886705961362}
+  - {fileID: 7997388958013752731}
 --- !u!1 &5512459343323414739
 GameObject:
   m_ObjectHideFlags: 0

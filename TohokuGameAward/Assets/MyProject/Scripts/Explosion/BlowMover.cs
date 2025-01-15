@@ -59,8 +59,11 @@ public class BlowMover : MonoBehaviour
 
         if (!PlayerBlowChecker())
         {
-            //m_playerMover.GetExplosion(false);
-            //m_isBlow = false;
+            m_playerMover.GetExplosion(false);
+            m_isBlow = false;
+            m_playerRigidbody.useGravity = true;
+            var collider = m_playerRigidbody.gameObject.GetComponentInChildren<Collider>();
+            collider.enabled = true;
 
             // アニメーション遷移可能状態にする
             m_animator.TransferableState(top: PlayerAnimator.TopState.Blow);

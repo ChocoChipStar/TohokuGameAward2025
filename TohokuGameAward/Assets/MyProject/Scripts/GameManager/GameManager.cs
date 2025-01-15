@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
                 continue;
             }
 
-            if (IsPlayerOut(m_playerManager.PlayerCount[i]))
+            if (IsPlayerOut(m_playerManager.PlayerCount[i], i))
             {
                 OutOfStage(i);
             }
@@ -52,11 +52,11 @@ public class GameManager : MonoBehaviour
         m_playerManager.PlayerCount[playerNum].transform.position = m_penartyPos;
     }
 
-    private bool IsPlayerOut(GameObject targetPlayer)
+    private bool IsPlayerOut(GameObject targetPlayer, int num)
     {
         GameObject target = targetPlayer;
 
-        if(targetPlayer == null)
+        if(targetPlayer == null || m_playerManager.IsCannon[num] == true)
         {
             return false;
         }
