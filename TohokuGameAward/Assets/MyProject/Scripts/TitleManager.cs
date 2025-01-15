@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class TitleManager : MonoBehaviour
 {
     [SerializeField]
-    private FadeManager m_fadeManager = null;
+    private SceneChanger m_sceneChanger = null;
 
     private void Update()
     {
@@ -18,7 +18,7 @@ public class TitleManager : MonoBehaviour
             var wasPressedStartButton = Gamepad.all[i].bButton.wasPressedThisFrame;
             if (wasPressedStartButton)
             {
-                
+                m_sceneChanger.TransitionNextScene();
             }
         }
     }

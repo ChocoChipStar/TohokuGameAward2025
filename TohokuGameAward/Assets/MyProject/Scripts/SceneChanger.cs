@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using static SceneChanger;
 
 public class SceneChanger : MonoBehaviour
 {
@@ -12,12 +14,15 @@ public class SceneChanger : MonoBehaviour
     [SerializeField]
     private FadeManager m_fadeManager = null;
 
+    private SceneName m_specifiedName = 0;
+    private bool m_isSpecified = false;
+
     private static readonly string[] ScenesName = new string[]
     {
-        "TitleScene", 
-        "TutorialScene", 
-        "CharacterSelectScene", 
-        "MainScene", 
+        "TitleScene",
+        "TutorialScene",
+        "CharacterSelectScene",
+        "MainScene",
         "ResultScene"
     };
 
@@ -29,10 +34,19 @@ public class SceneChanger : MonoBehaviour
         Result
     }
 
+    private void Awake()
+    {
+        if(!m_onPlayFadeIn)
+        {
+            return;
+        }
+        m_fadeManager.StartFadeIn();
+    }
+
 #if UNITY_EDITOR
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -41,21 +55,32 @@ public class SceneChanger : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(m_fadeManager.IsFadeIn)
+        if (!m_fadeManager.IsFinishFadeOut)
         {
-            
+            return;
+        }
+        m_onPlayFadeOut = false;
+
+        if (m_isSpecified)
+        {
+            TransitionSpecifiedScene(m_specifiedName);
+            return;
         }
 
-        if(m_fadeManager.IsFadeOut)
-        {
-
-        }
+        TransitionNextScene();
     }
 
-    public void TransitionScene(SceneName sceneNum)
+    /// <summary>
+    /// 引数で指定したシーンに遷移する処理を行います
+    /// </summary>
+    /// <param name="sceneNum"> シーンを設定 </param>
+    public void TransitionSpecifiedScene(SceneName sceneNum)
     {
         if(m_onPlayFadeOut)
         {
+            m_isSpecified = true;
+            m_specifiedName = sceneNum;
+
             m_fadeManager.StartFadeOut();
             return;
         }
@@ -63,9 +88,25 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene(ScenesName[(int)sceneNum]);
     }
 
+    /// <summary>
+    /// 現在シーンから次のシーンへ遷移する処理を行います
+    /// </summary>
     public void TransitionNextScene()
     {
+        if(m_onPlayFadeOut)
+        {
+            m_fadeManager.StartFadeOut();
+            return;
+        }
+
         var currentIndex = SceneManager.GetActiveScene().buildIndex;
+        var isIndexMax = currentIndex >= SceneManager.sceneCountInBuildSettings - 1;
+        if(isIndexMax)
+        {
+            SceneManager.LoadScene(0);
+            return;
+        }
+
         SceneManager.LoadScene(currentIndex + 1);
     }
 }

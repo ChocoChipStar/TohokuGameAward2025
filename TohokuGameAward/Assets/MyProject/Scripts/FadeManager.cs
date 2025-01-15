@@ -22,8 +22,8 @@ public class FadeManager : MonoBehaviour
     private const float CircleMax = 25.0f;
     private static readonly Vector3 CircleScaleMax = new Vector3(25.0f, 25.0f, 25.0f);
 
-    public bool IsFadeIn { get { return m_isFadeIn; } private set { value = m_isFadeIn; } }
-    public bool IsFadeOut { get { return m_isFadeOut; } private set { value = m_isFadeOut; } }
+    public bool IsFinishFadeIn { get; private set; } = false;
+    public bool IsFinishFadeOut { get; private set; } = false;
 
     private void Start()
     {
@@ -47,26 +47,44 @@ public class FadeManager : MonoBehaviour
     {
         if (GreaterThanVector((Vector2)m_unMaskRectTrans.localScale,CircleMax))
         {
-            m_unMaskRectTrans.localScale = Vector3.zero;
-            m_isFadeIn = false;
+            InitializeFadeIn();
             return;
         }
 
         m_unMaskRectTrans.localScale += m_varianceValue;
     }
 
+    /// <summary>
+    /// フェードアウトアニメーションの処理を行います
+    /// </summary>
     private void FadingOut()
     {
         if (LessThanVector((Vector2)m_unMaskRectTrans.localScale,0.0f))
         {
-            m_unMaskRectTrans.localScale = Vector3.zero;
-            m_isFadeOut = false;
+            InitializeFadeOut();
             return;
         }
 
         m_unMaskRectTrans.localScale += -m_varianceValue;
     }
 
+    private void InitializeFadeIn()
+    {
+        m_unMaskRectTrans.localScale = CircleScaleMax;
+        m_isFadeIn = false;
+        IsFinishFadeIn = true;
+    }
+
+    private void InitializeFadeOut()
+    {
+        m_unMaskRectTrans.localScale = Vector3.zero;
+        m_isFadeOut = false;
+        IsFinishFadeOut = true;
+    }
+
+    /// <summary>
+    /// フェードアニメーション速度を百分率に変換します
+    /// </summary>
     private Vector3 ConvertScaleValueToScaleRate(float percentage = 1.0f)
     {
         return CircleScaleMax / 100.0f * percentage;

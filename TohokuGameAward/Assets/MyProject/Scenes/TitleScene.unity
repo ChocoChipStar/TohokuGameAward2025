@@ -563,6 +563,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cf9663629aa1443a6618f0b163ab4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5160825337853749679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4291571347791682426, guid: 6bc6bc98d8708684a9840d9848d79d44,
+    type: 3}
+  m_PrefabInstance: {fileID: 7161441886417596833}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a5e27dc5c8fe94d8ed73588a8900a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7161441886417596833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -574,7 +586,7 @@ PrefabInstance:
     - target: {fileID: 2424110137440423455, guid: 6bc6bc98d8708684a9840d9848d79d44,
         type: 3}
       propertyPath: m_Name
-      value: FadeManager
+      value: SceneManager
       objectReference: {fileID: 0}
     - target: {fileID: 7057493182290619918, guid: 6bc6bc98d8708684a9840d9848d79d44,
         type: 3}
@@ -694,6 +706,11 @@ PrefabInstance:
       propertyPath: m_fadeManager
       value: 
       objectReference: {fileID: 5160825337853749678}
+    - target: {fileID: 3905306042948140455, guid: 45b373e5366cd3d4f81d09055e76e7fb,
+        type: 3}
+      propertyPath: m_sceneChanger
+      value: 
+      objectReference: {fileID: 5160825337853749679}
     - target: {fileID: 6848677163222208943, guid: 45b373e5366cd3d4f81d09055e76e7fb,
         type: 3}
       propertyPath: m_Name
