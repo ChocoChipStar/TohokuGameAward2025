@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4149313653274578606}
   - component: {fileID: 1397684175313392933}
-  - component: {fileID: 3248944331748273574}
   m_Layer: 0
   m_Name: SEManager
   m_TagString: Untagged
