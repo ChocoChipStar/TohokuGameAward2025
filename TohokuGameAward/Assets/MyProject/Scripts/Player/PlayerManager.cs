@@ -21,6 +21,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private PlayerData m_playerData = null;
 
+    private PlayerInvincible[] m_playerInvincible = new PlayerInvincible[4];
+
     [SerializeField]
     private float m_respawnTime = 0.0f;
 
@@ -73,6 +75,8 @@ public class PlayerManager : MonoBehaviour
             }
             instance.name = "Player" + (i + 1);
             m_playerCount[i] = instance;
+
+            m_playerInvincible[i] = GetComponentInChildren<PlayerInvincible>();
             var inputData = instance.GetComponent<PlayerInputData>();
 
             if (inputData != null)
@@ -143,6 +147,7 @@ public class PlayerManager : MonoBehaviour
 
     private void RespawnPlayer(int playerNum)
     {
+        m_playerInvincible[playerNum].PlayerInvincibleTime();
         m_playerCount[playerNum].gameObject.transform.position = m_playerData.Positions.RespawnPos[playerNum];
 
         foreach (Transform child in m_playerCount[playerNum].transform)

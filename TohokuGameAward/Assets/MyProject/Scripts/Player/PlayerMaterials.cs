@@ -35,4 +35,20 @@ public class PlayerMaterials : MonoBehaviour
             m_playerMesh[i].material = m_playerMaterial[playerNum];
         }
     }
+
+    public void PlayerInvincibleMesh()
+    {
+        for (int i = 0; i < m_playerMeshCount; i++)
+        {
+            m_playerMesh[i].enabled = !m_playerMesh[i].enabled;
+        }
+    }
+
+    public void PlayerInvincibleMeshEnd()
+    {
+        for (int i = 0; i < m_playerMeshCount; i++)
+        {
+            m_playerMesh[i].enabled = false;
+        }
+    }
 }

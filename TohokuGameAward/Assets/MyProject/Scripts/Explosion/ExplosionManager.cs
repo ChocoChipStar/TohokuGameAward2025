@@ -117,6 +117,13 @@ public class ExplosionManager : MonoBehaviour
         }
 
         m_blowMover = other.GetComponentInParent<BlowMover>();
+
+        var invincible = other.GetComponentInParent<PlayerInvincible>();
+        if (invincible.IsInvincible)
+        {
+            return;
+        }
+
         m_blowMover.BlowOfTarget(rigidbody, transform.position, other, m_bombData, m_playerMover);
     }
 
