@@ -327,7 +327,7 @@ PrefabInstance:
     - target: {fileID: 3526640093867363154, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_limitTime
-      value: 20
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
@@ -1363,6 +1363,12 @@ PrefabInstance:
       propertyPath: m_cannonManager
       value: 
       objectReference: {fileID: 750075211}
+    - target: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
+        type: 3}
+      propertyPath: m_playerInvincible
+      value: 
+      objectReference: {fileID: 4901573555780915496, guid: e8c61d18646ad4c419cf93b40a41ecac,
+        type: 3}
     - target: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}
       propertyPath: m_cannonPlayerNumber

@@ -1695,6 +1695,7 @@ GameObject:
   - component: {fileID: 3275289140434366653}
   - component: {fileID: 234677848321282988}
   - component: {fileID: 6800665573880325553}
+  - component: {fileID: 4901573555780915496}
   - component: {fileID: 7163019421322361095}
   - component: {fileID: 5286550003958549445}
   - component: {fileID: 2317007520261670163}
@@ -1798,6 +1799,20 @@ MonoBehaviour:
   m_animator: {fileID: 2021427367427975607}
   m_detectorR: {fileID: 5493103671532895295}
   m_detectorL: {fileID: 6942322652930575667}
+--- !u!114 &4901573555780915496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5497014825113209656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08e640055dd18e4c9ab93800cd0b3a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_materials: {fileID: 4489965637871046548}
+  m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
 --- !u!114 &7163019421322361095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1846,6 +1861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
   m_animator: {fileID: 2021427367427975607}
+  m_playerInvincible: {fileID: 4901573555780915496}
   m_playerRigidbody: {fileID: 6658028852423634333}
 --- !u!114 &4489965637871046548
 MonoBehaviour:
