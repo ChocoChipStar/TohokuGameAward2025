@@ -9,10 +9,9 @@ public class PlayerMaterials : MonoBehaviour
     private SkinnedMeshRenderer[] m_playerMesh = new SkinnedMeshRenderer[6];
 
     private int m_playerCount = 0;
-
     private int m_playerMeshCount = 0;
 
-    private string[] m_playerName = {"Player1", "Player2", "Player3", "Player4" };
+    private static readonly string PlayerName = "Player";
 
     private void Start()
     {
@@ -20,13 +19,16 @@ public class PlayerMaterials : MonoBehaviour
         m_playerMeshCount = m_playerMesh.Length;
 
         for (int i = 0; i < m_playerCount; i++)
-        if(this.gameObject.name == m_playerName[i])
+        {
+            var playerName = PlayerName + (i + 1);
+            if (this.gameObject.name == playerName)
             {
-                SetMaterrial(i);
+                SetMaterial(i);
             }
+        }
     }
 
-    private void SetMaterrial(int playerNum)
+    private void SetMaterial(int playerNum)
     {
         for(int i = 0; i < m_playerMeshCount; i++)
         {
