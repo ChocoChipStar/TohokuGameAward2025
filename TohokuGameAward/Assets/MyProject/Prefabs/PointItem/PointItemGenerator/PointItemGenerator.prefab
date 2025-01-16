@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1803966686610953160}
   - component: {fileID: 8452502998508277831}
   m_Layer: 5
-  m_Name: 'Text_DifencesScore '
+  m_Name: 'Text_BravoScore '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 340, y: -136}
+  m_AnchoredPosition: {x: 595, y: -410}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1803966686610953160
@@ -145,7 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8838363890048511098}
   m_Layer: 5
-  m_Name: DefencesText
+  m_Name: BravoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 2105995815614531445}
   - component: {fileID: 4973557317548516348}
   m_Layer: 5
-  m_Name: 'Text_DifencesTotaScore  '
+  m_Name: 'Text_BravoTotaScore  '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,7 +207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 340, y: -175}
+  m_AnchoredPosition: {x: 595, y: -475}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2105995815614531445
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 2479978239028310318}
   - component: {fileID: 4902006104984093312}
   m_Layer: 5
-  m_Name: Text_OffencesScore
+  m_Name: Text_AlphaScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -445,7 +445,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -136}
+  m_AnchoredPosition: {x: -575, y: -410}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2479978239028310318
@@ -623,7 +623,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerManager: {fileID: 0}
   m_timer: {fileID: 0}
-  m_score: 00000000
+  m_canonPoint: {fileID: 0}
+  m_pointData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
+  m_score: 
 --- !u!114 &4395743306678041335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,7 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8124140724025309812}
   m_Layer: 5
-  m_Name: OffencesText
+  m_Name: AlphaText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,7 +694,7 @@ GameObject:
   - component: {fileID: 3522069399198951478}
   - component: {fileID: 3066845664704453236}
   m_Layer: 5
-  m_Name: Text_Offences
+  m_Name: Text_Alpha
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,7 +716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -208, y: -100}
+  m_AnchoredPosition: {x: -618, y: -345}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3522069399198951478
@@ -745,7 +747,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Offences
+  m_text: Alpha
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -826,7 +828,7 @@ GameObject:
   - component: {fileID: 8034597110104983447}
   - component: {fileID: 7042496404214388492}
   m_Layer: 5
-  m_Name: 'Text_OffencesTotalScore '
+  m_Name: 'Text_AlphaTotalScore '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -848,7 +850,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -175}
+  m_AnchoredPosition: {x: -575, y: -467}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8034597110104983447
@@ -961,7 +963,7 @@ GameObject:
   - component: {fileID: 7817290363108336135}
   - component: {fileID: 5447920891584063819}
   m_Layer: 5
-  m_Name: Text_Defences
+  m_Name: Text_Bravo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -983,7 +985,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 270, y: -100}
+  m_AnchoredPosition: {x: 560, y: -345}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7817290363108336135
@@ -1014,7 +1016,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Defences
+  m_text: Bravo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -288,6 +288,7 @@ MonoBehaviour:
   m_stageData: {fileID: 11400000, guid: 6bcff8c8c9a207641a3d60b111342677, type: 2}
   m_effectManager: {fileID: 0}
   m_soundEffectManager: {fileID: 0}
+  m_penartyPos: {x: 100, y: 100, z: 0}
 --- !u!114 &3526640093867363154
 MonoBehaviour:
   m_ObjectHideFlags: 0

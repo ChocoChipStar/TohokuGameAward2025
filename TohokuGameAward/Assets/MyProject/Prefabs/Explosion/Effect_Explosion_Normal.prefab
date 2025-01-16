@@ -9806,10 +9806,9 @@ GameObject:
   - component: {fileID: 8646132586375023396}
   - component: {fileID: 2166937797015758672}
   - component: {fileID: 1213818051919320206}
-  - component: {fileID: -701835972575003066}
   m_Layer: 0
   m_Name: Effect_Explosion_Normal
-  m_TagString: Untagged
+  m_TagString: Explosion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9863,7 +9862,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -9963,21 +9962,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-701835972575003066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2083922939837167772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf772d4c7f236784d86cbca2582db8e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pointData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
-  m_pointManager: {fileID: 6505357305837549286, guid: 83a995b5c31d2844f9f7e64252836dca,
-    type: 3}
 --- !u!1 &3394883979281194329
 GameObject:
   m_ObjectHideFlags: 0

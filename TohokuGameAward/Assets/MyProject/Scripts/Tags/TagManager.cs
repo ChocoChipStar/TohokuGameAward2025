@@ -4,17 +4,19 @@ public class TagManager : MonoBehaviour
 {
     public static TagManager Instance { get; private set; }
     // 「Player」タグは必ず配列の末尾にすること
-    public static readonly string[] NameLists = new string[] { "Ground", "Wall", "Bomb", "Detected", "Stage", "Drone", "Crown", "Player" };
+    public static readonly string[] NameLists = new string[] { "Ground", "Wall", "Bomb","Explosion", "Detected", "Stage", "Drone", "Crown", "Player" };
 
     public enum Type
     {
         Ground,
         Wall,
         Bomb,
+        Explosion,
         Detected,
         Stage,
         Drone,
         Crown,
+
         Player
     }
 

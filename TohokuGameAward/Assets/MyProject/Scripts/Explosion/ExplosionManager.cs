@@ -64,7 +64,14 @@ public class ExplosionManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
+        //if (TagManager.Instance.SearchedTagName(other.gameObject.transform.parent.gameObject, TagManager.Type.Player))
+        //{
+        //    PlayerManager playerManager = other.gameObject.GetComponentInParent<PlayerManager>();
+        //    InputData inputData = other.gameObject.GetComponent<InputData>();
+        //    playerManager.IsShot[inputData.SelfNumber] = true;
+        //}
+
+        if (TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
         {
             var drone = other.GetComponent<DroneDestroy>();
             drone.SetDestroy();

@@ -44,6 +44,9 @@ public class PointData : ScriptableObject
         [SerializeField, Header("爆弾に当たった時に引かれるポイント")]
         private int m_penaltyPoint = 0;
 
+        [SerializeField, Header("爆弾でポイントが引かれた後のインターバル")]
+        private float m_penaltyInterval = 0;
+
         [SerializeField, Header("アイテムを回転させる角度")]
         private float m_rotatingAngle = 0f;
 
@@ -58,6 +61,8 @@ public class PointData : ScriptableObject
 
         public int CannonPoint { get { return m_cannonPoint; } private set { value = m_cannonPoint; } }
         public int PenaltyPoint { get { return m_penaltyPoint; } private set { value = m_penaltyPoint; } }
+
+        public float PenaltyInterval { get { return m_penaltyInterval; } private set { value = m_penaltyInterval; } }
 
         public float RotatingAngle { get { return m_rotatingAngle; } private set { value = m_rotatingAngle; } }
 

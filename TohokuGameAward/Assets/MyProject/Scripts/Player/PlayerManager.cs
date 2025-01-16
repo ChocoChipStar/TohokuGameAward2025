@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private int m_cannonPlayerNumber = 0;
 
+    [SerializeField]
     private GameObject[] m_playerCount = null;
     private GameObject instance = null;
 
@@ -36,11 +37,20 @@ public class PlayerManager : MonoBehaviour
 
     private bool[] m_isDead = new bool[4];
     private bool[] m_isCannon = new bool[4];
+    private bool[] m_isshot = new bool[4];
+
+    [SerializeField]
+    private float[] m_shotInterval = new float[4];
 
     private float[] m_respawnCount = null;
 
     public bool[] IsDead {  get { return m_isDead; } }
     public bool[] IsCannon { get {  return m_isCannon; } }
+
+    public bool[] IsShot { get { return m_isshot; } set { m_isshot = value; } }
+
+    public float[] ShotInterval { get { return m_shotInterval; } set { m_shotInterval = value; } }
+
 
     public GameObject[] PlayerCount
     {
@@ -55,6 +65,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        ShotIntervalTime();
         //CountPlayers();
         RespawnAfterDelay();
     }
@@ -62,8 +73,8 @@ public class PlayerManager : MonoBehaviour
     private void CreatePlayerBasedOnControllers()
     {
         var gamepads = Gamepad.all;
-        m_playerCount = new GameObject[gamepads.Count];
-        for (int i = 0; i < gamepads.Count; i++)
+        m_playerCount = new GameObject[gamepads.Count];//gamepads.Count
+        for (int i = 0; i < gamepads.Count; i++)//gamepads.Count
         {
             //var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
             if (Timer.Round % 2 == 0)
@@ -158,6 +169,21 @@ public class PlayerManager : MonoBehaviour
 
         Rigidbody rb = m_playerCount[playerNum].gameObject.GetComponentInParent<Rigidbody>();
         rb.isKinematic = false;
+    }
+
+    private void ShotIntervalTime()
+    {
+        for(int i = 0; i < m_playerCount.Length; i++)
+        {
+            if(m_isshot[i])
+            {
+                m_shotInterval[i] -= Time.deltaTime;
+            }
+            if(m_shotInterval[i] < 0)
+            {
+                m_isshot[i] = false;
+            }
+        }
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using static UnityEngine.GraphicsBuffer;
 
 public class PointManager : MonoBehaviour
@@ -12,10 +13,15 @@ public class PointManager : MonoBehaviour
     Timer m_timer = null;
 
     [SerializeField]
+    CanonPointManager m_canonPoint = null;
+
+    [SerializeField]
     PointData m_pointData = null;
 
     [SerializeField]
     private int[] m_score = null;
+
+    private float[] m_scoreInterval = null;
 
     private int[] m_defencesIndex = null;
 
@@ -32,6 +38,7 @@ public class PointManager : MonoBehaviour
     void Start()
     {
         Array.Resize(ref m_score, m_playerManager.PlayerCount.Length);
+        Array.Resize(ref m_scoreInterval, m_playerManager.PlayerCount.Length);
         if (Timer.Round == 0)
         {
             m_defroundScore = new int[m_timer.FinalRound];
@@ -42,9 +49,22 @@ public class PointManager : MonoBehaviour
     }
     private void Update()
     {
+        ShotScore();
         AddPoint();
     }
 
+    void ShotScore()
+    {
+        for (int i = 0; i < m_playerManager.PlayerCount.Length; i++)
+        {
+            if (m_playerManager.IsShot[i])
+            {
+                AddCannonPoint();
+                DecreaseScore();
+                m_playerManager.IsShot[i] = false;
+            }
+        }
+    }
     void AddPoint()
     {
         if(Timer.Round >= m_timer.FinalRound)
@@ -124,16 +144,23 @@ public class PointManager : MonoBehaviour
     {
         for (int i = 0; i < m_score.Length; i++)
         {
-            if(m_playerManager.IsCannon[i])
+            if (m_playerManager.IsCannon[i])
             {
                 m_score[i] += m_pointData.Params.CannonPoint;
                 break;
             }
         }
     }
-
-    public void DecreaseScore(int playerIndex,int score)
+    
+    public void DecreaseScore()
     {
-        m_score[playerIndex] -= score;
+        for (int i = 0; i < m_score.Length; i++)
+        {
+            if (!m_playerManager.IsCannon[i])
+            {
+                m_score[i] -= m_pointData.Params.CannonPoint;
+                break;
+            }
+        }
     }
 }
