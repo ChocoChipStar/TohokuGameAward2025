@@ -19,7 +19,7 @@ public class SceneChanger : MonoBehaviour
     {
         "TitleScene",
         "TutorialScene",
-        "CharacterSelectScene",
+        "ConfirmScene",
         "MainScene",
         "ResultScene"
     };

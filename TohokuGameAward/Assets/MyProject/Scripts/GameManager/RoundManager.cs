@@ -1,9 +1,17 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class RoundStartManager : MonoBehaviour
+public class RoundManager : MonoBehaviour
 {
+    [SerializeField]
+    private GameTimer m_timer = null;
+
+    [SerializeField]
+    private SceneChanger m_sceneChanger = null;
+
     [SerializeField]
     private FadeManager m_fadeManager = null;
 
@@ -41,11 +49,16 @@ public class RoundStartManager : MonoBehaviour
     private int m_playerCount = 2;
     private int m_cannonCount = 0;
 
+
     private bool[] m_isCannonObject = new bool[4];
 
     private bool m_isStart = false;
-    private bool m_isPlayerRand = false;
+    private bool m_isShuffle = false;
     private bool m_isTeamSet = false;
+    private bool m_isFinish = false;
+
+
+    public static int CurrentRound { get; private set; }
 
     private enum RoundUI
     {
@@ -77,7 +90,7 @@ public class RoundStartManager : MonoBehaviour
             m_playerIconObject[i].SetActive(false);
         }
         m_isStart = false;
-        m_isPlayerRand = false;
+        m_isShuffle = false;
         m_UItransform = UIMoveSpeed(m_roundUI[0].transform.position);
         StartCoroutine(WaitOperation());
     }
@@ -90,24 +103,33 @@ public class RoundStartManager : MonoBehaviour
             RoundFadeInUI(m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.transform.position);
         }
 
-        if (m_isPlayerRand)
+        if (m_isShuffle)
         {
-            PlayerRand();
+            IconShuffler();
         }
 
         if (m_isTeamSet)
         {
             TeamSet();
         }
+
+        if(m_timer.IsTimeLimit && !m_isFinish)
+        {
+            StartCoroutine(RoundFinish());
+        }
     }
 
     private void RoundFadeInUI(Vector3 UI)
     {
-        m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.transform.position= Vector3.MoveTowards(
-          UI, m_originPosition, m_UItransform.x);
+        var teamOneUIPos = m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.transform.position;
+        teamOneUIPos = Vector3.MoveTowards(UI, m_originPosition, m_UItransform.x);
+        m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.transform.position = teamOneUIPos;
     }
 
-    public void PlayerSet(GameObject player, bool isCannons, int Num)
+    /// <summary>
+    /// プレイヤーの動きを止める処理
+    /// </summary>
+    public void StoppedMovement(GameObject player, bool isCannons, int Num)
     {
         m_isCannonObject[Num] = isCannons;
         if (isCannons)
@@ -121,12 +143,15 @@ public class RoundStartManager : MonoBehaviour
         m_playerObject[Num].enabled = false;
     }
 
-    private void PlayerRand()
+    /// <summary>
+    /// プレイヤーの顔アイコンをシャッフルする処理を行います
+    /// </summary>
+    private void IconShuffler()
     {
         for(int i = 0; i < m_playerObject.Length; i++)
         {
-            var randum = Random.Range(0, m_playerObject.Length);
-            m_playerIconImage[i].sprite = m_playerIcon[randum];
+            var randomValue = Random.Range(0, InputData.PlayerMax);
+            m_playerIconImage[i].sprite = m_playerIcon[randomValue];
         }
     }
 
@@ -162,18 +187,15 @@ public class RoundStartManager : MonoBehaviour
     IEnumerator WaitOperation()
     {
         yield return new WaitForSeconds(m_showTime);
-        m_isStart = true;
 
+        m_isStart = true;
         yield return new WaitForSeconds(m_showTime);
         m_isStart = false;
-        m_isPlayerRand = true;
-        for(int i = 0; i < m_playerIconObject.Length; i++)
-        {
-            m_playerIconObject[i].SetActive(true);
-        }
+
+        InitializeShuffle();
 
         yield return new WaitForSeconds(m_showTime);
-        m_isPlayerRand = false;
+        m_isShuffle = false;
         m_isTeamSet = true;
 
         yield return new WaitForSeconds(m_showTime);
@@ -196,19 +218,62 @@ public class RoundStartManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         m_roundUI[(int)RoundUI.Start].SetActive(false);
 
-        for (int i = 0; i < m_gameStartScript.Length; i++)
-        {
-            m_gameStartScript[i].enabled = true;
-        }
-        for (int i = 0; i < m_gameStartObject.Length; i++)
-        {
-            m_gameStartObject[i].SetActive(true);
-        }
+        InitializeGameStart();
+
         for (int i = 0; i < m_playerObject.Length; i++)
         {
             if (m_playerObject[i] == null)
                 break;
-            m_playerObject[i].enabled=true;
+            m_playerObject[i].enabled = true;
         }
+    }
+
+    private void InitializeShuffle()
+    {
+        m_isShuffle = true;
+        for (int i = 0; i < m_playerIconObject.Length; i++)
+        {
+            m_playerIconObject[i].SetActive(true);
+        }
+    }
+
+    private IEnumerator RoundFinish()
+    {
+        m_roundUI[(int)RoundUI.GameSet].SetActive(true);
+        m_isFinish = true;
+
+        yield return new WaitForSeconds(m_showTime);
+
+        if (CurrentRound == 0)
+        {
+            SwitchNextRound();
+        }
+        else
+        {
+            SwitchResultScene();
+        }
+    }
+
+    /// <summary>
+    /// ゲームスタート時の初期化を行います
+    /// </summary>
+    private void InitializeGameStart()
+    {
+        for (int i = 0; i < m_gameStartScript.Length; i++)
+        {
+            m_gameStartScript[i].enabled = true;
+            m_gameStartObject[i].SetActive(true);
+        }
+    }
+
+    private void SwitchNextRound()
+    {
+        CurrentRound++;
+        m_sceneChanger.TransitionSpecifiedScene(SceneChanger.SceneName.Main);
+    }
+
+    private void SwitchResultScene()
+    {
+        m_sceneChanger.TransitionNextScene();
     }
 }

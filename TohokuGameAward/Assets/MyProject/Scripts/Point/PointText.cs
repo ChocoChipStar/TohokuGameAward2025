@@ -19,7 +19,7 @@ public class PointText : MonoBehaviour
     PlayerManager m_playerManager = null;
 
     [SerializeField]
-    Timer m_timer = null;
+    GameTimer m_timer = null;
 
     private int[] m_score = null;
 
@@ -41,11 +41,11 @@ public class PointText : MonoBehaviour
     {
         m_pointManager = GetComponent<PointManager>();
 
-        if(Timer.Round == 0)
+        if(GameTimer.Round == 0)
         {
             InitArray();
         }
-        if(Timer.Round != 0)
+        if(GameTimer.Round != 0)
         {
             GetLastRoundPoints();
         }
@@ -81,7 +81,7 @@ public class PointText : MonoBehaviour
 
     void GetPoint()
     {
-        if (Timer.Round == 0)
+        if (GameTimer.Round == 0)
         {
             m_currentDefeScore = PointManager.DefRoundScore[0];
             m_currentOffeScore = PointManager.OffRoundScore[0];
@@ -91,10 +91,10 @@ public class PointText : MonoBehaviour
 
             return;
         }
-        if (Timer.Round < m_timer.FinalRound)
+        if (GameTimer.Round < m_timer.FinalRound)
         {
-            m_currentDefeScore = PointManager.DefRoundScore[Timer.Round];
-            m_currentOffeScore = PointManager.OffRoundScore[Timer.Round];
+            m_currentDefeScore = PointManager.DefRoundScore[GameTimer.Round];
+            m_currentOffeScore = PointManager.OffRoundScore[GameTimer.Round];
 
             m_defeTotalScore = m_pointManager.GetTotalScore(PointManager.DefRoundScore);
             m_offeTotalScore = m_pointManager.GetTotalScore(PointManager.OffRoundScore);

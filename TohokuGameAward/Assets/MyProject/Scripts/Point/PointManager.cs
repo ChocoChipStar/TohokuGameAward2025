@@ -9,7 +9,7 @@ public class PointManager : MonoBehaviour
     PlayerManager m_playerManager = null;
 
     [SerializeField]
-    Timer m_timer = null;
+    GameTimer m_timer = null;
 
     [SerializeField]
     private int[] m_score = null;
@@ -29,7 +29,7 @@ public class PointManager : MonoBehaviour
     void Start()
     {
         Array.Resize(ref m_score, m_playerManager.PlayerCount.Length);
-        if (Timer.Round == 0)
+        if (GameTimer.Round == 0)
         {
             m_defroundScore = new int[m_timer.FinalRound];
             m_offroundScore = new int[m_timer.FinalRound];
@@ -44,14 +44,14 @@ public class PointManager : MonoBehaviour
 
     void AddPoint()
     {
-        if(Timer.Round >= m_timer.FinalRound)
+        if(GameTimer.Round >= m_timer.FinalRound)
         {
             return;
         }
 
         for (int i = 0; i < m_score.Length; i++)
         {
-            if (Timer.Round == 0)
+            if (GameTimer.Round == 0)
             {
 
                 if (!m_playerManager.IsCannon[i])//逃げる側だったら
@@ -67,7 +67,7 @@ public class PointManager : MonoBehaviour
 
         for (int i = 0; i < m_score.Length; i++)
         {
-            if (Timer.Round == 1)
+            if (GameTimer.Round == 1)
             {
                 if (!m_playerManager.IsCannon[i])//逃げる側だったら
                 {
@@ -99,8 +99,8 @@ public class PointManager : MonoBehaviour
                 continue;
             }
         }
-        m_defroundScore[Timer.Round] = defencesScore;
-        m_offroundScore[Timer.Round] = offencesScore;
+        m_defroundScore[GameTimer.Round] = defencesScore;
+        m_offroundScore[GameTimer.Round] = offencesScore;
     }
 
     public int GetTotalScore(int[] Score)

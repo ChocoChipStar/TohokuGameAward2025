@@ -22,7 +22,7 @@ public class PlayerManager : MonoBehaviour
     private PlayerData m_playerData = null;
 
     [SerializeField]
-    private RoundStartManager m_roundStartManager = null;
+    private RoundManager m_roundManager = null;
 
     private PlayerInvincible[] m_playerInvincible = new PlayerInvincible[4];
 
@@ -68,23 +68,24 @@ public class PlayerManager : MonoBehaviour
         m_playerCount = new GameObject[gamepads.Count];
         for (int i = 0; i < gamepads.Count; i++)
         {
-            //var instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
-            if (Timer.Round % 2 == 0)
+            if (RoundManager.CurrentRound == 0)
             {
                 PlayerCountJudg(i, out instance);
             }
-            if (Timer.Round % 2 == 1)
+
+            if (RoundManager.CurrentRound == 1)
             {
                 SwapCannonAndPlayer(i, out instance);
             }
+
             instance.name = "Player" + (i + 1);
             m_playerCount[i] = instance;
 
-            m_roundStartManager.PlayerSet(instance, m_isCannon[i], i);
+            m_roundManager.StoppedMovement(instance, m_isCannon[i], i);
 
             m_playerInvincible[i] = m_playerCount[i].GetComponentInChildren<PlayerInvincible>();
-            var inputData = instance.GetComponent<InputData>();
 
+            var inputData = instance.GetComponent<InputData>();
             if (inputData != null)
             {
                 inputData.SetNumber(i);
@@ -92,6 +93,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 配列サイズの初期化
+    /// </summary>
     private void InitArray()
     {
         Array.Resize(ref m_isDead, PlayerCount.Length);
@@ -135,6 +139,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ラウンド2の際にプレイヤーと大砲側を入れ替える処理を行います
+    /// </summary>
     private void SwapCannonAndPlayer(int i, out GameObject player)
     {
         if (m_cannonPlayerNumber <= i + 1)
