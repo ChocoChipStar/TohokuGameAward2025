@@ -42,7 +42,7 @@ public class ResultText : MonoBehaviour
     private float m_renderWinnerDelay = 0;
 
     private int[] m_deffencesScore = null;
- 
+
     private int[] m_offencesScore = null;
 
     private int m_defTotalScore = 0;
@@ -76,8 +76,8 @@ public class ResultText : MonoBehaviour
 
     private void GetFinalScore()
     {
-        m_deffencesScore = PointManager.DefRoundScore;
-        m_offencesScore = PointManager.OffRoundScore;
+       m_deffencesScore = PointManager.DefRoundScore;
+       m_offencesScore = PointManager.OffRoundScore;
         m_defTotalScore = TotalScore(m_deffencesScore);
         m_offTotalScore = TotalScore(m_offencesScore);
     }

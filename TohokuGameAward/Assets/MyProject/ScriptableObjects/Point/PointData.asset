@@ -18,6 +18,8 @@ MonoBehaviour:
     m_staticItemPos:
     - {x: 1, y: 0, z: 0}
   m_paramsData:
+    m_cannonPoint: 20
+    m_penaltyPoint: 20
     m_rotatingAngle: 0
     m_maxItem: 2
     m_spawnInterval: 1

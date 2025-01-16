@@ -12,6 +12,9 @@ public class PointManager : MonoBehaviour
     Timer m_timer = null;
 
     [SerializeField]
+    PointData m_pointData = null;
+
+    [SerializeField]
     private int[] m_score = null;
 
     private int[] m_defencesIndex = null;
@@ -53,7 +56,6 @@ public class PointManager : MonoBehaviour
         {
             if (Timer.Round == 0)
             {
-
                 if (!m_playerManager.IsCannon[i])//逃げる側だったら
                 {
                     m_defencesIndex[i] = i;//こちらにインデックスを格納
@@ -113,8 +115,25 @@ public class PointManager : MonoBehaviour
         return totalScore;
     }
 
-    public void AddScore(int playerIndex,int score)
+    public void AddScore(int playerIndex, int score)
     {
         m_score[playerIndex] += score;
+    }
+
+    public void AddCannonPoint()
+    {
+        for (int i = 0; i < m_score.Length; i++)
+        {
+            if(m_playerManager.IsCannon[i])
+            {
+                m_score[i] += m_pointData.Params.CannonPoint;
+                break;
+            }
+        }
+    }
+
+    public void DecreaseScore(int playerIndex,int score)
+    {
+        m_score[playerIndex] -= score;
     }
 }

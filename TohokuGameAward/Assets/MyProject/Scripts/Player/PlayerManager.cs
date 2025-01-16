@@ -86,7 +86,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
-
+ 
     private void InitArray()
     {
         Array.Resize(ref m_isDead, PlayerCount.Length);
