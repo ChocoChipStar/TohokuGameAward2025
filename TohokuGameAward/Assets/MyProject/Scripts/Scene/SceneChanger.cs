@@ -28,6 +28,7 @@ public class SceneChanger : MonoBehaviour
     {
         Title,
         Tutorial,
+        Confirm,
         Main,
         Result
     }

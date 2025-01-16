@@ -28,11 +28,11 @@ public class PointManager : MonoBehaviour
 
     void Start()
     {
-        Array.Resize(ref m_score, m_playerManager.PlayerCount.Length);
-        if (GameTimer.Round == 0)
+        Array.Resize(ref m_score, m_playerManager.Instances.Length);
+        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
-            m_defroundScore = new int[m_timer.FinalRound];
-            m_offroundScore = new int[m_timer.FinalRound];
+            m_defroundScore = new int[(int)RoundManager.RoundState.Max];
+            m_offroundScore = new int[(int)RoundManager.RoundState.Max];
         }
         m_defencesIndex = new int[m_score.Length];
         m_offencesIndex = new int [m_score.Length];
@@ -44,17 +44,17 @@ public class PointManager : MonoBehaviour
 
     void AddPoint()
     {
-        if(GameTimer.Round >= m_timer.FinalRound)
+        if(RoundManager.CurrentRound >= (int)RoundManager.RoundState.Max)
         {
             return;
         }
 
         for (int i = 0; i < m_score.Length; i++)
         {
-            if (GameTimer.Round == 0)
+            if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
             {
-
-                if (!m_playerManager.IsCannon[i])//逃げる側だったら
+                var isNotCannon = !TagManager.Instance.SearchedTagName(m_playerManager.Instances[i], TagManager.Type.Cannon);
+                if (isNotCannon)//逃げる側だったら
                 {
                     m_defencesIndex[i] = i;//こちらにインデックスを格納
                 }
@@ -67,9 +67,10 @@ public class PointManager : MonoBehaviour
 
         for (int i = 0; i < m_score.Length; i++)
         {
-            if (GameTimer.Round == 1)
+            if (RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
             {
-                if (!m_playerManager.IsCannon[i])//逃げる側だったら
+                var isNotCannon = !TagManager.Instance.SearchedTagName(m_playerManager.Instances[i], TagManager.Type.Cannon);
+                if (isNotCannon)//逃げる側だったら
                 {
                     m_offencesIndex[i] = i;//こちらにインデックスを格納
                 }
@@ -99,8 +100,8 @@ public class PointManager : MonoBehaviour
                 continue;
             }
         }
-        m_defroundScore[GameTimer.Round] = defencesScore;
-        m_offroundScore[GameTimer.Round] = offencesScore;
+        m_defroundScore[RoundManager.CurrentRound] = defencesScore;
+        m_offroundScore[RoundManager.CurrentRound] = offencesScore;
     }
 
     public int GetTotalScore(int[] Score)

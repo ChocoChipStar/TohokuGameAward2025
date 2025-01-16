@@ -30,14 +30,14 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerIFOutOfStage()
     {
-        for (int i = 0; i < m_playerManager.PlayerCount.Length; i++)
+        for (int i = 0; i < m_playerManager.Instances.Length; i++)
         {
             if (m_playerManager.IsDead[i])
             {
                 continue;
             }
 
-            if (IsPlayerOut(m_playerManager.PlayerCount[i], i))
+            if (IsPlayerOut(m_playerManager.Instances[i], i))
             {
                 OutOfStage(i);
             }
@@ -47,16 +47,16 @@ public class GameManager : MonoBehaviour
     {
         m_playerManager.SwitchDeadFlug(playerNum, true);
         m_playerManager.DisablePhysics(playerNum);
-        m_effectManager.OnPlayStageOutEffect(m_playerManager.PlayerCount[playerNum].transform.position, EffectManager.EffectType.StageOut);
+        m_effectManager.OnPlayStageOutEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
         m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
-        m_playerManager.PlayerCount[playerNum].transform.position = m_penartyPos;
+        m_playerManager.Instances[playerNum].transform.position = m_penartyPos;
     }
 
     private bool IsPlayerOut(GameObject targetPlayer, int num)
     {
         GameObject target = targetPlayer;
 
-        if(targetPlayer == null || m_playerManager.IsCannon[num] == true)
+        if(targetPlayer == null || TagManager.Instance.SearchedTagName(m_playerManager.Instances[num],TagManager.Type.Cannon))
         {
             return false;
         }

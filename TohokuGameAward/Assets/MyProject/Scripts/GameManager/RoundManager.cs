@@ -25,13 +25,10 @@ public class RoundManager : MonoBehaviour
     private MonoBehaviour[] m_playerObject = null;
 
     [SerializeField]
-    private GameObject[] m_playerIconObject = null;
-
-    [SerializeField]
     private Image[] m_playerIconImage = null;
 
     [SerializeField]
-    private Sprite[] m_playerIcon = null;
+    private Sprite[] m_playerNumberImage = null;
 
     [SerializeField]
     private GameObject[] m_roundUI = null;
@@ -57,9 +54,6 @@ public class RoundManager : MonoBehaviour
     private bool m_isTeamSet = false;
     private bool m_isFinish = false;
 
-
-    public static int CurrentRound { get; private set; }
-
     private enum RoundUI
     {
         PlayerTeam1,
@@ -69,6 +63,14 @@ public class RoundManager : MonoBehaviour
         GameSet
     }
 
+    public static int CurrentRound { get; private set; }
+
+    public enum RoundState
+    {
+        One,
+        Two,
+        Max
+    }
 
     private void Awake()
     {
@@ -85,9 +87,9 @@ public class RoundManager : MonoBehaviour
             m_roundUI[i].SetActive(false);
             m_roundUI[i].transform.position = m_UIPosition;
         }
-        for (int i = 0; i < m_playerIconObject.Length; i++)
+        for (int i = 0; i < m_playerIconImage.Length; i++)
         {
-            m_playerIconObject[i].SetActive(false);
+            m_playerIconImage[i].enabled = false;
         }
         m_isStart = false;
         m_isShuffle = false;
@@ -151,29 +153,24 @@ public class RoundManager : MonoBehaviour
         for(int i = 0; i < m_playerObject.Length; i++)
         {
             var randomValue = Random.Range(0, InputData.PlayerMax);
-            m_playerIconImage[i].sprite = m_playerIcon[randomValue];
+            m_playerIconImage[i].sprite = m_playerNumberImage[randomValue];
         }
     }
 
     private void TeamSet()
     {
-        for (int i = 0; i < m_playerObject.Length; i++)
+        for (int i = 0; i < PlayerManager.AlphaTeamNumber.Length; i++)
         {
-            if (m_playerObject[i] == null)
-            {
-                break;
-            }
-            if (m_isCannonObject[i])
-            {
-                m_playerIconImage[m_cannonCount].sprite = m_playerIcon[i];
-                m_cannonCount++;
-            }
-            else
-            {
-                m_playerIconImage[m_playerCount].sprite = m_playerIcon[i];
-                m_playerCount++;
-            }
+            var alphaNum = PlayerManager.AlphaTeamNumber[i];
+            m_playerIconImage[i].sprite = m_playerNumberImage[alphaNum];
         }
+
+        for (int i = 0; i < PlayerManager.BravoTeamNumber.Length; i++)
+        {
+            var bravoNum = PlayerManager.BravoTeamNumber[i];
+            m_playerIconImage[i + 2].sprite = m_playerNumberImage[bravoNum];
+        }
+
         m_isTeamSet = false;
     }
 
@@ -199,9 +196,9 @@ public class RoundManager : MonoBehaviour
         m_isTeamSet = true;
 
         yield return new WaitForSeconds(m_showTime);
-        for (int i = 0; i < m_playerIconObject.Length; i++)
+        for (int i = 0; i < m_playerIconImage.Length; i++)
         {
-            m_playerIconObject[i].SetActive(false);
+            m_playerIconImage[i].enabled = false;
         }
         for (int i = 0; i < m_roundUI.Length; i++)
         {
@@ -231,15 +228,16 @@ public class RoundManager : MonoBehaviour
     private void InitializeShuffle()
     {
         m_isShuffle = true;
-        for (int i = 0; i < m_playerIconObject.Length; i++)
+        for (int i = 0; i < m_playerIconImage.Length; i++)
         {
-            m_playerIconObject[i].SetActive(true);
+            m_playerIconImage[i].enabled = true;
         }
     }
 
     private IEnumerator RoundFinish()
     {
         m_roundUI[(int)RoundUI.GameSet].SetActive(true);
+        m_roundUI[(int)RoundUI.GameSet].transform.position = m_originPosition;
         m_isFinish = true;
 
         yield return new WaitForSeconds(m_showTime);

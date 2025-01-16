@@ -184,7 +184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -430}
+  m_AnchoredPosition: {x: 25, y: -430}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8861222443293585546
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 330d02bfe36bfcc40892a7276dbc6e29, type: 2}
   m_sharedMaterial: {fileID: -5918701107358102925, guid: 330d02bfe36bfcc40892a7276dbc6e29,
@@ -537,11 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_timerTextField: {fileID: 4206110489220438668}
-  m_limitTextField: {fileID: 3148286591168513344}
   m_limitTime: 50
-  m_timeLimitText: Finish
-  m_sceneChangeDelay: 1
-  m_finalRound: 2
 --- !u!114 &5350949036695840124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,29 +550,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b24a3af5de06a94cbb10e81ffeab3ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_timer: {fileID: 3526640093867363154}
+  m_sceneChanger: {fileID: 0}
   m_fadeManager: {fileID: 0}
   m_gameStartScript:
   - {fileID: 3526640093867363154}
   - {fileID: 5203162272734579835}
   m_gameStartObject:
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5313584074784454080}
   m_playerObject:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_playerIconObject:
-  - {fileID: 5802078434849945212}
-  - {fileID: 550904435387174240}
-  - {fileID: 7439090775404048973}
-  - {fileID: 7913983496979696998}
   m_playerIconImage:
   - {fileID: 8443754057651939234}
   - {fileID: 6132075198757295139}
   - {fileID: 481418402639119118}
   - {fileID: 64267355276206608}
-  m_playerIcon:
+  m_playerNumberImage:
   - {fileID: 21300000, guid: c15fc3f1ab7cc3744abf6d9fb3dab72c, type: 3}
   - {fileID: 21300000, guid: 5d941515057dc8d45803287f4a39fd3c, type: 3}
   - {fileID: 21300000, guid: 525800948cd1971449343bad190694f6, type: 3}
@@ -681,7 +674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6993545756870434604
 RectTransform:
   m_ObjectHideFlags: 0
