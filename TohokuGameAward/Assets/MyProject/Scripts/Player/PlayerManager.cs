@@ -21,6 +21,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private PlayerData m_playerData = null;
 
+    [SerializeField]
+    private RoundStartManager m_roundStartManager = null;
+
     private PlayerInvincible[] m_playerInvincible = new PlayerInvincible[4];
 
     [SerializeField]
@@ -77,7 +80,9 @@ public class PlayerManager : MonoBehaviour
             instance.name = "Player" + (i + 1);
             m_playerCount[i] = instance;
 
-            m_playerInvincible[i] = GetComponentInChildren<PlayerInvincible>();
+            m_roundStartManager.PlayerSet(instance, m_isCannon[i], i);
+
+            m_playerInvincible[i] = m_playerCount[i].GetComponentInChildren<PlayerInvincible>();
             var inputData = instance.GetComponent<InputData>();
 
             if (inputData != null)
