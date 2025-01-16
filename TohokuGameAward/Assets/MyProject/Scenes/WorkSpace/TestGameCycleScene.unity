@@ -545,6 +545,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1987806971529190524, guid: 739911a6540a904479e3a379c2a4b550,
         type: 3}
+      propertyPath: m_stageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6bcff8c8c9a207641a3d60b111342677,
+        type: 2}
+    - target: {fileID: 1987806971529190524, guid: 739911a6540a904479e3a379c2a4b550,
+        type: 3}
       propertyPath: m_gameManager
       value: 
       objectReference: {fileID: 1593883530}
