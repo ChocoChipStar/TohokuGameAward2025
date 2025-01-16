@@ -9,6 +9,11 @@ public class PointItemManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.transform.parent == null)
+        {
+            return; 
+        }
+
         if (TagManager.Instance.SearchedTagName(other.transform.parent.gameObject, TagManager.Type.Player) && !m_isGot)
         {
             PlayerManager playerManager = other.gameObject.GetComponentInParent<PlayerManager>();
