@@ -10,7 +10,9 @@ public class SoundEffectManager : MonoBehaviour
 
     public enum SoundEffectName
     {
-        StageOut
+        StageOut,
+        Cannon,
+        Point
     }
     public void OnPlayOneShot(SoundEffectName seNum)
     {
