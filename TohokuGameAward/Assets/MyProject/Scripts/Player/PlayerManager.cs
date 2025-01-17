@@ -21,6 +21,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private PlayerData m_playerData = null;
 
+    [SerializeField]
+    private GameManager m_gameManager = null;
+
     private PlayerInvincible[] m_playerInvincible = new PlayerInvincible[4];
 
     [SerializeField]
@@ -50,7 +53,6 @@ public class PlayerManager : MonoBehaviour
     public bool[] IsShot { get { return m_isshot; } set { m_isshot = value; } }
 
     public float[] ShotInterval { get { return m_shotInterval; } set { m_shotInterval = value; } }
-
 
     public GameObject[] PlayerCount
     {

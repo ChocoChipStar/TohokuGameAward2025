@@ -694,6 +694,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404916f275818bc4898ce7c3c59deff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &821012156 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1324121620}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292c34226ab64d2438ef73f8298c1bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1324121620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -719,9 +731,34 @@ PrefabInstance:
       objectReference: {fileID: 1403572740}
     - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
+      propertyPath: m_gameManager
+      value: 
+      objectReference: {fileID: 1593883530}
+    - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
       propertyPath: m_playerManager
       value: 
       objectReference: {fileID: 1741602048}
+    - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: isDeadPointInterVal.Array.data[0]
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: isDeadPointInterVal.Array.data[1]
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: isDeadPointInterVal.Array.data[2]
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: isDeadPointInterVal.Array.data[3]
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6505357305837549286, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_Name
@@ -1543,6 +1580,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_pointData
+      value: 
+      objectReference: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9,
+        type: 2}
+    - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_pointManager
+      value: 
+      objectReference: {fileID: 821012156}
     - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_effectManager

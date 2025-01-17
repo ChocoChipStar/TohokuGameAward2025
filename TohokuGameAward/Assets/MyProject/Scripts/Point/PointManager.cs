@@ -10,6 +10,9 @@ public class PointManager : MonoBehaviour
     PlayerManager m_playerManager = null;
 
     [SerializeField]
+    GameManager m_gameManager = null;
+
+    [SerializeField]
     Timer m_timer = null;
 
     [SerializeField]
@@ -31,9 +34,19 @@ public class PointManager : MonoBehaviour
 
     static private int[] m_offroundScore = null;
 
+    private bool[] isDeadPoint = new bool[4];
+
+    [SerializeField]
+    private float[] isDeadPointInterVal = new float[4];
+
     public static int[] DefRoundScore { get { return m_defroundScore; } }
 
     public static int[] OffRoundScore { get { return m_offroundScore; } }
+
+    public bool[] IsDeadPoint { get { return isDeadPoint; }  set{isDeadPoint = value; } }
+
+
+    public float[] DeadPointInterVal { get { return isDeadPointInterVal; } set { isDeadPointInterVal = value; } }
 
     void Start()
     {
@@ -49,15 +62,39 @@ public class PointManager : MonoBehaviour
     }
     private void Update()
     {
-        ShotScore();
+        IsDeadPointInterVal();
+        DeathScore();
         AddPoint();
     }
 
+    void DeathScore()
+    {
+        for (int i = 0; i < m_playerManager.PlayerCount.Length; i++)
+        {
+            if (isDeadPoint[i] && isDeadPointInterVal[i] > 0)
+            {
+                AddCannonPoint();
+                DecreaseScore();
+                isDeadPoint[i] = false;
+            }
+        }
+    }
+    void IsDeadPointInterVal()
+    {
+
+        for (int i = 0; i < m_playerManager.PlayerCount.Length; i++)
+        {
+            if (isDeadPointInterVal[i] > 0)
+            {
+                isDeadPointInterVal[i] -= Time.deltaTime;
+            }
+        }
+    }
     void ShotScore()
     {
         for (int i = 0; i < m_playerManager.PlayerCount.Length; i++)
         {
-            if (m_playerManager.IsShot[i])
+            if (m_playerManager.IsShot[i] )
             {
                 AddCannonPoint();
                 DecreaseScore();
@@ -149,6 +186,8 @@ public class PointManager : MonoBehaviour
                 m_score[i] += m_pointData.Params.CannonPoint;
                 break;
             }
+
+
         }
     }
     
