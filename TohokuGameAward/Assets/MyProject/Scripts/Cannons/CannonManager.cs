@@ -8,6 +8,9 @@ public class CannonManager : MonoBehaviour
     [SerializeField]
     private CannonData m_cannonData = null;
 
+    [SerializeField]
+    private SoundEffectManager m_soundEffectManager = null;
+
     private int m_cannonCount = 0;
 
     // Update is called once per frame
@@ -53,5 +56,10 @@ public class CannonManager : MonoBehaviour
         m_cannonCount++;
 
         return cannonObject;
+    }
+
+    public void PlaySoundEffect()
+    {
+        m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.Cannon);
     }
 }

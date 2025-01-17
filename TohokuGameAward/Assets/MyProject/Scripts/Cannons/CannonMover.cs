@@ -18,6 +18,8 @@ public class CannonMover : MonoBehaviour
     [SerializeField]
     private Canvas m_canvas = null;
 
+
+
     [SerializeField, Range(0.0f, 100.0f)]
     private float m_cannonPosition = 0.0f;
 

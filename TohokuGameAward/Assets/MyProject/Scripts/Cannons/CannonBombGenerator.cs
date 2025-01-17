@@ -19,6 +19,9 @@ public class CannonBombGenerator : MonoBehaviour
     private Transform m_shootTransform = null;
 
     [SerializeField]
+    private CannonManager m_cannonManager = null;
+
+    [SerializeField]
     private float m_bombStock = 0.0f;
 
     [SerializeField]
@@ -28,6 +31,7 @@ public class CannonBombGenerator : MonoBehaviour
     {
         m_cannonSlider.maxValue = m_cannonData.Params.CannonBombStock;
         m_bombStock = m_cannonData.Params.CannonBombStock;
+        m_cannonManager = GetComponentInParent<CannonManager>();
     }
 
     // Update is called once per frame
@@ -65,6 +69,7 @@ public class CannonBombGenerator : MonoBehaviour
         if(bombRigidbody == null)
            return;
 
+        m_cannonManager.PlaySoundEffect();
         bombRigidbody.AddForce(ShootVector() * m_cannonData.Params.ShootSpeed, ForceMode.Impulse);
         m_bombStock--;
         m_bombCoolTime--;
