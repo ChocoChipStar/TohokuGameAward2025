@@ -19,7 +19,7 @@ public class PointText : MonoBehaviour
     PlayerManager m_playerManager = null;
 
     [SerializeField]
-    Timer m_timer = null;
+    GameTimer m_timer = null;
 
     private int[] m_score = null;
 
@@ -41,11 +41,11 @@ public class PointText : MonoBehaviour
     {
         m_pointManager = GetComponent<PointManager>();
 
-        if(Timer.Round == 0)
+        if(RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
             InitArray();
         }
-        if(Timer.Round != 0)
+        if(RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
         {
             GetLastRoundPoints();
         }
@@ -58,8 +58,8 @@ public class PointText : MonoBehaviour
 
     void InitArray()
     {
-        m_deffRoundScore  = new int[m_timer.FinalRound];
-        m_offeRoundScore  = new int[m_timer.FinalRound];
+        m_deffRoundScore  = new int[(int)RoundManager.RoundState.Max];
+        m_offeRoundScore  = new int[(int)RoundManager.RoundState.Max];
     }
 
     void GetLastRoundPoints()
@@ -81,7 +81,7 @@ public class PointText : MonoBehaviour
 
     void GetPoint()
     {
-        if (Timer.Round == 0)
+        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
             m_currentDefeScore = PointManager.DefRoundScore[0];
             m_currentOffeScore = PointManager.OffRoundScore[0];
@@ -91,10 +91,10 @@ public class PointText : MonoBehaviour
 
             return;
         }
-        if (Timer.Round < m_timer.FinalRound)
+        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
         {
-            m_currentDefeScore = PointManager.DefRoundScore[Timer.Round];
-            m_currentOffeScore = PointManager.OffRoundScore[Timer.Round];
+            m_currentDefeScore = PointManager.DefRoundScore[RoundManager.CurrentRound];
+            m_currentOffeScore = PointManager.OffRoundScore[RoundManager.CurrentRound];
 
             m_defeTotalScore = m_pointManager.GetTotalScore(PointManager.DefRoundScore);
             m_offeTotalScore = m_pointManager.GetTotalScore(PointManager.OffRoundScore);

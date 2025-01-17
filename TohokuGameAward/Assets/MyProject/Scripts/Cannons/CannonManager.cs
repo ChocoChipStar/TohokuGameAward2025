@@ -44,13 +44,14 @@ public class CannonManager : MonoBehaviour
     }
 
     //大砲が作成される処理
-    public void GenerateCannon(GameObject cannon, out GameObject instance)
+    public GameObject GenerateCannon(GameObject cannon)
     {
         var cannonObject = Instantiate(cannon, Vector3.zero, Quaternion.identity, this.transform);
         
         m_playerRailMover[m_cannonCount] = cannonObject.GetComponent<CannonMover>();
         m_playerRailMover[m_cannonCount].CreateStart(m_cannonCount);
         m_cannonCount++;
-        instance = cannonObject;
+
+        return cannonObject;
     }
 }
