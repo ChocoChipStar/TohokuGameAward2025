@@ -579,9 +579,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_drawImage: {fileID: 1992036746}
   m_tutorialSprite:
-  - {fileID: 21300000, guid: f9eae5a5587aa5c48830e86e6f5ffa2d, type: 3}
-  - {fileID: 21300000, guid: 50d35513b2e288842ad87cc3bf3ebb81, type: 3}
-  - {fileID: 21300000, guid: a0b3a91d81bee7d4db3b407262d30818, type: 3}
+  - {fileID: 21300000, guid: 83729217c6d1f104da941a950e80010c, type: 3}
+  - {fileID: 21300000, guid: c808c5b4bcb44fc45b0f3f81059c3bb0, type: 3}
+  - {fileID: 21300000, guid: 0e068cf5a2e8b5b4387422606473db9c, type: 3}
+  - {fileID: 21300000, guid: 56e3574f0ee33c74796d71d3583b95f6, type: 3}
+  - {fileID: 21300000, guid: 8e3acfa50266a21439d39c98eff63bfe, type: 3}
+  - {fileID: 21300000, guid: b08a16bdaeb0f6646af7c0fa470e8e71, type: 3}
+  - {fileID: 21300000, guid: 193df3a426b98d941b8bf7672fc4f8e5, type: 3}
 --- !u!114 &1716933436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,7 +766,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f9eae5a5587aa5c48830e86e6f5ffa2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 83729217c6d1f104da941a950e80010c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
