@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.Rendering.Universal.Internal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -8,6 +10,9 @@ public class RoundManager : MonoBehaviour
 {
     [SerializeField]
     private GameTimer m_timer = null;
+
+    [SerializeField]
+    private PlayerManager m_playerManager = null;
 
     [SerializeField]
     private SceneChanger m_sceneChanger = null;
@@ -34,18 +39,20 @@ public class RoundManager : MonoBehaviour
     private GameObject[] m_roundUI = null;
 
     [SerializeField]
+    private GameObject[] m_finishUI = null;
+
+    [SerializeField]
     private float m_UISpeed = 0.0f;
 
     [SerializeField]
     private float m_showTime = 0.0f;
 
-    private Vector3 m_UIPosition = new Vector3(-1920.0f, 540.0f, 0.0f);
+    private Vector3 m_UIPosition = new Vector3(-1920.0f, 0.0f, 0.0f);
     private Vector3 m_originPosition = new Vector3(960.0f, 540.0f, 0.0f);
     private Vector3 m_UItransform = Vector3.zero;
 
     private int m_playerCount = 2;
     private int m_cannonCount = 0;
-
 
     private bool[] m_isCannonObject = new bool[4];
 
@@ -56,8 +63,8 @@ public class RoundManager : MonoBehaviour
 
     private enum RoundUI
     {
-        PlayerTeam1,
-        PlayerTeam2,
+        TeamSelectionRoundOne,
+        TeamSelectionRoundTwo,
         ready,
         Start,
         GameSet
@@ -85,7 +92,6 @@ public class RoundManager : MonoBehaviour
         for (int i = 0; i < m_roundUI.Length; i++)
         {
             m_roundUI[i].SetActive(false);
-            m_roundUI[i].transform.position = m_UIPosition;
         }
         for (int i = 0; i < m_playerIconImage.Length; i++)
         {
@@ -93,7 +99,15 @@ public class RoundManager : MonoBehaviour
         }
         m_isStart = false;
         m_isShuffle = false;
-        m_UItransform = UIMoveSpeed(m_roundUI[0].transform.position);
+        if(CurrentRound == (int)RoundState.One)
+        {
+            m_UItransform = UIMoveSpeed(m_roundUI[(int)RoundState.One].transform.position);
+        }
+        else
+        {
+            m_UItransform = UIMoveSpeed(m_roundUI[(int)RoundState.Two].transform.position);
+        }
+
         StartCoroutine(WaitOperation());
     }
 
@@ -101,8 +115,8 @@ public class RoundManager : MonoBehaviour
     {
         if (m_fadeManager.IsFinishFadeIn && m_isStart)
         {
-            m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.SetActive(true);
-            RoundFadeInUI(m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.transform.position);
+            
+            MoveToTeamSelectionUI(m_originPosition,50.0f);
         }
 
         if (m_isShuffle)
@@ -121,28 +135,32 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    private void RoundFadeInUI(Vector3 UI)
+    private void MoveToTeamSelectionUI(Vector3 targetPos, float speed)
     {
-        var teamOneUIPos = m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.transform.position;
-        teamOneUIPos = Vector3.MoveTowards(UI, m_originPosition, m_UItransform.x);
-        m_roundUI[(int)RoundUI.PlayerTeam1].gameObject.transform.position = teamOneUIPos;
-    }
+        var newPos = Vector3.zero;
+        var currentPos = Vector3.zero;
+        switch (CurrentRound)
+        {
+            case (int)RoundState.One:
+                m_roundUI[(int)RoundUI.TeamSelectionRoundOne].gameObject.SetActive(true);
+                currentPos = m_roundUI[(int)RoundUI.TeamSelectionRoundOne].gameObject.GetComponent<RectTransform>().position;
+                newPos = Vector3.MoveTowards(currentPos, targetPos, m_UItransform.x);
+                m_roundUI[(int)RoundUI.TeamSelectionRoundOne].gameObject.transform.position = newPos;
+                break;
 
-    /// <summary>
-    /// プレイヤーの動きを止める処理
-    /// </summary>
-    public void StoppedMovement(GameObject player, bool isCannons, int Num)
-    {
-        m_isCannonObject[Num] = isCannons;
-        if (isCannons)
-        {
-            m_playerObject[Num] = player.GetComponent<CannonMover>();
+            case (int)RoundState.Two:
+                m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.SetActive(true);
+                currentPos = m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.GetComponent<RectTransform>().position;
+                newPos = Vector3.MoveTowards(currentPos, targetPos, m_UItransform.x);
+                m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.transform.position = newPos;
+                break;
         }
-        else
+
+        if(Vector3.Distance(currentPos,targetPos) <= 0.3f)
         {
-            m_playerObject[Num] = player.GetComponent<PlayerMover>();
+            m_isStart = false;
+            StartCoroutine(RoundStart());
         }
-        m_playerObject[Num].enabled = false;
     }
 
     /// <summary>
@@ -159,13 +177,13 @@ public class RoundManager : MonoBehaviour
 
     private void TeamSet()
     {
-        for (int i = 0; i < PlayerManager.AlphaTeamNumber.Length; i++)
+        for (int i = 0; i < PlayerManager.AlphaTeamNumber.Count; i++)
         {
             var alphaNum = PlayerManager.AlphaTeamNumber[i];
             m_playerIconImage[i].sprite = m_playerNumberImage[alphaNum];
         }
 
-        for (int i = 0; i < PlayerManager.BravoTeamNumber.Length; i++)
+        for (int i = 0; i < PlayerManager.BravoTeamNumber.Count; i++)
         {
             var bravoNum = PlayerManager.BravoTeamNumber[i];
             m_playerIconImage[i + 2].sprite = m_playerNumberImage[bravoNum];
@@ -176,7 +194,7 @@ public class RoundManager : MonoBehaviour
 
     private Vector3 UIMoveSpeed(Vector3 tarms)
     {
-        var speed = Time.deltaTime * ((this.transform.position.x - tarms.x) / m_UISpeed);
+        var speed = (this.transform.position.x - tarms.x) * m_UISpeed;
         tarms.x = speed;
         return tarms;
     }
@@ -184,22 +202,23 @@ public class RoundManager : MonoBehaviour
     IEnumerator WaitOperation()
     {
         yield return new WaitForSeconds(m_showTime);
+        m_isStart = true;        
+    }
 
-        m_isStart = true;
-        yield return new WaitForSeconds(m_showTime);
-        m_isStart = false;
-
-        InitializeShuffle();
-
-        yield return new WaitForSeconds(m_showTime);
-        m_isShuffle = false;
-        m_isTeamSet = true;
-
-        yield return new WaitForSeconds(m_showTime);
-        for (int i = 0; i < m_playerIconImage.Length; i++)
+    private IEnumerator RoundStart()
+    {
+        DrawPlayerIcon(true);
+        if (CurrentRound == (int)RoundState.One)
         {
-            m_playerIconImage[i].enabled = false;
+            m_isShuffle = true;
+            yield return new WaitForSeconds(m_showTime);
+            m_isShuffle = false;
         }
+
+        m_isTeamSet = true;
+        yield return new WaitForSeconds(m_showTime);
+        DrawPlayerIcon(false);
+
         for (int i = 0; i < m_roundUI.Length; i++)
         {
             m_roundUI[i].SetActive(false);
@@ -211,6 +230,11 @@ public class RoundManager : MonoBehaviour
         m_roundUI[(int)RoundUI.ready].SetActive(false);
         m_roundUI[(int)RoundUI.Start].SetActive(true);
         m_roundUI[(int)RoundUI.Start].transform.position = m_originPosition;
+
+        for(int i = 0; i < InputData.PlayerMax; i++)
+        {
+            m_playerManager.SetMovement(i, true);
+        }
 
         yield return new WaitForSeconds(1);
         m_roundUI[(int)RoundUI.Start].SetActive(false);
@@ -225,12 +249,12 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    private void InitializeShuffle()
+    private void DrawPlayerIcon(bool isActive)
     {
-        m_isShuffle = true;
+        
         for (int i = 0; i < m_playerIconImage.Length; i++)
         {
-            m_playerIconImage[i].enabled = true;
+            m_playerIconImage[i].enabled = isActive;
         }
     }
 
@@ -239,6 +263,23 @@ public class RoundManager : MonoBehaviour
         m_roundUI[(int)RoundUI.GameSet].SetActive(true);
         m_roundUI[(int)RoundUI.GameSet].transform.position = m_originPosition;
         m_isFinish = true;
+
+        for (int i = 0; i < InputData.PlayerMax; i++)
+        {
+            m_playerManager.SetMovement(i, false);
+        }
+
+        for(int i = 0; i < m_finishUI.Length; i++)
+        {
+            m_finishUI[i].SetActive(true);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        var bomb = GameObject.FindGameObjectsWithTag("Bomb");
+        for(int i = 0; i < bomb.Length; i++)
+        {
+            Destroy(bomb[i]);
+        }
 
         yield return new WaitForSeconds(m_showTime);
 
@@ -260,6 +301,10 @@ public class RoundManager : MonoBehaviour
         for (int i = 0; i < m_gameStartScript.Length; i++)
         {
             m_gameStartScript[i].enabled = true;
+        }
+
+        for(int i = 0; i < m_gameStartObject.Length; i++)
+        {
             m_gameStartObject[i].SetActive(true);
         }
     }

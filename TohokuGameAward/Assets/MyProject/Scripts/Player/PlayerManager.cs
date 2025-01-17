@@ -39,8 +39,9 @@ public class PlayerManager : MonoBehaviour
 
     private float[] m_respawnCount = null;
 
-    public static int[] AlphaTeamNumber { get; private set; } = new int[2];
-    public static int[] BravoTeamNumber { get; private set; } = new int[2];
+    public static List<int> AlphaTeamNumber { get; private set; } = new List<int> { };
+    public static List<int> BravoTeamNumber { get; private set; } = new List<int> { };
+
 
     public bool[] IsDead {  get { return m_isDead; } }
     public bool[] IsCannon { get {  return m_isCannon; } }
@@ -93,7 +94,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="index"> プレイヤー番号 </param>
     /// <param name="isActive"> true -> 操作可能 false -> 操作不可 </param>
-    private void SetMovement(int index, bool isActive)
+    public void SetMovement(int index, bool isActive)
     {
         var playerMover = Instances[index].GetComponent<PlayerMover>();
         if (playerMover != null)
@@ -163,12 +164,12 @@ public class PlayerManager : MonoBehaviour
         if(index <= 1)
         {
             instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[index], Quaternion.identity, this.transform);
-            AlphaTeamNumber[index] = m_randomIndex[index];
+            AlphaTeamNumber.Add(m_randomIndex[index]);
         }
         else
         {
             instance = m_cannonManager.GenerateCannon(m_cannonPrefab);
-            BravoTeamNumber[index] = m_randomIndex[index];
+            BravoTeamNumber.Add(m_randomIndex[index]);
         }
 
         instance.name = "Player" + (m_randomIndex[index] + 1);
@@ -181,12 +182,12 @@ public class PlayerManager : MonoBehaviour
     private void SwitchingTeamMember()
     {
         var instance = new GameObject();
-        for (int i = 0; i < AlphaTeamNumber.Length; i++)
+        for (int i = 0; i < AlphaTeamNumber.Count; i++)
         {
             instance = m_cannonManager.GenerateCannon(m_cannonPrefab);
             instance.name = "Player" + (AlphaTeamNumber[i] + 1);
 
-            if(m_instances.Length >= i)
+            if(m_instances.Length <= i)
             {
                 continue;
             }
@@ -194,12 +195,12 @@ public class PlayerManager : MonoBehaviour
             m_instances[i] = instance;
         }
 
-        for (int i = 0; i < BravoTeamNumber.Length; i++)
+        for (int i = 0; i < BravoTeamNumber.Count; i++)
         {
             instance = Instantiate(m_playerPrefab, m_playerData.Positions.StartPos[i], Quaternion.identity, this.transform);
             instance.name = "Player" + (BravoTeamNumber[i] + 1);
 
-            if (m_instances.Length >= i)
+            if (m_instances.Length <= i)
             {
                 continue;
             }

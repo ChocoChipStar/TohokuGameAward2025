@@ -91,7 +91,7 @@ public class PointText : MonoBehaviour
 
             return;
         }
-        if (RoundManager.CurrentRound < (int)RoundManager.RoundState.Two)
+        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
         {
             m_currentDefeScore = PointManager.DefRoundScore[RoundManager.CurrentRound];
             m_currentOffeScore = PointManager.OffRoundScore[RoundManager.CurrentRound];
