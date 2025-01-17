@@ -15,6 +15,11 @@ public class TutorialManager : MonoBehaviour
     [SerializeField]
     private FadeManager m_fadeManager = null;
 
+    [SerializeField]
+    private SoundEffectManager m_soundEffectManager = null;
+
+    private bool m_isGetStart = false;
+
     private void Update()
     {
         if(!m_fadeManager.IsFinishFadeIn)
@@ -30,10 +35,12 @@ public class TutorialManager : MonoBehaviour
         var padCount = Gamepad.all.Count;
         for(int i = 0; i < padCount; i++)
         {
-            if (m_imageChanger.IsIndexMax)
+            if (m_imageChanger.IsIndexMax && !m_isGetStart)
             {
                 if(m_inputData.WasPressedUIButton(InputData.UserInterfaceName.Decision,i))
                 {
+                    m_isGetStart = true;
+                    m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
                     m_sceneChanger.TransitionNextScene();
                     return;
                 }
