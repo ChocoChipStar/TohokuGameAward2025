@@ -16,23 +16,32 @@ MonoBehaviour:
     m_rotatingItemPos:
     - {x: 0, y: 0, z: 0}
     m_staticItemPos:
-    - {x: 1, y: 0, z: 0}
+    - {x: -5.5, y: -1, z: 0}
+    - {x: 5.5, y: -1, z: 0}
+    - {x: -9.5, y: -1, z: 0}
+    - {x: 9.5, y: -1, z: 0}
+    - {x: -2.5, y: 9, z: 0}
+    - {x: 2.5, y: 9, z: 0}
+    - {x: -8, y: 6, z: 0}
+    - {x: 8, y: 6, z: 0}
+    - {x: -5, y: 1.5, z: 0}
+    - {x: 5, y: 1.5, z: 0}
   m_paramsData:
     m_cannonPoint: 50
     m_penaltyPoint: 10
     m_penaltyInterval: 5
     m_deadPointInterVal: 3
     m_rotatingAngle: 0
-    m_maxItem: 2
+    m_maxItem: 4
     m_spawnInterval: 1
-    m_itemLifetime: 3
+    m_itemLifetime: 8
   m_itemData:
     m_pointItemPrefab:
-    - {fileID: 7314725359114612865, guid: a7ba7799104ebf348ba999e5cbbfa7ac, type: 3}
-    - {fileID: 7314725359114612865, guid: a958493666a60f0499404c7e7f9fd3de, type: 3}
-    - {fileID: 7314725359114612865, guid: e96a0b14535fa1740a2b8130fca1c8e7, type: 3}
+    - {fileID: 6779122977183572042, guid: cb74ff0f4d36f7d4fab4ecf2b1b8c446, type: 3}
+    - {fileID: 5168489982057890336, guid: e86fe1e8b74ba5542986ecea2c4f5d17, type: 3}
+    - {fileID: 8982680373025810337, guid: 7a9c5877acb9bd54e87a76ece2ad501b, type: 3}
   m_chanceData:
     m_chanceOfPointItem:
-    - 50
     - 40
-    - 10
+    - 40
+    - 20
