@@ -22,5 +22,5 @@ MonoBehaviour:
     m_moveSpeed: 5
     m_shootSpeed: 5
     m_cannonBombStock: 2
-    m_bombReroadTime: 1
+    m_bombReroadTime: 3
     m_bombCoolTime: 1
