@@ -7,6 +7,12 @@ public class GameManager : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private PointManager m_pointManager = null;
+
+    [SerializeField]
+    private PointData m_pointData = null;
+
+    [SerializeField]
     private StageData m_stageData = null;
 
     [SerializeField]
@@ -17,6 +23,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private Vector3 m_penartyPos = Vector3.zero;
+
+    private bool[] isDeadPoint = new bool[4];
+
+    public bool[] IsDeadPoint {  get { return isDeadPoint; }set { isDeadPoint = value; } }
 
     private void Update()
     {
@@ -40,11 +50,18 @@ public class GameManager : MonoBehaviour
             if (IsPlayerOut(m_playerManager.Instances[i], i))
             {
                 OutOfStage(i);
+                
             }
         }
     }
     private void OutOfStage(int playerNum)
     {
+        if (m_pointManager.DeadPointInterVal[playerNum] < 0)
+        {
+            m_pointManager.IsDeadPoint[playerNum] = true;
+            m_pointManager.DeadPointInterVal[playerNum] = m_pointData.Params.DeadPointInterval;
+        }
+        
         m_playerManager.SwitchDeadFlug(playerNum, true);
         m_playerManager.DisablePhysics(playerNum);
         m_effectManager.OnPlayStageOutEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);

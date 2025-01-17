@@ -140,9 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '0
-
-'
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 330d02bfe36bfcc40892a7276dbc6e29, type: 2}
   m_sharedMaterial: {fileID: -5918701107358102925, guid: 330d02bfe36bfcc40892a7276dbc6e29,
@@ -554,9 +552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '0
-
-'
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 330d02bfe36bfcc40892a7276dbc6e29, type: 2}
   m_sharedMaterial: {fileID: -5918701107358102925, guid: 330d02bfe36bfcc40892a7276dbc6e29,
@@ -645,7 +641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8727824486401761457
 Transform:
   m_ObjectHideFlags: 0
@@ -702,8 +698,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerManager: {fileID: 0}
+  m_pointData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
   m_timer: {fileID: 0}
   m_score: 00000000
+  isDeadPointInterVal:
+  - -1
+  - -1
+  - -1
+  - -1
 --- !u!114 &4395743306678041335
 MonoBehaviour:
   m_ObjectHideFlags: 0

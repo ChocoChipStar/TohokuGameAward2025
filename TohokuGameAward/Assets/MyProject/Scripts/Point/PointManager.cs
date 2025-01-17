@@ -9,10 +9,15 @@ public class PointManager : MonoBehaviour
     PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private PointData m_pointData = null;
+
+    [SerializeField]
     GameTimer m_timer = null;
 
     [SerializeField]
     private int[] m_score = null;
+
+    private float[] m_scoreInterval = null;
 
     private int[] m_defencesIndex = null;
 
@@ -22,13 +27,24 @@ public class PointManager : MonoBehaviour
 
     static private int[] m_offroundScore = null;
 
+    private bool[] isDeadPoint = new bool[4];
+
+    [SerializeField]
+    private float[] isDeadPointInterVal = new float[4];
+
     public static int[] DefRoundScore { get { return m_defroundScore; } }
 
     public static int[] OffRoundScore { get { return m_offroundScore; } }
 
+    public bool[] IsDeadPoint { get { return isDeadPoint; }  set{isDeadPoint = value; } }
+
+
+    public float[] DeadPointInterVal { get { return isDeadPointInterVal; } set { isDeadPointInterVal = value; } }
+
     void Start()
     {
         Array.Resize(ref m_score, m_playerManager.Instances.Length);
+        Array.Resize(ref m_scoreInterval, m_playerManager.Instances.Length);
         if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
             m_defroundScore = new int[(int)RoundManager.RoundState.Max];
@@ -39,7 +55,33 @@ public class PointManager : MonoBehaviour
     }
     private void Update()
     {
+        IsDeadPointInterVal();
+        DeathScore();
         AddPoint();
+    }
+
+    void DeathScore()
+    {
+        for (int i = 0; i < m_playerManager.Instances.Length; i++)
+        {
+            if (isDeadPoint[i] && isDeadPointInterVal[i] > 0)
+            {
+                AddCannonPoint();
+                DecreaseScore();
+                isDeadPoint[i] = false;
+            }
+        }
+    }
+    void IsDeadPointInterVal()
+    {
+
+        for (int i = 0; i < m_playerManager.Instances.Length; i++)
+        {
+            if (isDeadPointInterVal[i] > 0)
+            {
+                isDeadPointInterVal[i] -= Time.deltaTime;
+            }
+        }
     }
 
     void AddPoint()
@@ -117,5 +159,31 @@ public class PointManager : MonoBehaviour
     public void AddScore(int playerIndex,int score)
     {
         m_score[playerIndex] += score;
+    }
+
+    public void AddCannonPoint()
+    {
+        for (int i = 0; i < m_score.Length; i++)
+        {
+            if (TagManager.Instance.SearchedTagName(m_playerManager.Instances[i], TagManager.Type.Cannon))
+            {
+                m_score[i] += m_pointData.Params.CannonPoint;
+                break;
+            }
+
+
+        }
+    }
+    
+    public void DecreaseScore()
+    {
+        for (int i = 0; i < m_score.Length; i++)
+        {
+            if (TagManager.Instance.SearchedTagName(m_playerManager.Instances[i],TagManager.Type.Player))
+            {
+                m_score[i] -= m_pointData.Params.PenaltyPoint;
+                break;
+            }
+        }
     }
 }

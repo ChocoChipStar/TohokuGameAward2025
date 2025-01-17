@@ -80,7 +80,6 @@ public class PlayerManager : MonoBehaviour
             SetMovement(i,false);
 
             m_playerInvincible[i] = m_instances[i].GetComponentInChildren<PlayerInvincible>();
-
             var inputData = m_instances[i].GetComponent<InputData>();
             if (inputData != null)
             {
