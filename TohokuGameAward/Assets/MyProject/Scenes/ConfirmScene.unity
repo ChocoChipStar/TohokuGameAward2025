@@ -568,6 +568,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4291571347791682426, guid: 6bc6bc98d8708684a9840d9848d79d44,
         type: 3}
+      propertyPath: m_onPlayFadeIn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4291571347791682426, guid: 6bc6bc98d8708684a9840d9848d79d44,
+        type: 3}
       propertyPath: m_onPlayFadeOut
       value: 1
       objectReference: {fileID: 0}
