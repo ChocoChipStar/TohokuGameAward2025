@@ -1,9 +1,5 @@
 ﻿using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.EditorTools;
 using UnityEngine;
-using UnityEngine.Rendering.Universal.Internal;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RoundManager : MonoBehaviour
@@ -317,6 +313,7 @@ public class RoundManager : MonoBehaviour
 
     private void SwitchResultScene()
     {
+        CurrentRound = 0;
         m_sceneChanger.TransitionNextScene();
     }
 }
