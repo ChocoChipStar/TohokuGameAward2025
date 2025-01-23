@@ -4,16 +4,16 @@ using UnityEngine;
 public class PointItemGenerator : MonoBehaviour
 {
     [SerializeField]
-    PointItemSelector m_pointItemSelector = null;
+    private PointItemSelector m_pointItemSelector = null;
 
     [SerializeField]
-    PointData m_pointData = null;  
+    private PointData m_pointData = null;  
 
-    float m_timeCounter = 0;
+    private float m_timeCounter = 0;
 
-    bool m_isItemActive = false;
+    private bool m_isItemActive = false;
 
-    void Update()
+    private void Update()
     {
         if (m_timeCounter > m_pointData.Params.SpawnInterval && !m_isItemActive)
         {
@@ -28,49 +28,26 @@ public class PointItemGenerator : MonoBehaviour
 
     private void GeneratePointItem()
     {
-        List<Vector3> rotatingItemPosCopy = new List<Vector3>(m_pointData.Positions.RotatingItemPos);
-        List<Vector3> staticItemPosCopy = new List<Vector3>(m_pointData.Positions.StaticItemPos);
+        List<Vector3> staticItemPos = new List<Vector3>(m_pointData.Positions.StaticItemPos);
 
         for (int i = 0; i < m_pointData.Params.MaxItem; i++)
         {
-            GameObject randomItemPrefab = m_pointItemSelector.ChoosePointItem();
-            int totalSpawnPos = rotatingItemPosCopy.Count + staticItemPosCopy.Count;
-            int randomPos = UnityEngine.Random.Range(0, totalSpawnPos - 1);
+            GameObject randomItemPrefab = m_pointItemSelector.ChoosePointItem(); //ポイントアイテムの種類を選びます
 
-            if(0 < rotatingItemPosCopy.Count && IsChosen(randomPos,rotatingItemPosCopy.Count))
+            int totalSpawnPos = staticItemPos.Count;
+            int randomPos = Random.Range(0, totalSpawnPos - 1);//全ての出現位置からランダムに1つ選びます。
+
+            if (0 < staticItemPos.Count)
             {
-                GenerateRotatingItem(randomItemPrefab, rotatingItemPosCopy[randomPos]);
-                rotatingItemPosCopy.RemoveAt(randomPos);
+                GenerateStaticItem(randomItemPrefab, staticItemPos[randomPos]);
+                staticItemPos.RemoveAt(randomPos);
                 m_isItemActive = true;
-                continue;
             }
-
-            randomPos -= rotatingItemPosCopy.Count;　//rotatingRingPosに該当しなければstaticRingPosで生成する。
-
-            if (0 < staticItemPosCopy.Count && IsChosen(randomPos,staticItemPosCopy.Count))
+            else
             {
-                GenerateStaticItem(randomItemPrefab, staticItemPosCopy[randomPos]);
-                staticItemPosCopy.RemoveAt(randomPos);
-                m_isItemActive = true;
-                continue;
+                Debug.Log("存在しないポジションが選ばれています");
             }
-
-            Debug.Log("存在しないポジションが選ばれています");
         }
-    }
-
-    private bool IsChosen(int randomPos,int count)
-    {
-        if(randomPos < count)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private void GenerateRotatingItem(GameObject ringPrefab,Vector3 pos)
-    {
-        Instantiate(ringPrefab, pos, Quaternion.Euler(0, m_pointData.Params.RotatingAngle, 0), transform);
     }
 
     private void GenerateStaticItem(GameObject ringPrefab, Vector3 pos)

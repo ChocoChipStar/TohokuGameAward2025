@@ -1,6 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class ResultText : MonoBehaviour
@@ -41,9 +41,9 @@ public class ResultText : MonoBehaviour
     [SerializeField]
     private float m_renderWinnerDelay = 0;
 
-    private int[] m_deffencesScore = null;
+    private int[] m_deffencesScore = new int[(int)RoundManager.RoundState.Max];
 
-    private int[] m_offencesScore = null;
+    private int[] m_offencesScore = new int[(int)RoundManager.RoundState.Max];
 
     private int m_defTotalScore = 0;
 
@@ -76,8 +76,8 @@ public class ResultText : MonoBehaviour
 
     private void GetFinalScore()
     {
-       m_deffencesScore = PointManager.DefRoundScore;
-       m_offencesScore = PointManager.OffRoundScore;
+       m_deffencesScore = PointManager.AlphaRoundScore;
+       m_offencesScore = PointManager.BravoRoundScore;
         m_defTotalScore = TotalScore(m_deffencesScore);
         m_offTotalScore = TotalScore(m_offencesScore);
     }
