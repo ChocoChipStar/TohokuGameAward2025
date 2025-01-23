@@ -1,8 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerData", menuName = "ScriptableObjects/PlayerData", order = 1)]
-public class PlayerData : ScriptableObject
+[CreateAssetMenu(fileName = "HumanoidData", menuName = "ScriptableObjects/HumanoidData", order = 1)]
+public class HumanoidData : ScriptableObject
 {
     [SerializeField]
     private PositionData m_positionData = new PositionData();

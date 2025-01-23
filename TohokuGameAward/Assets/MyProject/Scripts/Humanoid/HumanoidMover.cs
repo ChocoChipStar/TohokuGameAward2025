@@ -1,20 +1,16 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using static PlayerAnimator;
 
-public class PlayerMover : MonoBehaviour
+public class HumanoidMover : MonoBehaviour
 {
     [SerializeField]
     private Rigidbody m_rigidbody = null;
 
     [SerializeField]
-    private PlayerData m_playerData = null;
+    private HumanoidData m_humanoidData = null;
 
     [SerializeField]
     private InputData m_inputData = null;
-
-    // [SerializeField]
-    // private PlayerProduceBomb m_produceBomb = null;
     
     [SerializeField]
     private PlayerAnimator m_animator = null;
@@ -79,7 +75,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void MoveOperation(Vector2 stickValue)
     {
-        var speedX = m_playerData.Params.MoveSpeed * stickValue.x;
+        var speedX = m_humanoidData.Params.MoveSpeed * stickValue.x;
         this.transform.position += new Vector3(speedX, 0.0f, 0.0f) * Time.deltaTime;
 
         m_animator.ChangeTopState(TopState.Move);
@@ -91,12 +87,6 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private bool CanMove(Vector2 stickValue)
     {
-        // ボムを生成している。または、爆発を受けている
-        //if(m_produceBomb.isGenerating && !m_isGetExplosion)
-        //{
-        //    return false;
-        //}
-
         // 右の壁に衝突していたら右への移動入力を不可にする
         if (stickValue.x > InputData.MovementDeadZoneRange && m_detectorR.IsHitWall())
         {
@@ -122,7 +112,7 @@ public class PlayerMover : MonoBehaviour
     /// </summary>
     private void JumpOperation()
     {
-        m_rigidbody.AddForce(new Vector3(0.0f, m_playerData.Params.PowerJump, 0.0f), ForceMode.Impulse);
+        m_rigidbody.AddForce(new Vector3(0.0f, m_humanoidData.Params.PowerJump, 0.0f), ForceMode.Impulse);
 
         m_animator.ChangeTopState(TopState.Jump);
         m_animator.ChangeUnderState(UnderState.Jump);
@@ -134,7 +124,7 @@ public class PlayerMover : MonoBehaviour
     private bool CanJump()
     {
         if(m_inputData.WasPressedActionButton(InputData.ActionsName.Jump, m_inputData.SelfNumber) 
-        && IsGrounded && !m_isGetExplosion /*&& !m_produceBomb.isGenerating*/)
+        && IsGrounded && !m_isGetExplosion)
         {
             return true;
         }

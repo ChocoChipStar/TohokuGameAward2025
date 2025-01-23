@@ -64,7 +64,6 @@ GameObject:
   - component: {fileID: 3648145990431739353}
   - component: {fileID: 6577629262087675331}
   - component: {fileID: 3349947653543477314}
-  - component: {fileID: 7785468176681311418}
   m_Layer: 12
   m_Name: BombNormal
   m_TagString: Bomb
@@ -108,7 +107,6 @@ MonoBehaviour:
   m_bombRenderer: {fileID: 1701948448197186486}
   m_baseBombMaterials: []
   m_animator: {fileID: 4401138293158971157}
-  m_shotPointManager: {fileID: 7785468176681311418}
 --- !u!54 &3349947653543477314
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -136,20 +134,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
---- !u!114 &7785468176681311418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6015317307024279286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf772d4c7f236784d86cbca2582db8e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_pointData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
-  m_pointManagerScript: {fileID: 0}
 --- !u!1001 &852308446364764712
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-public class PlayerInvincible : MonoBehaviour
+public class HumanoidInvincible : MonoBehaviour
 {
     [SerializeField]
-    private PlayerMaterials m_materials = null;
+    private HumanoidMaterials m_materials = null;
 
     [SerializeField]
-    private PlayerData m_playerData = null;
+    private HumanoidData m_humanoidData = null;
 
     private float m_invincibleTime = 0.0f;
     private float m_materialsTime = 0.0f;
@@ -29,7 +29,7 @@ public class PlayerInvincible : MonoBehaviour
         }
 
         m_invincibleTime -= Time.deltaTime;
-        m_materialsTime += Time.deltaTime * m_playerData.Params.InvinceibleSpeed;
+        m_materialsTime += Time.deltaTime * m_humanoidData.Params.InvinceibleSpeed;
         if ((int)m_materialsTime % 2 == 1) // 奇数の秒数でマテリアルをチカチカさせる
         {
             m_materialsTime = 0.0f;
@@ -41,7 +41,7 @@ public class PlayerInvincible : MonoBehaviour
     public void PlayerInvincibleTime()
     {
         m_isInvincible = true;
-        m_invincibleTime = m_playerData.Params.InvinceibleTime;
+        m_invincibleTime = m_humanoidData.Params.InvinceibleTime;
         m_materialsTime = 0.0f;
     }
 

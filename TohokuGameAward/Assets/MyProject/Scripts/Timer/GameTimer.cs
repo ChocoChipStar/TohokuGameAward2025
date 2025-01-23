@@ -1,11 +1,13 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;
+﻿using TMPro;
+using UnityEngine;
 
 public class GameTimer : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI m_timerTextField = null;
+
+    [SerializeField]
+    private RoundManager m_roundManager = null;
 
     [SerializeField]
     private float m_limitTime = 0.0f;
@@ -16,7 +18,7 @@ public class GameTimer : MonoBehaviour
 
     private void Update()
     {
-        if(m_isTimeLimit)
+        if(m_isTimeLimit || !m_roundManager.IsRoundStart)
         {
             return;
         }

@@ -10,13 +10,13 @@ public class BlowMover : MonoBehaviour
     private PlayerAnimator m_animator = null;
 
     [SerializeField]
-    private PlayerInvincible m_playerInvincible = null;
+    private HumanoidInvincible m_playerInvincible = null;
 
     [SerializeField]
     private Rigidbody m_playerRigidbody = null;
 
     private BombData m_bombData = null;
-    private PlayerMover m_playerMover = null;
+    private HumanoidMover m_playerMover = null;
 
     private RaycastHit hitRaycast;
 
@@ -155,7 +155,7 @@ public class BlowMover : MonoBehaviour
     /// <summary>
     /// 爆発による影響を受けた物体を吹き飛ばす処理を実行します。
     /// </summary>
-    public void BlowOfTarget(Rigidbody rigidbody, Vector3 BombPos, Collider other, BombData bombDeta, PlayerMover playerMover)
+    public void BlowOfTarget(Rigidbody rigidbody, Vector3 BombPos, Collider other, BombData bombDeta, HumanoidMover playerMover)
     {
         if (rigidbody == null || m_isBlow)
         {

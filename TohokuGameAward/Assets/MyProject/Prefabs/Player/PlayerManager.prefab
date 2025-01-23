@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2560436910719319491}
   - component: {fileID: 2561843527547026999}
+  - component: {fileID: 3223083419896689900}
+  - component: {fileID: 8217896764399191858}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -44,13 +46,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35615dd1702f204cabab830c20cab4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3223083419896689900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8274386607292376071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3190f729909572e458512263c76541ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerManager: {fileID: 2561843527547026999}
   m_playerPrefab: {fileID: 5497014825113209656, guid: e8c61d18646ad4c419cf93b40a41ecac,
     type: 3}
   m_cannonPrefab: {fileID: 8705550395945270090, guid: af12fdfb876140041b4d7b41789d4c91,
     type: 3}
   m_cannonManager: {fileID: 0}
-  m_playerData: {fileID: 11400000, guid: 64a1cea4fce119c4390eb29d09e0e8f3, type: 2}
-  m_roundManager: {fileID: 0}
-  m_respawnTime: 5
-  m_playerCount: []
-  m_shotInterval:
+  m_humanoidData: {fileID: 11400000, guid: 7e148fa8c794c67499b090e2f28c86c7, type: 2}
+--- !u!114 &8217896764399191858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8274386607292376071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ee0db7ce7a756459f2ca45e48185a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerManager: {fileID: 2561843527547026999}
+  m_humanoidData: {fileID: 11400000, guid: 7e148fa8c794c67499b090e2f28c86c7, type: 2}
+  m_respawnTime: 3

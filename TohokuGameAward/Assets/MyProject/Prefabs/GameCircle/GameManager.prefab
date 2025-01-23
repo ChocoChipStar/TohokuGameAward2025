@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 5203162272734579835}
   - component: {fileID: 3526640093867363154}
   - component: {fileID: 5350949036695840124}
+  - component: {fileID: 3916593708206929397}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -520,6 +521,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerManager: {fileID: 0}
+  m_roundManager: {fileID: 0}
+  m_playerRespawn: {fileID: 0}
   m_pointManager: {fileID: 0}
   m_pointData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
   m_stageData: {fileID: 11400000, guid: 6bcff8c8c9a207641a3d60b111342677, type: 2}
@@ -539,6 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_timerTextField: {fileID: 4206110489220438668}
+  m_roundManager: {fileID: 0}
   m_limitTime: 50
 --- !u!114 &5350949036695840124
 MonoBehaviour:
@@ -554,11 +558,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_timer: {fileID: 3526640093867363154}
   m_playerManager: {fileID: 0}
+  m_playerTeamGenerator: {fileID: 0}
   m_sceneChanger: {fileID: 0}
   m_fadeManager: {fileID: 0}
-  m_gameStartScript:
-  - {fileID: 3526640093867363154}
-  - {fileID: 5203162272734579835}
+  m_controller: {fileID: 0}
   m_gameStartObject:
   - {fileID: 0}
   - {fileID: 5313584074784454080}
@@ -591,6 +594,40 @@ MonoBehaviour:
   - {fileID: 0}
   m_UISpeed: 0.02
   m_showTime: 3
+--- !u!114 &3916593708206929397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745671595426879529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aafb3b984217154429322ccb19c712a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerIconImage:
+  - {fileID: 8443754057651939234}
+  - {fileID: 6132075198757295139}
+  - {fileID: 481418402639119118}
+  - {fileID: 64267355276206608}
+  m_playerNumberImage:
+  - {fileID: 21300000, guid: c15fc3f1ab7cc3744abf6d9fb3dab72c, type: 3}
+  - {fileID: 21300000, guid: 5d941515057dc8d45803287f4a39fd3c, type: 3}
+  - {fileID: 21300000, guid: 525800948cd1971449343bad190694f6, type: 3}
+  - {fileID: 21300000, guid: 302a496338d0caa4188d344da5ea917f, type: 3}
+  m_roundUI:
+  - {fileID: 1738083942864462779}
+  - {fileID: 5766444982435063871}
+  - {fileID: 6579412969666506735}
+  - {fileID: 4520056626733147823}
+  - {fileID: 540465286645063191}
+  m_finishUI:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &4520056626733147823
 GameObject:
   m_ObjectHideFlags: 0

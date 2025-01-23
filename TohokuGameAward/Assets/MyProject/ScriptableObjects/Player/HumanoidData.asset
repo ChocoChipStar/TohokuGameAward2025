@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53574e739398b32489ac92a21655b9d6, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: ed28463cd52986d4e9a4b5dde9d34e93, type: 3}
+  m_Name: HumanoidData
   m_EditorClassIdentifier: 
   m_positionData:
     m_startPos:
@@ -26,17 +26,17 @@ MonoBehaviour:
   m_paramsData:
     m_weight: 0
     m_powerFrictional: 0
-    m_moveSpeed: 3.5
-    m_powerJump: 11
-    m_bombGenerateTime: 3
-    m_rightBodyAngle: 140
-    m_leftBodyAngle: 230
-    m_invincibleTime: 10
-    m_invincibleSpeed: 8
+    m_moveSpeed: 0
+    m_powerJump: 0
+    m_bombGenerateTime: 0
+    m_rightBodyAngle: 0
+    m_leftBodyAngle: 0
+    m_invincibleTime: 0
+    m_invincibleSpeed: 0
   m_throwData:
-    m_angleSide: 45
-    m_powerSide: 35
-    m_angleUpper: 80
-    m_powerUpper: 40
+    m_angleSide: 0
+    m_powerSide: 0
+    m_angleUpper: 0
+    m_powerUpper: 0
     m_angleUnder: 0
-    m_powerUnder: 35
+    m_powerUnder: 0

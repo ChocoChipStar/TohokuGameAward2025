@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerMaterials : MonoBehaviour
+public class HumanoidMaterials : MonoBehaviour
 {
     [SerializeField]
     private Material[] m_playerMaterial = new Material[4];

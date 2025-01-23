@@ -669,11 +669,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3526640093867363154, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_roundManager
+      value: 
+      objectReference: {fileID: 566311347}
+    - target: {fileID: 3916593708206929397, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_UISpeed
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916593708206929397, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_finishUI.Array.data[0]
+      value: 
+      objectReference: {fileID: 647382762}
+    - target: {fileID: 3916593708206929397, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_finishUI.Array.data[1]
+      value: 
+      objectReference: {fileID: 120477296}
+    - target: {fileID: 3916593708206929397, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_finishUI.Array.data[2]
+      value: 
+      objectReference: {fileID: 1371638583}
+    - target: {fileID: 3916593708206929397, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_finishUI.Array.data[3]
+      value: 
+      objectReference: {fileID: 2139837399}
+    - target: {fileID: 3916593708206929397, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_finishUI.Array.data[4]
+      value: 
+      objectReference: {fileID: 1259041765}
     - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_pointManager
       value: 
       objectReference: {fileID: 235710624}
+    - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_roundManager
+      value: 
+      objectReference: {fileID: 566311347}
     - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_effectManager
@@ -686,6 +726,11 @@ PrefabInstance:
       objectReference: {fileID: 1532246805}
     - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
+      propertyPath: m_playerRespawn
+      value: 
+      objectReference: {fileID: 1610106168}
+    - target: {fileID: 5203162272734579835, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
       propertyPath: m_soundEffectManager
       value: 
       objectReference: {fileID: 1298808469}
@@ -696,6 +741,11 @@ PrefabInstance:
       objectReference: {fileID: 117652347}
     - target: {fileID: 5350949036695840124, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
+      propertyPath: m_controllerUI
+      value: 
+      objectReference: {fileID: 566311349}
+    - target: {fileID: 5350949036695840124, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
       propertyPath: m_sceneChanger
       value: 
       objectReference: {fileID: 1618039943}
@@ -704,6 +754,11 @@ PrefabInstance:
       propertyPath: m_playerManager
       value: 
       objectReference: {fileID: 1532246805}
+    - target: {fileID: 5350949036695840124, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_playerTeamGenerator
+      value: 
+      objectReference: {fileID: 1532246808}
     - target: {fileID: 5350949036695840124, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_finishUI.Array.data[0]
@@ -773,6 +828,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b24a3af5de06a94cbb10e81ffeab3ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &566311349 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3916593708206929397, guid: 53b62dd7922e91d4db1947cb135e78d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 566311344}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aafb3b984217154429322ccb19c712a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &647382762 stripped
@@ -1722,6 +1789,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a35615dd1702f204cabab830c20cab4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1532246808 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3223083419896689900, guid: 6b2433e84fd7b87488e93fe954dea34e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2910125394532094302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3190f729909572e458512263c76541ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1557602808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1800,6 +1879,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bc6bc98d8708684a9840d9848d79d44, type: 3}
+--- !u!114 &1610106168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8217896764399191858, guid: 6b2433e84fd7b87488e93fe954dea34e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2910125394532094302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ee0db7ce7a756459f2ca45e48185a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1618039943 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4291571347791682426, guid: 6bc6bc98d8708684a9840d9848d79d44,
@@ -2277,12 +2368,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
-        type: 3}
-      propertyPath: m_roundManager
-      value: 
-      objectReference: {fileID: 566311347}
-    - target: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
+    - target: {fileID: 3223083419896689900, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}
       propertyPath: m_cannonManager
       value: 
