@@ -27,10 +27,10 @@ public class PointGiverObject : MonoBehaviour
 
     void GivePoint(Collider other)
     {
-        PlayerManager playerManager = other.gameObject.GetComponentInParent<PlayerManager>();
+        InputData inputData = other.transform.parent.gameObject.GetComponent<InputData>();
         PointManager pointManager = this.transform.parent.GetComponent<PointManager>();
 
-        int playerIndex = playerManager.GetPlayerIndex(other.transform.parent.gameObject);
+        int playerIndex = inputData.SelfNumber;
         pointManager.AddScore(playerIndex, m_score);
     }
 }
