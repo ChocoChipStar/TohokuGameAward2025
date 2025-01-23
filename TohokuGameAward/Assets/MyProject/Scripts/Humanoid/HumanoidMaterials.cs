@@ -3,29 +3,21 @@
 public class HumanoidMaterials : MonoBehaviour
 {
     [SerializeField]
-    private Material[] m_playerMaterial = new Material[4];
+    private InputData m_inputData = null;
 
     [SerializeField]
-    private SkinnedMeshRenderer[] m_playerMesh = new SkinnedMeshRenderer[6];
+    private Material[] m_playerMaterial = new Material[InputData.PlayerMax];
 
-    private int m_playerCount = 0;
+    [SerializeField]
+    private SkinnedMeshRenderer[] m_playerMesh = new SkinnedMeshRenderer[HumanoidMeshMax];
+
     private int m_playerMeshCount = 0;
-
-    private static readonly string PlayerName = "Player";
+    private const int HumanoidMeshMax = 6;
 
     private void Start()
     {
-        m_playerCount = m_playerMaterial.Length;
         m_playerMeshCount = m_playerMesh.Length;
-
-        for (int i = 0; i < m_playerCount; i++)
-        {
-            var playerName = PlayerName + (i + 1);
-            if (this.gameObject.name == playerName)
-            {
-                SetMaterial(i);
-            }
-        }
+        SetMaterial(m_inputData.SelfNumber);
     }
 
     private void SetMaterial(int playerNum)
@@ -36,7 +28,7 @@ public class HumanoidMaterials : MonoBehaviour
         }
     }
 
-    public void PlayerInvincibleMesh()
+    public void SwitchMaterial()
     {
         for (int i = 0; i < m_playerMeshCount; i++)
         {
@@ -44,7 +36,7 @@ public class HumanoidMaterials : MonoBehaviour
         }
     }
 
-    public void PlayerInvincibleMeshEnd()
+    public void FinishInvincible()
     {
         for (int i = 0; i < m_playerMeshCount; i++)
         {

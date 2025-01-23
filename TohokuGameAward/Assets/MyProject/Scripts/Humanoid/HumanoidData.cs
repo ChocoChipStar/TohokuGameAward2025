@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "HumanoidData", menuName = "ScriptableObjects/HumanoidData", order = 1)]
 public class HumanoidData : ScriptableObject

@@ -24,7 +24,7 @@ public class HumanoidInvincible : MonoBehaviour
 
         if (m_invincibleTime < 0.0f)
         {
-            PlayerInvincibleEnd();
+            FinishInvicible();
             return;
         }
 
@@ -33,21 +33,21 @@ public class HumanoidInvincible : MonoBehaviour
         if ((int)m_materialsTime % 2 == 1) // 奇数の秒数でマテリアルをチカチカさせる
         {
             m_materialsTime = 0.0f;
-            m_materials.PlayerInvincibleMesh();
+            m_materials.SwitchMaterial();
         }
     }
 
 
-    public void PlayerInvincibleTime()
+    public void StartInvincible()
     {
         m_isInvincible = true;
         m_invincibleTime = m_humanoidData.Params.InvinceibleTime;
         m_materialsTime = 0.0f;
     }
 
-    private void PlayerInvincibleEnd()
+    private void FinishInvicible()
     {
-        m_materials.PlayerInvincibleMeshEnd();
+        m_materials.FinishInvincible();
         m_isInvincible = false;
     }
 }

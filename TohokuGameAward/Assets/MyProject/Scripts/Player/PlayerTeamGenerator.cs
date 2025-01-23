@@ -7,7 +7,7 @@ public class PlayerTeamGenerator : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
-    private GameObject m_playerPrefab = null;
+    private GameObject m_humanoidPrefab = null;
 
     [SerializeField]
     private GameObject m_cannonPrefab = null;
@@ -31,6 +31,7 @@ public class PlayerTeamGenerator : MonoBehaviour
 
     private void NonOverlappingRandomValue()
     {
+        //乱数をもとにプレイヤーに0～3の番号を割り当てます
         for (int i = 0; i < 1000; i++)
         {
             if (m_randomIndex.Count >= InputData.PlayerMax)
@@ -39,6 +40,8 @@ public class PlayerTeamGenerator : MonoBehaviour
             }
 
             var randomValue = UnityEngine.Random.Range(0, InputData.PlayerMax);
+
+            //重複していなければリストに追加されます
             if (!m_randomIndex.Contains(randomValue))
             {
                 m_randomIndex.Add(randomValue);
@@ -72,21 +75,27 @@ public class PlayerTeamGenerator : MonoBehaviour
         }
     }
 
-    private GameObject CreatingPlayer(int index)
+    /// <summary>
+    /// 乱数で割り当てられた番号をもとにプレイヤー1からチームを割り当て、作成する処理を行います。
+    /// </summary>
+    /// <param name="playerNum">プレイヤーの番号（コントローラー接続順）</param>
+    private GameObject CreatingPlayer(int playerNum)
     {
         var instance = new GameObject();
-        if (m_randomIndex[index] <= 1)
+
+        //割り当てられた番号が1以下であればBチームに2以上であればAチームに割り当てられます。
+        if (m_randomIndex[playerNum] <= 1)
         {
-            BravoTeamNumber.Add(index);
-            instance = Instantiate(m_playerPrefab, m_humanoidData.Positions.StartPos[index], Quaternion.identity, this.transform);
+            BravoTeamNumber.Add(playerNum);
+            instance = Instantiate(m_humanoidPrefab, m_humanoidData.Positions.StartPos[playerNum], Quaternion.identity, this.transform);
         }
         else
         {
-            AlphaTeamNumber.Add(index);
+            AlphaTeamNumber.Add(playerNum);
             instance = m_cannonManager.GenerateCannon(m_cannonPrefab);
         }
 
-        instance.name = "Player" + (index + 1);
+        instance.name = "Player" + (playerNum + 1);
         return instance;
     }
 
@@ -111,7 +120,7 @@ public class PlayerTeamGenerator : MonoBehaviour
 
         for (int i = 0; i < AlphaTeamNumber.Count; i++)
         {
-            instance = Instantiate(m_playerPrefab, m_humanoidData.Positions.StartPos[i], Quaternion.identity, this.transform);
+            instance = Instantiate(m_humanoidPrefab, m_humanoidData.Positions.StartPos[i], Quaternion.identity, this.transform);
             instance.name = "Player" + (AlphaTeamNumber[i] + 1);
 
             if (m_playerManager.Instances.Length <= i)

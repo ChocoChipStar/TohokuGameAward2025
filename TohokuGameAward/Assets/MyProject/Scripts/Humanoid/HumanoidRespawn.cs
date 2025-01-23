@@ -12,35 +12,22 @@ public class HumanoidRespawn : MonoBehaviour
     [SerializeField]
     private float m_respawnTime = 0.0f;
 
-    private HumanoidInvincible[] m_playerInvincible = new HumanoidInvincible[4];
+    private HumanoidInvincible[] m_playerInvincible = new HumanoidInvincible[InputData.PlayerMax];
 
-    private float[] m_respawnCount = null;
+    private float[] m_respawnCount = new float[InputData.PlayerMax];
 
-    private bool[] m_isDead = new bool[4];
+    private bool[] m_isDead = new bool[InputData.PlayerMax];
 
     public bool[] IsDead { get { return m_isDead; } }
 
     private void Start()
     {
-        InitArray();
         GetPlayerInvisible();
     }
 
     private void Update()
     {
-        RespawnAfterDelay();
-    }
-
-    /// <summary>
-    /// 配列サイズの初期化
-    /// </summary>
-    private void InitArray()
-    {
-        Array.Resize(ref m_isDead, m_playerManager.Instances.Length);
-        Array.Fill(m_isDead, false);
-
-        Array.Resize(ref m_respawnCount, m_playerManager.Instances.Length);
-        Array.Fill(m_respawnCount, 0.0f);
+        CanRespawn();
     }
 
     private void GetPlayerInvisible()
@@ -54,9 +41,9 @@ public class HumanoidRespawn : MonoBehaviour
     /// <summary>
     /// プレイヤーがリスポーン可能かを調べる
     /// </summary>
-    private void RespawnAfterDelay()
+    private void CanRespawn()
     {
-        for (int i = 0; i < m_playerManager.Instances.Length; i++)
+        for (int i = 0; i < InputData.PlayerMax; i++)
         {
             if (m_isDead[i])
             {
@@ -72,22 +59,22 @@ public class HumanoidRespawn : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// プレイヤーをリスポーン
-    /// </summary>
-    /// <param name="playerNum"></param>
     private void RespawnPlayer(int playerNum)
     {
-        m_playerInvincible[playerNum].PlayerInvincibleTime();
-        m_playerManager.Instances[playerNum].gameObject.transform.position = m_humanoidData.Positions.RespawnPos[playerNum];
+        m_playerInvincible[playerNum].StartInvincible();
+        m_playerManager.Instances[playerNum].transform.position = m_humanoidData.Positions.RespawnPos[playerNum];
+        RespawnParamsInitialize(playerNum);
+    }
 
+    private void RespawnParamsInitialize(int playerNum)
+    {
         foreach (Transform child in m_playerManager.Instances[playerNum].transform)
         {
             child.GetComponent<Collider>().enabled = true;
         }
 
-        Rigidbody rb = m_playerManager.Instances[playerNum].gameObject.GetComponentInParent<Rigidbody>();
-        rb.isKinematic = false;
+        Rigidbody rigidbody = m_playerManager.Instances[playerNum].GetComponentInParent<Rigidbody>();
+        rigidbody.isKinematic = false;
     }
 
     /// <summary>
