@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PointManager : MonoBehaviour
 {
@@ -11,38 +12,25 @@ public class PointManager : MonoBehaviour
     [SerializeField]
     private int[] m_score = new int[InputData.PlayerMax];
 
-    static private int[] m_alphaRoundScore = null;
+    private static List<int> m_alphaRoundScore  = new List<int>();
 
-    static private int[] m_bravoRoundScore = null;
+    private static List<int> m_bravoRoundScore = new List<int>();
 
-    public static int[] AlphaRoundScore { get { return m_alphaRoundScore; } }
+    public static List<int> AlphaRoundScore { get { return m_alphaRoundScore; } }
 
-    public static int[] BravoRoundScore { get { return m_bravoRoundScore; } }
+    public static List<int> BravoRoundScore { get { return m_bravoRoundScore; } }
 
-    //以下のゲッターと変数はGameManagerとのコンフリクト防止のため次のブランチで消します。
-
-    private bool[] m_isDeadPoint = new bool[InputData.PlayerMax];
-
-    private float[] m_deadPenartyInterVal = new float[InputData.PlayerMax];
-
-    public bool[] IsDeadPoint { get { return m_isDeadPoint; }  set{ m_isDeadPoint = value; } }
-
-    public float[] DeadPointInterVal { get { return m_deadPenartyInterVal; } set { m_deadPenartyInterVal = value; } }
-
-    void Start()
+    private void Start()
     {
-        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
-        {
-            m_alphaRoundScore = new int[(int)RoundManager.RoundState.Max];
-            m_bravoRoundScore = new int[(int)RoundManager.RoundState.Max];
-        }
+        m_alphaRoundScore.Add(1);
+        m_bravoRoundScore.Add(1);
     }
     private void Update()
     {
         UpdatePoint();
     }
 
-    void UpdatePoint()
+    private void UpdatePoint()
     {
         if(RoundManager.CurrentRound >= (int)RoundManager.RoundState.Max)
         {
@@ -72,10 +60,10 @@ public class PointManager : MonoBehaviour
         m_bravoRoundScore[RoundManager.CurrentRound] = bravoScore;
     }
 
-    public int GetTotalScore(int[] Score)
+    public int GetTotalScore(List<int> Score)
     {
         int totalScore = 0;
-        for (int i = 0; i < Score.Length; i++)
+        for (int i = 0; i < Score.Count; i++)
         {
             totalScore += Score[i];
         }
@@ -87,7 +75,7 @@ public class PointManager : MonoBehaviour
         m_score[playerIndex] += score;
     }
 
-    public void DecreaseScoe(int playerIndex,int score)
+    public void DecreaseScore(int playerIndex,int score)
     {
         m_score[playerIndex] -= score;
     }

@@ -56,11 +56,11 @@ public class GameManager : MonoBehaviour
     }
     private void OutOfStage(int playerNum)
     {
-        if (m_pointManager.DeadPointInterVal[playerNum] < 0)
-        {
-            m_pointManager.IsDeadPoint[playerNum] = true;
-            m_pointManager.DeadPointInterVal[playerNum] = m_pointData.Params.DeadPointInterval;
-        }
+        //if (m_pointManager.DeadPointInterVal[playerNum] < 0)
+        //{
+        //    m_pointManager.IsDeadPoint[playerNum] = true;
+        //    m_pointManager.DeadPointInterVal[playerNum] = m_pointData.Params.DeadPointInterval;
+        //}
         
         m_playerManager.SwitchDeadFlug(playerNum, true);
         m_playerManager.DisablePhysics(playerNum);

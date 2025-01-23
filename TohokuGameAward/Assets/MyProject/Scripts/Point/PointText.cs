@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PointText : MonoBehaviour
@@ -17,9 +18,9 @@ public class PointText : MonoBehaviour
 
     PointManager m_pointManager = null;
 
-    private int[] m_alphaRoundScore = null;
+    private List<int> m_alphaRoundScore = new List<int>();
 
-    private int[] m_bravoRoundScore = null;
+    private List<int> m_bravoRoundScore = new List<int>();
 
     private int m_currentAlphaScore = 0;
 
@@ -50,12 +51,14 @@ public class PointText : MonoBehaviour
 
     void InitArray()
     {
-        m_alphaRoundScore  = new int[(int)RoundManager.RoundState.Max];
-        m_bravoRoundScore  = new int[(int)RoundManager.RoundState.Max];
+        m_alphaRoundScore.Add(1);
+        m_bravoRoundScore.Add(1);
     }
 
     void GetLastRoundPoints()
     {
+        m_alphaRoundScore.Add(1);
+        m_bravoRoundScore.Add(1);
         m_alphaRoundScore  = PointManager.AlphaRoundScore;
         m_bravoRoundScore  = PointManager.BravoRoundScore;
     }

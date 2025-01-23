@@ -4,16 +4,16 @@ using UnityEngine;
 public class PointItemGenerator : MonoBehaviour
 {
     [SerializeField]
-    PointItemSelector m_pointItemSelector = null;
+    private PointItemSelector m_pointItemSelector = null;
 
     [SerializeField]
-    PointData m_pointData = null;  
+    private PointData m_pointData = null;  
 
-    float m_timeCounter = 0;
+    private float m_timeCounter = 0;
 
-    bool m_isItemActive = false;
+    private bool m_isItemActive = false;
 
-    void Update()
+    private void Update()
     {
         if (m_timeCounter > m_pointData.Params.SpawnInterval && !m_isItemActive)
         {
@@ -28,20 +28,19 @@ public class PointItemGenerator : MonoBehaviour
 
     private void GeneratePointItem()
     {
-        List<Vector3> rotatingItemPosCopy = new List<Vector3>(m_pointData.Positions.RotatingItemPos);
-        List<Vector3> staticItemPosCopy = new List<Vector3>(m_pointData.Positions.StaticItemPos);
+        List<Vector3> staticItemPos = new List<Vector3>(m_pointData.Positions.StaticItemPos);
 
         for (int i = 0; i < m_pointData.Params.MaxItem; i++)
         {
             GameObject randomItemPrefab = m_pointItemSelector.ChoosePointItem(); //ポイントアイテムの種類を選びます
 
-            int totalSpawnPos = staticItemPosCopy.Count;
-            int randomPos = UnityEngine.Random.Range(0, totalSpawnPos - 1);//全ての出現位置からランダムに1つ選びます。
+            int totalSpawnPos = staticItemPos.Count;
+            int randomPos = Random.Range(0, totalSpawnPos - 1);//全ての出現位置からランダムに1つ選びます。
 
-            if (0 < staticItemPosCopy.Count)
+            if (0 < staticItemPos.Count)
             {
-                GenerateStaticItem(randomItemPrefab, staticItemPosCopy[randomPos]);
-                staticItemPosCopy.RemoveAt(randomPos);
+                GenerateStaticItem(randomItemPrefab, staticItemPos[randomPos]);
+                staticItemPos.RemoveAt(randomPos);
                 m_isItemActive = true;
             }
             else

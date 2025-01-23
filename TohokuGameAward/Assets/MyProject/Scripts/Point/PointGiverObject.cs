@@ -20,14 +20,18 @@ public class PointGiverObject : MonoBehaviour
         if (TagManager.Instance.SearchedTagName(other.transform.parent.gameObject, TagManager.Type.Player))
         {
             m_isGot = true;
-            GivePoint(other);
+            GivePoint(other.gameObject);
             Destroy(this.gameObject);
         }
     }
 
-    void GivePoint(Collider other)
+    /// <summary>
+    /// otherObjにm_scoreと同じ値のポイントを与えます。
+    /// </summary>
+    /// <param name="other"></param>
+    private void GivePoint(GameObject otherObj)
     {
-        InputData inputData = other.transform.parent.gameObject.GetComponent<InputData>();
+        InputData inputData = otherObj.transform.parent.gameObject.GetComponent<InputData>();
         PointManager pointManager = this.transform.parent.GetComponent<PointManager>();
 
         int playerIndex = inputData.SelfNumber;

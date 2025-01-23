@@ -17,6 +17,8 @@ public class PenartyPointOparator : MonoBehaviour
 
     public bool[] IsPenaltyPoint { get { return m_isPenaltyPoint; } }
 
+    public float[] DeadPenartyInterVal { get { return m_deadPenartyInterVal; } } 
+
     // Update is called once per frame
     void Update()
     {
@@ -68,7 +70,7 @@ public class PenartyPointOparator : MonoBehaviour
     }
     public void PenaltyScore(int playerIndex)
     {
-     m_pointManager.DecreaseScoe(playerIndex, m_pointData.Params.PenaltyPoint);
+     m_pointManager.DecreaseScore(playerIndex, m_pointData.Params.PenaltyPoint);
     }
 
     //以下の関数はGameManagerで呼び出しますが、コンフリクト防止のため次のブランチで

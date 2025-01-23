@@ -5,15 +5,15 @@ using UnityEngine;
 public class PointItemSelector : MonoBehaviour
 {
     [SerializeField]
-    PointData m_pointData = null;
+    private PointData m_pointData = null;
 
     private Tuple<GameObject, float>[] m_pointItemData = null;
 
     private float m_totalChanceOfPointItem = 0;
 
-    void Start()
+    private void Start()
     {
-        m_pointItemData = MakeRingPointItemData();
+        m_pointItemData = MakePointItemData();
 
         m_totalChanceOfPointItem = TotalChanceOfPointItem();
     }
@@ -22,13 +22,14 @@ public class PointItemSelector : MonoBehaviour
     /// リングのプレハブと出現確率を対応させた表を作ります。
     /// 両方を対応させつつ並び替えたいため、Tapleを使用しています。
     /// </summary>
-    /// <returns></returns>
-    private Tuple<GameObject, float>[] MakeRingPointItemData()
+    /// <returns>確率順に並んだTuple<GameObject, float>型の配列を返します</returns>
+    private Tuple<GameObject, float>[] MakePointItemData()
     {
         //m_pointData.Items.Prefab の各要素（prefab）と、m_pointData.Chances.ChanceOfItem の各要素（chance）を
         //1対1で組み合わせてTapleと呼ばれる表を作成しています。
-        var makeTuple = m_pointData.Items.Prefab.Zip(m_pointData.Chances.ChanceOfItem, (prefab, chance) 
-            　　　　　=> Tuple.Create(prefab, chance));
+        var makeTuple = m_pointData.Items.Prefab.Zip(
+            m_pointData.Chances.ChanceOfItem, (prefab, chance) => Tuple.Create(prefab, chance)
+            );
 
         //Tapleの機能を使用し、Item2（chance）の値を基準に降順に並び替えています。
         var sortedTuple = makeTuple.OrderByDescending(item => item.Item2);
@@ -51,6 +52,11 @@ public class PointItemSelector : MonoBehaviour
         return total;
     }
 
+    /// <summary>
+    /// m_pointItemDataからランダムなポイントアイテムを抽選し返します。
+    /// </summary>
+    /// <returns>float numberToChooseが範囲内の数だったら該当のポイントアイテムのプレハブを、
+    /// 範囲外の値だったらm_pointItemDataの一番最後のプレハブを返します</returns>
     public GameObject ChoosePointItem()
     {
         //m_pointItemDataには、確率順に並んだプレハブのデータが入っています。
