@@ -18,7 +18,10 @@ public class PlayerTeamGenerator : MonoBehaviour
     [SerializeField]
     private HumanoidData m_humanoidData = null;
 
-    private List<int> m_randomIndex = new List<int>();
+    /// <summary>
+    /// プレイヤーの所持する乱数
+    /// </summary>
+    private List<int> m_randomTicket = new List<int>();
 
     public static List<int> AlphaTeamNumber { get; private set; } = new List<int> { };
     public static List<int> BravoTeamNumber { get; private set; } = new List<int> { };
@@ -32,9 +35,10 @@ public class PlayerTeamGenerator : MonoBehaviour
     private void NonOverlappingRandomValue()
     {
         //乱数をもとにプレイヤーに0～3の番号を割り当てます
-        for (int i = 0; i < 1000; i++)
+        int trialCount = 1000;
+        for (int i = 0; i < trialCount; i++)
         {
-            if (m_randomIndex.Count >= InputData.PlayerMax)
+            if (m_randomTicket.Count >= InputData.PlayerMax)
             {
                 return;
             }
@@ -42,9 +46,9 @@ public class PlayerTeamGenerator : MonoBehaviour
             var randomValue = UnityEngine.Random.Range(0, InputData.PlayerMax);
 
             //重複していなければリストに追加されます
-            if (!m_randomIndex.Contains(randomValue))
+            if (!m_randomTicket.Contains(randomValue))
             {
-                m_randomIndex.Add(randomValue);
+                m_randomTicket.Add(randomValue);
             }
         }
     }
@@ -84,7 +88,7 @@ public class PlayerTeamGenerator : MonoBehaviour
         var instance = new GameObject();
 
         //割り当てられた番号が1以下であればBチームに2以上であればAチームに割り当てられます。
-        if (m_randomIndex[playerNum] <= 1)
+        if (m_randomTicket[playerNum] <= 1)
         {
             BravoTeamNumber.Add(playerNum);
             instance = Instantiate(m_humanoidPrefab, m_humanoidData.Positions.StartPos[playerNum], Quaternion.identity, this.transform);
