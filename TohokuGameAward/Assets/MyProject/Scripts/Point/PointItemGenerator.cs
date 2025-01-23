@@ -33,44 +33,22 @@ public class PointItemGenerator : MonoBehaviour
 
         for (int i = 0; i < m_pointData.Params.MaxItem; i++)
         {
-            GameObject randomItemPrefab = m_pointItemSelector.ChoosePointItem();
-            int totalSpawnPos = rotatingItemPosCopy.Count + staticItemPosCopy.Count;
-            int randomPos = UnityEngine.Random.Range(0, totalSpawnPos - 1);
+            GameObject randomItemPrefab = m_pointItemSelector.ChoosePointItem(); //ポイントアイテムの種類を選びます
 
-            if(0 < rotatingItemPosCopy.Count && IsChosen(randomPos,rotatingItemPosCopy.Count))
-            {
-                GenerateRotatingItem(randomItemPrefab, rotatingItemPosCopy[randomPos]);
-                rotatingItemPosCopy.RemoveAt(randomPos);
-                m_isItemActive = true;
-                continue;
-            }
+            int totalSpawnPos = staticItemPosCopy.Count;
+            int randomPos = UnityEngine.Random.Range(0, totalSpawnPos - 1);//全ての出現位置からランダムに1つ選びます。
 
-            randomPos -= rotatingItemPosCopy.Count;　//rotatingRingPosに該当しなければstaticRingPosで生成する。
-
-            if (0 < staticItemPosCopy.Count && IsChosen(randomPos,staticItemPosCopy.Count))
+            if (0 < staticItemPosCopy.Count)
             {
                 GenerateStaticItem(randomItemPrefab, staticItemPosCopy[randomPos]);
                 staticItemPosCopy.RemoveAt(randomPos);
                 m_isItemActive = true;
-                continue;
             }
-
-            Debug.Log("存在しないポジションが選ばれています");
+            else
+            {
+                Debug.Log("存在しないポジションが選ばれています");
+            }
         }
-    }
-
-    private bool IsChosen(int randomPos,int count)
-    {
-        if(randomPos < count)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private void GenerateRotatingItem(GameObject ringPrefab,Vector3 pos)
-    {
-        Instantiate(ringPrefab, pos, Quaternion.Euler(0, m_pointData.Params.RotatingAngle, 0), transform);
     }
 
     private void GenerateStaticItem(GameObject ringPrefab, Vector3 pos)

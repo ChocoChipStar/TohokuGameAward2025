@@ -391,6 +391,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44fa8e26ce10e95448526b1fb19103c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &307062639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7042496404214388492, guid: 83a995b5c31d2844f9f7e64252836dca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1324121620}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &385570589
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +456,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0, y: 1, z: 1}
   m_Center: {x: -0.5, y: 0, z: 0}
+--- !u!114 &430254672 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4902006104984093312, guid: 83a995b5c31d2844f9f7e64252836dca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1324121620}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &526153463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -810,6 +834,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 292c34226ab64d2438ef73f8298c1bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &885893290 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8452502998508277831, guid: 83a995b5c31d2844f9f7e64252836dca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1324121620}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1277458112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4973557317548516348, guid: 83a995b5c31d2844f9f7e64252836dca,
+    type: 3}
+  m_PrefabInstance: {fileID: 1324121620}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1324121620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -818,6 +866,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3003788949241303285, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Text_BravoScore '
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335845136126891997, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: BravoText
+      objectReference: {fileID: 0}
     - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_timer
@@ -825,9 +883,29 @@ PrefabInstance:
       objectReference: {fileID: 1403572740}
     - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
+      propertyPath: m_alphaTextGUI
+      value: 
+      objectReference: {fileID: 430254672}
+    - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_bravoTextGUI
+      value: 
+      objectReference: {fileID: 885893290}
+    - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
       propertyPath: m_playerManager
       value: 
       objectReference: {fileID: 1741602048}
+    - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_alphaTotalTextGUI
+      value: 
+      objectReference: {fileID: 307062639}
+    - target: {fileID: 4395743306678041335, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_bravoTotalTextGUI
+      value: 
+      objectReference: {fileID: 1277458112}
     - target: {fileID: 5903952608472755844, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_timer
@@ -869,10 +947,35 @@ PrefabInstance:
       propertyPath: isDeadPointInterVal.Array.data[3]
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 5926142509902482009, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Text_BravoTotalScore  '
+      objectReference: {fileID: 0}
+    - target: {fileID: 6383259975573504752, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: Text_AlphaScore
+      objectReference: {fileID: 0}
     - target: {fileID: 6505357305837549286, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
       propertyPath: m_Name
       value: PointItemGenerator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6505357305837549286, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7172686064145754061, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: AlphaText
+      objectReference: {fileID: 0}
+    - target: {fileID: 8230560951074729736, guid: 83a995b5c31d2844f9f7e64252836dca,
+        type: 3}
+      propertyPath: m_Name
+      value: 'Text_AlphaTotalScore '
       objectReference: {fileID: 0}
     - target: {fileID: 8727824486401761457, guid: 83a995b5c31d2844f9f7e64252836dca,
         type: 3}
@@ -925,7 +1028,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7600647310870233653, guid: 83a995b5c31d2844f9f7e64252836dca, type: 3}
+    - {fileID: 9152870909267464290, guid: 83a995b5c31d2844f9f7e64252836dca, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83a995b5c31d2844f9f7e64252836dca, type: 3}
@@ -1931,7 +2036,7 @@ PrefabInstance:
     - target: {fileID: 1309942334234032225, guid: 62ada0804917f77459b7f7cc29a9ce46,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20.26
+      value: -50.6
       objectReference: {fileID: 0}
     - target: {fileID: 1309942334234032225, guid: 62ada0804917f77459b7f7cc29a9ce46,
         type: 3}

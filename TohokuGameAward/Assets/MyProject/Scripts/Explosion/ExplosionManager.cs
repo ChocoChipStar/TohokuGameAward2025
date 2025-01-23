@@ -77,11 +77,11 @@ public class ExplosionManager : MonoBehaviour
         //    playerManager.IsShot[inputData.SelfNumber] = true;
         //}
 
-        if (TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
-        {
-            var drone = other.GetComponent<DroneDestroy>();
-            drone.SetDestroy();
-        }
+        //if (TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
+        //{
+        //    var drone = other.GetComponent<DroneDestroy>();
+        //    drone.SetDestroy();
+        //}
 
         var rigidbody = other.GetComponentInParent<Rigidbody>();
         if (rigidbody == null)

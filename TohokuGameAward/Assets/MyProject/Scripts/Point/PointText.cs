@@ -4,38 +4,30 @@ using UnityEngine;
 public class PointText : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI m_defenceTextGUI = null;
+    private TextMeshProUGUI m_alphaTextGUI = null;
 
     [SerializeField]
-    private TextMeshProUGUI m_offencesTextGUI = null;
+    private TextMeshProUGUI m_bravoTextGUI = null;
 
     [SerializeField]
-    private TextMeshProUGUI m_ofeTotalTextGUI = null;
+    private TextMeshProUGUI m_alphaTotalTextGUI = null;
 
     [SerializeField]
-    private TextMeshProUGUI m_defeTotalTextGUI = null;
-
-    [SerializeField]
-    PlayerManager m_playerManager = null;
-
-    [SerializeField]
-    GameTimer m_timer = null;
-
-    private int[] m_score = null;
+    private TextMeshProUGUI m_bravoTotalTextGUI = null;
 
     PointManager m_pointManager = null;
 
-    private int[] m_deffRoundScore = null;
+    private int[] m_alphaRoundScore = null;
 
-    private int[] m_offeRoundScore = null;
+    private int[] m_bravoRoundScore = null;
 
-    private int m_currentDefeScore = 0;
+    private int m_currentAlphaScore = 0;
 
-    private int m_currentOffeScore = 0;
+    private int m_currentBravoScore = 0;
 
-    private int m_defeTotalScore = 0;
+    private int m_alphaTotalScore = 0;
 
-    private int m_offeTotalScore = 0;
+    private int m_bravoTotalScore = 0;
 
     void Start()
     {
@@ -58,46 +50,44 @@ public class PointText : MonoBehaviour
 
     void InitArray()
     {
-        m_deffRoundScore  = new int[(int)RoundManager.RoundState.Max];
-        m_offeRoundScore  = new int[(int)RoundManager.RoundState.Max];
+        m_alphaRoundScore  = new int[(int)RoundManager.RoundState.Max];
+        m_bravoRoundScore  = new int[(int)RoundManager.RoundState.Max];
     }
 
     void GetLastRoundPoints()
     {
-        m_deffRoundScore  = PointManager.DefRoundScore;
-        m_offeRoundScore  = PointManager.OffRoundScore;
+        m_alphaRoundScore  = PointManager.AlphaRoundScore;
+        m_bravoRoundScore  = PointManager.BravoRoundScore;
     }
 
     void DrawPoint()
     {
         GetPoint();
 
-        m_defenceTextGUI.text  = m_currentDefeScore.ToString();
-        m_offencesTextGUI.text = m_currentOffeScore.ToString();
+        m_alphaTextGUI.text  = m_currentAlphaScore.ToString();
+        m_bravoTextGUI.text = m_currentBravoScore.ToString();
 
-        m_defeTotalTextGUI.text = m_defeTotalScore.ToString();
-        m_ofeTotalTextGUI.text  = m_offeTotalScore.ToString();
+        m_bravoTotalTextGUI.text = m_alphaTotalScore.ToString();
+        m_alphaTotalTextGUI.text  =  m_bravoTotalScore.ToString();
     }
 
     void GetPoint()
     {
         if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
-            m_currentDefeScore = PointManager.DefRoundScore[0];
-            m_currentOffeScore = PointManager.OffRoundScore[0];
+            //ラウンド1だけ総ポイントと現ラウンドのポイントが同じになる
+             m_currentAlphaScore = PointManager.AlphaRoundScore[(int)RoundManager.RoundState.One];
+             m_currentBravoScore = PointManager.BravoRoundScore[(int)RoundManager.RoundState.One];
 
-            m_defeTotalScore = m_currentDefeScore;
-            m_offeTotalScore = m_currentOffeScore;
+             m_alphaTotalScore = m_currentAlphaScore;
+             m_bravoTotalScore = m_currentBravoScore;
 
             return;
         }
-        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
-        {
-            m_currentDefeScore = PointManager.DefRoundScore[RoundManager.CurrentRound];
-            m_currentOffeScore = PointManager.OffRoundScore[RoundManager.CurrentRound];
+         m_currentAlphaScore = PointManager.AlphaRoundScore[RoundManager.CurrentRound];
+         m_currentBravoScore = PointManager.BravoRoundScore[RoundManager.CurrentRound];
 
-            m_defeTotalScore = m_pointManager.GetTotalScore(PointManager.DefRoundScore);
-            m_offeTotalScore = m_pointManager.GetTotalScore(PointManager.OffRoundScore);
-        }
+         m_alphaTotalScore = m_pointManager.GetTotalScore(PointManager.AlphaRoundScore);
+         m_bravoTotalScore = m_pointManager.GetTotalScore(PointManager.BravoRoundScore);
     }
 }
