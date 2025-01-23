@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class PointText : MonoBehaviour
-{//pointdrowerみたいな
+{
     [SerializeField]
     private TextMeshProUGUI m_alphaTextGUI = null;
 
@@ -17,14 +17,8 @@ public class PointText : MonoBehaviour
 
     private PointManager m_pointManager = null;
 
-    private int m_currentAlphaScore = 0;
-    private int m_currentBravoScore = 0;
-
     private int m_totalAlphaScore = 0;
     private int m_totalBravoScore = 0;
-
-    private int[] m_alphaRoundScore = new int[(int)RoundManager.RoundState.Max];
-    private int[] m_bravoRoundScore = new int[(int)RoundManager.RoundState.Max];
 
     private void Start()
     {
@@ -53,5 +47,4 @@ public class PointText : MonoBehaviour
         SetTotalScore(currentAlphaScore, currentBravoScore);
         SetScoreText(currentAlphaScore, currentBravoScore);
     }
-
 }
