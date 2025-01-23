@@ -53,10 +53,10 @@ public class PointItemSelector : MonoBehaviour
     }
 
     /// <summary>
-    /// m_pointItemDataからランダムなポイントアイテムを抽選し返します。
+    /// 登録された中からランダムなポイントアイテムを抽選し返します。
     /// </summary>
-    /// <returns>float numberToChooseが範囲内の数だったら該当のポイントアイテムのプレハブを、
-    /// 範囲外の値だったらm_pointItemDataの一番最後のプレハブを返します</returns>
+    /// <returns>Random.Range()が範囲内の数だったら該当のポイントアイテムのプレハブを、
+    /// 範囲外の値だったら一番確率が低いプレハブを返します</returns>
     public GameObject ChoosePointItem()
     {
         //m_pointItemDataには、確率順に並んだプレハブのデータが入っています。

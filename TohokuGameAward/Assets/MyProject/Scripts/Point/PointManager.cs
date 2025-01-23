@@ -4,7 +4,7 @@ using UnityEngine;
 public class PointManager : MonoBehaviour
 {
     [SerializeField]
-    PlayerManager m_playerManager = null;
+    private PlayerManager m_playerManager = null;
 
     [SerializeField]
     private PointData m_pointData = null;
@@ -22,21 +22,12 @@ public class PointManager : MonoBehaviour
 
     private void Start()
     {
-        m_alphaRoundScore.Add(1);
-        m_bravoRoundScore.Add(1);
-    }
-    private void Update()
-    {
-        UpdatePoint();
+        m_alphaRoundScore.Add(0);
+        m_bravoRoundScore.Add(0);
     }
 
     private void UpdatePoint()
     {
-        if(RoundManager.CurrentRound >= (int)RoundManager.RoundState.Max)
-        {
-            return;
-        }
-
         int alphaScore = 0;
         int bravoScore = 0;
 
@@ -73,10 +64,12 @@ public class PointManager : MonoBehaviour
     public void AddScore(int playerIndex,int score)
     {
         m_score[playerIndex] += score;
+        UpdatePoint();
     }
 
     public void DecreaseScore(int playerIndex,int score)
     {
         m_score[playerIndex] -= score;
+        UpdatePoint();
     }
 }

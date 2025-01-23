@@ -36,7 +36,7 @@ public class PointText : MonoBehaviour
 
         if(RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
-            InitArray();
+            InitList();
         }
         if(RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
         {
@@ -49,18 +49,16 @@ public class PointText : MonoBehaviour
         DrawPoint();
     }
 
-    void InitArray()
+    void InitList()
     {
-        m_alphaRoundScore.Add(1);
-        m_bravoRoundScore.Add(1);
+        m_alphaRoundScore.Add(0);
+        m_bravoRoundScore.Add(0);
     }
 
     void GetLastRoundPoints()
     {
-        m_alphaRoundScore.Add(1);
-        m_bravoRoundScore.Add(1);
-        m_alphaRoundScore  = PointManager.AlphaRoundScore;
-        m_bravoRoundScore  = PointManager.BravoRoundScore;
+        m_alphaRoundScore.Add(PointManager.AlphaRoundScore[RoundManager.CurrentRound - 1]);
+        m_bravoRoundScore.Add(PointManager.BravoRoundScore[RoundManager.CurrentRound - 1]);
     }
 
     void DrawPoint()

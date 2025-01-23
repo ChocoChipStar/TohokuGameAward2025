@@ -6,7 +6,7 @@ public class PointGiverObject : MonoBehaviour
     private int m_score = 0;
 
     [SerializeField]
-    private PlayerData m_playerData;
+    private PlayerData m_playerData = null;
 
     private bool m_isGot = false;
 
@@ -20,7 +20,8 @@ public class PointGiverObject : MonoBehaviour
         if (TagManager.Instance.SearchedTagName(other.transform.parent.gameObject, TagManager.Type.Player))
         {
             m_isGot = true;
-            GivePoint(other.gameObject);
+            var parentObj = other.transform.parent.gameObject;
+            GivePoint(parentObj);
             Destroy(this.gameObject);
         }
     }
@@ -28,10 +29,9 @@ public class PointGiverObject : MonoBehaviour
     /// <summary>
     /// otherObjにm_scoreと同じ値のポイントを与えます。
     /// </summary>
-    /// <param name="other"></param>
-    private void GivePoint(GameObject otherObj)
+    private void GivePoint(GameObject parentObj)
     {
-        InputData inputData = otherObj.transform.parent.gameObject.GetComponent<InputData>();
+        InputData inputData = parentObj.gameObject.GetComponent<InputData>();
         PointManager pointManager = this.transform.parent.GetComponent<PointManager>();
 
         int playerIndex = inputData.SelfNumber;
