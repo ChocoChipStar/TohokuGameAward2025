@@ -3,7 +3,7 @@
 public class BombManager : MonoBehaviour
 {
     [SerializeField]
-    private BombData[] allBombData = new BombData[(int)BombData.BombMax - 1];
+    private BombData[] m_allBombData = new BombData[(int)BombData.BombMax - 1];
     
     public static BombManager Instance { get; private set; }
 
@@ -22,7 +22,7 @@ public class BombManager : MonoBehaviour
 
     public BombData GetBombData(BombData.BombType type)
     {
-        foreach (var bombData in allBombData)
+        foreach (var bombData in m_allBombData)
         {
             if (bombData.Type == type)
             {

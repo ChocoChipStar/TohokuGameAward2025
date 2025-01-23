@@ -89,7 +89,7 @@ public class PlayerThrow : MonoBehaviour
         }
 
         var bombBase = m_pickup.DetectedItemObj.GetComponent<BombBase>();
-        bombBase.OnThrow(m_forceVector);
+        //bombBase.OnThrow(m_forceVector);
     }
 
     /// <summary>

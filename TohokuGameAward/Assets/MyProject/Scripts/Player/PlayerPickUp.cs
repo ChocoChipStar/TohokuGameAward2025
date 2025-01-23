@@ -59,10 +59,10 @@ public class PlayerPickup : MonoBehaviour
         if (TagManager.Instance.SearchedTagName(other.gameObject,TagManager.Type.Bomb))
         {
             var bombBase = other.gameObject.GetComponentInParent<BombBase>();
-            if(bombBase.currentState == BombBase.BombState.Throw)
-            {
-                return;
-            }
+            //if(bombBase.currentState == BombBase.BombState.Throw)
+            //{
+            //    return;
+            //}
 
             m_isDetected = true;
             DetectedItemObj = other.gameObject.transform.parent.gameObject;
@@ -108,7 +108,7 @@ public class PlayerPickup : MonoBehaviour
         m_isDetected = false;
 
         var bombBase = DetectedItemObj.GetComponent<BombBase>();
-        bombBase.OnHolding(m_inputData.SelfNumber);
+        //bombBase.OnHolding(m_inputData.SelfNumber);
     }
 
     /// <summary>
