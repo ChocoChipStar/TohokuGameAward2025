@@ -7,8 +7,9 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField]
     private Animator m_animator = null;
 
-    [SerializeField]
-    private PlayerPickup m_playerPickup = null;
+    //Script削除したためコメントアウト
+    //[SerializeField]
+    //private PlayerPickup m_playerPickup = null;
 
     private bool m_isMirror = false;
     private bool m_isCalledAnimationEvent = false;

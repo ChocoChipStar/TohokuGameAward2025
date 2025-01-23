@@ -1,19 +1,16 @@
 ﻿using UniRx;
 using UnityEngine;
 
-public class PlayerDirectionRotator : MonoBehaviour
+public class HumanoidDirectionRotator : MonoBehaviour
 {
     [SerializeField]
     private Transform m_modelTransform = null;
 
     [SerializeField]
-    private PlayerThrow m_playerThrow = null;
-
-    [SerializeField]
     private PlayerAnimator m_animator = null;
 
     [SerializeField]
-    private PlayerData m_playerData = null;
+    private HumanoidData m_humanoidData = null;
 
     private float m_lastFramePosX = 0.0f;
 
@@ -37,11 +34,6 @@ public class PlayerDirectionRotator : MonoBehaviour
     /// </summary>
     private void SerachDirection()
     {
-        if (m_playerThrow.IsPlaybackThrow())
-        {
-            return;
-        }
-
         var diffValue = this.transform.position.x - m_lastFramePosX;
         if (diffValue >= -DiffDetectionRange && diffValue <= DiffDetectionRange)
         {
@@ -70,9 +62,9 @@ public class PlayerDirectionRotator : MonoBehaviour
     {
         if(IsRight.Value)
         {
-            m_modelTransform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.RightBodyAngle, 0.0f);
+            m_modelTransform.rotation = Quaternion.Euler(0.0f, m_humanoidData.Params.RightBodyAngle, 0.0f);
             return;
         }
-        m_modelTransform.rotation = Quaternion.Euler(0.0f, m_playerData.Params.LeftBodyAngle, 0.0f);
+        m_modelTransform.rotation = Quaternion.Euler(0.0f, m_humanoidData.Params.LeftBodyAngle, 0.0f);
     }
 }

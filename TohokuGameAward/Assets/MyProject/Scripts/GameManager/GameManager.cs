@@ -7,6 +7,12 @@ public class GameManager : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private RoundManager m_roundManager = null;
+
+    [SerializeField]
+    private HumanoidRespawn m_playerRespawn = null;
+
+    [SerializeField]
     private PointManager m_pointManager = null;
 
     [SerializeField]
@@ -30,6 +36,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (!m_roundManager.IsRoundStart)
+        {
+            return;
+        }
+
         OnPlayerIFOutOfStage();
 
         //if (m_playerManager.GetOnlyOnePlayer())
@@ -42,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_playerManager.Instances.Length; i++)
         {
-            if (m_playerManager.IsDead[i])
+            if (m_playerRespawn.IsDead[i])
             {
                 continue;
             }
@@ -61,9 +72,9 @@ public class GameManager : MonoBehaviour
             m_pointManager.IsDeadPoint[playerNum] = true;
             m_pointManager.DeadPointInterVal[playerNum] = m_pointData.Params.DeadPointInterval;
         }
-        
-        m_playerManager.SwitchDeadFlug(playerNum, true);
-        m_playerManager.DisablePhysics(playerNum);
+
+        m_playerRespawn.SwitchDeadFlug(playerNum, true);
+        DisablePhysics(playerNum);
         m_effectManager.OnPlayStageOutEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
         m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
         m_playerManager.Instances[playerNum].transform.position = m_penartyPos;
@@ -88,6 +99,16 @@ public class GameManager : MonoBehaviour
         }
 
         return false;
+    }
+    private void DisablePhysics(int playerNum)
+    {
+        Rigidbody rb = m_playerManager.Instances[playerNum].gameObject.GetComponentInParent<Rigidbody>();
+        rb.isKinematic = true;
+
+        foreach (Transform child in m_playerManager.Instances[playerNum].transform)
+        {
+            child.GetComponent<Collider>().enabled = false;
+        }
     }
 
     //private void ActiveGameSetText()

@@ -6,7 +6,7 @@ public class PointItemManager : MonoBehaviour
     private int m_score = 0;
 
     [SerializeField]
-    private PlayerData m_playerData;
+    private HumanoidData m_playerData;
 
     private bool m_isGot = false;
 

@@ -18,7 +18,7 @@ public class ExplosionManager : MonoBehaviour
     private BlowMover m_blowMover = null;
 
     private BombData m_bombData = null;
-    private PlayerMover m_playerMover = null;
+    private HumanoidMover m_playerMover = null;
 
     private RaycastHit hitInfo;
 
@@ -77,11 +77,12 @@ public class ExplosionManager : MonoBehaviour
         //    playerManager.IsShot[inputData.SelfNumber] = true;
         //}
 
-        if (TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
-        {
-            var drone = other.GetComponent<DroneDestroy>();
-            drone.SetDestroy();
-        }
+        //TAGでエラーがでるのでコメントアウト
+        //if (TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
+        //{
+        //    var drone = other.GetComponent<DroneDestroy>();
+        //    drone.SetDestroy();
+        //}
 
         var rigidbody = other.GetComponentInParent<Rigidbody>();
         if (rigidbody == null)
@@ -91,7 +92,7 @@ public class ExplosionManager : MonoBehaviour
 
         if (m_playerMover == null)
         {
-            m_playerMover = other.GetComponentInParent<PlayerMover>();
+            m_playerMover = other.GetComponentInParent<HumanoidMover>();
             return;
         }
 
@@ -131,7 +132,7 @@ public class ExplosionManager : MonoBehaviour
 
         m_blowMover = other.GetComponentInParent<BlowMover>();
 
-        var invincible = other.GetComponentInParent<PlayerInvincible>();
+        var invincible = other.GetComponentInParent<HumanoidInvincible>();
         if (invincible.IsInvincible)
         {
             return;
