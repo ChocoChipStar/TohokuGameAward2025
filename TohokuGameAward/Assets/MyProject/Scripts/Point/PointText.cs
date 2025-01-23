@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class PointText : MonoBehaviour
-{
+{//pointdrowerみたいな
     [SerializeField]
     private TextMeshProUGUI m_alphaTextGUI = null;
 
@@ -15,71 +15,43 @@ public class PointText : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_bravoTotalTextGUI = null;
 
-    PointManager m_pointManager = null;
-
-    private int[] m_alphaRoundScore = new int[(int)RoundManager.RoundState.Max];
-
-    private int[] m_bravoRoundScore = new int[(int)RoundManager.RoundState.Max];
+    private PointManager m_pointManager = null;
 
     private int m_currentAlphaScore = 0;
-
     private int m_currentBravoScore = 0;
 
-    private int m_alphaTotalScore = 0;
+    private int m_totalAlphaScore = 0;
+    private int m_totalBravoScore = 0;
 
-    private int m_bravoTotalScore = 0;
+    private int[] m_alphaRoundScore = new int[(int)RoundManager.RoundState.Max];
+    private int[] m_bravoRoundScore = new int[(int)RoundManager.RoundState.Max];
 
-    void Start()
+    private void Start()
     {
         m_pointManager = GetComponent<PointManager>();
-
-        if(RoundManager.CurrentRound != (int)RoundManager.RoundState.One)
-        {
-            GetLastRoundPoints();
-        }
     }
 
-    void Update()
+    private void SetScoreText(int currentAlphaScore, int currentBravoScore) 
     {
-        DrawPoint();
+        m_alphaTextGUI.text  = PointManager.AlphaRoundScore[RoundManager.CurrentRound].ToString();
+        m_bravoTextGUI.text =  PointManager.BravoRoundScore[RoundManager.CurrentRound].ToString();
+
+        m_bravoTotalTextGUI.text = m_totalAlphaScore.ToString();
+        m_alphaTotalTextGUI.text  =  m_totalBravoScore.ToString();
     }
 
-
-
-    void GetLastRoundPoints()
+    private void SetTotalScore(int currentAlphaScore, int currentBravoScore)
     {
-        m_alphaRoundScore[RoundManager.CurrentRound] = PointManager.AlphaRoundScore[RoundManager.CurrentRound - 1];
-        m_bravoRoundScore[RoundManager.CurrentRound] = PointManager.BravoRoundScore[RoundManager.CurrentRound - 1];
+        m_totalAlphaScore = m_totalAlphaScore + currentAlphaScore;
+        m_totalBravoScore = m_totalBravoScore + currentBravoScore;
     }
 
-    void DrawPoint()
+    public void UpdateText()
     {
-        GetPoint();
-
-        m_alphaTextGUI.text  = m_currentAlphaScore.ToString();
-        m_bravoTextGUI.text = m_currentBravoScore.ToString();
-
-        m_bravoTotalTextGUI.text = m_alphaTotalScore.ToString();
-        m_alphaTotalTextGUI.text  =  m_bravoTotalScore.ToString();
+        var currentAlphaScore = PointManager.AlphaRoundScore[RoundManager.CurrentRound];
+        var currentBravoScore = PointManager.BravoRoundScore[RoundManager.CurrentRound];
+        SetTotalScore(currentAlphaScore, currentBravoScore);
+        SetScoreText(currentAlphaScore, currentBravoScore);
     }
 
-    void GetPoint()
-    {
-        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
-        {
-            //ラウンド1だけ総ポイントと現ラウンドのポイントが同じになる
-             m_currentAlphaScore = PointManager.AlphaRoundScore[(int)RoundManager.RoundState.One];
-             m_currentBravoScore = PointManager.BravoRoundScore[(int)RoundManager.RoundState.One];
-
-             m_alphaTotalScore = m_currentAlphaScore;
-             m_bravoTotalScore = m_currentBravoScore;
-
-            return;
-        }
-         m_currentAlphaScore = PointManager.AlphaRoundScore[RoundManager.CurrentRound];
-         m_currentBravoScore = PointManager.BravoRoundScore[RoundManager.CurrentRound];
-
-         m_alphaTotalScore = m_pointManager.GetTotalScore(PointManager.AlphaRoundScore);
-         m_bravoTotalScore = m_pointManager.GetTotalScore(PointManager.BravoRoundScore);
-    }
 }

@@ -7,6 +7,9 @@ public class PointManager : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private PointText m_pointText = null;
+
+    [SerializeField]
     private PointData m_pointData = null;
 
     [SerializeField]
@@ -59,11 +62,13 @@ public class PointManager : MonoBehaviour
     {
         m_score[playerIndex] += score;
         UpdatePoint();
+        m_pointText.UpdateText();
     }
 
     public void DecreaseScore(int playerIndex,int score)
     {
         m_score[playerIndex] -= score;
         UpdatePoint();
+        m_pointText.UpdateText();
     }
 }
