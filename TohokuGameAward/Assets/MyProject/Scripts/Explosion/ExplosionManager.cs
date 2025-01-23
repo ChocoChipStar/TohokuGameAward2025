@@ -29,16 +29,7 @@ public class ExplosionManager : MonoBehaviour
 
     private void Awake()
     {
-        if(m_explosionEffect != null)
-        {
-            m_explosionEffect.Stop();
-        }
-        if(m_audioSource != null)
-        {
-            m_audioSource.Stop();
-        }
-
-        m_explosionCollider.enabled = false;
+        OnPlayExplosionEffect();
     }
 
     /// <summary>
@@ -101,7 +92,7 @@ public class ExplosionManager : MonoBehaviour
 
     /// <summary>
     /// 爆弾の爆発に巻き込まれた爆弾を爆発させる誘爆処理を行います
-    /// 
+    /// </summary>
     private void InducedExplosion(Collider other, Rigidbody rigidbody)
     {
         var parentObj = other.gameObject.transform.parent.gameObject;
@@ -205,13 +196,5 @@ public class ExplosionManager : MonoBehaviour
         {
             m_audioSource.Play(); // 効果音再生
         }
-    }
-
-    /// <summary>
-    /// 起爆させる爆弾の情報を更新します
-    /// </summary>
-    public void UpdateBombData(BombData bombData)
-    {
-        m_bombData = bombData;
     }
 }
