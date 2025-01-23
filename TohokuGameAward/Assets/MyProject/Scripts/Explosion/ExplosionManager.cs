@@ -4,28 +4,23 @@ using UnityEngine;
 public class ExplosionManager : MonoBehaviour
 {
     [SerializeField]
+    private AudioSource m_audioSource = null;
+
+    [SerializeField]
     private ParticleSystem m_explosionEffect = null;
+
+    [SerializeField]
+    private SphereCollider m_explosionCollider = null;
 
     [SerializeField]
     private ExplosionData m_explosionData = null;
 
     [SerializeField]
-    private AudioSource m_audioSource = null;
-
-    [SerializeField]
-    private SphereCollider m_explosionCollider = null;
-
-    private BlowMover m_blowMover = null;
-
     private BombData m_bombData = null;
-    private PlayerMover m_playerMover = null;
 
-    private RaycastHit hitInfo;
+    private RaycastHit m_hitInfo;
 
     private const float RayDistance = 10.0f;
-    private const float DecreaseTimeMax = 0.2f;
-
-    private bool m_isDestroy = false;
 
     private void Awake()
     {
@@ -55,108 +50,73 @@ public class ExplosionManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var parent = other.gameObject.transform.parent.gameObject;
-        if(!TagManager.Instance.SearchedTagName(parent,TagManager.Type.Player))
-        {
-            return;
-        }
-
-        //if (TagManager.Instance.SearchedTagName(other.gameObject.transform.parent.gameObject, TagManager.Type.Player))
-        //{
-        //    PlayerManager playerManager = other.gameObject.GetComponentInParent<PlayerManager>();
-        //    InputData inputData = other.gameObject.GetComponent<InputData>();
-        //    playerManager.IsShot[inputData.SelfNumber] = true;
-        //}
-
-        if (TagManager.Instance.SearchedTagName(other.gameObject, TagManager.Type.Drone))
-        {
-            var drone = other.GetComponent<DroneDestroy>();
-            drone.SetDestroy();
-        }
-
-        var rigidbody = other.GetComponentInParent<Rigidbody>();
-        if (rigidbody == null)
-        {
-            return;
-        }
-
-        if (m_playerMover == null)
-        {
-            m_playerMover = other.GetComponentInParent<PlayerMover>();
-            return;
-        }
-
-        InducedExplosion(other, rigidbody);
-        GenerateExplosion(other, rigidbody);
-    }
-
-    /// <summary>
-    /// 爆弾の爆発に巻き込まれた爆弾を爆発させる誘爆処理を行います
-    /// </summary>
-    private void InducedExplosion(Collider other, Rigidbody rigidbody)
-    {
         var parentObj = other.gameObject.transform.parent.gameObject;
-        if (TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Bomb)) // 爆風に爆弾が接触したか判定します
+        if (TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Bomb))
         {
-            var bombBase = parentObj.GetComponent<BombBase>();
-            bombBase.CauseAnExplosion();
-            GenerateExplosion(other, rigidbody);
+            InducedExplosion(parentObj, other.transform.position);
         }
-    }
 
-    /// <summary>
-    /// 爆風を発生させる処理を行います
-    /// </summary>
-    private void GenerateExplosion(Collider other, Rigidbody rigidbody)
-    {
-        var origin = Vector3.zero;
-        var direction = Vector3.zero;
-        GetRayOriginAndDirection(this.transform.position, other.transform.position, out origin, out direction);
-
-        var parentObj = other.gameObject.transform.parent.gameObject;
-        var isParentObjTagBomb = TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Bomb);
-        if (IsHittedStage(origin, direction) || isParentObjTagBomb)
+        if (!TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Player))
         {
             return;
         }
 
-        m_blowMover = other.GetComponentInParent<BlowMover>();
-
-        var invincible = other.GetComponentInParent<PlayerInvincible>();
+        var invincible = parentObj.GetComponent<PlayerInvincible>();
         if (invincible.IsInvincible)
         {
             return;
         }
 
-        m_blowMover.BlowOfTarget(rigidbody, transform.position, other, m_bombData, m_playerMover);
+        if (IsPlayerInsideExplosion(other.transform.position))
+        {
+            var rigidbody = parentObj.GetComponent<Rigidbody>();
+            var playerMover = parentObj.GetComponent<PlayerMover>();
+            var blowMover = parentObj.GetComponent<BlowMover>();
+
+            blowMover.BlowOfTarget(rigidbody, this.transform.position, other, m_bombData, playerMover);
+        }
     }
 
     /// <summary>
-    /// 投射するRayのOriginとDirectionを取得する処理を行います
+    /// 爆弾の爆発に巻き込まれた爆弾を爆発させる誘爆処理を行います
     /// </summary>
-    private void GetRayOriginAndDirection(Vector3 targetA, Vector3 targetB, out Vector3 origin, out Vector3 direction)
+    private void InducedExplosion(GameObject parentObj, Vector3 otherPos)
     {
-        origin = targetA;
-        direction = (targetB - targetA).normalized;
-        direction.z = 0.0f;
+        var bombBase = parentObj.GetComponent<BombManager>();
+        bombBase.CauseAnExplosion();
+    }
+
+    /// <summary>
+    /// プレイヤーが爆風の範囲内にいるかを調べます
+    /// </summary>
+    private bool IsPlayerInsideExplosion(Vector3 otherPos)
+    {
+        if (IsHittedStage(otherPos))
+        {
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
     /// Rayがステージに衝突したかを検知します
     /// </summary>
     /// <returns> true->衝突を検知 false->検知無し </returns>
-    private bool IsHittedStage(Vector3 origin, Vector3 direction)
+    private bool IsHittedStage(Vector3 otherPos)
     {
-        Physics.Raycast(origin, direction * RayDistance, out hitInfo);
-        if(hitInfo.collider != null)
+        var origin = this.transform.position;
+        var direction = (otherPos - origin).normalized;
+        direction.z = 0.0f;
+
+        Physics.Raycast(origin, direction * RayDistance, out m_hitInfo);
+        if(m_hitInfo.collider != null)
         {
-            var hitObj = hitInfo.collider.gameObject;
+            var hitObj = m_hitInfo.collider.gameObject;
             if (TagManager.Instance.SearchedTagName(hitObj, TagManager.Type.Ground, TagManager.Type.Wall))
             {
                 return true;
             }
         }
-
         return false;
     }
 
