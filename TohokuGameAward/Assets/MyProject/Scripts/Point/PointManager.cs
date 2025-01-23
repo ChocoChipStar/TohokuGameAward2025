@@ -12,19 +12,13 @@ public class PointManager : MonoBehaviour
     [SerializeField]
     private int[] m_score = new int[InputData.PlayerMax];
 
-    private static List<int> m_alphaRoundScore  = new List<int>();
+    private static int[] m_alphaRoundScore = new int[(int)RoundManager.RoundState.Max];
 
-    private static List<int> m_bravoRoundScore = new List<int>();
+    private static int[] m_bravoRoundScore = new int[(int)RoundManager.RoundState.Max];
 
-    public static List<int> AlphaRoundScore { get { return m_alphaRoundScore; } }
+    public static int[] AlphaRoundScore { get { return m_alphaRoundScore; } }
 
-    public static List<int> BravoRoundScore { get { return m_bravoRoundScore; } }
-
-    private void Start()
-    {
-        m_alphaRoundScore.Add(0);
-        m_bravoRoundScore.Add(0);
-    }
+    public static int[] BravoRoundScore { get { return m_bravoRoundScore; } }
 
     private void UpdatePoint()
     {
@@ -51,10 +45,10 @@ public class PointManager : MonoBehaviour
         m_bravoRoundScore[RoundManager.CurrentRound] = bravoScore;
     }
 
-    public int GetTotalScore(List<int> Score)
+    public int GetTotalScore(int[] Score)
     {
         int totalScore = 0;
-        for (int i = 0; i < Score.Count; i++)
+        for (int i = 0; i < Score.Length; i++)
         {
             totalScore += Score[i];
         }

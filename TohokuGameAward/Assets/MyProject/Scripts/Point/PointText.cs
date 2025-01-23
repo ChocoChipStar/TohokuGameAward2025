@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class PointText : MonoBehaviour
@@ -18,9 +17,9 @@ public class PointText : MonoBehaviour
 
     PointManager m_pointManager = null;
 
-    private List<int> m_alphaRoundScore = new List<int>();
+    private int[] m_alphaRoundScore = new int[(int)RoundManager.RoundState.Max];
 
-    private List<int> m_bravoRoundScore = new List<int>();
+    private int[] m_bravoRoundScore = new int[(int)RoundManager.RoundState.Max];
 
     private int m_currentAlphaScore = 0;
 
@@ -34,11 +33,7 @@ public class PointText : MonoBehaviour
     {
         m_pointManager = GetComponent<PointManager>();
 
-        if(RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
-        {
-            InitList();
-        }
-        if(RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
+        if(RoundManager.CurrentRound != (int)RoundManager.RoundState.One)
         {
             GetLastRoundPoints();
         }
@@ -49,16 +44,12 @@ public class PointText : MonoBehaviour
         DrawPoint();
     }
 
-    void InitList()
-    {
-        m_alphaRoundScore.Add(0);
-        m_bravoRoundScore.Add(0);
-    }
+
 
     void GetLastRoundPoints()
     {
-        m_alphaRoundScore.Add(PointManager.AlphaRoundScore[RoundManager.CurrentRound - 1]);
-        m_bravoRoundScore.Add(PointManager.BravoRoundScore[RoundManager.CurrentRound - 1]);
+        m_alphaRoundScore[RoundManager.CurrentRound] = PointManager.AlphaRoundScore[RoundManager.CurrentRound - 1];
+        m_bravoRoundScore[RoundManager.CurrentRound] = PointManager.BravoRoundScore[RoundManager.CurrentRound - 1];
     }
 
     void DrawPoint()

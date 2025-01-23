@@ -1,8 +1,7 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class ResultText : MonoBehaviour
 {
@@ -42,9 +41,9 @@ public class ResultText : MonoBehaviour
     [SerializeField]
     private float m_renderWinnerDelay = 0;
 
-    private List<int> m_deffencesScore = new List<int>();
+    private int[] m_deffencesScore = new int[(int)RoundManager.RoundState.Max];
 
-    private List<int> m_offencesScore = new List<int>();
+    private int[] m_offencesScore = new int[(int)RoundManager.RoundState.Max];
 
     private int m_defTotalScore = 0;
 
@@ -133,10 +132,10 @@ public class ResultText : MonoBehaviour
         m_winnerTexture.gameObject.SetActive(true);
     }
 
-    private int TotalScore(List<int> Score)
+    private int TotalScore(int[] Score)
     {
         int TotalScore = 0;
-        for(int i = 0;i < Score.Count;i++)
+        for(int i = 0;i < Score.Length;i++)
         {
             TotalScore += Score[i];
         }
