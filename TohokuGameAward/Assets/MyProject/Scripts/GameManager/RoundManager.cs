@@ -16,7 +16,7 @@ public class RoundManager : MonoBehaviour
     private FadeManager m_fadeManager = null;
 
     [SerializeField]
-    private UIController m_controllerUI = null;
+    private ControllerUI m_controllerUI = null;
 
     [SerializeField]
     private GameObject[] m_gameStartObject = null;
@@ -96,6 +96,9 @@ public class RoundManager : MonoBehaviour
         m_isStart = true;        
     }
 
+    /// <summary>
+    /// ゲームが開始されるまでのUIをコントロールする処理です。
+    /// </summary>
     private IEnumerator RoundStart()
     {
         m_controllerUI.DrawPlayerIcon(true);
@@ -110,11 +113,11 @@ public class RoundManager : MonoBehaviour
         yield return new WaitForSeconds(m_showTime);
         m_controllerUI.DrawPlayerIcon(false);
         m_controllerUI.ChangeAllActiveUI(false);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.ready, true);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.ready, true);
         
         yield return new WaitForSeconds(m_showTime);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.ready, false);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.Start, true);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.ready, false);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Start, true);
 
         for(int i = 0; i < InputData.PlayerMax; i++)
         {
@@ -122,14 +125,17 @@ public class RoundManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(1);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.Start, false);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Start, false);
 
         InitializeGameStart(true);
     }
 
+    /// <summary>
+    /// タイマーが0になった後のUI、ラウンド切り替えの処理です。
+    /// </summary>
     private IEnumerator RoundFinish()
     {
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.GameSet, true);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.GameSet, true);
         m_isFinish = true;
 
         for (int i = 0; i < InputData.PlayerMax; i++)

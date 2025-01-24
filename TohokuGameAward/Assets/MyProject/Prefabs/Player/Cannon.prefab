@@ -679,17 +679,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_inputData: {fileID: 1223132130783986126}
-  m_CannonBaseMaterial:
+  m_cannonBaseMaterial:
   - {fileID: 2100000, guid: 0306d4eb24970804c9a1d9e75efbf2ad, type: 2}
   - {fileID: 2100000, guid: 66dc4f0ccaba36d4caa6e561cf76ade4, type: 2}
   - {fileID: 2100000, guid: 021c4d255ccb399409a13f15688ee79e, type: 2}
   - {fileID: 2100000, guid: b52778f3271602e4fb9f418b3d091d7a, type: 2}
-  m_CannonCleannessMaterial:
+  m_cannonCleannessMaterial:
   - {fileID: 2100000, guid: 0fbd5b496fce07b4aac0c121d17eec1f, type: 2}
   - {fileID: 2100000, guid: 5784cf4658be6ac49b6ed6f7ec503ca0, type: 2}
   - {fileID: 2100000, guid: 778bb935d3056244ba02756939b973a7, type: 2}
   - {fileID: 2100000, guid: 875f4347147104140913916f8121ed9b, type: 2}
-  m_CannonPlayerMaterial:
+  m_cannonHumanoidMaterial:
   - {fileID: 2100000, guid: e169681c5a7eb0042bdc477f0c0d7647, type: 2}
   - {fileID: 2100000, guid: 240bc160fa387314a82f6fa8a293865e, type: 2}
   - {fileID: 2100000, guid: c72dabc0e08933841b69f8fdda496cd8, type: 2}
@@ -743,9 +743,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_inputData: {fileID: 1223132130783986126}
   m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
-  m_dictanceManager: {fileID: 0}
+  m_distanceManager: {fileID: 0}
   m_splineAnimate: {fileID: 5013036733868414237}
-  m_gameObject: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
+  m_splineContainer: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
     type: 3}
   m_cannonPosition: 0
 --- !u!114 &8616529328100531461
@@ -760,15 +760,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a20081fc0ff725348a3b632ca90f2c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_bombPrehab: {fileID: 6015317307024279286, guid: 31daebd531dbe3741ab98ddb0502a6b2,
+  m_bombPrefab: {fileID: 6015317307024279286, guid: 31daebd531dbe3741ab98ddb0502a6b2,
     type: 3}
   m_inputData: {fileID: 1223132130783986126}
   m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
   m_cannonSlider: {fileID: 5682983618426239743}
   m_shootTransform: {fileID: 6561087655519887246}
   m_cannonManager: {fileID: 0}
-  m_bombStock: 0
-  m_bombCoolTime: 0
+  m_bombStock: 1
+  m_bombCoolTime: 1
 --- !u!114 &7578290319857609480
 MonoBehaviour:
   m_ObjectHideFlags: 0

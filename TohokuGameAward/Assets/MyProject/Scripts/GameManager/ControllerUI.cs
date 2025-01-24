@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static RoundManager;
 
-public class UIController : MonoBehaviour
+public class ControllerUI : MonoBehaviour
 {
     [SerializeField]
     private Image[] m_playerIconImage = null;
@@ -19,7 +19,7 @@ public class UIController : MonoBehaviour
     [SerializeField]
     private float m_UISpeed = 0.0f;
 
-    private Vector3 m_UItransform = Vector3.zero;
+    private Vector3 m_roundUIposition = Vector3.zero;
     private Vector3 m_originPosition = new Vector3(960.0f, 540.0f, 0.0f);
 
     private bool m_isMoveDone = false;
@@ -72,7 +72,7 @@ public class UIController : MonoBehaviour
 
     public void MoveRoundUI(int round)
     {
-        m_UItransform = UIMoveSpeed(m_roundUI[round].transform.position);
+        m_roundUIposition = UIMoveSpeed(m_roundUI[round].transform.position);
     }
 
     public void DrawPlayerIcon(bool isActive)
@@ -99,14 +99,14 @@ public class UIController : MonoBehaviour
             case (int)RoundState.One:
                 m_roundUI[(int)RoundUI.TeamSelectionRoundOne].gameObject.SetActive(true);
                 currentPos = m_roundUI[(int)RoundUI.TeamSelectionRoundOne].gameObject.GetComponent<RectTransform>().position;
-                newPos = Vector3.MoveTowards(currentPos, m_originPosition, m_UItransform.x);
+                newPos = Vector3.MoveTowards(currentPos, m_originPosition, m_roundUIposition.x);
                 m_roundUI[(int)RoundUI.TeamSelectionRoundOne].gameObject.transform.position = newPos;
                 break;
 
             case (int)RoundState.Two:
                 m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.SetActive(true);
                 currentPos = m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.GetComponent<RectTransform>().position;
-                newPos = Vector3.MoveTowards(currentPos, m_originPosition, m_UItransform.x);
+                newPos = Vector3.MoveTowards(currentPos, m_originPosition, m_roundUIposition.x);
                 m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.transform.position = newPos;
                 break;
         }
@@ -129,6 +129,9 @@ public class UIController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 確定したチームにあわせてアイコンをセットします
+    /// </summary>
     public void TeamSet()
     {
         for (int i = 0; i < PlayerTeamGenerator.AlphaTeamNumber.Count; i++)

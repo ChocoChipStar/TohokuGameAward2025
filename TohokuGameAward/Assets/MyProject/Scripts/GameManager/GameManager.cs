@@ -42,10 +42,10 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_playerManager.Instances.Length; i++)
         {
-            if (m_playerManager.IsDead[i])
-            {
-                continue;
-            }
+            //if (m_playerManager.IsDead[i])
+            //{
+            //    continue;
+            //}
 
             if (IsPlayerOut(m_playerManager.Instances[i], i))
             {
@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         //    m_pointManager.DeadPointInterVal[playerNum] = m_pointData.Params.DeadPointInterval;
         //}
         
-        m_playerManager.SwitchDeadFlug(playerNum, true);
-        m_playerManager.DisablePhysics(playerNum);
+        //m_playerManager.SwitchDeadFlug(playerNum, true);
+        //m_playerManager.DisablePhysics(playerNum);
         m_effectManager.OnPlayStageOutEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
         m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
         m_playerManager.Instances[playerNum].transform.position = m_penartyPos;

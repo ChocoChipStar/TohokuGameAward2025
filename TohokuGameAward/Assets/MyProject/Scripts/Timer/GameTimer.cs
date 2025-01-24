@@ -10,7 +10,7 @@ public class GameTimer : MonoBehaviour
     private RoundManager m_roundManager = null;
 
     [SerializeField]
-    private float m_limitTime = 0.0f;
+    private float m_timelimit = 0.0f;
 
     private bool m_isTimeLimit = false;
 
@@ -28,14 +28,14 @@ public class GameTimer : MonoBehaviour
 
     private void StartGameTimer()
     {
-        m_limitTime -= Time.deltaTime;
+        m_timelimit -= Time.deltaTime;
 
-        if(m_limitTime < 0)
+        if(m_timelimit < 0)
         {
-            m_limitTime = 0;
+            m_timelimit = 0;
             m_isTimeLimit = true;
         }
 
-        m_timerTextField.text = m_limitTime.ToString("F0");//整数で表示
+        m_timerTextField.text = m_timelimit.ToString("F0");//整数で表示
     }
 }
