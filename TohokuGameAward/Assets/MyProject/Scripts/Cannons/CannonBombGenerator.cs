@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CannonBombGenerator : MonoBehaviour
 {
     [SerializeField]
-    private GameObject m_bombPrehab = null;
+    private GameObject m_bombPrefab = null;
 
     [SerializeField]
     private InputData m_inputData = null;
@@ -34,7 +34,6 @@ public class CannonBombGenerator : MonoBehaviour
         m_cannonManager = GetComponentInParent<CannonManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (CanShootBomb())
@@ -44,7 +43,7 @@ public class CannonBombGenerator : MonoBehaviour
 
         if(m_bombStock < m_cannonData.Params.CannonBombStock)
         {
-            BombReroad();
+            BombReload();
         }
         else
         {
@@ -59,15 +58,16 @@ public class CannonBombGenerator : MonoBehaviour
         //スライダー反映
         m_cannonSlider.value = m_bombStock;
     }
-    
-    //大砲が爆弾を投げる処理
+
     private void ShootBomb()
     {
-        var bomb = Instantiate(m_bombPrehab, m_shootTransform.position, Quaternion.identity);
+        var bomb = Instantiate(m_bombPrefab, m_shootTransform.position, Quaternion.identity);
         var bombRigidbody = bomb.GetComponent<Rigidbody>();
         
         if(bombRigidbody == null)
-           return;
+        {
+            return;
+        }
 
         m_cannonManager.PlaySoundEffect();
         bombRigidbody.AddForce(ShootVector() * m_cannonData.Params.ShootSpeed, ForceMode.Impulse);
@@ -75,7 +75,10 @@ public class CannonBombGenerator : MonoBehaviour
         m_bombCoolTime--;
     }
 
-    //投げる角度を計算
+    /// <summary>
+    /// 投げる角度を計算
+    /// </summary>
+    /// <returns></returns>
     private Vector3 ShootVector()
     {
         var vector = m_shootTransform.position - transform.position;
@@ -83,20 +86,24 @@ public class CannonBombGenerator : MonoBehaviour
         return vector;
     }
 
-    private void BombReroad()
+    private void BombReload()
     {
-        m_bombStock += Time.deltaTime / m_cannonData.Params.BombReroadTime;
+        m_bombStock += Time.deltaTime / m_cannonData.Params.BombReloadTime;
     }
 
-    //爆弾を発射できるか確認
-    //※クールタイムなどの処理を追加予定
+    /// <summary>
+    /// 爆弾を発射できるか確認
+    /// </summary>
     private bool CanShootBomb()
     {
-        if(m_inputData.WasPressedActionButton(InputData.ActionsName.Shoot, m_inputData.SelfNumber)
-        && m_bombStock > 1.0f
-        && m_bombCoolTime > 1.0f) 
+        if(!m_inputData.WasPressedActionButton(InputData.ActionsName.Shoot, m_inputData.SelfNumber)) 
         {
-            return true;
+            return false;
+        }
+
+        if(m_bombStock > 1.0f && m_bombCoolTime > 1.0f)
+        {
+            return true ;
         }
         return false;
     }

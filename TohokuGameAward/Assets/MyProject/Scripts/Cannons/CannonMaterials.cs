@@ -3,45 +3,43 @@
 public class CannonMaterials : MonoBehaviour
 {
     [SerializeField]
-    private Material[] m_CannonBaseMaterial = new Material[4];
+    private InputData m_inputData = null;
 
     [SerializeField]
-    private Material[] m_CannonCleannessMaterial = new Material[4];
+    private Material[] m_cannonBaseMaterial = new Material[InputData.PlayerMax];
 
     [SerializeField]
-    private Material[] m_CannonPlayerMaterial = new Material[4];
+    private Material[] m_cannonCleannessMaterial = new Material[InputData.PlayerMax];
 
     [SerializeField]
-    private SkinnedMeshRenderer[] m_cannonBaseMesh = new SkinnedMeshRenderer[3];
+    private Material[] m_cannonHumanoidMaterial = new Material[InputData.PlayerMax];
 
     [SerializeField]
-    private SkinnedMeshRenderer[] m_cannonCleannessMesh = new SkinnedMeshRenderer[1];
+    private SkinnedMeshRenderer[] m_cannonBaseMesh = new SkinnedMeshRenderer[BaseMeshMax];
 
     [SerializeField]
-    private SkinnedMeshRenderer[] m_cannonPlayerMesh = new SkinnedMeshRenderer[6];
+    private SkinnedMeshRenderer[] m_cannonCleannessMesh = new SkinnedMeshRenderer[CleannessMeshMax];
 
+    [SerializeField]
+    private SkinnedMeshRenderer[] m_cannonHumanoidMesh = new SkinnedMeshRenderer[HumanoidMeshMax];
 
-    private static readonly string PlayerName = "Player";
+    private const int BaseMeshMax = 3;
+    private const int CleannessMeshMax = 1;
+    private const int HumanoidMeshMax = 6;
+
 
     private void Start()
     {
-        for (int i = 0; i < m_CannonBaseMaterial.Length; i++)
-        {
-            var playerName = PlayerName + (i + 1);
-            if (this.gameObject.name == playerName)
-            {
-                SetBaseMaterial(i);
-                SetCleannessMaterial(i);
-                SetPlayerMaterial(i);
-            }
-        }
+        SetBaseMaterial(m_inputData.SelfNumber);
+        SetCleannessMaterial(m_inputData.SelfNumber);
+        SetHumanoidMaterial(m_inputData.SelfNumber);
     }
 
     private void SetBaseMaterial(int playerNum)
     {
         for (int i = 0; i < m_cannonBaseMesh.Length; i++)
         {
-            m_cannonBaseMesh[i].material = m_CannonBaseMaterial[playerNum];
+            m_cannonBaseMesh[i].material = m_cannonBaseMaterial[playerNum];
         }
     }
 
@@ -49,15 +47,15 @@ public class CannonMaterials : MonoBehaviour
     {
         for (int i = 0; i < m_cannonCleannessMesh.Length; i++)
         {
-            m_cannonCleannessMesh[i].material = m_CannonCleannessMaterial[playerNum];
+            m_cannonCleannessMesh[i].material = m_cannonCleannessMaterial[playerNum];
         }
     }
 
-    private void SetPlayerMaterial(int playerNum)
+    private void SetHumanoidMaterial(int playerNum)
     {
-        for (int i = 0; i < m_cannonPlayerMesh.Length; i++)
+        for (int i = 0; i < m_cannonHumanoidMesh.Length; i++)
         {
-            m_cannonPlayerMesh[i].material = m_CannonPlayerMaterial[playerNum];
+            m_cannonHumanoidMesh[i].material = m_cannonHumanoidMaterial[playerNum];
         }
     }
 }
