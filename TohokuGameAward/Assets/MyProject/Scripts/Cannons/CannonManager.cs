@@ -6,7 +6,7 @@ public class CannonManager : MonoBehaviour
     private CannonData m_cannonData = null;
 
     [SerializeField]
-    private CannonDistance m_dictanceManager = null;
+    private CannonDistance m_distanceManager = null;
 
     [SerializeField]
     private SoundEffectManager m_soundEffectManager = null;
@@ -25,9 +25,9 @@ public class CannonManager : MonoBehaviour
     {
         CannonMover[] cannonMover = new CannonMover[CannonMax];
         cannonMover[m_cannonCount] = cannon.GetComponent<CannonMover>();
-        cannonMover[m_cannonCount].CannonInitialize(m_cannonCount);
+        cannonMover[m_cannonCount].InitializeSpline();
         cannonMover[m_cannonCount].InitializePosition(m_cannonCount);
-        m_dictanceManager.GetCannonMover(cannonMover[m_cannonCount], m_cannonCount);
+        m_distanceManager.GetCannonMover(cannonMover[m_cannonCount], m_cannonCount);
         m_cannonCount++;
     }
 

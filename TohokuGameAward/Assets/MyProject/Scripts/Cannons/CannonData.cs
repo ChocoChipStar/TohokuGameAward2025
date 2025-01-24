@@ -50,7 +50,7 @@ public class CannonData : ScriptableObject
         public float MoveSpeed { get { return m_moveSpeed; } private set { value = m_moveSpeed; } }
         public float ShootSpeed { get { return m_shootSpeed; } private set { value = m_shootSpeed; } }
         public int CannonBombStock { get { return m_cannonBombStock; } private set { value = m_cannonBombStock; } }
-        public float BombReroadTime { get { return m_bombReroadTime; } private set { value = m_bombReroadTime; } }
+        public float BombReloadTime { get { return m_bombReroadTime; } private set { value = m_bombReroadTime; } }
         public float BombCoolTime { get { return m_bombCoolTime; } private set { value = m_bombCoolTime; } }
     }
 }

@@ -10,7 +10,7 @@ public class CannonMover : MonoBehaviour
     private CannonData m_cannonData = null;
 
     [SerializeField]
-    private CannonDistance m_dictanceManager = null;
+    private CannonDistance m_distanceManager = null;
 
     [SerializeField]
     private SplineAnimate m_splineAnimate = null;
@@ -33,7 +33,7 @@ public class CannonMover : MonoBehaviour
 
     private void Start()
     {
-        m_dictanceManager = this.GetComponentInParent<CannonDistance>();
+        m_distanceManager = this.GetComponentInParent<CannonDistance>();
     }
 
     void Update()
@@ -84,7 +84,7 @@ public class CannonMover : MonoBehaviour
     {
         if(m_inputData.WasPressedActionButton(InputData.ActionsName.RightRail, m_inputData.SelfNumber)
           || m_inputData.WasPressedActionButton(InputData.ActionsName.LeftRail, m_inputData.SelfNumber)
-          || !m_dictanceManager.IsHitCannon)
+          || !m_distanceManager.IsHitCannon)
         {
             return true;            
         }
@@ -101,14 +101,14 @@ public class CannonMover : MonoBehaviour
         return speedPerSecond * (speed * speedPerLength);
     }
 
-    public void CannonInitialize(int playerNum)
+    public void InitializeSpline()
     {
         m_splineAnimate.Container = m_splineContainer;
     }
     
-    public void InitializePosition(int playerNum)
+    public void InitializePosition(int cannonNum)
     {
-        m_cannonPosition = m_cannonData.Positions.StartPosition[playerNum];
-        m_splineAnimate.NormalizedTime = m_cannonData.Positions.StartPosition[playerNum];
+        m_cannonPosition = m_cannonData.Positions.StartPosition[cannonNum];
+        m_splineAnimate.NormalizedTime = m_cannonData.Positions.StartPosition[cannonNum];
     }
 }

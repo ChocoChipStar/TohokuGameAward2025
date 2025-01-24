@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class CannonBombGenerator : MonoBehaviour
 {
     [SerializeField]
-    private GameObject m_bombPrehab = null;
+    private GameObject m_bombPrefab = null;
 
     [SerializeField]
     private InputData m_inputData = null;
@@ -43,7 +43,7 @@ public class CannonBombGenerator : MonoBehaviour
 
         if(m_bombStock < m_cannonData.Params.CannonBombStock)
         {
-            BombReroad();
+            BombReload();
         }
         else
         {
@@ -61,7 +61,7 @@ public class CannonBombGenerator : MonoBehaviour
 
     private void ShootBomb()
     {
-        var bomb = Instantiate(m_bombPrehab, m_shootTransform.position, Quaternion.identity);
+        var bomb = Instantiate(m_bombPrefab, m_shootTransform.position, Quaternion.identity);
         var bombRigidbody = bomb.GetComponent<Rigidbody>();
         
         if(bombRigidbody == null)
@@ -86,9 +86,9 @@ public class CannonBombGenerator : MonoBehaviour
         return vector;
     }
 
-    private void BombReroad()
+    private void BombReload()
     {
-        m_bombStock += Time.deltaTime / m_cannonData.Params.BombReroadTime;
+        m_bombStock += Time.deltaTime / m_cannonData.Params.BombReloadTime;
     }
 
     /// <summary>
