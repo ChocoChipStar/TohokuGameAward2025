@@ -10,13 +10,13 @@ public class CannonMover : MonoBehaviour
     private CannonData m_cannonData = null;
 
     [SerializeField]
-    private CannonDictanceManager m_dictanceManager = null;
+    private CannonDictance m_dictanceManager = null;
 
     [SerializeField]
     private SplineAnimate m_splineAnimate = null;
 
     [SerializeField]
-    private SplineContainer m_gameObject = null;
+    private SplineContainer m_splineContainer = null;
 
     [SerializeField, Range(0.0f, 1.0f)]
     private float m_cannonPosition = 0.0f;
@@ -33,7 +33,7 @@ public class CannonMover : MonoBehaviour
 
     private void Start()
     {
-        m_dictanceManager = this.GetComponentInParent<CannonDictanceManager>();
+        m_dictanceManager = this.GetComponentInParent<CannonDictance>();
     }
 
     void Update()
@@ -103,7 +103,7 @@ public class CannonMover : MonoBehaviour
 
     public void CannonInitialize(int playerNum)
     {
-        m_splineAnimate.Container = m_gameObject;
+        m_splineAnimate.Container = m_splineContainer;
         m_cannonPosition = m_cannonData.Positions.StartPosition[playerNum];
         m_splineAnimate.NormalizedTime = m_cannonData.Positions.StartPosition[playerNum];
     }

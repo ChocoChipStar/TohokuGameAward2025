@@ -6,13 +6,13 @@ public class CannonMaterials : MonoBehaviour
     private InputData m_inputData = null;
 
     [SerializeField]
-    private Material[] m_CannonBaseMaterial = new Material[InputData.PlayerMax];
+    private Material[] m_cannonBaseMaterial = new Material[InputData.PlayerMax];
 
     [SerializeField]
-    private Material[] m_CannonCleannessMaterial = new Material[InputData.PlayerMax];
+    private Material[] m_cannonCleannessMaterial = new Material[InputData.PlayerMax];
 
     [SerializeField]
-    private Material[] m_CannonPlayerMaterial = new Material[InputData.PlayerMax];
+    private Material[] m_cannonHumanoidMaterial = new Material[InputData.PlayerMax];
 
     [SerializeField]
     private SkinnedMeshRenderer[] m_cannonBaseMesh = new SkinnedMeshRenderer[BaseMeshMax];
@@ -32,14 +32,14 @@ public class CannonMaterials : MonoBehaviour
     {
         SetBaseMaterial(m_inputData.SelfNumber);
         SetCleannessMaterial(m_inputData.SelfNumber);
-        SetPlayerMaterial(m_inputData.SelfNumber);
+        SetHumanoidMaterial(m_inputData.SelfNumber);
     }
 
     private void SetBaseMaterial(int playerNum)
     {
         for (int i = 0; i < m_cannonBaseMesh.Length; i++)
         {
-            m_cannonBaseMesh[i].material = m_CannonBaseMaterial[playerNum];
+            m_cannonBaseMesh[i].material = m_cannonBaseMaterial[playerNum];
         }
     }
 
@@ -47,15 +47,15 @@ public class CannonMaterials : MonoBehaviour
     {
         for (int i = 0; i < m_cannonCleannessMesh.Length; i++)
         {
-            m_cannonCleannessMesh[i].material = m_CannonCleannessMaterial[playerNum];
+            m_cannonCleannessMesh[i].material = m_cannonCleannessMaterial[playerNum];
         }
     }
 
-    private void SetPlayerMaterial(int playerNum)
+    private void SetHumanoidMaterial(int playerNum)
     {
         for (int i = 0; i < m_cannonHumanoidMesh.Length; i++)
         {
-            m_cannonHumanoidMesh[i].material = m_CannonPlayerMaterial[playerNum];
+            m_cannonHumanoidMesh[i].material = m_cannonHumanoidMaterial[playerNum];
         }
     }
 }

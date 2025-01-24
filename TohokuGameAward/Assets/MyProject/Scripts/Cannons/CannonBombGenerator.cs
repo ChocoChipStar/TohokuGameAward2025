@@ -65,7 +65,9 @@ public class CannonBombGenerator : MonoBehaviour
         var bombRigidbody = bomb.GetComponent<Rigidbody>();
         
         if(bombRigidbody == null)
-           return;
+        {
+            return;
+        }
 
         m_cannonManager.PlaySoundEffect();
         bombRigidbody.AddForce(ShootVector() * m_cannonData.Params.ShootSpeed, ForceMode.Impulse);
@@ -94,11 +96,14 @@ public class CannonBombGenerator : MonoBehaviour
     /// </summary>
     private bool CanShootBomb()
     {
-        if(m_inputData.WasPressedActionButton(InputData.ActionsName.Shoot, m_inputData.SelfNumber)
-        && m_bombStock > 1.0f
-        && m_bombCoolTime > 1.0f) 
+        if(!m_inputData.WasPressedActionButton(InputData.ActionsName.Shoot, m_inputData.SelfNumber)) 
         {
-            return true;
+            return false;
+        }
+
+        if(m_bombStock > 1.0f && m_bombCoolTime > 1.0f)
+        {
+            return true ;
         }
         return false;
     }
