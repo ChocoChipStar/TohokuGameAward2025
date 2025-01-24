@@ -280,7 +280,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.7}
+  m_AnchoredPosition: {x: 0, y: 1.6}
   m_SizeDelta: {x: 90, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5682983618426239743
@@ -568,6 +568,7 @@ GameObject:
   - component: {fileID: 5013036733868414237}
   - component: {fileID: 2633302452076593668}
   - component: {fileID: 8616529328100531461}
+  - component: {fileID: 7578290319857609480}
   - component: {fileID: 1223132130783986126}
   m_Layer: 0
   m_Name: Cannon
@@ -677,6 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9814702b80a09e41b78f7527f9c411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_inputData: {fileID: 1223132130783986126}
   m_CannonBaseMaterial:
   - {fileID: 2100000, guid: 0306d4eb24970804c9a1d9e75efbf2ad, type: 2}
   - {fileID: 2100000, guid: 66dc4f0ccaba36d4caa6e561cf76ade4, type: 2}
@@ -697,7 +699,7 @@ MonoBehaviour:
   - {fileID: 8297788334234218556}
   m_cannonCleannessMesh:
   - {fileID: 4301031638502271166}
-  m_cannonPlayerMesh:
+  m_cannonHumanoidMesh:
   - {fileID: 5973254630615050609}
   - {fileID: 8785998064566394781}
   - {fileID: 532423560527220816}
@@ -741,10 +743,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_inputData: {fileID: 1223132130783986126}
   m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
+  m_dictanceManager: {fileID: 0}
   m_splineAnimate: {fileID: 5013036733868414237}
   m_gameObject: {fileID: 709490324930384521, guid: 5ba7af40e738cf64ebb6a2d762b80665,
     type: 3}
-  m_canvas: {fileID: 7612192175796279355}
   m_cannonPosition: 0
 --- !u!114 &8616529328100531461
 MonoBehaviour:
@@ -764,8 +766,22 @@ MonoBehaviour:
   m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
   m_cannonSlider: {fileID: 5682983618426239743}
   m_shootTransform: {fileID: 6561087655519887246}
+  m_cannonManager: {fileID: 0}
   m_bombStock: 0
   m_bombCoolTime: 0
+--- !u!114 &7578290319857609480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8705550395945270090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c916282ce8b3c941b318dfd45b01906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canvas: {fileID: 7612192175796279355}
 --- !u!114 &1223132130783986126
 MonoBehaviour:
   m_ObjectHideFlags: 0

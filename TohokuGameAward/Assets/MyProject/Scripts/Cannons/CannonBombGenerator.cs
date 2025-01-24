@@ -34,7 +34,6 @@ public class CannonBombGenerator : MonoBehaviour
         m_cannonManager = GetComponentInParent<CannonManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (CanShootBomb())
@@ -59,8 +58,7 @@ public class CannonBombGenerator : MonoBehaviour
         //スライダー反映
         m_cannonSlider.value = m_bombStock;
     }
-    
-    //大砲が爆弾を投げる処理
+
     private void ShootBomb()
     {
         var bomb = Instantiate(m_bombPrehab, m_shootTransform.position, Quaternion.identity);
@@ -75,7 +73,10 @@ public class CannonBombGenerator : MonoBehaviour
         m_bombCoolTime--;
     }
 
-    //投げる角度を計算
+    /// <summary>
+    /// 投げる角度を計算
+    /// </summary>
+    /// <returns></returns>
     private Vector3 ShootVector()
     {
         var vector = m_shootTransform.position - transform.position;
@@ -88,8 +89,9 @@ public class CannonBombGenerator : MonoBehaviour
         m_bombStock += Time.deltaTime / m_cannonData.Params.BombReroadTime;
     }
 
-    //爆弾を発射できるか確認
-    //※クールタイムなどの処理を追加予定
+    /// <summary>
+    /// 爆弾を発射できるか確認
+    /// </summary>
     private bool CanShootBomb()
     {
         if(m_inputData.WasPressedActionButton(InputData.ActionsName.Shoot, m_inputData.SelfNumber)

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5643248994680749839}
   - component: {fileID: 709490324930384521}
+  - component: {fileID: 4144592208067984784}
   - component: {fileID: 6967784821757616043}
   - component: {fileID: 6651511707639886892}
   - component: {fileID: 2208272287022713102}
@@ -222,6 +223,23 @@ MonoBehaviour:
       m_Data: []
   m_Knots:
     m_KnotsLink: []
+--- !u!114 &4144592208067984784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557950938094352148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 547f6004c8ce8c542934ac0b019c19f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_cannonManager: {fileID: 6967784821757616043}
+  m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
+  m_CannonMover:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &6967784821757616043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,10 +252,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44fa8e26ce10e95448526b1fb19103c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerRailMover:
-  - {fileID: 0}
-  - {fileID: 0}
   m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
+  m_dictanceManager: {fileID: 4144592208067984784}
+  m_CannonMover:
+  - {fileID: 0}
+  - {fileID: 0}
+  m_soundEffectManager: {fileID: 0}
 --- !u!114 &6651511707639886892
 MonoBehaviour:
   m_ObjectHideFlags: 0
