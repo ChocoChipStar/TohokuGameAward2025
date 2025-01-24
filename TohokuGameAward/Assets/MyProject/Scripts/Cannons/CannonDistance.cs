@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CannonDictance : MonoBehaviour
+public class CannonDistance : MonoBehaviour
 {
     [SerializeField]
     private CannonManager m_cannonManager = null;
