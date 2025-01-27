@@ -56,7 +56,8 @@ public class PlayerTeamGenerator : MonoBehaviour
     private void CreatePlayerBasedOnControllers()
     {
         m_playerManager.GetGamePadInstances();
-        
+        m_playerManager.SetMovement(false);
+
         if (RoundManager.CurrentRound == (int)RoundManager.RoundState.Two)
         {
             SwitchingTeamMember();
@@ -68,8 +69,6 @@ public class PlayerTeamGenerator : MonoBehaviour
             {
                 m_playerManager.Instances[i] = CreatingPlayer(i);
             }
-
-            m_playerManager.SetMovement(i, false);
 
             var inputData = m_playerManager.Instances[i].GetComponent<InputData>();
             if (inputData != null)

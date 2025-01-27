@@ -10,6 +10,9 @@ public class RoundManager : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private BombDestroyer m_bombDestroyer = null;
+
+    [SerializeField]
     private SceneChanger m_sceneChanger = null;
 
     [SerializeField]
@@ -19,13 +22,15 @@ public class RoundManager : MonoBehaviour
     private ControllerUI m_controllerUI = null;
 
     [SerializeField]
-    private GameObject[] m_gameStartObject = null;
-
-    [SerializeField]
-    private float m_UISpeed = 0.0f;
-
-    [SerializeField]
     private float m_showTime = 0.0f;
+
+    [SerializeField]
+    private float m_showStartTime = 0.0f;
+
+    [SerializeField]
+    private float m_bombDestroyTime = 0.0f;
+
+    private int m_counterUI = 0;
 
     private bool m_isStart = false;
     private bool m_isShuffle = false;
@@ -46,23 +51,21 @@ public class RoundManager : MonoBehaviour
 
     private void Awake()
     {
-        InitializeGameStart(false);
-        m_controllerUI.ChangeAllActiveUI(false);
-        m_controllerUI.ChangeAllPlayer(false);
-
-        m_isStart = false;
-        m_isShuffle = false;
+        m_isRoundStart = false;
+        m_controllerUI.ChangeAllActiveUI();
+        m_controllerUI.ChangeAllPlayerIcon(false);
+        m_counterUI = 0;
 
         m_controllerUI.MoveRoundUI(CurrentRound);
 
-        StartCoroutine(WaitOperation());
+        Invoke("WaitOperation", m_showTime);
     }
 
     private void Update()
     {
         if (m_fadeManager.IsFinishFadeIn && m_isStart)
         {
-            m_controllerUI.MoveToTeamSelectionUI(m_UISpeed);
+            m_controllerUI.MoveToTeamSelectionUI();
             if (m_controllerUI.IsMoveDone)
             {
                 m_isStart = false;
@@ -90,9 +93,8 @@ public class RoundManager : MonoBehaviour
         }
     }    
 
-    IEnumerator WaitOperation()
+    private void WaitOperation()
     {
-        yield return new WaitForSeconds(m_showTime);
         m_isStart = true;        
     }
 
@@ -112,22 +114,18 @@ public class RoundManager : MonoBehaviour
 
         yield return new WaitForSeconds(m_showTime);
         m_controllerUI.DrawPlayerIcon(false);
-        m_controllerUI.ChangeAllActiveUI(false);
-        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.ready, true);
+        m_controllerUI.ChangeAllActiveUI();
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Ready, true);
         
         yield return new WaitForSeconds(m_showTime);
-        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.ready, false);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Ready, false);
         m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Start, true);
+        m_playerManager.SetMovement(true);
 
-        for(int i = 0; i < InputData.PlayerMax; i++)
-        {
-            m_playerManager.SetMovement(i, true);
-        }
-
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(m_showStartTime);
         m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Start, false);
 
-        InitializeGameStart(true);
+        m_isRoundStart = true;
     }
 
     /// <summary>
@@ -137,20 +135,11 @@ public class RoundManager : MonoBehaviour
     {
         m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.GameSet, true);
         m_isFinish = true;
-
-        for (int i = 0; i < InputData.PlayerMax; i++)
-        {
-            m_playerManager.SetMovement(i, false);
-        }
-
+        m_playerManager.SetMovement( false);
         m_controllerUI.ActiveFinishEffect(true);
 
-        yield return new WaitForSeconds(0.5f);
-        var bomb = GameObject.FindGameObjectsWithTag("Bomb");
-        for(int i = 0; i < bomb.Length; i++)
-        {
-            Destroy(bomb[i]);
-        }
+        yield return new WaitForSeconds(m_bombDestroyTime);
+        m_bombDestroyer.DestoroyBomb();
 
         yield return new WaitForSeconds(m_showTime);
 
@@ -162,10 +151,6 @@ public class RoundManager : MonoBehaviour
         {
             SwitchResultScene();
         }
-    }
-    private void InitializeGameStart(bool isActive)
-    {
-        m_isRoundStart = isActive;
     }
 
     private void SwitchNextRound()
