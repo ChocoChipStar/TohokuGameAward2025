@@ -10,22 +10,25 @@ public class RoundManager : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private BombDestroyer m_bombDestroyer = null;
+
+    [SerializeField]
     private SceneChanger m_sceneChanger = null;
 
     [SerializeField]
     private FadeManager m_fadeManager = null;
 
     [SerializeField]
-    private UIController m_controllerUI = null;
-
-    [SerializeField]
-    private GameObject[] m_gameStartObject = null;
-
-    [SerializeField]
-    private float m_UISpeed = 0.0f;
+    private ControllerUI m_controllerUI = null;
 
     [SerializeField]
     private float m_showTime = 0.0f;
+
+    [SerializeField]
+    private float m_showStartTime = 0.0f;
+
+    [SerializeField]
+    private float m_bombDestroyTime = 0.0f;
 
     private bool m_isStart = false;
     private bool m_isShuffle = false;
@@ -46,23 +49,19 @@ public class RoundManager : MonoBehaviour
 
     private void Awake()
     {
-        InitializeGameStart(false);
-        m_controllerUI.ChangeAllActiveUI(false);
-        m_controllerUI.ChangeAllPlayer(false);
-
-        m_isStart = false;
-        m_isShuffle = false;
+        m_controllerUI.ChangeAllActiveUI();
+        m_controllerUI.ChangeAllPlayerIcon(false);
 
         m_controllerUI.MoveRoundUI(CurrentRound);
 
-        StartCoroutine(WaitOperation());
+        Invoke("WaitOperation", m_showTime);
     }
 
     private void Update()
     {
         if (m_fadeManager.IsFinishFadeIn && m_isStart)
         {
-            m_controllerUI.MoveToTeamSelectionUI(m_UISpeed);
+            m_controllerUI.MoveToTeamSelectionUI();
             if (m_controllerUI.IsMoveDone)
             {
                 m_isStart = false;
@@ -90,12 +89,14 @@ public class RoundManager : MonoBehaviour
         }
     }    
 
-    IEnumerator WaitOperation()
+    private void WaitOperation()
     {
-        yield return new WaitForSeconds(m_showTime);
         m_isStart = true;        
     }
 
+    /// <summary>
+    /// ゲームが開始されるまでのUIをコントロールする処理です。
+    /// </summary>
     private IEnumerator RoundStart()
     {
         m_controllerUI.DrawPlayerIcon(true);
@@ -109,42 +110,32 @@ public class RoundManager : MonoBehaviour
 
         yield return new WaitForSeconds(m_showTime);
         m_controllerUI.DrawPlayerIcon(false);
-        m_controllerUI.ChangeAllActiveUI(false);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.ready, true);
+        m_controllerUI.ChangeAllActiveUI();
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Ready, true);
         
         yield return new WaitForSeconds(m_showTime);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.ready, false);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.Start, true);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Ready, false);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Start, true);
+        m_playerManager.SetMovement(true);
 
-        for(int i = 0; i < InputData.PlayerMax; i++)
-        {
-            m_playerManager.SetMovement(i, true);
-        }
+        yield return new WaitForSeconds(m_showStartTime);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.Start, false);
 
-        yield return new WaitForSeconds(1);
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.Start, false);
-
-        InitializeGameStart(true);
+        m_isRoundStart = true;
     }
 
+    /// <summary>
+    /// タイマーが0になった後のUI、ラウンド切り替えの処理です。
+    /// </summary>
     private IEnumerator RoundFinish()
     {
-        m_controllerUI.ChangeUI((int)UIController.RoundUI.GameSet, true);
+        m_controllerUI.ChangeUI((int)ControllerUI.RoundUI.GameSet, true);
         m_isFinish = true;
-
-        for (int i = 0; i < InputData.PlayerMax; i++)
-        {
-            m_playerManager.SetMovement(i, false);
-        }
-
+        m_playerManager.SetMovement( false);
         m_controllerUI.ActiveFinishEffect(true);
 
-        yield return new WaitForSeconds(0.5f);
-        var bomb = GameObject.FindGameObjectsWithTag("Bomb");
-        for(int i = 0; i < bomb.Length; i++)
-        {
-            Destroy(bomb[i]);
-        }
+        yield return new WaitForSeconds(m_bombDestroyTime);
+        m_bombDestroyer.DestoroyBomb();
 
         yield return new WaitForSeconds(m_showTime);
 
@@ -156,10 +147,6 @@ public class RoundManager : MonoBehaviour
         {
             SwitchResultScene();
         }
-    }
-    private void InitializeGameStart(bool isActive)
-    {
-        m_isRoundStart = isActive;
     }
 
     private void SwitchNextRound()

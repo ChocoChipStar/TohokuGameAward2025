@@ -26,20 +26,23 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     /// <param name="index"> プレイヤー番号 </param>
     /// <param name="isActive"> true -> 操作可能 false -> 操作不可 </param>
-    public void SetMovement(int index, bool isActive)
+    public void SetMovement(bool isActive)
     {
-        var playerMover = m_instances[index].GetComponent<HumanoidMover>();
-        if (playerMover != null)
+        for(int i = 0; i < InputData.PlayerMax; i++)
         {
-            playerMover.enabled = isActive;
-            return;
-        }
+            var playerMover = m_instances[i].GetComponent<HumanoidMover>();
+            if (playerMover != null)
+            {
+                playerMover.enabled = isActive;
+                return;
+            }
 
-        var cannonMover = m_instances[index].GetComponent<CannonMover>();
-        if (cannonMover != null)
-        {
-            cannonMover.enabled = isActive;
-            return;
+            var cannonMover = m_instances[i].GetComponent<CannonMover>();
+            if (cannonMover != null)
+            {
+                cannonMover.enabled = isActive;
+                return;
+            }
         }
     }
 

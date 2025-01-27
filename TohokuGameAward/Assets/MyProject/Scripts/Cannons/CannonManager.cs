@@ -1,9 +1,16 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class CannonManager : MonoBehaviour
 {
     [SerializeField]
     private CannonData m_cannonData = null;
+
+    [SerializeField]
+    private GameObject m_bombManager = null;
+
+    [SerializeField]
+    private GameObject m_bombPrefab = null;
 
     [SerializeField]
     private CannonDistance m_distanceManager = null;
@@ -29,6 +36,13 @@ public class CannonManager : MonoBehaviour
         cannonMover[m_cannonCount].InitializePosition(m_cannonCount);
         m_distanceManager.GetCannonMover(cannonMover[m_cannonCount], m_cannonCount);
         m_cannonCount++;
+    }
+
+    public void GenerateBomb(Vector3 position,Vector3 force)
+    {
+        var bomb = Instantiate(m_bombPrefab,position, Quaternion.identity, m_bombManager.transform);
+        var bombRigidbody = bomb.GetComponent<Rigidbody>();
+        bombRigidbody.AddForce(force * m_cannonData.Params.ShootSpeed, ForceMode.Impulse);
     }
 
     public void PlaySoundEffect()

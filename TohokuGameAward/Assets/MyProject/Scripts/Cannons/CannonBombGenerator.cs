@@ -4,9 +4,6 @@ using UnityEngine.UI;
 public class CannonBombGenerator : MonoBehaviour
 {
     [SerializeField]
-    private GameObject m_bombPrefab = null;
-
-    [SerializeField]
     private InputData m_inputData = null;
 
     [SerializeField]
@@ -61,16 +58,8 @@ public class CannonBombGenerator : MonoBehaviour
 
     private void ShootBomb()
     {
-        var bomb = Instantiate(m_bombPrefab, m_shootTransform.position, Quaternion.identity);
-        var bombRigidbody = bomb.GetComponent<Rigidbody>();
-        
-        if(bombRigidbody == null)
-        {
-            return;
-        }
-
+        m_cannonManager.GenerateBomb(m_shootTransform.position, ShootVector());
         m_cannonManager.PlaySoundEffect();
-        bombRigidbody.AddForce(ShootVector() * m_cannonData.Params.ShootSpeed, ForceMode.Impulse);
         m_bombStock--;
         m_bombCoolTime--;
     }
