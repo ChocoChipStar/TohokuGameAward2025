@@ -30,8 +30,6 @@ public class RoundManager : MonoBehaviour
     [SerializeField]
     private float m_bombDestroyTime = 0.0f;
 
-    private int m_counterUI = 0;
-
     private bool m_isStart = false;
     private bool m_isShuffle = false;
     private bool m_isTeamSet = false;
@@ -51,10 +49,8 @@ public class RoundManager : MonoBehaviour
 
     private void Awake()
     {
-        m_isRoundStart = false;
         m_controllerUI.ChangeAllActiveUI();
         m_controllerUI.ChangeAllPlayerIcon(false);
-        m_counterUI = 0;
 
         m_controllerUI.MoveRoundUI(CurrentRound);
 

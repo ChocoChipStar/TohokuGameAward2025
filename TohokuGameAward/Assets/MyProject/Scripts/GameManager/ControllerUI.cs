@@ -1,26 +1,29 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using static RoundManager;
 
 public class ControllerUI : MonoBehaviour
 {
     [SerializeField]
-    private Image[] m_playerIconImage = new Image[4];
+    private Image[] m_playerIconImage = new Image[InputData.PlayerMax];
 
     [SerializeField]
-    private Sprite[] m_playerNumberImage = new Sprite[4];
+    private Sprite[] m_playerNumberImage = new Sprite[InputData.PlayerMax];
 
     [SerializeField]
-    private GameObject[] m_roundUI = new GameObject[5];
+    private List<GameObject> m_roundUI = new List<GameObject>();
 
     [SerializeField]
-    private GameObject[] m_finishEffectObject = new GameObject[5];
+    private List<GameObject> m_finishEffectObject = new List<GameObject>();
 
     [SerializeField]
     private float m_roundUISpeed = 0.0f;
 
     private Vector3 m_roundUIposition = Vector3.zero;
     private Vector3 m_originPosition = new Vector3(960.0f, 540.0f, 0.0f);
+
+    private float m_roundUIdistance = 0.05f;
 
     private bool m_isMoveDone = false;
     private bool m_isTeamSet = false;
@@ -48,7 +51,7 @@ public class ControllerUI : MonoBehaviour
 
     public void ChangeAllActiveUI()
     {
-        for (int i = 0; i < m_roundUI.Length; i++)
+        for (int i = 0; i < m_roundUI.Count; i++)
         {
             m_roundUI[i].SetActive(false);
         }
@@ -64,7 +67,7 @@ public class ControllerUI : MonoBehaviour
 
     public void ActiveFinishEffect(bool isActive)
     {
-        for (int i = 0; i < m_finishEffectObject.Length; i++)
+        for (int i = 0; i < m_finishEffectObject.Count; i++)
         {
             m_finishEffectObject[i].SetActive(isActive);
         }
@@ -94,15 +97,20 @@ public class ControllerUI : MonoBehaviour
     {
         var newPos = Vector3.zero;
         var currentPos = Vector3.zero;
-        NewMethod(newPos, currentPos);
+        MoveNextFramePosUI(newPos, currentPos);
     }
 
-    private void NewMethod(Vector3 newPos, Vector3 currentPos)
+    private void MoveNextFramePosUI(Vector3 newPos, Vector3 currentPos)
     {
-        m_roundUI[CurrentRound].gameObject.SetActive(true);
-        currentPos = m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.GetComponent<RectTransform>().position;
-        newPos = Vector3.MoveTowards(currentPos, m_originPosition, m_roundUIposition.x);
-        m_roundUI[CurrentRound].gameObject.transform.position = newPos;
+        if (Mathf.Abs(m_roundUI[CurrentRound].gameObject.transform.position.x - m_roundUIposition.x) >= m_roundUIdistance)
+        {
+            m_roundUI[CurrentRound].gameObject.SetActive(true);
+            currentPos = m_roundUI[(int)RoundUI.TeamSelectionRoundTwo].gameObject.GetComponent<RectTransform>().position;
+            newPos = Vector3.MoveTowards(currentPos, m_originPosition, m_roundUIposition.x);
+            m_roundUI[CurrentRound].gameObject.transform.position = newPos;
+            return;
+        }
+        m_isMoveDone = true;
     }
 
     /// <summary>
