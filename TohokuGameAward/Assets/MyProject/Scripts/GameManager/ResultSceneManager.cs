@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ResultSceneManager : MonoBehaviour
 {
+    [SerializeField]
+    SceneChanger m_sceneChanger = null;
+
     [SerializeField]
     ResultText m_resText = null;
 
@@ -12,7 +14,6 @@ public class ResultSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (m_resText.IsResultEnded)
         {
             m_sceneChangeDelay -= Time.deltaTime;
@@ -20,7 +21,7 @@ public class ResultSceneManager : MonoBehaviour
 
         if(m_sceneChangeDelay < 0)
         {
-            SceneManager.LoadScene("TitleScene");
+            m_sceneChanger.TransitionSpecifiedScene(SceneChanger.SceneName.Title);
         }
     }
 }

@@ -7,6 +7,12 @@ public class GameManager : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private HumanoidRespawn m_humanoidRespawn = null;
+
+    [SerializeField]
+    private PenartyPointOparator m_penartyOperator = null;
+
+    [SerializeField]
     private PointManager m_pointManager = null;
 
     [SerializeField]
@@ -31,85 +37,83 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         OnPlayerIFOutOfStage();
-
-        //if (m_playerManager.GetOnlyOnePlayer())
-        //{
-        //    ActiveGameSetText();
-        //}
     }
 
     private void OnPlayerIFOutOfStage()
     {
         for (int i = 0; i < m_playerManager.Instances.Length; i++)
         {
-            //if (m_playerManager.IsDead[i])
-            //{
-            //    continue;
-            //}
+            if (m_humanoidRespawn.IsDead[i])
+            {
+                continue;
+            }
 
-            if (IsPlayerOut(m_playerManager.Instances[i], i))
+            if (IsOverBorderLine(i))
             {
                 OutOfStage(i);
-                
             }
         }
     }
-    private void OutOfStage(int playerNum)
-    {
-        //if (m_pointManager.DeadPointInterVal[playerNum] < 0)
-        //{
-        //    m_pointManager.IsDeadPoint[playerNum] = true;
-        //    m_pointManager.DeadPointInterVal[playerNum] = m_pointData.Params.DeadPointInterval;
-        //}
-        
-        //m_playerManager.SwitchDeadFlug(playerNum, true);
-        //m_playerManager.DisablePhysics(playerNum);
-        m_effectManager.OnPlayStageOutEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
-        m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
-        m_playerManager.Instances[playerNum].transform.position = m_penartyPos;
-    }
 
-    private bool IsPlayerOut(GameObject targetPlayer, int num)
+    /// <summary>
+    /// プレイヤーがボーダーラインを越えているかを調べます
+    /// </summary>
+    /// <retuns> true->ボーダーラインを超えている false->超えていない </retuns>
+    private bool IsOverBorderLine(int index)
     {
-        GameObject target = targetPlayer;
-
-        if(targetPlayer == null || TagManager.Instance.SearchedTagName(m_playerManager.Instances[num],TagManager.Type.Cannon))
+        var targetObj = m_playerManager.Instances[index];
+        if (targetObj == null || TagManager.Instance.SearchedTagName(targetObj,TagManager.Type.Cannon))
         {
             return false;
         }
 
-        if (target.transform.position.x < m_stageData.Size.LeftLimit ||
-           target.transform.position.x > m_stageData.Size.RightLimit ||
-           target.transform.position.y < m_stageData.Size.Bottom     ||
-           target.transform.position.y > m_stageData.Size.UpLimit)
+        var isTargetOverLeftBorder = targetObj.transform.position.x < m_stageData.Border.Left;
+        var isTargetOverRightBorder = targetObj.transform.position.x > m_stageData.Border.Right;
+        if (isTargetOverLeftBorder || isTargetOverRightBorder)
         { 
-            //ステージ外に出ていればtrue
+            // 両サイドのボーダーラインを越えていたら
             return true; 
+        }
+
+        var isTargetOverBottomBorder = targetObj.transform.position.y < m_stageData.Border.Bottom;
+        var isTargetOverTopBorder = targetObj.transform.position.y > m_stageData.Border.Top;
+        if(isTargetOverBottomBorder || isTargetOverTopBorder)
+        {
+            // 上下のボーダーラインを越えていたら
+            return true;
         }
 
         return false;
     }
 
-    //private void ActiveGameSetText()
-    //{
-    //    if (m_gameSetText.gameObject.activeSelf)
-    //    {
-    //        return;
-    //    }
+    private void OutOfStage(int playerNum)
+    {
+        if (m_penartyOperator.DeadPenartyInterVal[playerNum] < 0)
+        {
+            InitPenalty(playerNum);
+        }
 
-    //    foreach (GameObject player in m_playerManager.PlayerCount)
-    //    {
-    //        if (player != null)
-    //        {
-    //            string winnerName = player.name;
-    //            m_gameSetText.text = winnerName + m_winText;
-    //            m_gameSetText.gameObject.SetActive(true);
-    //            return;
-    //        }
-    //    }
-    //}
+        OutOfStageProsessing(playerNum);
+    }
 
     /// <summary>
-    /// デバッグ用　スペースボタンでデストロイ
+    /// ステージ外にHumanoidが出た時の演出やフラグに関する処理を行います。
     /// </summary>
+    /// <param name="playerNum"></param>
+    private void OutOfStageProsessing(int playerNum)
+    {
+        m_humanoidRespawn.SwitchDeadFlug(playerNum, true);
+        m_effectManager.OnPlayEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
+        m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
+        m_playerManager.Instances[playerNum].transform.position = m_penartyPos;
+    }
+    /// <summary>
+    /// ステージ外にHumanoidが出た時のペナルティに関する処理を行います。
+    /// </summary>
+    /// <param name="playerNum"></param>
+    void InitPenalty(int playerNum)
+    {
+        m_penartyOperator.SetPenaltyPoint(playerNum);
+        m_penartyOperator.InitPenartyInterVal(playerNum);
+    }
 }
