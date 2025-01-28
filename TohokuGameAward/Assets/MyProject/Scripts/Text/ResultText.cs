@@ -123,11 +123,4 @@ public class ResultText : MonoBehaviour
         }
         return TotalScore;
     }
-
-    IEnumerator SetResultEndFlug()
-    {
-        m_isResultEnded = true;
-        yield return null;
-    }
-
 }

@@ -41,35 +41,46 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerIFOutOfStage()
     {
-        for (int i = 0; i < InputData.PlayerMax; i++)
+        for (int i = 0; i < m_playerManager.Instances.Length; i++)
         {
             if (m_humanoidRespawn.IsDead[i])
             {
                 continue;
             }
 
-            if (IsPlayerOut(m_playerManager.Instances[i], i))
+            if (IsOverBorderLine(i))
             {
                 OutOfStage(i);
             }
         }
     }
-    private bool IsPlayerOut(GameObject targetPlayer, int num)
-    {
-        GameObject target = targetPlayer;
 
-        if(targetPlayer == null || TagManager.Instance.SearchedTagName(m_playerManager.Instances[num],TagManager.Type.Cannon))
+    /// <summary>
+    /// プレイヤーがボーダーラインを越えているかを調べます
+    /// </summary>
+    /// <retuns> true->ボーダーラインを超えている false->超えていない </retuns>
+    private bool IsOverBorderLine(int index)
+    {
+        var targetObj = m_playerManager.Instances[index];
+        if (targetObj == null || TagManager.Instance.SearchedTagName(targetObj,TagManager.Type.Cannon))
         {
             return false;
         }
 
-        if (target.transform.position.x < m_stageData.Size.LeftLimit ||
-           target.transform.position.x > m_stageData.Size.RightLimit ||
-           target.transform.position.y < m_stageData.Size.Bottom     ||
-           target.transform.position.y > m_stageData.Size.UpLimit)
+        var isTargetOverLeftBorder = targetObj.transform.position.x < m_stageData.Border.Left;
+        var isTargetOverRightBorder = targetObj.transform.position.x > m_stageData.Border.Right;
+        if (isTargetOverLeftBorder || isTargetOverRightBorder)
         { 
-            //ステージ外に出ていればtrue
+            // 両サイドのボーダーラインを越えていたら
             return true; 
+        }
+
+        var isTargetOverBottomBorder = targetObj.transform.position.y < m_stageData.Border.Bottom;
+        var isTargetOverTopBorder = targetObj.transform.position.y > m_stageData.Border.Top;
+        if(isTargetOverBottomBorder || isTargetOverTopBorder)
+        {
+            // 上下のボーダーラインを越えていたら
+            return true;
         }
 
         return false;
@@ -92,7 +103,6 @@ public class GameManager : MonoBehaviour
     private void OutOfStageProsessing(int playerNum)
     {
         m_humanoidRespawn.SwitchDeadFlug(playerNum, true);
-        m_playerManager.DisablePhysics(playerNum);
         m_effectManager.OnPlayEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
         m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
         m_playerManager.Instances[playerNum].transform.position = m_penartyPos;
