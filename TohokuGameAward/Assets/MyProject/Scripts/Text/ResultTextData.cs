@@ -11,14 +11,13 @@ public class ResultTextData : ScriptableObject
     [SerializeField]
     private ParamsData m_paramsData = new ParamsData();
 
-    public EffectData EffectData { get { return m_effectData; } private set { value = m_effectData; } }
+    public EffectData Effect { get { return m_effectData; } private set { value = m_effectData; } }
 
-    public ParamsData ParamsData { get { return m_paramsData; } private set { value = m_paramsData; } }
+    public ParamsData Params { get { return m_paramsData; } private set { value = m_paramsData; } }
 
 }
 
 [System.Serializable]
-
 public class EffectData
 {
     [SerializeField, Header("スコア表示の間")]
@@ -40,13 +39,13 @@ public class EffectData
 [System.Serializable]
 public class ParamsData
 {
-    [SerializeField, Header("スコアのランダム表示の最小値")]
-    private int m_randomMin = 0;
+    [SerializeField, Header("スコアシャッフル時の最小値")]
+    private int m_shaffuleValueMin = 0;
 
     [SerializeField, Header("スコアのランダム表示の最大値")]
-    private int m_randomMax = 0;
+    private int m_shaffuleValueMax = 0;
 
-    public int Min { get { return m_randomMin; } private set { m_randomMin = value; } }
+    public int ShaffuleValueMin { get { return m_shaffuleValueMin; } private set { value = m_shaffuleValueMin; } }
 
-    public int Max { get { return m_randomMax; } private set { m_randomMax = value; } }
+    public int ShaffuleValueMax { get { return m_shaffuleValueMax; } private set { value = m_shaffuleValueMax; } }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ResultText : MonoBehaviour
 {
     [SerializeField]
-    private ResultTextData m_effectData = null;
+    private ResultTextData m_resultTextData = null;
     [SerializeField]
     private TextMeshProUGUI m_alphaTotalText = null;
 
@@ -42,14 +42,14 @@ public class ResultText : MonoBehaviour
 
     public bool IsResultEnded { get { return m_isResultEnded; } }
 
-    IEnumerator Start()
+    private IEnumerator Start()
     {
         GetFinalScore();
 
         for (int i = 0; i < (int)RoundManager.RoundState.Max; i++)
         { //ラウンドごとに時間をあけてスコアを表示
-            yield return StartCoroutine(RenderScoreAfterDelay(m_RenderingRound));
-            yield return new WaitForSeconds(m_effectData.EffectData.WaitForNextRound[m_RenderingRound]);
+            yield return StartCoroutine(RenderScoreAfterDelay());
+            yield return new WaitForSeconds(m_resultTextData.Effect.WaitForNextRound[m_RenderingRound]);
             m_RenderingRound++;
         }
 
@@ -57,7 +57,7 @@ public class ResultText : MonoBehaviour
 
         yield return StartCoroutine(RenderWinnerAfterDelay());//勝者側のテクスチャを表示
 
-        yield return StartCoroutine(SetResultEndFlug());
+        m_isResultEnded = true;
     }
 
     private void GetFinalScore()
@@ -68,45 +68,41 @@ public class ResultText : MonoBehaviour
         m_bravoTotalScore = TotalScore(m_bravoScore);
     }
 
-    IEnumerator RenderScoreAfterDelay(int Round)
+    private IEnumerator RenderScoreAfterDelay()
     {
-        float revealDelay = m_effectData.EffectData.RevealDelay[Round];
+        yield return ScoreShuffler(m_resultTextData.Effect.RevealDelay[m_RenderingRound]);
 
-        while (revealDelay > 0)
-        {
-            revealDelay -= Time.deltaTime;
-            m_alphaScoreText[Round].text = MakeRandomNum();
-            m_bravoScoreText[Round].text = MakeRandomNum();
-            yield return null;
-        }
-        m_alphaScoreText[Round].text = m_alphaScore[Round].ToString();
-        m_bravoScoreText[Round].text = m_bravoScore[Round].ToString();
+        m_alphaScoreText[m_RenderingRound].text = m_alphaScore[m_RenderingRound].ToString();
+        m_bravoScoreText[m_RenderingRound].text = m_bravoScore[m_RenderingRound].ToString();
     }
 
-    IEnumerator RenderTotalAfterDelay()
+    private IEnumerator RenderTotalAfterDelay()
     {
-        float revealDelay = m_effectData.EffectData.RevealDelay[m_RenderingRound];
+        yield return ScoreShuffler(m_resultTextData.Effect.RevealDelay[m_RenderingRound]);
 
-        while (revealDelay > 0)
-        {
-            revealDelay -= Time.deltaTime;
-            m_bravoTotalText.text = MakeRandomNum();
-            m_alphaTotalText.text = MakeRandomNum();
-            yield return null;
-        }
         m_bravoTotalText.text = m_bravoTotalScore.ToString();
         m_alphaTotalText.text = m_alphaTotalScore.ToString();
     }
-    private string MakeRandomNum()
+
+    private IEnumerator ScoreShuffler(float revealDelay)
     {
-        int random;
-        random = Random.Range(m_effectData.ParamsData.Min,m_effectData.ParamsData.Max);
-        return random.ToString();
+        while (revealDelay > 0)
+        {
+            revealDelay -= Time.deltaTime;
+            m_alphaScoreText[m_RenderingRound].text = MakeRandomNum();
+            m_bravoScoreText[m_RenderingRound].text = MakeRandomNum();
+            yield return null;
+        }
     }
 
-    IEnumerator RenderWinnerAfterDelay()
+    private string MakeRandomNum()
     {
-        yield return new WaitForSeconds(m_effectData.EffectData.winnerTextureDelay);
+        return Random.Range(m_resultTextData.Params.ShaffuleValueMin, m_resultTextData.Params.ShaffuleValueMax).ToString();
+    }
+
+    private IEnumerator RenderWinnerAfterDelay()
+    {
+        yield return new WaitForSeconds(m_resultTextData.Effect.winnerTextureDelay);
         if (m_alphaTotalScore > m_bravoTotalScore)
         {
             m_winnerTexture.sprite = m_alphaWinSprite;
