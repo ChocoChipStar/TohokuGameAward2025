@@ -6,16 +6,18 @@ using UnityEngine.UI;
 public class ResultText : MonoBehaviour
 {
     [SerializeField]
+    private ResultTextData m_effectData = null;
+    [SerializeField]
     private TextMeshProUGUI m_alphaTotalText = null;
 
     [SerializeField]
-    private TextMeshProUGUI m_offeTotalText = null;
+    private TextMeshProUGUI m_bravoTotalText = null;
 
     [SerializeField]
-    private TextMeshProUGUI[] m_defeScoreText = null;
+    private TextMeshProUGUI[] m_alphaScoreText = null;
 
     [SerializeField]
-    private TextMeshProUGUI[] m_offeScoreText = null;
+    private TextMeshProUGUI[] m_bravoScoreText = null;
 
     [SerializeField]
     private Image m_winnerTexture = null;
@@ -25,29 +27,14 @@ public class ResultText : MonoBehaviour
 
     [SerializeField]
     private Sprite m_alphaWinSprite = null;
-    
-    [SerializeField]
-    private float[] m_waitForNextRender = null;
 
-    [SerializeField]
-    private float[] m_revealDelay = null;
+    private int[] m_alphaScore = new int[(int)RoundManager.RoundState.Max];
 
-    [SerializeField]
-    private int m_randomMin = 0;
+    private int[] m_bravoScore = new int[(int)RoundManager.RoundState.Max];
 
-    [SerializeField]
-    private int m_randomMax = 0;
+    private int m_alphaTotalScore = 0;
 
-    [SerializeField]
-    private float m_renderWinnerDelay = 0;
-
-    private int[] m_deffencesScore = new int[(int)RoundManager.RoundState.Max];
-
-    private int[] m_offencesScore = new int[(int)RoundManager.RoundState.Max];
-
-    private int m_defTotalScore = 0;
-
-    private int m_offTotalScore = 0;
+    private int m_bravoTotalScore = 0;
 
     private int m_RenderingRound = 0;
 
@@ -59,69 +46,68 @@ public class ResultText : MonoBehaviour
     {
         GetFinalScore();
 
-        yield return StartCoroutine(RenderScoreAfterDelay(m_RenderingRound));
-        yield return new WaitForSeconds(m_waitForNextRender[m_RenderingRound]);
-        m_RenderingRound++;
+        for (int i = 0; i < (int)RoundManager.RoundState.Max; i++)
+        { //ラウンドごとに時間をあけてスコアを表示
+            yield return StartCoroutine(RenderScoreAfterDelay(m_RenderingRound));
+            yield return new WaitForSeconds(m_effectData.EffectData.WaitForNextRound[m_RenderingRound]);
+            m_RenderingRound++;
+        }
 
-        yield return StartCoroutine(RenderScoreAfterDelay(m_RenderingRound));
-        yield return new WaitForSeconds(m_waitForNextRender[m_RenderingRound]);
-        m_RenderingRound++;
+        yield return StartCoroutine(RenderTotalAfterDelay());//トータルスコア表示
 
-        yield return StartCoroutine(RenderTotalAfterDelay());
+        yield return StartCoroutine(RenderWinnerAfterDelay());//勝者側のテクスチャを表示
 
-        yield return StartCoroutine(RenderWinnerAfterDelay());
-
-        yield return StartCoroutine(SetResultEndFlig());
+        yield return StartCoroutine(SetResultEndFlug());
     }
 
     private void GetFinalScore()
     {
-       m_deffencesScore = PointManager.AlphaRoundScore;
-       m_offencesScore = PointManager.BravoRoundScore;
-        m_defTotalScore = TotalScore(m_deffencesScore);
-        m_offTotalScore = TotalScore(m_offencesScore);
+        m_alphaScore = PointManager.AlphaRoundScore;
+        m_bravoScore = PointManager.BravoRoundScore;
+        m_alphaTotalScore = TotalScore(m_alphaScore);
+        m_bravoTotalScore = TotalScore(m_bravoScore);
     }
 
     IEnumerator RenderScoreAfterDelay(int Round)
     {
-        float revealDelay = m_revealDelay[Round];
+        float revealDelay = m_effectData.EffectData.RevealDelay[Round];
 
         while (revealDelay > 0)
         {
             revealDelay -= Time.deltaTime;
-            m_defeScoreText[Round].text = MakeRandomNum();
-            m_offeScoreText[Round].text = MakeRandomNum();
+            m_alphaScoreText[Round].text = MakeRandomNum();
+            m_bravoScoreText[Round].text = MakeRandomNum();
             yield return null;
         }
-        m_defeScoreText[Round].text = m_deffencesScore[Round].ToString();
-        m_offeScoreText[Round].text = m_offencesScore[Round].ToString();
+        m_alphaScoreText[Round].text = m_alphaScore[Round].ToString();
+        m_bravoScoreText[Round].text = m_bravoScore[Round].ToString();
     }
 
     IEnumerator RenderTotalAfterDelay()
     {
-        float revealDelay = m_revealDelay[m_RenderingRound];
+        float revealDelay = m_effectData.EffectData.RevealDelay[m_RenderingRound];
 
         while (revealDelay > 0)
         {
             revealDelay -= Time.deltaTime;
-            m_offeTotalText.text = MakeRandomNum();
+            m_bravoTotalText.text = MakeRandomNum();
             m_alphaTotalText.text = MakeRandomNum();
             yield return null;
         }
-        m_offeTotalText.text = m_offTotalScore.ToString();
-        m_alphaTotalText.text = m_defTotalScore.ToString();
+        m_bravoTotalText.text = m_bravoTotalScore.ToString();
+        m_alphaTotalText.text = m_alphaTotalScore.ToString();
     }
     private string MakeRandomNum()
     {
         int random;
-        random = Random.Range(m_randomMin, m_randomMax);
+        random = Random.Range(m_effectData.ParamsData.Min,m_effectData.ParamsData.Max);
         return random.ToString();
     }
 
     IEnumerator RenderWinnerAfterDelay()
     {
-        yield return new WaitForSeconds(m_renderWinnerDelay);
-        if (m_defTotalScore > m_offTotalScore)
+        yield return new WaitForSeconds(m_effectData.EffectData.winnerTextureDelay);
+        if (m_alphaTotalScore > m_bravoTotalScore)
         {
             m_winnerTexture.sprite = m_alphaWinSprite;
         }
@@ -142,7 +128,7 @@ public class ResultText : MonoBehaviour
         return TotalScore;
     }
 
-    IEnumerator SetResultEndFlig()
+    IEnumerator SetResultEndFlug()
     {
         m_isResultEnded = true;
         yield return null;

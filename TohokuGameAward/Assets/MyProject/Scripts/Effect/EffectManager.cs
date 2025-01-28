@@ -27,16 +27,5 @@ public class EffectManager : MonoBehaviour
 
         effectPlayer.OnPlay();
     }
-
-   
-    //GameManagerとのコンフリクトを防ぐために残しています。
-    public void OnPlayStageOutEffect(Vector3 position, EffectType effectType)
-    {
-        GameObject effect = Instantiate(m_effectPrefab[(int)effectType], position , Quaternion.identity);
-
-        EffectPlayer effectPlayer = effect.GetComponent<EffectPlayer>();
-
-        effectPlayer.OnPlay();
-    }
 }
 

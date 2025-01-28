@@ -7,6 +7,12 @@ public class GameManager : MonoBehaviour
     private PlayerManager m_playerManager = null;
 
     [SerializeField]
+    private HumanoidRespawn m_humanoidRespawn = null;
+
+    [SerializeField]
+    private PenartyPointOparator m_penartyOperator = null;
+
+    [SerializeField]
     private PointManager m_pointManager = null;
 
     [SerializeField]
@@ -31,18 +37,13 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         OnPlayerIFOutOfStage();
-
-        //if (m_playerManager.GetOnlyOnePlayer())
-        //{
-        //    ActiveGameSetText();
-        //}
     }
 
     private void OnPlayerIFOutOfStage()
     {
-        for (int i = 0; i < m_playerManager.Instances.Length; i++)
+        for (int i = 0; i < InputData.PlayerMax; i++)
         {
-            if (m_playerManager.IsDead[i])
+            if (m_humanoidRespawn.IsDead[i])
             {
                 continue;
             }
@@ -50,25 +51,9 @@ public class GameManager : MonoBehaviour
             if (IsPlayerOut(m_playerManager.Instances[i], i))
             {
                 OutOfStage(i);
-                
             }
         }
     }
-    private void OutOfStage(int playerNum)
-    {
-        //if (m_pointManager.DeadPointInterVal[playerNum] < 0)
-        //{
-        //    m_pointManager.IsDeadPoint[playerNum] = true;
-        //    m_pointManager.DeadPointInterVal[playerNum] = m_pointData.Params.DeadPointInterval;
-        //}
-        
-        m_playerManager.SwitchDeadFlug(playerNum, true);
-        m_playerManager.DisablePhysics(playerNum);
-        m_effectManager.OnPlayStageOutEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
-        m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
-        m_playerManager.Instances[playerNum].transform.position = m_penartyPos;
-    }
-
     private bool IsPlayerOut(GameObject targetPlayer, int num)
     {
         GameObject target = targetPlayer;
@@ -90,26 +75,35 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    //private void ActiveGameSetText()
-    //{
-    //    if (m_gameSetText.gameObject.activeSelf)
-    //    {
-    //        return;
-    //    }
+    private void OutOfStage(int playerNum)
+    {
+        if (m_penartyOperator.DeadPenartyInterVal[playerNum] < 0)
+        {
+            InitPenalty(playerNum);
+        }
 
-    //    foreach (GameObject player in m_playerManager.PlayerCount)
-    //    {
-    //        if (player != null)
-    //        {
-    //            string winnerName = player.name;
-    //            m_gameSetText.text = winnerName + m_winText;
-    //            m_gameSetText.gameObject.SetActive(true);
-    //            return;
-    //        }
-    //    }
-    //}
+        OutOfStageProsessing(playerNum);
+    }
 
     /// <summary>
-    /// デバッグ用　スペースボタンでデストロイ
+    /// ステージ外にHumanoidが出た時の演出やフラグに関する処理を行います。
     /// </summary>
+    /// <param name="playerNum"></param>
+    private void OutOfStageProsessing(int playerNum)
+    {
+        m_humanoidRespawn.SwitchDeadFlug(playerNum, true);
+        m_playerManager.DisablePhysics(playerNum);
+        m_effectManager.OnPlayEffect(m_playerManager.Instances[playerNum].transform.position, EffectManager.EffectType.StageOut);
+        m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.StageOut);
+        m_playerManager.Instances[playerNum].transform.position = m_penartyPos;
+    }
+    /// <summary>
+    /// ステージ外にHumanoidが出た時のペナルティに関する処理を行います。
+    /// </summary>
+    /// <param name="playerNum"></param>
+    void InitPenalty(int playerNum)
+    {
+        m_penartyOperator.SetPenaltyPoint(playerNum);
+        m_penartyOperator.InitPenartyInterVal(playerNum);
+    }
 }
