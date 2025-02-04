@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7057493182290619918}
   - component: {fileID: 4291571347791682426}
-  - component: {fileID: 3986289350882196040}
+  - component: {fileID: 3235052915936530967}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -138,9 +138,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_onPlayFadeIn: 0
-  m_onPlayFadeOut: 0
-  m_fadeManager: {fileID: 3986289350882196040}
---- !u!114 &3986289350882196040
+  m_onPlayFadeOut: 1
+  m_screenFade: {fileID: 3235052915936530967}
+--- !u!114 &3235052915936530967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,13 +149,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2424110137440423455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29cf9663629aa1443a6618f0b163ab4f, type: 3}
+  m_Script: {fileID: 11500000, guid: 548d84e9b4bf4ca49975072c11d6c14c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_unMaskRectTrans: {fileID: 5141958258088984740}
   m_sceneChanger: {fileID: 4291571347791682426}
   m_interval: 1
-  m_fadeSpeed: 3.5
+  m_fadeSpeed: 3
 --- !u!1 &3521398779504148867
 GameObject:
   m_ObjectHideFlags: 0

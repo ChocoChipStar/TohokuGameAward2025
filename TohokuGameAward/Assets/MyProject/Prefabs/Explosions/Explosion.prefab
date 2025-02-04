@@ -9807,7 +9807,7 @@ GameObject:
   - component: {fileID: 2166937797015758672}
   - component: {fileID: 1213818051919320206}
   m_Layer: 0
-  m_Name: Effect_Explosion_Normal
+  m_Name: Explosion
   m_TagString: Explosion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9841,10 +9841,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac25c579c0ff25343ac95d4ebfa793f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_explosionEffect: {fileID: 1231523777687422391}
-  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
   m_audioSource: {fileID: 1213818051919320206}
+  m_explosionEffect: {fileID: 1231523777687422391}
   m_explosionCollider: {fileID: 2166937797015758672}
+  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
+  m_bombData: {fileID: 11400000, guid: fd568c11a7a5bf049b5a8a5c682aae47, type: 2}
 --- !u!135 &2166937797015758672
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9974,7 +9975,7 @@ GameObject:
   - component: {fileID: 1231523777687422391}
   - component: {fileID: 7050230713271557474}
   m_Layer: 0
-  m_Name: 2D*2_Flash_Beta
+  m_Name: ExplosionEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
