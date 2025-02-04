@@ -14,29 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_positionData:
     m_startPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
+    - {x: -3, y: 0}
+    - {x: 3, y: 0}
     m_respawnPos:
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
-    - {x: 0, y: 0, z: 0}
+    - {x: -3, y: 0}
+    - {x: 3, y: 0}
   m_paramsData:
-    m_weight: 0
-    m_powerFrictional: 0
     m_moveSpeed: 3.5
     m_powerJump: 11
-    m_bombGenerateTime: 3
     m_rightBodyAngle: 140
     m_leftBodyAngle: 230
     m_invincibleTime: 5
     m_invincibleSpeed: 8
-  m_throwData:
-    m_angleSide: 0
-    m_powerSide: 0
-    m_angleUpper: 0
-    m_powerUpper: 0
-    m_angleUnder: 0
-    m_powerUnder: 0
+    m_respwanTime: 3
+    m_blowSpeed: 20

@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aaba5385e3a7f241a59557fe3be046c, type: 3}
-  m_Name: StageData
+  m_Script: {fileID: 11500000, guid: 8ee3152203ce85844a5478c09b7a94df, type: 3}
+  m_Name: ScoreData
   m_EditorClassIdentifier: 
-  m_stageSize:
-    m_bottom: -10
-    m_upLimit: 10
-    m_leftLimit: -17
-    m_rightLimit: 17
+  m_paramsData:
+    m_hitHumanoidScore: 100
+    m_deathScore: -30
+    m_silverScore: 10
+    m_goldScore: 30
+    m_diamondScore: 50

@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: CannonData
   m_EditorClassIdentifier: 
   m_positionData:
-    m_startPosition:
-    - 0.2
-    - 0.8
+    m_startPos:
+    - {x: -14, y: 3.3}
+    - {x: 14, y: 3.3}
+    m_movePosMinY: -2
+    m_movePosMaxY: 9
   m_paramData:
-    m_cannonCount: 2
-    m_cannonDictance: 0.05
     m_moveSpeed: 5
-    m_shootSpeed: 5
-    m_cannonBombStock: 2
-    m_bombReroadTime: 3
-    m_bombCoolTime: 1
+    m_shootSpeed: 25
+    m_shootAngle: 35
+    m_magazineMax: 3
+    m_reloadTime: 2.5
+    m_cookingOffTime: 1
