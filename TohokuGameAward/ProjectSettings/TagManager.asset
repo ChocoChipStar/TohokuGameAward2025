@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Wall
+  - Cannon
+  - Bomb
+  - Detected
+  - Humanoid
   layers:
   - Default
   - TransparentFX

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44407d849b9f97b4baee6a1ddef36176, type: 3}
+  m_Name: CannonData
+  m_EditorClassIdentifier: 
+  m_positionData:
+    m_startPos:
+    - {x: -14, y: 3.3}
+    - {x: 14, y: 3.3}
+    m_movePosMinY: -2
+    m_movePosMaxY: 9
+  m_paramData:
+    m_moveSpeed: 5
+    m_shootSpeed: 25
+    m_shootAngle: 35
+    m_magazineMax: 3
+    m_reloadTime: 2.5
+    m_cookingOffTime: 1
