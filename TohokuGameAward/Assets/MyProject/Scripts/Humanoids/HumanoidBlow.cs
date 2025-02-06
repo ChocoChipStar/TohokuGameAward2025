@@ -46,7 +46,7 @@ public class HumanoidBlow : MonoBehaviour
     /// <summary>
     /// 爆風を受けたヒューマノイドの初期化処理を行います
     /// </summary>
-    public void InitializeStartBlow(Vector3 targetPos, HumanoidMover targetMover , int shootPlayerNum)
+    public void InitializeStartBlow(Vector3 targetPos, HumanoidMover targetMover)
     {
         if (m_isBlow)
         {

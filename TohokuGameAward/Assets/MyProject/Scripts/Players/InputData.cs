@@ -103,7 +103,7 @@ public class InputData : MonoBehaviour
                     return gamepad.aButton.wasPressedThisFrame;
 
                 case ActionsType.Attack:
-                    return gamepad.aButton.wasPressedThisFrame;
+                    return gamepad.aButton.isPressed;
 
                 default:
                     return false;
@@ -130,11 +130,11 @@ public class InputData : MonoBehaviour
                 return WasPressedActionsKeyDown(currentType);
             }
 
-            // 攻撃は長押し判定を取得しないためreturnする
-            if (currentType.Value == ActionsType.Attack && actionType == ActionsType.Attack)
-            {
-                return WasPressedActionsKeyDown(currentType);
-            }
+            //// 攻撃は長押し判定を取得しないためreturnする
+            //if (currentType.Value == ActionsType.Attack && actionType == ActionsType.Attack)
+            //{
+            //    return WasPressedActionsKeyDown(currentType);
+            //}
 
             // 引数指定されたキーが押されているか総当たりします（長押し）
             if (currentType.Value == actionType && Input.GetKey(currentType.Key))
@@ -244,6 +244,12 @@ public class InputData : MonoBehaviour
         {
             case MenuInteractionInput.Decision:
                 return Gamepad.all[playerNum].bButton.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame;
+
+            case MenuInteractionInput.SwitchLeft:
+                return Gamepad.all[playerNum].leftShoulder.wasPressedThisFrame;
+
+            case MenuInteractionInput.SwitchRight:
+                return Gamepad.all[playerNum].rightShoulder.wasPressedThisFrame;
 
             default:
                 return false;

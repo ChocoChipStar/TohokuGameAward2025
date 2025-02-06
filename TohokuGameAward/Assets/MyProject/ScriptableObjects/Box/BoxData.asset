@@ -13,10 +13,25 @@ MonoBehaviour:
   m_Name: BoxData
   m_EditorClassIdentifier: 
   m_positionData:
-    m_boxSpawnPos: []
+    m_boxSpawnPos:
+    - {x: 2, y: -1, z: 0}
+    - {x: 1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
+    - {x: -1, y: -1, z: 0}
+    - {x: -2, y: -1, z: 0}
   m_prefabData:
-    m_box: []
+    m_box:
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
+    - {fileID: 8005966443821468155, guid: 5a5278e28b7c4564cae2447d2a97eff6, type: 3}
   m_paramData:
-    m_spawnAtOnce: 0
-    m_spawnMax: 0
-    m_spawnInterval: 0
+    m_spawnAtOnce: 5
+    m_spawnMax: 10
+    m_spawnInterval: 7

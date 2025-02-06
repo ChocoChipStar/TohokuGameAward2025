@@ -33,10 +33,15 @@ public class StunByBox : MonoBehaviour
 
     private void Stan(GameObject stanPlayer)
     {
+        if(!stanPlayer.gameObject.CompareTag("Humanoid"))
+        {
+            return;
+        }
+
         HumanoidMover hm = stanPlayer.GetComponent<HumanoidMover>();
         m_humanoidMover.Add(hm);
         m_currentStanTime.Add(m_stanTime);
-        hm.enabled = false;
+        hm.SetOperable(false);
     }
 
     private void StanTimer()
@@ -63,6 +68,6 @@ public class StunByBox : MonoBehaviour
 
     private void endStan(int Num)
     {
-        m_humanoidMover[Num].enabled = true;
+        m_humanoidMover[Num].SetOperable(true);
     }
 }

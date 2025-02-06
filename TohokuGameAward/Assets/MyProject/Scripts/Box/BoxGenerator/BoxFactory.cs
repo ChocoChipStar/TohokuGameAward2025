@@ -112,9 +112,4 @@ public class BoxFactory : MonoBehaviour
             }
         }
     }
-
-    public void CreanBoxSlot(int i)
-    {
-        Destroy(m_boxesSlot[i]);
-    }
 }

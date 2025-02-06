@@ -17,8 +17,6 @@ public class ExplosionManager : MonoBehaviour
 
     private RaycastHit m_hitInfo;
 
-    private int m_shootPlayerNum = 0;
-
     private const float RayDistance = 10.0f;
 
     private void Awake()
@@ -71,7 +69,7 @@ public class ExplosionManager : MonoBehaviour
         var humanoidMover = parentObj.GetComponent<HumanoidMover>();
         var humanoidBlow = parentObj.GetComponent<HumanoidBlow>();
 
-        humanoidBlow.InitializeStartBlow(this.transform.position, humanoidMover, m_shootPlayerNum);
+        humanoidBlow.InitializeStartBlow(this.transform.position, humanoidMover);
     }
 
     /// <summary>
@@ -104,13 +102,5 @@ public class ExplosionManager : MonoBehaviour
 
         m_explosionEffect.Play();
         SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Explosion);
-    }
-
-    /// <summary>
-    /// 爆発を引き起こしたプレイヤー番号をセットします
-    /// </summary>
-    public void SetShootPlayerNum(int shootPlayerNum)
-    {
-        m_shootPlayerNum = shootPlayerNum;
     }
 }

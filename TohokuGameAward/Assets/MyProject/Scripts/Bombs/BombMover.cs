@@ -11,8 +11,6 @@ public class BombMover : MonoBehaviour
     [SerializeField]
     private CannonData m_cannonData = null;
 
-    private int m_shootPlayerNum = 0;
-
     private bool m_isAlreadyExistExplosion = false;
 
     private void Awake()
@@ -22,7 +20,7 @@ public class BombMover : MonoBehaviour
         {
             direction.x = Mathf.Abs(direction.x);
         }
-        m_rigidbody.AddForce(direction * m_cannonData.Params.ShootSpeed, ForceMode.Impulse);
+        //m_rigidbody.AddForce(direction * m_cannonData.Params.ShootSpeed, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -50,18 +48,8 @@ public class BombMover : MonoBehaviour
     public void CauseAnExplosion()
     {
         var instance = Instantiate(m_explosionPrefab, this.transform.position, Quaternion.identity);
-        var explosionManager = instance.GetComponent<ExplosionManager>();
-        explosionManager.SetShootPlayerNum(m_shootPlayerNum);
 
         m_isAlreadyExistExplosion = true;
         Destroy(this.gameObject); // 爆弾のオブジェクトを破壊する
-    }
-
-    /// <summary>
-    /// 爆弾を発射したプレイヤーの番号を設定します
-    /// </summary>
-    public void SetShootPlayerNum(int shootPlayerNum)
-    {
-        m_shootPlayerNum = shootPlayerNum;
     }
 }

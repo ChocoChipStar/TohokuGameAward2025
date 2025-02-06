@@ -22,18 +22,20 @@ public class TutorialManager : MonoBehaviour
 
     private void Update()
     {
-        if(!m_screenFade.IsFinishFadeIn)
+        if (!m_screenFade.IsFinishFadeIn)
         {
             return;
         }
 
-        if (Gamepad.current == null)
-        {
-            return;
-        }
+        //if (Gamepad.current == null)
+        //{
+        //    return;
+        //}
+
 
         var padCount = Gamepad.all.Count;
-        for(int i = 0; i < padCount; i++)
+        
+        for (int i = 0; i < padCount; i++)
         {
             if (m_imageChanger.IsIndexMax && !m_isGetStart)
             {
@@ -42,17 +44,18 @@ public class TutorialManager : MonoBehaviour
                     m_isGetStart = true;
                     m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.Death);
                     m_sceneChanger.LoadNextScene();
+                    
                     return;
                 }
             }
-
+            
             if (m_inputData.WasPressedMenuInteractionInput(InputData.MenuInteractionInput.SwitchRight, i))
             {
                 m_imageChanger.SwitchNextImage();
                 continue;
             }
 
-            if(m_inputData.WasPressedMenuInteractionInput(InputData.MenuInteractionInput.SwitchLeft,i))
+            if (m_inputData.WasPressedMenuInteractionInput(InputData.MenuInteractionInput.SwitchLeft, i))
             {
                 m_imageChanger.SwitchPreviousImage();
                 continue;

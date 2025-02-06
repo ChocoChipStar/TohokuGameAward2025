@@ -56,7 +56,7 @@ public class RespawnManager : MonoBehaviour
             {
                 continue;
             }
-            MeasureElapsedAfterDeathTime();
+            MeasureElapsedAfterDeathTime(humanoidNum);
         }
     }
 
@@ -87,32 +87,32 @@ public class RespawnManager : MonoBehaviour
     /// <summary>
     /// 死んだヒューマノイドの死後経過時間を測る処理を行います
     /// </summary>
-    private void MeasureElapsedAfterDeathTime()
+    private void MeasureElapsedAfterDeathTime(int humanoidNum)
     {
-        m_elapsedAfterDeathTime[m_deathHumanoidNum] += Time.deltaTime;
-        if (m_elapsedAfterDeathTime[m_deathHumanoidNum] > m_humanoidData.Params.RespawnTime)
+        m_elapsedAfterDeathTime[humanoidNum] += Time.deltaTime;
+        if (m_elapsedAfterDeathTime[humanoidNum] > m_humanoidData.Params.RespawnTime)
         {
-            InitializeRespawnedPlayer();
+            InitializeRespawnedPlayer(humanoidNum);
         }
     }
 
     /// <summary>
     /// リスポーンしたプレイヤーの初期化処理を行います
     /// </summary>
-    private void InitializeRespawnedPlayer()
+    private void InitializeRespawnedPlayer(int humanoidNum)
     {
         // パラメータ初期化
-        IsDead[m_deathHumanoidNum].Value = false;
-        m_elapsedAfterDeathTime[m_deathHumanoidNum] = 0.0f;
+        IsDead[humanoidNum].Value = false;
+        m_elapsedAfterDeathTime[humanoidNum] = 0.0f;
 
         // 物理挙動有効化;
         m_humanoidMover.SetPhysicalOperable(true);
 
         // リスポーン地点にヒューマノイドの座標を移動
-        m_playerManager.HumanoidInstances[m_deathHumanoidNum].transform.position = m_humanoidData.Positions.RespawnPos[m_deathHumanoidNum];
+        m_playerManager.HumanoidInstances[humanoidNum].transform.position = m_humanoidData.Positions.RespawnPos[humanoidNum];
 
         // リスポーン後の無敵時間を開始
-        var humanoidInvisible = m_playerManager.HumanoidInstances[m_deathHumanoidNum].GetComponent<HumanoidInvincible>();
+        var humanoidInvisible = m_playerManager.HumanoidInstances[humanoidNum].GetComponent<HumanoidInvincible>();
         humanoidInvisible.StartInvincible();
     }
 

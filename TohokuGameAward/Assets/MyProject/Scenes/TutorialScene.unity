@@ -350,7 +350,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioSources.Array.data[0]
       value: 
-      objectReference: {fileID: 613945914}
+      objectReference: {fileID: 0}
     - target: {fileID: 1305688837136986673, guid: 1557a8f547e698449b8ab8af6cbd6c49,
         type: 3}
       propertyPath: Loop
@@ -421,12 +421,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1557a8f547e698449b8ab8af6cbd6c49, type: 3}
---- !u!82 &613945914 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 1305688837136986673, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-    type: 3}
-  m_PrefabInstance: {fileID: 613945913}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &704479033
 GameObject:
   m_ObjectHideFlags: 0
@@ -722,6 +716,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a5e27dc5c8fe94d8ed73588a8900a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1446952997 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3235052915936530967, guid: 6bc6bc98d8708684a9840d9848d79d44,
+    type: 3}
+  m_PrefabInstance: {fileID: 1446952995}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548d84e9b4bf4ca49975072c11d6c14c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1716933433
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +799,7 @@ MonoBehaviour:
   m_inputData: {fileID: 1716933437}
   m_imageChanger: {fileID: 1716933435}
   m_sceneChanger: {fileID: 1446952996}
-  m_fadeManager: {fileID: 1891934649}
+  m_screenFade: {fileID: 1446952997}
   m_soundEffectManager: {fileID: 2106877100}
 --- !u!114 &1716933437
 MonoBehaviour:
@@ -807,6 +813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3efc67d96a73b48bbc5120d98f949b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isOpreableKeyboard: 1
 --- !u!1 &1856890562
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,18 +916,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1891934649 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3986289350882196040, guid: 6bc6bc98d8708684a9840d9848d79d44,
-    type: 3}
-  m_PrefabInstance: {fileID: 1446952995}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29cf9663629aa1443a6618f0b163ab4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1992036745
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ TagManager:
   - Bomb
   - Detected
   - Humanoid
+  - Explosion
+  - Box
   layers:
   - Default
   - TransparentFX
