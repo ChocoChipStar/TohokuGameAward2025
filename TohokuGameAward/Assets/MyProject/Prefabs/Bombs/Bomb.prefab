@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3648145990431739353}
   - component: {fileID: 3349947653543477314}
-  - component: {fileID: 6347502762358484687}
+  - component: {fileID: -2577336913647756459}
   m_Layer: 12
   m_Name: Bomb
   m_TagString: Bomb
@@ -201,9 +201,9 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 56
   m_CollisionDetection: 0
---- !u!114 &6347502762358484687
+--- !u!114 &-2577336913647756459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,13 +212,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6015317307024279286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e03081ab1435ea44e847d4de22671ba9, type: 3}
+  m_Script: {fileID: 11500000, guid: bdfc115c3bf63bf4bb61f1cd1be7bf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rigidbody: {fileID: 3349947653543477314}
-  m_explosionPrefab: {fileID: 2083922939837167772, guid: 646cdb2680a787348a46574ecec74c36,
-    type: 3}
-  m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
+  m_scaleMin: 0.5
+  m_scaleMax: 4
+  m_scaleChangeTime: 2
+  m_scaleMaxTime: 1
+  m_bombCollider: {fileID: 8825022915557785972}
+  m_bombRigidbody: {fileID: 3349947653543477314}
+  m_isShoot: 0
+  m_isScaleChange: 0
+  m_bombData: {fileID: 11400000, guid: fd568c11a7a5bf049b5a8a5c682aae47, type: 2}
 --- !u!1 &7417143033453233692
 GameObject:
   m_ObjectHideFlags: 0

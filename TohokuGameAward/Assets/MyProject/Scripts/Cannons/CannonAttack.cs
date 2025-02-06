@@ -53,8 +53,6 @@ public class CannonAttack : MonoBehaviour
     {
         // 爆弾を生成
         var instance = Instantiate(m_bombPrefab, m_generatePosTrans.position, Quaternion.identity);
-        var bombMover = instance.GetComponent<BombMover>();
-        bombMover.SetShootPlayerNum(m_selfData.Number);
 
         // 爆弾発射SE再生
         SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Cannon);

@@ -103,6 +103,7 @@ public class DrawResultScoreText : MonoBehaviour
             m_bravoScoreText[m_currentDrawRound].SetText(CreateRandomValue().ToString());
             yield return null;
         }
+        m_currentDrawRound++;
     }
 
     /// <summary>

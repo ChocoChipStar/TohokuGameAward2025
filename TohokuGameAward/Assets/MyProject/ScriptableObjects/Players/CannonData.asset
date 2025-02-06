@@ -20,7 +20,9 @@ MonoBehaviour:
     m_movePosMaxY: 9
   m_paramData:
     m_moveSpeed: 5
-    m_shootSpeed: 25
+    m_shootSpeedMin: 4
+    m_shootSpeedMax: 20
+    m_shootChargeSpeed: 6
     m_shootAngle: 35
     m_magazineMax: 3
     m_reloadTime: 2.5

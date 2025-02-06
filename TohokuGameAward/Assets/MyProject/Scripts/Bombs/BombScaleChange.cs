@@ -21,6 +21,12 @@ public class BombScaleChange : MonoBehaviour
     private const float m_scaleConstant = 0.1f;
 
     [SerializeField]
+    private Collider m_bombCollider = null;
+
+    [SerializeField]
+    private Rigidbody m_bombRigidbody = null;
+
+    [SerializeField]
     private bool m_isShoot = false;
     [SerializeField]
     private bool m_isScaleChange = false;
@@ -45,35 +51,31 @@ public class BombScaleChange : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collider.gameObject.CompareTag("Box"))
-        {
-            m_isShoot = true;
-            m_isScaleChange = true;
-
-            BoxInExplosion(collider.gameObject);
-        }
-
-        var parent = collider.gameObject.transform.parent.gameObject;
-
-        var rigidbody = parent.GetComponentInParent<Rigidbody>();
-        if (rigidbody == null)
-        {
-            return;
-        }
-
-        var playerMover = parent.GetComponentInParent<HumanoidMover>();
-        if (playerMover == null)
-        {
-            return;
-        }
-
         m_isShoot = true;
         m_isScaleChange = true;
+        m_bombCollider.isTrigger = true;
+        m_bombRigidbody.useGravity = false;
+        m_bombRigidbody.velocity = Vector3.zero;
+    }
 
-        var blowMover = parent.GetComponentInParent<BlowMover>();
-        blowMover.BlowOfTarget(rigidbody, transform.position, collider, m_bombData, playerMover);
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Box"))
+        {
+            BoxInExplosion(other.gameObject);
+        }
+        var parent = other.gameObject.transform.gameObject;
+
+        var HumanoidMover = parent.GetComponentInParent<HumanoidMover>();
+        if (HumanoidMover == null)
+        {
+            return;
+        }
+
+        var HumanoidBlow = parent.GetComponentInParent<HumanoidBlow>();
+        HumanoidBlow.InitializeStartBlow(transform.position, HumanoidMover);
     }
 
     /// <summary>

@@ -30,7 +30,7 @@ public class BoxDestroy : MonoBehaviour
 
     private void DestroyBox()
     {
-        m_boxFactory.CreanBoxSlot(m_thisIndex);
+        Destroy(this.gameObject);
     }
 
     private bool IsOverBorderLine()

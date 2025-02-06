@@ -23,7 +23,9 @@ public class HumanoidMover : MonoBehaviour
     private HumanoidAnimator m_animator = null;
 
     private float m_movementValue = 0.0f;
+    private float m_stunExitTIme = 0.0f;
 
+    private bool m_isStun = false;
     private bool m_isOperable = true;
 
     private RaycastHit hitInfo;
@@ -37,6 +39,10 @@ public class HumanoidMover : MonoBehaviour
     {
         if(!m_isOperable)
         {
+            if (m_isStun)
+            {
+                CountStunTime();
+            }
             return;
         }
 
@@ -128,6 +134,19 @@ public class HumanoidMover : MonoBehaviour
         return false;
     }
 
+    private void CountStunTime()
+    {
+        if(m_stunExitTIme > 0.0f)
+        {
+            m_stunExitTIme -= Time.deltaTime;
+        }
+        else
+        {
+            m_isStun = false;
+            SetOperable(true);
+        }
+    }
+
     /// <summary>
     /// 操作可能状態の指定します
     /// </summary>
@@ -145,5 +164,12 @@ public class HumanoidMover : MonoBehaviour
         m_rigidbody.isKinematic = !isActive;
 
         m_collider.enabled = isActive;
+    }
+
+    public void StunStart(float stun)
+    {
+        m_stunExitTIme = stun;
+        m_isOperable = false;
+        m_isStun = true;
     }
 }

@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482823e2ff864294c917c4ddc7a7a439, type: 3}
   m_Name: ResultTextData
   m_EditorClassIdentifier: 
-  m_effectData:
-    m_waitForNextRound:
-    - 1
-    - 1
-    m_revealDelay:
-    - 1
-    - 1
-    - 2
-    m_renderWinnerDelay: 2
   m_paramsData:
-    m_randomMin: 9999
-    m_randomMax: 0
+    m_shuffleValueMin: 0
+    m_shuffleValueMax: 999
+    m_drawNextRoundDelayTime:
+    - 3
+    - 3
+    - 3
+    m_scoreShuffleTime:
+    - 0
+    - 0
+    - 0
+    m_drawWinnerUIDelayTime: 1

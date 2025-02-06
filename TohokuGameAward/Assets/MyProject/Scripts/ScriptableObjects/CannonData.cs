@@ -35,8 +35,14 @@ public class CannonData : ScriptableObject
         [SerializeField, Header("移動速度")]
         private float m_moveSpeed = 0.0f;
 
-        [SerializeField, Header("爆弾の発射速度")]
-        private float m_shootSpeed = 0.0f;
+        [SerializeField, Header("爆弾の最小発射速度")]
+        private float m_shootSpeedMin = 0.0f;
+
+        [SerializeField, Header("爆弾の最大発射速度")]
+        private float m_shootSpeedMax = 0.0f;
+
+        [SerializeField, Header("爆弾の飛距離増加速度")]
+        private float m_shootChargeSpeed = 0.0f;
 
         [SerializeField, Header("爆弾の発射角度")]
         private float m_shootAngle = 0.0f;
@@ -51,7 +57,9 @@ public class CannonData : ScriptableObject
         private float m_cookingOffTime = 0.0f;
 
         public float MoveSpeed { get { return m_moveSpeed; } private set { m_moveSpeed = value; } }
-        public float ShootSpeed { get { return m_shootSpeed; } private set { m_shootSpeed = value; } }
+        public float ShootSpeedMin { get { return m_shootSpeedMin; } private set { m_shootSpeedMin = value; } }
+        public float ShootSpeedMax { get { return m_shootSpeedMax; } private set { m_shootSpeedMax = value; } }
+        public float ShootChargeSpeed { get { return m_shootChargeSpeed; } private set { m_shootChargeSpeed = value; } }
         public float ShootAngle { get { return m_shootAngle; } private set { m_shootAngle = value; } }
         public int MagazineMax { get { return m_magazineMax; } private set { m_magazineMax = value; } }
         public float ReloadTime { get { return m_reloadTime; } private set { m_reloadTime = value; } }
