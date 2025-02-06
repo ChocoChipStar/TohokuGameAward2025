@@ -39,9 +39,10 @@ public class StunByBox : MonoBehaviour
         }
 
         HumanoidMover hm = stanPlayer.GetComponent<HumanoidMover>();
+        hm.StunStart(m_stanTime);
         m_humanoidMover.Add(hm);
         m_currentStanTime.Add(m_stanTime);
-        hm.SetOperable(false);
+        //hm.SetOperable(false);
     }
 
     private void StanTimer()

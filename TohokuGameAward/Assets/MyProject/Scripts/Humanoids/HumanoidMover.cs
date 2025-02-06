@@ -138,7 +138,7 @@ public class HumanoidMover : MonoBehaviour
     {
         if(m_stunExitTIme > 0.0f)
         {
-            m_stunExitTIme += Time.deltaTime;
+            m_stunExitTIme -= Time.deltaTime;
         }
         else
         {
@@ -166,9 +166,10 @@ public class HumanoidMover : MonoBehaviour
         m_collider.enabled = isActive;
     }
 
-    public void StunEnd(float stun)
+    public void StunStart(float stun)
     {
         m_stunExitTIme = stun;
+        m_isOperable = false;
         m_isStun = true;
     }
 }
