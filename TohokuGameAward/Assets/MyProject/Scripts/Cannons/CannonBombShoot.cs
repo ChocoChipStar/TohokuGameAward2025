@@ -20,13 +20,17 @@ public class CannonBombShoot : MonoBehaviour
     private GameObject m_bombrefab = null;
 
     [SerializeField]
-    private Slider m_slider = null;
+    private Slider m_gaugeSlider = null;
+
+    [SerializeField]
+    private Image m_gaugeImage = null;
 
     [SerializeField,Header("発射の強さ")]
     private float m_shootPower = 0.0f;
 
     [SerializeField]
     private float m_bombStockTime = 0.0f;
+
     [SerializeField]
     private float m_cannonCookingOffTime = 0.0f;
 
@@ -54,7 +58,8 @@ public class CannonBombShoot : MonoBehaviour
             return;
         }
 
-        m_slider.value = m_bombStockTime / m_cannonData.Params.MagazineMax;
+        m_gaugeSlider.value = m_bombStockTime / m_cannonData.Params.MagazineMax;
+        ChangeGaugeColor();
 
         if (m_cannonCookingOffTime < 1.0f)
         {
@@ -103,6 +108,27 @@ public class CannonBombShoot : MonoBehaviour
         IsShoot = false;
         m_cannonCookingOffTime = 0.0f;
         m_bombStockTime--;
+    }
+
+    private void ChangeGaugeColor()
+    {
+        if (m_bombStockTime >= m_cannonData.Params.MagazineMax)
+        {
+            m_gaugeImage.color = Color.blue;
+        }
+        else if (m_bombStockTime >= m_cannonData.Params.MagazineMax - 1.0f)
+        {
+            m_gaugeImage.color = Color.green;
+        }
+        else if (m_bombStockTime >= m_cannonData.Params.MagazineMax - 2.0f)
+        {
+            m_gaugeImage.color = Color.yellow;
+        }
+        else
+        {
+            m_gaugeImage.color = Color.red;
+        }
+        
     }
 
     /// <summary>
