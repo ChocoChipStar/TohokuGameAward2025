@@ -16,3 +16,14 @@ MonoBehaviour:
     m_colliderActivateDelayTime: 0.1
     m_durationFrameCount: 1
     m_effectEndTime: 2
+  m_blowData:
+    m_decelerationStartTime: 3.2
+    m_decelerationTime: 1.5
+    m_cantInputTime: 1
+    m_decelerationRate: 0.5
+  m_effectData:
+    m_scaleMin: 0.5
+    m_scaleMax: 16
+    m_scaleChangeTime: 4
+    m_scaleMaxTime: 2
+    m_effectEndTime: 1

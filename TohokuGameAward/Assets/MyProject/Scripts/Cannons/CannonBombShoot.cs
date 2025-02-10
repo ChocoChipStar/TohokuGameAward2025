@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using static InputData;
 
 public class CannonBombShoot : MonoBehaviour
@@ -17,6 +18,9 @@ public class CannonBombShoot : MonoBehaviour
 
     [SerializeField]
     private GameObject m_bombrefab = null;
+
+    [SerializeField]
+    private Slider m_slider = null;
 
     [SerializeField,Header("発射の強さ")]
     private float m_shootPower = 0.0f;
@@ -49,6 +53,8 @@ public class CannonBombShoot : MonoBehaviour
         {
             return;
         }
+
+        m_slider.value = m_bombStockTime / m_cannonData.Params.MagazineMax;
 
         if (m_cannonCookingOffTime < 1.0f)
         {
