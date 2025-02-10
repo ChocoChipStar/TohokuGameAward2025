@@ -1,22 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BombScaleChange : MonoBehaviour
+public class BombColliderScaleChange : MonoBehaviour
 {
-    [SerializeField,Header("通常サイズ")]
-    private float m_scaleMin = 0.0f;
-
-    [SerializeField,Header("最大サイズ")]
-    private float m_scaleMax = 0.0f;
-
-    [SerializeField,Header("最大サイズまで大きくなる時間")]
-    private float m_scaleChangeTime = 0.0f;
-
-    [SerializeField, Header("最大サイズを維持する時間")]
-    private float m_scaleMaxTime = 0.0f;
-
     [SerializeField]
-    private ExplosionData m_experienceData = null;
+    private ExplosionData m_explosionData = null;
 
     [SerializeField]
     private GameObject m_explosionEffect = null;
@@ -28,13 +16,13 @@ public class BombScaleChange : MonoBehaviour
     private Rigidbody m_bombRigidbody = null;
 
     [SerializeField]
+    private SkinnedMeshRenderer m_bombMeshRenderer = null;
+
+    [SerializeField]
     private bool m_isShoot = false;
 
     [SerializeField]
     private bool m_isScaleChange = false;
-
-    [SerializeField]
-    BombData m_bombData = null;
 
     private const float m_scaleConstant = 0.1f;
 
@@ -80,8 +68,9 @@ public class BombScaleChange : MonoBehaviour
         m_bombCollider.isTrigger = true;
         m_bombRigidbody.useGravity = false;
         m_bombRigidbody.velocity = Vector3.zero;
+        m_bombMeshRenderer.enabled = false;
+        this.transform.localScale = new Vector3(m_explosionData.Effect.ScaleMin, m_explosionData.Effect.ScaleMin, m_scaleConstant);
         var bomb = Instantiate(m_explosionEffect, transform.position, Quaternion.identity);
-
     }
 
     /// <summary>
@@ -92,10 +81,10 @@ public class BombScaleChange : MonoBehaviour
         if (m_isScaleChange)
         {
             var scale = transform.localScale.x;
-            scale += (m_scaleMax / m_scaleChangeTime) * Time.deltaTime;
+            scale += (m_explosionData.Effect.ScaleMax / m_explosionData.Effect.ScaleChangeTime) * Time.deltaTime;
             this.transform.localScale = new Vector3(scale, scale, m_scaleConstant);
 
-            if(scale >= m_scaleMax)
+            if(scale >= m_explosionData.Effect.ScaleMax)
             {
                 m_isScaleChange = false;
             }
@@ -103,7 +92,7 @@ public class BombScaleChange : MonoBehaviour
         else
         {
            ExplosionDestructor();
-           Destroy(this.gameObject, m_scaleMaxTime);
+           Destroy(this.gameObject, m_explosionData.Effect.ScaleMaxTime);
         }
     }
 

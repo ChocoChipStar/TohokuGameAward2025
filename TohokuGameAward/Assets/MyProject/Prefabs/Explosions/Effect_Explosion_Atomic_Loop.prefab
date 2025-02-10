@@ -9796,6 +9796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1731039588320534459}
+  - component: {fileID: 6236039116469975957}
   m_Layer: 0
   m_Name: Effect_Explosion_Atomic_Loop
   m_TagString: Untagged
@@ -9819,6 +9820,19 @@ Transform:
   - {fileID: 4548843671464815471}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6236039116469975957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6714553188770134669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abe8fb624e4a21c41b21e36720ac8e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
 --- !u!1 &7562657030732588824
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,8 +9,12 @@ public class ExplosionData : ScriptableObject
     [SerializeField]
     private BlowData m_blowData = new BlowData();
 
+    [SerializeField]
+    private EffectData m_effectData = null;
+
     public ParamsData Params { get {  return m_paramsData; } private set { value = m_paramsData; } }
     public BlowData Blow { get { return m_blowData; } private set { value = m_blowData; } }
+    public EffectData Effect { get { return m_effectData; } private set { m_effectData = value; } }
 
     [System.Serializable]
     public class ParamsData
