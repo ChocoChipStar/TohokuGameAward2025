@@ -20,11 +20,15 @@ public class DrawResultScoreText : MonoBehaviour
 
     [SerializeField]
     private Image m_winnerImage = null;
+    [SerializeField]
+    private Image m_drawImage = null;
 
     [SerializeField]
     private Sprite m_alphaWinnerSprite = null;
     [SerializeField]
     private Sprite m_bravoWinnerSprite = null;
+    [SerializeField]
+    private Sprite m_drawSprite = null;
 
     private int m_alphaTotalScore = 0;
     private int m_bravoTotalScore = 0;
@@ -35,7 +39,6 @@ public class DrawResultScoreText : MonoBehaviour
 
     private int[] m_alphaScore = new int[(int)RoundManager.RoundState.Max];
     private int[] m_bravoScore = new int[(int)RoundManager.RoundState.Max];
-
     public bool IsResultEnded { get { return m_isResultEnded; } private set { m_isResultEnded = value; } }
 
     private void Start()
@@ -121,12 +124,20 @@ public class DrawResultScoreText : MonoBehaviour
         if (m_alphaTotalScore > m_bravoTotalScore)
         {
             m_winnerImage.sprite = m_alphaWinnerSprite;
+            m_winnerImage.gameObject.SetActive(true);
         }
-        else
+        if(m_bravoTotalScore > m_alphaTotalScore)
         {
-            m_winnerImage.sprite = m_bravoWinnerSprite; 
+            m_winnerImage.sprite = m_bravoWinnerSprite;
+            m_winnerImage.gameObject.SetActive(true);
         }
-        m_winnerImage.gameObject.SetActive(true);
+
+        if(m_alphaTotalScore == m_bravoTotalScore)
+        {
+            m_drawImage.sprite = m_drawSprite;
+            m_drawImage.gameObject.SetActive(true);
+        }
+ 
     }
 
     private int TotalScore(int[] Score)
