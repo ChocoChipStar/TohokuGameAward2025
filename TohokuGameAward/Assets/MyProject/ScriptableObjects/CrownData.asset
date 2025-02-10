@@ -18,20 +18,22 @@ MonoBehaviour:
   - {fileID: 8982680373025810337, guid: 7a9c5877acb9bd54e87a76ece2ad501b, type: 3}
   m_posData:
     m_generatePos:
-    - {x: 4, y: 3, z: 0}
-    - {x: 3, y: 3, z: 0}
-    - {x: 2, y: 3, z: 0}
-    - {x: 1, y: 3, z: 0}
-    - {x: 0, y: 3, z: 0}
-    - {x: -1, y: 3, z: 0}
-    - {x: -2, y: 3, z: 0}
-    - {x: -3, y: 3, z: 0}
-    - {x: -4, y: 3, z: 0}
+    - {x: 0, y: 0, z: 0}
+    - {x: -6.5, y: -2, z: 0}
+    - {x: 6.5, y: -2, z: 0}
+    - {x: -12, y: -2, z: 0}
+    - {x: 12, y: -2, z: 0}
+    - {x: -9.5, y: 6.5, z: 0}
+    - {x: 9.5, y: 6.5, z: 0}
+    - {x: 0, y: 4, z: 0}
+    - {x: 0, y: 9, z: 0}
+    - {x: -9.5, y: 4, z: 0}
+    - {x: 9.5, y: 4, z: 0}
   m_paramsData:
-    m_generateCountOneTime: 6
+    m_generateCountOneTime: 5
     m_generateSpan: 3
-    m_lifeTime: 3
+    m_lifeTime: 20
   m_rateData:
-    m_silverRate: 65
-    m_goldRate: 30
+    m_silverRate: 60
+    m_goldRate: 35
     m_diamondRate: 5

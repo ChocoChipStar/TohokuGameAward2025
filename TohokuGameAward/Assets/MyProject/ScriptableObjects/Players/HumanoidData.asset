@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_positionData:
     m_startPos:
-    - {x: -3, y: 0}
-    - {x: 3, y: 0}
+    - {x: -7, y: 4}
+    - {x: 7, y: 4}
     m_respawnPos:
-    - {x: -3, y: 0}
-    - {x: 3, y: 0}
+    - {x: -7, y: 4}
+    - {x: 7, y: 4}
   m_paramsData:
-    m_moveSpeed: 3.5
-    m_powerJump: 11
+    m_moveSpeed: 2
+    m_powerJump: 9
     m_rightBodyAngle: 140
     m_leftBodyAngle: 230
-    m_invincibleTime: 5
+    m_invincibleTime: 3
     m_invincibleSpeed: 8
-    m_respwanTime: 3
-    m_blowSpeed: 20
+    m_respwanTime: 6
+    m_blowSpeed: 30

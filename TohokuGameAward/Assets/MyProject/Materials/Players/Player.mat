@@ -44,7 +44,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _1st_ShadeMap:
-        m_Texture: {fileID: 2800000, guid: 68c4c0c050f3a424ca5349d049d4a145, type: 3}
+        m_Texture: {fileID: 2800000, guid: e9c3104f0b8725a42b45f8068e95a515, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _2nd_ShadeMap:
@@ -140,7 +140,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: b993914558a480d4bb0b20c9bc7b8562, type: 3}
+        m_Texture: {fileID: 2800000, guid: 23ec1925177ccdd4c836740e0fa9ec61, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -414,7 +414,7 @@ Material:
     - _OcclusionStrength: 1
     - _Offset_X_Axis_BLD: -0.05
     - _Offset_Y_Axis_BLD: 0.09
-    - _Offset_Z: 9
+    - _Offset_Z: 0
     - _OutlineOverridden: 0
     - _OutlineVisible: 1
     - _Outline_Width: 100

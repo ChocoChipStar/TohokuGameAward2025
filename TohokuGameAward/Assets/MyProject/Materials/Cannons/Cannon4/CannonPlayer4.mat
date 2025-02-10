@@ -31,7 +31,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _1st_ShadeMap:
-        m_Texture: {fileID: 2800000, guid: b711acf9e0a671c40bc36b423635e8c8, type: 3}
+        m_Texture: {fileID: 2800000, guid: ca5704a6fa5560b40a5f35d548c82f96, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _2nd_ShadeMap:
@@ -127,7 +127,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 113d45f89ce89954cab6a6515905e6bc, type: 3}
+        m_Texture: {fileID: 2800000, guid: f76b1627f87eebd4c93b76368c8aa187, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:

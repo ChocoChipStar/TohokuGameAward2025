@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_positionData:
     m_startPos:
-    - {x: -14, y: 3.3}
-    - {x: 14, y: 3.3}
+    - {x: -15.5, y: 3.3}
+    - {x: 15.5, y: 3.3}
     m_movePosMinY: -2
-    m_movePosMaxY: 9
+    m_movePosMaxY: 10
   m_paramData:
-    m_moveSpeed: 5
-    m_shootSpeedMin: 4
-    m_shootSpeedMax: 20
-    m_shootChargeSpeed: 6
-    m_shootAngle: 35
+    m_moveSpeed: 7
+    m_shootSpeedMin: 3
+    m_shootSpeedMax: 16
+    m_shootChargeSpeed: 8
+    m_shootAngle: 30
     m_magazineMax: 3
-    m_reloadTime: 2.5
-    m_cookingOffTime: 1
+    m_reloadTime: 3
+    m_cookingOffTime: 0.5

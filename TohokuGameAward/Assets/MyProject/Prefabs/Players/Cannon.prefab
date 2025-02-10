@@ -1459,8 +1459,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3926324051095577228}
   - {fileID: 6276369465018195126}
@@ -1517,6 +1517,8 @@ MonoBehaviour:
   m_bombrefab: {fileID: 6015317307024279286, guid: 31daebd531dbe3741ab98ddb0502a6b2,
     type: 3}
   m_shootPower: 4
+  m_bombStockTime: 0
+  m_cannonCookingOffTime: 0
 --- !u!114 &3337039001839828932
 MonoBehaviour:
   m_ObjectHideFlags: 0

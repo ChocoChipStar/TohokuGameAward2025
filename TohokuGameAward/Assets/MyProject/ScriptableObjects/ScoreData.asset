@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ScoreData
   m_EditorClassIdentifier: 
   m_paramsData:
-    m_hitHumanoidScore: 100
-    m_deathScore: -30
-    m_silverScore: 10
-    m_goldScore: 30
-    m_diamondScore: 50
+    m_hitHumanoidScore: 140
+    m_deathScore: -50
+    m_silverScore: 30
+    m_goldScore: 60
+    m_diamondScore: 150
