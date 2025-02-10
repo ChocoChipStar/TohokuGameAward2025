@@ -19,10 +19,10 @@ public class BombColliderScaleChange : MonoBehaviour
     private SkinnedMeshRenderer m_bombMeshRenderer = null;
 
     [SerializeField]
-    private bool m_isShoot = false;
+    private BombEffectPlayer m_bombEffectPlayer = null;
 
     [SerializeField]
-    private bool m_isScaleChange = false;
+    private bool m_isShoot = false;
 
     private const float m_scaleConstant = 0.1f;
 
@@ -34,16 +34,19 @@ public class BombColliderScaleChange : MonoBehaviour
     {
         if (m_isShoot)
         {
-            ScaleChange();
+            GetExplosion();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        StartEffect();
+        if (!m_isShoot)
+        {
+            StartEffect();
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void HitPlayer(Collider other)
     {
         if (other.gameObject.CompareTag("Box"))
         {
@@ -64,35 +67,27 @@ public class BombColliderScaleChange : MonoBehaviour
     private void StartEffect()
     {
         m_isShoot = true;
-        m_isScaleChange = true;
-        m_bombCollider.isTrigger = true;
+        m_bombCollider.enabled = false;
         m_bombRigidbody.useGravity = false;
         m_bombRigidbody.velocity = Vector3.zero;
         m_bombMeshRenderer.enabled = false;
         this.transform.localScale = new Vector3(m_explosionData.Effect.ScaleMin, m_explosionData.Effect.ScaleMin, m_scaleConstant);
-        var bomb = Instantiate(m_explosionEffect, transform.position, Quaternion.identity);
+        var bomb = Instantiate(m_explosionEffect, transform.position, Quaternion.identity, this.transform);
+        m_bombEffectPlayer = bomb.GetComponent<BombEffectPlayer>();
     }
 
     /// <summary>
     /// 何かにぶつかると徐々に大きくなり消える。
     /// </summary>
-    private void ScaleChange()
+    private void GetExplosion()
     {
-        if (m_isScaleChange)
+        if (m_bombEffectPlayer.IsVanish)
         {
-            var scale = transform.localScale.x;
-            scale += (m_explosionData.Effect.ScaleMax / m_explosionData.Effect.ScaleChangeTime) * Time.deltaTime;
-            this.transform.localScale = new Vector3(scale, scale, m_scaleConstant);
-
-            if(scale >= m_explosionData.Effect.ScaleMax)
-            {
-                m_isScaleChange = false;
-            }
+            ExplosionDestructor();
         }
-        else
+        if (m_bombEffectPlayer.IsDestroy)
         {
-           ExplosionDestructor();
-           Destroy(this.gameObject, m_explosionData.Effect.ScaleMaxTime);
+            Destroy(this.gameObject, m_explosionData.Effect.ScaleMaxTime);
         }
     }
 
