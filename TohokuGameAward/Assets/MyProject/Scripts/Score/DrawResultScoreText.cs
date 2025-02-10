@@ -120,11 +120,11 @@ public class DrawResultScoreText : MonoBehaviour
         yield return new WaitForSeconds(m_resultTextData.Params.DrawWinnerUIDelayTime);
         if (m_alphaTotalScore > m_bravoTotalScore)
         {
-            m_winnerImage.sprite = m_bravoWinnerSprite;
+            m_winnerImage.sprite = m_alphaWinnerSprite;
         }
         else
         {
-            m_winnerImage.sprite = m_alphaWinnerSprite;
+            m_winnerImage.sprite = m_bravoWinnerSprite; 
         }
         m_winnerImage.gameObject.SetActive(true);
     }
