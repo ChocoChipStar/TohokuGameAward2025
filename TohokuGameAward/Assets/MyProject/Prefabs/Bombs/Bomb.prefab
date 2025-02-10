@@ -107,8 +107,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b09e606c4dfe37f41964d42b7e1f9394, type: 2}
-  - {fileID: 2100000, guid: 013f0b26d1b4b004e93b4633a938b14e, type: 2}
+  - {fileID: 2100000, guid: b60ca983d58bf6a4ba08981f5ac0eea0, type: 2}
+  - {fileID: 2100000, guid: b60ca983d58bf6a4ba08981f5ac0eea0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -170,7 +170,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 891355906076208579}
@@ -215,15 +215,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdfc115c3bf63bf4bb61f1cd1be7bf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_scaleMin: 0.5
-  m_scaleMax: 10
-  m_scaleChangeTime: 3
-  m_scaleMaxTime: 1.5
+  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
+  m_explosionEffect: {fileID: 6714553188770134669, guid: 1bac62caa7df6b743a05685a500a59f9,
+    type: 3}
   m_bombCollider: {fileID: 8825022915557785972}
   m_bombRigidbody: {fileID: 3349947653543477314}
+  m_bombMeshRenderer: {fileID: 1701948448197186486}
+  m_bombEffectPlayer: {fileID: 0}
   m_isShoot: 0
-  m_isScaleChange: 0
-  m_bombData: {fileID: 11400000, guid: fd568c11a7a5bf049b5a8a5c682aae47, type: 2}
 --- !u!1 &7417143033453233692
 GameObject:
   m_ObjectHideFlags: 0

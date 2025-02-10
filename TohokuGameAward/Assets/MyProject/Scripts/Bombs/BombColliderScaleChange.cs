@@ -1,24 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class BombScaleChange : MonoBehaviour
+public class BombColliderScaleChange : MonoBehaviour
 {
-   // [SerializeField]
-   // private BombData m_bombData = null;
+    [SerializeField]
+    private ExplosionData m_explosionData = null;
 
-    [SerializeField,Header("通常サイズ")]
-    private float m_scaleMin = 0.0f;
-
-    [SerializeField,Header("最大サイズ")]
-    private float m_scaleMax = 0.0f;
-
-    [SerializeField,Header("最大サイズまで大きくなる時間")]
-    private float m_scaleChangeTime = 0.0f;
-
-    [SerializeField, Header("最大サイズを維持する時間")]
-    private float m_scaleMaxTime = 0.0f;
-
-    private const float m_scaleConstant = 0.1f;
+    [SerializeField]
+    private GameObject m_explosionEffect = null;
 
     [SerializeField]
     private Collider m_bombCollider = null;
@@ -27,40 +16,37 @@ public class BombScaleChange : MonoBehaviour
     private Rigidbody m_bombRigidbody = null;
 
     [SerializeField]
-    private bool m_isShoot = false;
-    [SerializeField]
-    private bool m_isScaleChange = false;
+    private SkinnedMeshRenderer m_bombMeshRenderer = null;
 
     [SerializeField]
-    BombData m_bombData = null;
+    private BombEffectPlayer m_bombEffectPlayer = null;
+
+    [SerializeField]
+    private bool m_isShoot = false;
+
+    private const float m_scaleConstant = 0.1f;
 
     private List<BoxFlyController> m_boxController = new List<BoxFlyController>();
 
     private List<ObjectShake> m_objectShake =new List<ObjectShake>();
 
-    private void Start()
-    {
-        this.transform.localScale = new Vector3(m_scaleMin, m_scaleMin, m_scaleConstant);
-    }
-
     private void Update()
     {
         if (m_isShoot)
         {
-            ScaleChange();
+            GetExplosion();
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        m_isShoot = true;
-        m_isScaleChange = true;
-        m_bombCollider.isTrigger = true;
-        m_bombRigidbody.useGravity = false;
-        m_bombRigidbody.velocity = Vector3.zero;
+        if (!m_isShoot)
+        {
+            StartEffect();
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void HitPlayer(Collider other)
     {
         if (other.gameObject.CompareTag("Box"))
         {
@@ -78,26 +64,30 @@ public class BombScaleChange : MonoBehaviour
         HumanoidBlow.InitializeStartBlow(transform.position, HumanoidMover);
     }
 
+    private void StartEffect()
+    {
+        m_isShoot = true;
+        m_bombCollider.enabled = false;
+        m_bombRigidbody.useGravity = false;
+        m_bombRigidbody.velocity = Vector3.zero;
+        m_bombMeshRenderer.enabled = false;
+        this.transform.localScale = new Vector3(m_explosionData.Effect.ScaleMin, m_explosionData.Effect.ScaleMin, m_scaleConstant);
+        var bomb = Instantiate(m_explosionEffect, transform.position, Quaternion.identity, this.transform);
+        m_bombEffectPlayer = bomb.GetComponent<BombEffectPlayer>();
+    }
+
     /// <summary>
     /// 何かにぶつかると徐々に大きくなり消える。
     /// </summary>
-    private void ScaleChange()
+    private void GetExplosion()
     {
-        if (m_isScaleChange)
+        if (m_bombEffectPlayer.IsVanish)
         {
-            var scale = transform.localScale.x;
-            scale += (m_scaleMax / m_scaleChangeTime) * Time.deltaTime;
-            this.transform.localScale = new Vector3(scale, scale, m_scaleConstant);
-
-            if(scale >= m_scaleMax)
-            {
-                m_isScaleChange = false;
-            }
+            ExplosionDestructor();
         }
-        else
+        if (m_bombEffectPlayer.IsDestroy)
         {
-           ExplosionDestructor();
-           Destroy(this.gameObject, m_scaleMaxTime);
+            Destroy(this.gameObject, m_explosionData.Effect.ScaleMaxTime);
         }
     }
 
