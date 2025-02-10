@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class BombScaleChange : MonoBehaviour
 {
-   // [SerializeField]
-   // private BombData m_bombData = null;
-
     [SerializeField,Header("通常サイズ")]
     private float m_scaleMin = 0.0f;
 
@@ -18,7 +15,11 @@ public class BombScaleChange : MonoBehaviour
     [SerializeField, Header("最大サイズを維持する時間")]
     private float m_scaleMaxTime = 0.0f;
 
-    private const float m_scaleConstant = 0.1f;
+    [SerializeField]
+    private ExplosionData m_experienceData = null;
+
+    [SerializeField]
+    private GameObject m_explosionEffect = null;
 
     [SerializeField]
     private Collider m_bombCollider = null;
@@ -28,20 +29,18 @@ public class BombScaleChange : MonoBehaviour
 
     [SerializeField]
     private bool m_isShoot = false;
+
     [SerializeField]
     private bool m_isScaleChange = false;
 
     [SerializeField]
     BombData m_bombData = null;
 
+    private const float m_scaleConstant = 0.1f;
+
     private List<BoxFlyController> m_boxController = new List<BoxFlyController>();
 
     private List<ObjectShake> m_objectShake =new List<ObjectShake>();
-
-    private void Start()
-    {
-        this.transform.localScale = new Vector3(m_scaleMin, m_scaleMin, m_scaleConstant);
-    }
 
     private void Update()
     {
@@ -53,11 +52,7 @@ public class BombScaleChange : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        m_isShoot = true;
-        m_isScaleChange = true;
-        m_bombCollider.isTrigger = true;
-        m_bombRigidbody.useGravity = false;
-        m_bombRigidbody.velocity = Vector3.zero;
+        StartEffect();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -76,6 +71,17 @@ public class BombScaleChange : MonoBehaviour
 
         var HumanoidBlow = parent.GetComponentInParent<HumanoidBlow>();
         HumanoidBlow.InitializeStartBlow(transform.position, HumanoidMover);
+    }
+
+    private void StartEffect()
+    {
+        m_isShoot = true;
+        m_isScaleChange = true;
+        m_bombCollider.isTrigger = true;
+        m_bombRigidbody.useGravity = false;
+        m_bombRigidbody.velocity = Vector3.zero;
+        var bomb = Instantiate(m_explosionEffect, transform.position, Quaternion.identity);
+
     }
 
     /// <summary>
