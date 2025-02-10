@@ -18,12 +18,18 @@ public class TitleManager : MonoBehaviour
 
     private void Update()
     {
-        if(Gamepad.current == null)
+        if (m_isFinished && !m_isGetStart)
+        {
+            m_isGetStart = true;
+            GoNextScene();
+        }
+
+        if (Gamepad.current == null)
         {
             return;
         }
 
-        if(!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Title_Idle"))
+        if (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Title_Idle"))
         {
             return;
         }
@@ -35,10 +41,6 @@ public class TitleManager : MonoBehaviour
             if(wasPressedStartButton)
             {
                 m_animator.SetBool("wasPressedStartBottom", true);
-            }
-            if (m_isFinished)
-            {
-                GoNextScene();
             }
         }
     }

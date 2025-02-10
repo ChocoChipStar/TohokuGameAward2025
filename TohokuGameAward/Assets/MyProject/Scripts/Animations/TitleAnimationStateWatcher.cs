@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 
-public class TitleAnimationStateWatcher : StateMachineBehaviour
+public class TitleAnimationStateWatcher : MonoBehaviour
 {
-    TitleManager m_titleManager = null;
-    // アニメーションが終了したときに呼ばれる
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    [SerializeField]
+    private TitleManager m_titleManager = null;
+
+    [SerializeField]
+    private Animator m_animator = null;
+   
+
+    public void SetIsFinished()
     {
-        m_titleManager = animator.gameObject.GetComponent<TitleManager>();
         m_titleManager.SetIsFinished();
     }
 }
