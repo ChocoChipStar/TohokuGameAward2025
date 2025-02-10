@@ -26,7 +26,8 @@ public class CannonBombShoot : MonoBehaviour
     [SerializeField]
     private float m_cannonCookingOffTime = 0.0f;
 
-    bool m_isShoot = false;
+    private bool m_isShoot = false;
+    private bool m_isOperable = false;
 
     private Vector3 m_shootInitialPosition = Vector3.zero;
     private Vector3 m_shootVelocity = Vector3.zero;
@@ -44,6 +45,11 @@ public class CannonBombShoot : MonoBehaviour
 
     private void Update()
     {
+        if (!m_isOperable)
+        {
+            return;
+        }
+
         if (m_cannonCookingOffTime < 1.0f)
         {
             m_cannonCookingOffTime += Time.deltaTime;
@@ -109,5 +115,10 @@ public class CannonBombShoot : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void SetOperable(bool isEnabled)
+    {
+        m_isOperable = isEnabled;
     }
 }
