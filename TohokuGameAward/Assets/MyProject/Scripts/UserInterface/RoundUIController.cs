@@ -174,8 +174,8 @@ public class RoundUIController : MonoBehaviour
         var bravoNum = TeamGenerator.BravoTeamNumber;
         for (int i = 0; i < TeamGenerator.MembersCount; i++)
         {
-            m_faceIconImage[i].sprite = m_faceIconSprite[alphaNum[i]];
-            m_faceIconImage[i + TeamGenerator.MembersCount].sprite = m_faceIconSprite[bravoNum[i]];
+            m_faceIconImage[i].sprite = m_faceIconSprite[bravoNum[i]]; 
+            m_faceIconImage[i + TeamGenerator.MembersCount].sprite = m_faceIconSprite[alphaNum[i]];
         }
     }
 

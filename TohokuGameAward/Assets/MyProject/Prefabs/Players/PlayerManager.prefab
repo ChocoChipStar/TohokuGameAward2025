@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_playerManager: {fileID: 2561843527547026999}
+  m_bombManager: {fileID: 0}
 --- !u!1 &8274386607292376071
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +99,6 @@ MonoBehaviour:
     type: 3}
   m_humanoidData: {fileID: 11400000, guid: 7e148fa8c794c67499b090e2f28c86c7, type: 2}
   m_cannonData: {fileID: 11400000, guid: 39375f89d5f837443858936920f1c9bc, type: 2}
-  m_teamGenerator: {fileID: 3223083419896689900}
   m_humanoidParent: {fileID: 7724443315217274875}
   m_cannonParent: {fileID: 66322358352787683}
 --- !u!114 &3223083419896689900
@@ -175,4 +175,5 @@ MonoBehaviour:
   m_effectManager: {fileID: 0}
   m_soundEffectManager: {fileID: 0}
   m_humanoidData: {fileID: 11400000, guid: 7e148fa8c794c67499b090e2f28c86c7, type: 2}
+  m_scoreData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
   m_stageData: {fileID: 11400000, guid: 6bcff8c8c9a207641a3d60b111342677, type: 2}
