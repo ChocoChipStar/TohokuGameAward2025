@@ -14680,6 +14680,7 @@ GameObject:
   - component: {fileID: 6094230870891432850}
   - component: {fileID: -2500016358557444083}
   - component: {fileID: 1675968794172524675}
+  - component: {fileID: 6360064305028465340}
   m_Layer: 0
   m_Name: GoldCrown
   m_TagString: Untagged
@@ -14788,6 +14789,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
   m_type: 1
+--- !u!114 &6360064305028465340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168489982057890336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3988798068addc49b504bcefa9bcf3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_crownData: {fileID: 11400000, guid: dbb665d346346c840ab6a184f3bbe47d, type: 2}
+  m_blinkSpeed: 0.3
+  m_blinkStartTime: 18
 --- !u!1 &5594196332869751743
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,6 @@ MonoBehaviour:
   m_prefabs:
   - {fileID: 6779122977183572042, guid: cb74ff0f4d36f7d4fab4ecf2b1b8c446, type: 3}
   - {fileID: 5168489982057890336, guid: e86fe1e8b74ba5542986ecea2c4f5d17, type: 3}
-  - {fileID: 8982680373025810337, guid: 7a9c5877acb9bd54e87a76ece2ad501b, type: 3}
   m_posData:
     m_generatePos:
     - {x: 0, y: 0, z: 0}
@@ -35,5 +34,5 @@ MonoBehaviour:
     m_lifeTime: 20
   m_rateData:
     m_silverRate: 60
-    m_goldRate: 35
-    m_diamondRate: 5
+    m_goldRate: 40
+    m_diamondRate: 0

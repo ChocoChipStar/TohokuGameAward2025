@@ -34,6 +34,9 @@ public class RoundManager : MonoBehaviour
     private CrownGenerator m_crownGenerator = null;
 
     [SerializeField]
+    private SpecialCrownGenerator m_specialCrownGenerator = null;
+
+    [SerializeField]
     private RoundUIController m_roundUIController = null;
 
     public static int CurrentRound { get; private set; }
@@ -62,6 +65,7 @@ public class RoundManager : MonoBehaviour
         m_gameTimer.StartCountDown();
         m_drawScoreText.SetDrawing(true);
         StartCoroutine(m_crownGenerator.GenerateStart());
+        StartCoroutine(m_specialCrownGenerator.GenerateStartSpecialCrown());
     }
 
     /// <summary>
