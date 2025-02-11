@@ -13,6 +13,9 @@ public class RoundManager : MonoBehaviour
     private CannonManager m_cannonManager = null;
 
     [SerializeField]
+    private BombManager m_bombManager = null;
+
+    [SerializeField]
     private EffectManager m_effectManager = null;
 
     [SerializeField]
@@ -108,6 +111,8 @@ public class RoundManager : MonoBehaviour
 
         m_humanoidManager.SetOperable(false);
         m_cannonManager.SetOperable(false);
+
+        m_bombManager.DestoroyBomb();
 
         m_effectManager.OnPlayEffect(Vector3.zero, 0.0f, EffectManager.Type.Finish);
 

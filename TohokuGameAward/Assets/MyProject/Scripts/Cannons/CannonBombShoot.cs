@@ -20,6 +20,9 @@ public class CannonBombShoot : MonoBehaviour
     private GameObject m_bombrefab = null;
 
     [SerializeField]
+    private CannonManager m_cannonManager = null;
+
+    [SerializeField]
     private Slider m_gaugeSlider = null;
 
     [SerializeField]
@@ -47,6 +50,7 @@ public class CannonBombShoot : MonoBehaviour
 
     private void Start()
     {
+        m_cannonManager = GetComponentInParent<CannonManager>();
         m_shootTransform.Rotate(0.0f,0.0f, m_cannonData.Params.ShootAngle);
         ShootInitialPosition = m_shootTransform.transform.position;
     }
@@ -136,7 +140,7 @@ public class CannonBombShoot : MonoBehaviour
     /// </summary>
     private GameObject GenerateBomb()
     {
-        var bomb = Instantiate(m_bombrefab, m_shootTransform.position, Quaternion.identity);
+        var bomb = Instantiate(m_bombrefab, m_shootTransform.position, Quaternion.identity, m_cannonManager.BombManager);
         return bomb;
     }
 

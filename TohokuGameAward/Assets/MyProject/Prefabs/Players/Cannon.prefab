@@ -680,8 +680,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_cannonBombShoot: {fileID: 3213450926248657641}
   m_lineRenderer: {fileID: 3407648869939462235}
-  m_lineRenderCount: 100
-  m_lineLength: 8
+  m_lineRenderCount: 400
+  m_lineLength: 4
 --- !u!114 &3213450926248657641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,7 +700,7 @@ MonoBehaviour:
   m_shootTransform: {fileID: 6561087655519887246}
   m_bombrefab: {fileID: 6015317307024279286, guid: 31daebd531dbe3741ab98ddb0502a6b2,
     type: 3}
-  m_bombManager: {fileID: 0}
+  m_cannonManager: {fileID: 0}
   m_gaugeSlider: {fileID: 5682983618426239743}
   m_gaugeImage: {fileID: 1721427179303434663}
   m_shootPower: 4
@@ -792,7 +792,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 74ed27a798cc21a46ac60fc7d183d174, type: 2}
+  - {fileID: 2100000, guid: 919438a3582430d49bd99ccdb97a2d12, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -818,28 +818,19 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.5114136
-        inSlope: -1.0286709
-        outSlope: -1.0286709
+        time: 0.0073260106
+        value: 1
+        inSlope: -0.008520348
+        outSlope: -0.008520348
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.16654864
-      - serializedVersion: 3
-        time: 0.81791633
-        value: 0.080547966
-        inSlope: 0.034341324
-        outSlope: 0.034341324
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.19032839
-        outWeight: 0
+        outWeight: 0.20994516
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4

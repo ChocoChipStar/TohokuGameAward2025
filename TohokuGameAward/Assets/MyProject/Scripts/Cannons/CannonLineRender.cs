@@ -90,6 +90,10 @@ public class CannonLineRender : MonoBehaviour
         RaycastHit hitInfo;
         if (Physics.Linecast(startPosition, endPosition, out hitInfo))
         {
+            if(TagManager.Instance.SearchedTagName(hitInfo.transform.gameObject, TagManager.Type.Bomb))
+            {
+                return false;
+            }
             return true;
         }
         return false;

@@ -5,7 +5,12 @@ public class CannonManager : MonoBehaviour
     [SerializeField]
     private PlayerManager m_playerManager = null;
 
+    [SerializeField]
+    private Transform m_bombManager = null;
+
     public static readonly int CannonMax = 2;
+
+    public Transform BombManager { get { return m_bombManager; } private set { m_bombManager = value; } }
 
     public void SetOperable(bool isEnabled)
     {
