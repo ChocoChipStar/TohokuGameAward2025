@@ -19645,7 +19645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_crownData: {fileID: 11400000, guid: dbb665d346346c840ab6a184f3bbe47d, type: 2}
   m_blinkSpeed: 0.3
-  m_blinkStartTime: 18
+  m_blinkStartTime: 5
 --- !u!1 &7256327318770919144
 GameObject:
   m_ObjectHideFlags: 0
