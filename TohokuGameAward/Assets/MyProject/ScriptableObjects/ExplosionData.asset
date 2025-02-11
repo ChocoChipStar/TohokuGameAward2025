@@ -22,8 +22,8 @@ MonoBehaviour:
     m_cantInputTime: 1
     m_decelerationRate: 0.5
   m_effectData:
-    m_scaleMin: 0.5
-    m_scaleMax: 16
+    m_scaleMin: 1
+    m_scaleMax: 5
     m_scaleChangeTime: 4
-    m_scaleMaxTime: 2
+    m_scaleMaxTime: 2.5
     m_effectEndTime: 1
