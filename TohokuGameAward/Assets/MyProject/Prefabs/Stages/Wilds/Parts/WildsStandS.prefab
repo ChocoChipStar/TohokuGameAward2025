@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2017006241240819413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0.43, z: 0}
+  m_LocalPosition: {x: -1.07, y: 0.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -39,7 +39,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017006241240819413}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8abb942df8a67a340867c45898589882, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -51,8 +51,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.26, y: 0.8, z: 4.5}
-  m_Center: {x: -0.01, y: -0.32, z: 0}
+  m_Size: {x: 0.05, y: 0.66, z: 4.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4546273496748568954
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +79,7 @@ Transform:
   m_GameObject: {fileID: 4546273496748568954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.4, z: 0}
+  m_LocalPosition: {x: 1.07, y: 0.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -92,7 +92,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4546273496748568954}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8abb942df8a67a340867c45898589882, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -104,8 +104,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.26, y: 0.8, z: 4.5}
-  m_Center: {x: 0.01, y: -0.32, z: 0}
+  m_Size: {x: 0.05, y: 0.66, z: 4.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5167842938888501975
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,5 +211,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.26, y: 0.7, z: 4.5}
-  m_Center: {x: 0, y: 0.18, z: 0}
+  m_Size: {x: 2.14, y: 0.6, z: 4.5}
+  m_Center: {x: 0, y: 0.2, z: 0}
