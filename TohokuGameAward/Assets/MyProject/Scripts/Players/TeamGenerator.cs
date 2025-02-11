@@ -92,11 +92,11 @@ public class TeamGenerator : MonoBehaviour
             // 割り当てられた番号が1以下であればBチームに2以上であればAチームに割り当てられます。
             if (m_randomTicket[i] < MembersCount)
             {
-                BravoTeamNumber.Add(i);
+                AlphaTeamNumber.Add(i);
             }
             else
             {
-                AlphaTeamNumber.Add(i);
+                BravoTeamNumber.Add(i);
             }
         }
         m_isAssigned = true;
@@ -106,17 +106,17 @@ public class TeamGenerator : MonoBehaviour
     {
         if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
-            return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Alpha];
+            return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Bravo];
         }
-        return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Bravo];
+        return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Alpha];
     }
 
     public string GetCurrentCannonTeamName()
     {
         if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
-            return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Bravo];
+            return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Alpha];
         }
-        return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Alpha];
+        return TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Bravo];
     }
 }

@@ -14,8 +14,8 @@ public class CannonManager : MonoBehaviour
             var cannonMover = m_playerManager.CannonInstances[i].GetComponent<CannonMover>();
             cannonMover.SetOperable(isEnabled);
 
-            var cannonAttack = m_playerManager.CannonInstances[i].GetComponent<CannonAttack>();
-            cannonAttack.SetOperable(isEnabled);
+            var cannonBombShoot = m_playerManager.CannonInstances[i].GetComponent<CannonBombShoot>();
+            cannonBombShoot.SetOperable(isEnabled);
         }
     }
 }

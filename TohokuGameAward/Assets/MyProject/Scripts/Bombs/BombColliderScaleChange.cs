@@ -60,6 +60,12 @@ public class BombColliderScaleChange : MonoBehaviour
             return;
         }
 
+        var humanoidInvincible = parent.GetComponentInParent<HumanoidInvincible>();
+        if (humanoidInvincible.IsInvincible)
+        {
+            return;
+        }
+
         var HumanoidBlow = parent.GetComponentInParent<HumanoidBlow>();
         HumanoidBlow.InitializeStartBlow(transform.position, HumanoidMover);
     }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using static InputData;
 
 public class CannonBombShoot : MonoBehaviour
@@ -18,15 +19,23 @@ public class CannonBombShoot : MonoBehaviour
     [SerializeField]
     private GameObject m_bombrefab = null;
 
+    [SerializeField]
+    private Slider m_gaugeSlider = null;
+
+    [SerializeField]
+    private Image m_gaugeImage = null;
+
     [SerializeField,Header("発射の強さ")]
     private float m_shootPower = 0.0f;
 
     [SerializeField]
     private float m_bombStockTime = 0.0f;
+
     [SerializeField]
     private float m_cannonCookingOffTime = 0.0f;
 
-    bool m_isShoot = false;
+    private bool m_isShoot = false;
+    private bool m_isOperable = false;
 
     private Vector3 m_shootInitialPosition = Vector3.zero;
     private Vector3 m_shootVelocity = Vector3.zero;
@@ -44,6 +53,14 @@ public class CannonBombShoot : MonoBehaviour
 
     private void Update()
     {
+        if (!m_isOperable)
+        {
+            return;
+        }
+
+        m_gaugeSlider.value = m_bombStockTime / m_cannonData.Params.MagazineMax;
+        ChangeGaugeColor();
+
         if (m_cannonCookingOffTime < 1.0f)
         {
             m_cannonCookingOffTime += Time.deltaTime;
@@ -93,6 +110,27 @@ public class CannonBombShoot : MonoBehaviour
         m_bombStockTime--;
     }
 
+    private void ChangeGaugeColor()
+    {
+        if (m_bombStockTime >= m_cannonData.Params.MagazineMax)
+        {
+            m_gaugeImage.color = Color.blue;
+        }
+        else if (m_bombStockTime >= m_cannonData.Params.MagazineMax - 1.0f)
+        {
+            m_gaugeImage.color = Color.green;
+        }
+        else if (m_bombStockTime >= m_cannonData.Params.MagazineMax - 2.0f)
+        {
+            m_gaugeImage.color = Color.yellow;
+        }
+        else
+        {
+            m_gaugeImage.color = Color.red;
+        }
+        
+    }
+
     /// <summary>
     /// ボムを生成し、bombのGameObjectを返します。
     /// </summary>
@@ -109,5 +147,10 @@ public class CannonBombShoot : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void SetOperable(bool isEnabled)
+    {
+        m_isOperable = isEnabled;
     }
 }

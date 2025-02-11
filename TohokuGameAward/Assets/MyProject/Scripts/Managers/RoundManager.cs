@@ -16,9 +16,6 @@ public class RoundManager : MonoBehaviour
     private EffectManager m_effectManager = null;
 
     [SerializeField]
-    private BombManager m_bombManager = null;
-
-    [SerializeField]
     private SceneChanger m_sceneChanger = null;
 
     [SerializeField]
@@ -112,7 +109,6 @@ public class RoundManager : MonoBehaviour
         m_humanoidManager.SetOperable(false);
         m_cannonManager.SetOperable(false);
 
-        m_bombManager.DestoroyBomb();
         m_effectManager.OnPlayEffect(Vector3.zero, 0.0f, EffectManager.Type.Finish);
 
         yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Finish, m_textDrawDelayTime));
