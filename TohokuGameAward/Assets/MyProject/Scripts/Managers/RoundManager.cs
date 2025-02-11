@@ -74,18 +74,28 @@ public class RoundManager : MonoBehaviour
             yield break;
         }
 
-        m_roundUIController.DrawFaceIcon();
+       
         if (CurrentRound == (int)RoundState.One)
         {
-            // ラウンド1のみアイコンのシャッフル演出を行います
+            // ラウンド1のみ行うシャッフルとチーム確認
+            m_roundUIController.DrawFaceIcon();
+
             yield return StartCoroutine(m_roundUIController.ShuffleFaceIcon(m_textDrawDelayTime));
+            m_roundUIController.SetFaceIconSprite();
+
+            yield return StartCoroutine(m_roundUIController.HiddenFaceIcon(m_textDrawDelayTime));
+            m_roundUIController.HiddenTeamConfirmUI();
+            m_roundUIController.SetTeamUI(true);
+            yield return StartCoroutine(m_roundUIController.HiddenFaceIcon(m_textDrawDelayTime));
         }
 
-        m_roundUIController.SetFaceIconSprite();
-
-        yield return StartCoroutine(m_roundUIController.HiddenFaceIcon(m_textDrawDelayTime));
-
-        m_roundUIController.HiddenTeamConfirmUI();
+        if (CurrentRound == (int)RoundState.Two)
+        {
+            yield return StartCoroutine(m_roundUIController.HiddenFaceIcon(m_textDrawDelayTime));
+            m_roundUIController.HiddenTeamConfirmUI();
+        }
+        
+        m_roundUIController.SetTeamUI(false);
 
         SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Ready);
         yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Ready, m_textDrawDelayTime));
