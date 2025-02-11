@@ -39,6 +39,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField]
     private RoundUIController m_roundUIController = null;
 
+    [SerializeField]
+    private SurviveScoreManager m_surviveScoreManager = null;
+
     public static int CurrentRound { get; private set; }
 
     public enum RoundState
@@ -66,6 +69,7 @@ public class RoundManager : MonoBehaviour
         m_drawScoreText.SetDrawing(true);
         StartCoroutine(m_crownGenerator.GenerateStart());
         StartCoroutine(m_specialCrownGenerator.GenerateStartSpecialCrown());
+        m_surviveScoreManager.enabled = true;
     }
 
     /// <summary>

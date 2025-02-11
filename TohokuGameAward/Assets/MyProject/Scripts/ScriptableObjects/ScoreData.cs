@@ -26,10 +26,25 @@ public class ScoreData : ScriptableObject
         [SerializeField, Header("ヒューマノイド側が王冠を獲得した時のスコア（ダイヤモンド）")]
         private int m_diamondScore = 0;
 
+        [SerializeField, Header("ヒューマノイド側が生き残った時間で入るスコア")]
+        private int[] m_alivingScore = null;
+
+        [SerializeField, Header("スコアが入る間隔（秒）")]
+        private float m_aliveScoreTime = 0;
+
+        [SerializeField, Header("生き残った時間で入るスコアが一段階上がるまでの時間")]
+        private float m_upgradeScoreTime = 0;
+
         public int HitHumanoidScore { get { return m_hitHumanoidScore; } private set { m_hitHumanoidScore = value; } }
         public int DeathScore { get { return m_deathScore; } private set { m_deathScore = value; } }
         public int SilverScore { get { return m_silverScore; } private set { m_silverScore = value; } }
         public int GoldScore { get { return m_goldScore; } private set { m_goldScore = value; } }
         public int DiamondScore { get { return m_diamondScore; } private set { m_diamondScore = value; } }
+
+        public int[] AlivingScore { get { return m_alivingScore; } private set { m_alivingScore = value; } }
+
+        public float AliveScoreTime { get { return m_aliveScoreTime; } private set { m_aliveScoreTime = value; } }
+
+        public float UpgradeScoreTime { get { return m_upgradeScoreTime; } private set { m_upgradeScoreTime = value; } }
     }
 }

@@ -461,6 +461,7 @@ GameObject:
   - component: {fileID: 8727824486401761457}
   - component: {fileID: 7473149211588488578}
   - component: {fileID: 4395743306678041335}
+  - component: {fileID: 3248001058291220770}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -513,6 +514,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_alphaScoreText: {fileID: 4902006104984093312}
   m_bravoScoreText: {fileID: 8452502998508277831}
+  m_alphaScoreFrame: {fileID: 4491736547200207671}
+  m_bravoScoreFrame: {fileID: 2395165413059956900}
+--- !u!114 &3248001058291220770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6505357305837549286}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5cd4912a2aeddf49a531d7ed1b53512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_respawnManager: {fileID: 0}
+  m_scoreData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
 --- !u!1 &8372513465459223452
 GameObject:
   m_ObjectHideFlags: 0
