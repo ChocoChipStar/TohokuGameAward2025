@@ -27,6 +27,9 @@ public class RoundUIController : MonoBehaviour
     [SerializeField]
     private List<Image> m_roundTextImage = new List<Image>();
 
+    [SerializeField]
+    private Image m_playerTeamImage = null;
+
     private bool m_isMove = false;
     private RectTransform m_rectTransform = null;
     private Vector3 m_moveTerminalPos = new Vector3(960.0f, 540.0f, 0.0f);
@@ -77,7 +80,7 @@ public class RoundUIController : MonoBehaviour
     private void MoveTeamConfirmUI()
     {
         // ほぼ目的地に近い距離になったら移動を終了し、終点値に座標を固定する
-        if (Mathf.Abs(m_rectTransform.position.x - m_moveTerminalPos.x) <= AlmostDestination)
+        if (Mathf.Abs(m_rectTransform.position.y - m_moveTerminalPos.y) <= AlmostDestination)
         {
             m_rectTransform.position = m_moveTerminalPos;
             IsArrived.Value = true;
@@ -182,5 +185,10 @@ public class RoundUIController : MonoBehaviour
     public void HiddenTeamConfirmUI()
     {
         m_teamConfirmImage[RoundManager.CurrentRound].enabled = false;
+    }
+
+    public void SetTeamUI(bool isEnabled)
+    {
+        m_playerTeamImage.enabled = isEnabled;
     }
 }
