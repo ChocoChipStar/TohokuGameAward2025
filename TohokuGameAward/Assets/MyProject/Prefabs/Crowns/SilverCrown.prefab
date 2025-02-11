@@ -19522,6 +19522,7 @@ GameObject:
   - component: {fileID: 2513884301650902630}
   - component: {fileID: 1930274340000235016}
   - component: {fileID: -5377058206192756309}
+  - component: {fileID: 223204812156447357}
   m_Layer: 0
   m_Name: SilverCrown
   m_TagString: Untagged
@@ -19630,6 +19631,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
   m_type: 0
+--- !u!114 &223204812156447357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6779122977183572042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3988798068addc49b504bcefa9bcf3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_crownData: {fileID: 11400000, guid: dbb665d346346c840ab6a184f3bbe47d, type: 2}
+  m_blinkSpeed: 0.3
+  m_blinkStartTime: 18
 --- !u!1 &7256327318770919144
 GameObject:
   m_ObjectHideFlags: 0
