@@ -1618,6 +1618,8 @@ MonoBehaviour:
   m_modelTransform: {fileID: 3400207722130086997}
   m_animator: {fileID: 1642553735718660088}
   m_humanoidData: {fileID: 11400000, guid: 7e148fa8c794c67499b090e2f28c86c7, type: 2}
+  m_inputData: {fileID: 234677848321282988}
+  m_selfData: {fileID: 2843869093201168715}
 --- !u!114 &2317007520261670163
 MonoBehaviour:
   m_ObjectHideFlags: 0
