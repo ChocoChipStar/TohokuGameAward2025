@@ -26,6 +26,7 @@ public class BombEffectPlayer : MonoBehaviour
         var scale = m_explosionData.Effect.ScaleMin;
         this.transform.localScale = new Vector3(scale, scale, scale);
         m_isGettingBigger = true;
+        SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Explosion);
     }
 
     private void Update()

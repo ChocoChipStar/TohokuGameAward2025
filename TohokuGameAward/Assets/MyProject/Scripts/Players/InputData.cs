@@ -3,7 +3,7 @@ using System.Linq;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Editor;
+//using UnityEngine.InputSystem.Editor;
 
 public class InputData : MonoBehaviour
 {

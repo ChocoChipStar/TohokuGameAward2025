@@ -7,6 +7,9 @@ public class RoundManager : MonoBehaviour
     private float m_textDrawDelayTime = 0.0f;
 
     [SerializeField]
+    private float m_ReadytextDrawDelayTime = 0.0f;
+
+    [SerializeField]
     private HumanoidManager m_humanoidManager = null;
 
     [SerializeField]
@@ -84,7 +87,7 @@ public class RoundManager : MonoBehaviour
             // ラウンド1のみ行うシャッフルとチーム確認
             m_roundUIController.DrawFaceIcon();
 
-            yield return StartCoroutine(m_roundUIController.ShuffleFaceIcon(m_textDrawDelayTime));
+            //yield return StartCoroutine(m_roundUIController.ShuffleFaceIcon(m_textDrawDelayTime));
             m_roundUIController.SetFaceIconSprite();
 
             yield return StartCoroutine(m_roundUIController.HiddenFaceIcon(m_textDrawDelayTime));
@@ -102,13 +105,13 @@ public class RoundManager : MonoBehaviour
         m_roundUIController.SetTeamUI(false);
 
         SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Ready);
-        yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Ready, m_textDrawDelayTime));
+        yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Ready, m_ReadytextDrawDelayTime));
 
         m_humanoidManager.SetOperable(true);
         m_cannonManager.SetOperable(true);
 
         BackGroundMusicManager.Instance.OnPlayOneShot(BackGroundMusicManager.MusicName.MainBGM);
-        yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Go, m_textDrawDelayTime));
+        yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Go, m_ReadytextDrawDelayTime));
 
         InitializeRoundStart();
     }

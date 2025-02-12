@@ -22,7 +22,7 @@ MonoBehaviour:
     m_moveSpeed: 7
     m_shootSpeedMin: 3
     m_shootSpeedMax: 16
-    m_shootChargeSpeed: 8
+    m_shootChargeSpeed: 5
     m_shootAngle: 30
     m_magazineMax: 3
     m_reloadTime: 2.5

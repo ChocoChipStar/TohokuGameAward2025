@@ -14,6 +14,7 @@ public class TeamGenerator : MonoBehaviour
     /// </summary>
     private const int RandomTicketValueTrialCount = 1000;
 
+    private static readonly int EvenNumber = 2;
     public static List<int> AlphaTeamNumber { get; private set; } = new List<int> { };
     public static List<int> BravoTeamNumber { get; private set; } = new List<int> { };
 
@@ -86,11 +87,11 @@ public class TeamGenerator : MonoBehaviour
         }
 
         // 乱数番号札の作成
-        m_randomTicket = CreateNonOverlappingRandomValue();
+        //m_randomTicket = CreateNonOverlappingRandomValue();
         for (int i = 0; i < PlayerManager.PlayerMax; i++)
         {
-            // 割り当てられた番号が1以下であればBチームに2以上であればAチームに割り当てられます。
-            if (m_randomTicket[i] < MembersCount)
+            //プレイヤーナンバーが偶数ならアルファ
+            if(0 == i % EvenNumber)
             {
                 AlphaTeamNumber.Add(i);
             }
@@ -98,6 +99,16 @@ public class TeamGenerator : MonoBehaviour
             {
                 BravoTeamNumber.Add(i);
             }
+
+            //// 割り当てられた番号が1以下であればBチームに2以上であればAチームに割り当てられます。
+            //if (m_randomTicket[i] < MembersCount)
+            //{
+            //    AlphaTeamNumber.Add(i);
+            //}
+            //else
+            //{
+            //    BravoTeamNumber.Add(i);
+            //}
         }
         m_isAssigned = true;
     }
