@@ -10,10 +10,7 @@ public class DrawScoreText : MonoBehaviour
     private TextMeshProUGUI m_bravoScoreText = null;
 
     [SerializeField]
-    private Image m_alphaScoreFrame = null;
-
-    [SerializeField]
-    private Image m_bravoScoreFrame = null;
+    private Image m_ScoreFrame = null;
 
     private void SetScoreText(int currentAlphaScore, int currentBravoScore) 
     {
@@ -33,7 +30,6 @@ public class DrawScoreText : MonoBehaviour
         m_alphaScoreText.enabled = isEnabled;
         m_bravoScoreText.enabled = isEnabled;
 
-        m_alphaScoreFrame.enabled = isEnabled;
-        m_bravoScoreFrame.enabled = isEnabled;
+        m_ScoreFrame.enabled = isEnabled;
     }
 }
