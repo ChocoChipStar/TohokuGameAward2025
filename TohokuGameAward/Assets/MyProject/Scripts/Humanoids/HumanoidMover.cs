@@ -120,13 +120,57 @@ public class HumanoidMover : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// ヒューマノイドが現在地面に着地しているかを調べます
+    /// </summary>
+    /// <returns> true-> 着地中 false-> 空中 </returns>
     private bool IsGrounded()
     {
+        // Ray発射位置設定
         var startPos = this.transform.position + FixedRayStartPos;
-        var ray = new Ray(startPos, transform.up * -1);
 
-        if(Physics.Raycast(ray, out hitInfo, RayDistance))
+        // 左側の発射位置からワールド下向きに飛ばすRayを作成
+        var leftRay = new Ray(new Vector3(startPos.x - 0.2f, startPos.y, startPos.z), transform.up * -1);
+
+        // 右側の発射位置からワールド下向きに飛ばすRayを作成
+        var rightRay = new Ray(new Vector3(startPos.x + 0.2f, startPos.y, startPos.z), transform.up * -1);
+
+        Debug.DrawRay(leftRay.origin, leftRay.direction, Color.red, 1.0f);
+        Debug.DrawRay(rightRay.origin, rightRay.direction, Color.blue, 1.0f);
+
+        // 作成したRayをRayDistance分照射し、何かしらと接触したか調べます
+        var isHitLeft = Physics.Raycast(leftRay, out hitInfo, RayDistance);
+        if(isHitLeft && IsHitGroundOrStand(hitInfo))
         {
+            return true;
+        }
+
+        var isHitRight = Physics.Raycast(rightRay, out hitInfo, RayDistance);
+        if(isHitRight && IsHitGroundOrStand(hitInfo))
+        {
+            return true;
+        }
+        
+        this.transform.SetParent(null);
+        return false;
+    }
+
+    private bool IsHitGroundOrStand(RaycastHit hitInfo)
+    {
+        // Rayと接触したのが地面であれば
+        if (TagManager.Instance.SearchedTagName(hitInfo.collider.gameObject, TagManager.Type.Ground))
+        {
+            m_animator.TransferableState(top: TopState.Falling);
+            m_animator.TransferableState(under: UnderState.Falling);
+            return true;
+        }
+
+        // Rayと接触したのが足場であれば
+        if (TagManager.Instance.SearchedTagName(hitInfo.collider.gameObject, TagManager.Type.Stand))
+        {
+            this.transform.SetParent(hitInfo.transform);
+
+            // 落下アニメーションから次アニメーションへ遷移可能にする
             m_animator.TransferableState(top: TopState.Falling);
             m_animator.TransferableState(under: UnderState.Falling);
             return true;

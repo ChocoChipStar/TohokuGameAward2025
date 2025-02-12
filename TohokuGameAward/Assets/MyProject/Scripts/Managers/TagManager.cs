@@ -6,7 +6,7 @@ public class TagManager : MonoBehaviour
     // 「Player」タグは必ず配列の末尾にすること
     public static readonly string[] NameLists = new string[] 
     { 
-        "Ground", "Wall", "Bomb","Explosion", "Stage", "Crown", "Humanoid", "Cannon"
+        "Ground", "Wall", "Bomb","Explosion", "Stand", "Crown", "Humanoid", "Cannon"
     };
 
     public enum Type
@@ -15,7 +15,7 @@ public class TagManager : MonoBehaviour
         Wall,
         Bomb,
         Explosion,
-        Stage,
+        Stand,
         Crown,
         Humanoid,
         Cannon,
