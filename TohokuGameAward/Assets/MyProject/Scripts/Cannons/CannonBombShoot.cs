@@ -126,6 +126,7 @@ public class CannonBombShoot : MonoBehaviour
     /// </summary>
     private void ShootBombOperation()
     {
+        SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Cannon);
         var rigidbody = GenerateBomb().GetComponent<Rigidbody>();
         rigidbody.AddForce(ShootVelocity * rigidbody.mass, ForceMode.Impulse);
         m_shootPower = m_cannonData.Params.ShootSpeedMin;

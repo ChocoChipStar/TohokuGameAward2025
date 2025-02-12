@@ -17,6 +17,9 @@ public class SoundEffectManager : MonoBehaviour
         Explosion,
         Cannon,
         Point,
+        LowSurvivePoint,
+        MiddleSurvivePoint,
+        HigtSurvivePoint,
         Ready,
     }
 
