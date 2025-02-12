@@ -143,7 +143,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_audioSource: {fileID: 5939159357312149199}
   m_audioClips:
-  - {fileID: 8300000, guid: 550a942bc8dc78343a63248aef0a0f55, type: 3}
-  - {fileID: 8300000, guid: 731bed6f9ca7d874298ce82b137d0cc4, type: 3}
-  - {fileID: 8300000, guid: 772b49e1e10da89428ad6d97251521eb, type: 3}
-  - {fileID: 8300000, guid: b5bdb09798470f74a8b9e4a01c293cf1, type: 3}
+  - {fileID: 8300000, guid: 80926eeeb4439084aa2b0b4cd13107b0, type: 3}
+  - {fileID: 8300000, guid: 339bbc157ea526f46aa6ab3759c227ee, type: 3}
+  - {fileID: 8300000, guid: b8908c831d413554f9e2a2fd84512b9f, type: 3}
+  - {fileID: 8300000, guid: 34b053c6062cedc4a820b3a131983848, type: 3}
+  - {fileID: 8300000, guid: 64ef4937df90fa049931aa99250cb653, type: 3}
+  - {fileID: 8300000, guid: 64ef4937df90fa049931aa99250cb653, type: 3}
+  - {fileID: 8300000, guid: 64ef4937df90fa049931aa99250cb653, type: 3}
+  - {fileID: 8300000, guid: 64ef4937df90fa049931aa99250cb653, type: 3}
