@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8081153196e584949a1a7dd4a4e467f0
+guid: 52c57deee93fe8649a78c266fa310b97
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -19,11 +19,12 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'PL_Run_anime_ALL' has import animation warnings
+    animationImportWarnings: "\nClip 'PL_Run_anime_v2_ALL' has import animation warnings
       that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Player_L_Leg' has translation animation
-      that will be discarded.\n\t'Player_R_Leg' has translation animation that will
-      be discarded.\n"
+      to improve retargeting quality.\n\t'Player_L_ForeArm' has translation animation
+      that will be discarded.\n\t'Player_R_ForeArm' has translation animation that
+      will be discarded.\n\t'Player_L_Leg' has translation animation that will be
+      discarded.\n\t'Player_R_Leg' has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -37,11 +38,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: PL_Run_anime_ALL
-      takeName: PL_Run_anime_ALL
-      internalID: 8551870299158673336
+      name: PL_Run_anime_v2_ALL
+      takeName: PL_Run_anime_v2_ALL
+      internalID: -2171447995572900368
       firstFrame: 1
-      lastFrame: 24
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -64,7 +65,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 0.59999996
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -276,60 +277,60 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: PL_Run_anime_ALL(Clone)
+    - name: PL_Run_anime_v2_ALL(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_Hips
-      parentName: PL_Run_anime_ALL(Clone)
-      position: {x: -0.006818872, y: 0.23978281, z: 0.013975695}
-      rotation: {x: -0.48858094, y: 0.55216515, z: 0.46499616, w: -0.49008265}
+      parentName: PL_Run_anime_v2_ALL(Clone)
+      position: {x: -0.0037233548, y: 0.26800916, z: -0.021092223}
+      rotation: {x: 0.54605025, y: -0.49542183, z: -0.51579994, w: 0.436276}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_Spine
       parentName: Player_Hips
-      position: {x: -0.102868535, y: -0.000000024369742, z: -0.000000007615068}
-      rotation: {x: -0.026299288, y: 0.006176906, z: 0.02569587, w: 0.9993047}
+      position: {x: -0.1028686, y: -0.0000000031272138, z: 0.0000000020637205}
+      rotation: {x: -0.026299324, y: 0.006176774, z: 0.025695782, w: 0.9993047}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_Spine1
       parentName: Player_Spine
-      position: {x: -0.09725765, y: 0.000000007956956, z: 0.0000000011734846}
-      rotation: {x: -0.05251926, y: 0.00825813, z: 0.052193552, w: 0.9972208}
+      position: {x: -0.09725767, y: 0.0000000036869063, z: 0.0000000234861}
+      rotation: {x: -0.052519232, y: 0.00825828, z: 0.05219355, w: 0.9972208}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_Spine2
       parentName: Player_Spine1
-      position: {x: -0.089776285, y: -0.000000006346842, z: 0.000000005312417}
-      rotation: {x: -0.05249749, y: 0.002402209, z: 0.05279952, w: 0.99722135}
+      position: {x: -0.08977629, y: 7.1220757e-10, z: 8.980107e-10}
+      rotation: {x: -0.052497506, y: 0.0024021144, z: 0.052799553, w: 0.99722135}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_Neck
       parentName: Player_Spine2
-      position: {x: -0.10006313, y: 0.000000026696265, z: -0.0000000030268599}
-      rotation: {x: 0.087334216, y: 0.011697529, z: -0.041666105, w: 0.9952386}
+      position: {x: -0.10006316, y: 0.0000000060635026, z: 0.000000007224107}
+      rotation: {x: 0.06518212, y: 0.0059838826, z: 0.05218641, w: 0.9964899}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_Head
       parentName: Player_Neck
-      position: {x: -0.29859808, y: 0.00000013569507, z: 0.000000028375863}
-      rotation: {x: -0.43065417, y: 0.47724402, z: 0.5216448, w: 0.5609473}
+      position: {x: -0.29859963, y: 0.000000053439475, z: 0.000000042218296}
+      rotation: {x: -0.44187206, y: 0.49138707, z: 0.5124444, w: 0.5483508}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_L_Sholder
       parentName: Player_Spine2
-      position: {x: -0.102799565, y: -0.000000010287069, z: 0.18771048}
-      rotation: {x: -0.060130738, y: 0.67775214, z: -0.06548653, w: 0.7298958}
-      scale: {x: 1, y: 1, z: 1}
+      position: {x: -0.10279959, y: 8.261275e-11, z: 0.1877105}
+      rotation: {x: -0.06706093, y: 0.67518544, z: -0.07260424, w: 0.73099667}
+      scale: {x: 0.99999946, y: 1, z: 1}
     - name: Player_L_Arm
       parentName: Player_L_Sholder
-      position: {x: -0.018806454, y: -6.681211e-10, z: -0.000000018978458}
-      rotation: {x: -0.26654372, y: 0.00231868, z: 0.15456457, w: 0.9513458}
+      position: {x: -0.018806446, y: -0.000000016767068, z: 0.000000051225005}
+      rotation: {x: -0.4299412, y: -0.034609348, z: 0.1528268, w: 0.8891551}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_L_ForeArm
       parentName: Player_L_Arm
-      position: {x: -0.25159281, y: -0.0000114146, z: 0.0000008310394}
-      rotation: {x: 0.001175214, y: -0.002661863, z: -0.00033402827, w: 0.9999957}
-      scale: {x: 0.99999875, y: 1, z: 1}
+      position: {x: -0.2515927, y: -0.000009858111, z: -0.000009382762}
+      rotation: {x: -0.0029975767, y: -0.010036669, z: -0.0136086475, w: 0.9998526}
+      scale: {x: 0.9999989, y: 1, z: 1}
     - name: Player_L_Hand
       parentName: Player_L_ForeArm
-      position: {x: -0.27898952, y: -0.00000072006964, z: 0.000000003231228}
-      rotation: {x: -0.5224231, y: -0.064349905, z: 0.6706147, w: 0.5226943}
+      position: {x: -0.27898943, y: 0.0000003503602, z: 0.00000014285057}
+      rotation: {x: -0.52033466, y: -0.16024709, z: 0.6541394, w: 0.52504706}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_L_Item
       parentName: Player_L_Hand
@@ -338,53 +339,53 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Player_R_Sholder
       parentName: Player_Spine2
-      position: {x: -0.10308317, y: 0.0000000013829319, z: -0.18755493}
+      position: {x: -0.103083186, y: -0.000000008439391, z: -0.187555}
       rotation: {x: 0.067007415, y: -0.6746166, z: -0.07265952, w: 0.73152107}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_R_Arm
       parentName: Player_R_Sholder
-      position: {x: -0.018805606, y: -0.000000003891634, z: -0.0000000192606}
-      rotation: {x: 0.32378408, y: -0.03138354, z: 0.028385498, w: 0.9451843}
+      position: {x: -0.018805575, y: 0.0000000020164825, z: 0.0000000032197702}
+      rotation: {x: -0.65467954, y: -0.0633401, z: 0.0011662617, w: 0.7532473}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_R_ForeArm
       parentName: Player_R_Arm
-      position: {x: -0.2515936, y: -0.000012093101, z: 0.000010484472}
-      rotation: {x: -0.0004951058, y: 0.0040777335, z: -0.034748375, w: 0.99938774}
+      position: {x: -0.25159383, y: -0.0000045770253, z: -0.0000068167765}
+      rotation: {x: 0.0029421153, y: 0.008066502, z: -0.018861469, w: 0.99978524}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_R_Hand
       parentName: Player_R_ForeArm
-      position: {x: -0.2789893, y: -0.0000011374689, z: 0.00000003055845}
-      rotation: {x: -0.002052853, y: -0.70645094, z: 0.7077553, w: -0.0022930843}
+      position: {x: -0.2789891, y: -0.00000077828633, z: -0.00000007625975}
+      rotation: {x: -0.0020334122, y: -0.70465136, z: 0.70954704, w: -0.0023123235}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_L_Upleg
       parentName: Player_Hips
-      position: {x: -0.16098532, y: -0.0000000054191895, z: 0.12102149}
-      rotation: {x: 0.1594466, y: 0.9858502, z: -0.050236873, w: 0.012350051}
+      position: {x: -0.16098519, y: 0.000000019123695, z: 0.121021524}
+      rotation: {x: 0.045499116, y: 0.99741286, z: -0.053807095, w: 0.014223502}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_L_Leg
       parentName: Player_L_Upleg
-      position: {x: -0.29925883, y: -0.00001024234, z: 0.0000008821697}
-      rotation: {x: -0.00008196896, y: 0.010410102, z: 0.00909483, w: 0.99990445}
+      position: {x: -0.29925862, y: -0.0000105667405, z: 0.0000009100186}
+      rotation: {x: -0.00008192162, y: 0.010410208, z: 0.0090951845, w: 0.99990445}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_L_Foot
       parentName: Player_L_Leg
-      position: {x: -0.059607737, y: -0.00000021626454, z: 0.00000004217918}
-      rotation: {x: 0.42720154, y: 0.56610644, z: 0.42885974, w: -0.55955505}
+      position: {x: -0.059607625, y: -0.0000001936606, z: 0.000000023692962}
+      rotation: {x: 0.36519206, y: 0.60812086, z: 0.3568214, w: -0.60786694}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_R_Upleg
       parentName: Player_Hips
-      position: {x: -0.16094923, y: 0.000000015271333, z: -0.12106878}
-      rotation: {x: -0.071114086, y: 0.99504626, z: -0.050458424, w: -0.047746174}
+      position: {x: -0.16094913, y: 0.0000000035618537, z: -0.12106885}
+      rotation: {x: -0.18432434, y: 0.980709, z: -0.043984566, w: -0.04795498}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_R_Leg
       parentName: Player_R_Upleg
-      position: {x: -0.29925862, y: 0.000009935607, z: -0.00000016581085}
-      rotation: {x: -0.00014707538, y: -0.009149398, z: 0.026525859, w: 0.99960625}
+      position: {x: -0.2992587, y: 0.0000097772045, z: -0.00000033847326}
+      rotation: {x: -0.0001995098, y: -0.009926774, z: 0.032004256, w: 0.9994384}
       scale: {x: 1, y: 1, z: 1}
     - name: Player_R_Foot
       parentName: Player_R_Leg
-      position: {x: -0.059607398, y: -0.00000015858471, z: -0.00000006725008}
-      rotation: {x: 0.4029408, y: -0.5792207, z: 0.40818658, w: 0.57924587}
+      position: {x: -0.059607446, y: -0.00000018818865, z: -0.000000040390326}
+      rotation: {x: 0.46746355, y: -0.5297887, z: 0.46459714, w: 0.5338084}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
