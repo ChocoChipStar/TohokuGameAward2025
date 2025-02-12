@@ -12,6 +12,7 @@ TagManager:
   - Humanoid
   - Explosion
   - Box
+  - Stand
   layers:
   - Default
   - TransparentFX
