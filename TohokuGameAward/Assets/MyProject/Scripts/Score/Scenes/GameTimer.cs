@@ -9,9 +9,6 @@ public class GameTimer : MonoBehaviour
     private RoundManager m_roundManager = null;
 
     [SerializeField]
-    private Image m_timerFrameImage = null;
-
-    [SerializeField]
     private TextMeshProUGUI m_timerText = null;
 
     [SerializeField]
@@ -51,7 +48,6 @@ public class GameTimer : MonoBehaviour
     public void StartCountDown()
     {
         m_isCountDown = true;
-        m_timerFrameImage.enabled = true;
         m_timerText.enabled = true;
     }
 }
