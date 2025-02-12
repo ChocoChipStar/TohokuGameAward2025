@@ -12,9 +12,11 @@ public class HumanoidDirectionRotator : MonoBehaviour
     [SerializeField]
     private HumanoidData m_humanoidData = null;
 
-    private float m_lastFramePosX = 0.0f;
+    [SerializeField]
+    private InputData m_inputData = null;
 
-    private const float DiffDetectionRange = 0.01f;
+    [SerializeField]
+    private SelfData m_selfData = null;
 
     public ReactiveProperty<bool> IsRight { get; private set; } = new ReactiveProperty<bool>(false);
 
@@ -34,24 +36,20 @@ public class HumanoidDirectionRotator : MonoBehaviour
     /// </summary>
     private void SerachDirection()
     {
-        var diffValue = this.transform.position.x - m_lastFramePosX;
-        if (diffValue >= -DiffDetectionRange && diffValue <= DiffDetectionRange)
+        var movementValue = m_inputData.GetHumanoidMoveInput(m_selfData.Number);
+        if (movementValue <= InputData.MovementDeadZoneRange && movementValue >= -InputData.MovementDeadZoneRange)
         {
-            m_lastFramePosX = this.transform.position.x;
             return;
         }
 
-        if (diffValue > DiffDetectionRange)
+        if (movementValue > 0.0f)
         {
             IsRight.Value = true;
         }
-
-        if (diffValue < DiffDetectionRange)
+        else
         {
             IsRight.Value = false;
         }
-
-        m_lastFramePosX = this.transform.position.x;
         return;
     }
 
