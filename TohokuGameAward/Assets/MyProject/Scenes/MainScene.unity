@@ -490,9 +490,19 @@ PrefabInstance:
       objectReference: {fileID: 2006903758}
     - target: {fileID: 5350949036695840124, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
+      propertyPath: m_textDrawDelayTime
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5350949036695840124, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
       propertyPath: m_specialCrownGenerator
       value: 
       objectReference: {fileID: 916444285}
+    - target: {fileID: 5350949036695840124, guid: 53b62dd7922e91d4db1947cb135e78d2,
+        type: 3}
+      propertyPath: m_ReadytextDrawDelayTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7181936472481953864, guid: 53b62dd7922e91d4db1947cb135e78d2,
         type: 3}
       propertyPath: m_screenFade
@@ -973,7 +983,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: afc49ee86bf1d07469cf629670f4d67e, type: 3}
+      objectReference: {fileID: 8300000, guid: 339bbc157ea526f46aa6ab3759c227ee, type: 3}
     - target: {fileID: 1397684175313392933, guid: 2f1bc1f0cd0aad64cb8092483c6e4643,
         type: 3}
       propertyPath: m_audioClips.Array.data[2]

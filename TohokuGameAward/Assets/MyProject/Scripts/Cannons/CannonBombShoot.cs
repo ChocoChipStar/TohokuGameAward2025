@@ -39,6 +39,7 @@ public class CannonBombShoot : MonoBehaviour
 
     private bool m_isShoot = false;
     private bool m_isOperable = false;
+    private bool m_isGaugeChargeUp = true;
 
     private Vector3 m_shootInitialPosition = Vector3.zero;
     private Vector3 m_shootVelocity = Vector3.zero;
@@ -93,14 +94,33 @@ public class CannonBombShoot : MonoBehaviour
     /// </summary>
     private void ShootPowerCharge()
     {
-        if (m_cannonData.Params.ShootSpeedMax > m_shootPower)
-        {
-            m_shootPower += m_cannonData.Params.ShootChargeSpeed * Time.deltaTime;
-        }
+        ChargeShootPower();
         ShootInitialPosition = m_shootTransform.transform.position;
         ShootVelocity = m_shootTransform.up * m_shootPower;
         IsShoot = true;
     }
+
+    private void ChargeShootPower()
+    {
+        if (m_cannonData.Params.ShootSpeedMax > m_shootPower && m_isGaugeChargeUp)
+        {
+            m_shootPower += m_cannonData.Params.ShootChargeSpeed * Time.deltaTime;
+        }
+        else
+        {
+            m_isGaugeChargeUp = false;
+        }
+
+        if (m_shootPower > m_cannonData.Params.ShootSpeedMin && !m_isGaugeChargeUp)
+        {
+            m_shootPower -= m_cannonData.Params.ShootChargeSpeed * Time.deltaTime;
+        }
+        else
+        {
+            m_isGaugeChargeUp = true;
+        }
+    }
+
     /// <summary>
     ///ボムを投げる処理を行います。
     /// </summary>
@@ -116,11 +136,7 @@ public class CannonBombShoot : MonoBehaviour
 
     private void ChangeGaugeColor()
     {
-        if (m_bombStockTime >= m_cannonData.Params.MagazineMax)
-        {
-            m_gaugeImage.color = Color.blue;
-        }
-        else if (m_bombStockTime >= m_cannonData.Params.MagazineMax - 1.0f)
+        if (m_bombStockTime >= m_cannonData.Params.MagazineMax - 1.0f)
         {
             m_gaugeImage.color = Color.green;
         }
@@ -132,7 +148,6 @@ public class CannonBombShoot : MonoBehaviour
         {
             m_gaugeImage.color = Color.red;
         }
-        
     }
 
     /// <summary>
