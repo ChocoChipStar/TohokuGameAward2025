@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class CrownItem : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class CrownItem : MonoBehaviour
 
     [SerializeField]
     private Type m_type = new Type();
+
+    private GameObject m_scoreManager = null;
 
     private bool m_isUpdateScore = false;
 
@@ -22,6 +25,7 @@ public class CrownItem : MonoBehaviour
     private void Awake()
     {
         SetSelfScore();
+        m_scoreManager = GameObject.Find("ScoreManager");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,8 +41,14 @@ public class CrownItem : MonoBehaviour
         {
             SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Point);
             ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(), m_score);
-
             m_isUpdateScore = true;
+
+            GetScoreText getScoreText = m_scoreManager.transform.GetComponent<GetScoreText>();
+            getScoreText.ShowScoreEffect(m_score, this.transform.position);
+
+            GetCrownEffectGenerator geteffect = this.transform.parent.GetComponent<GetCrownEffectGenerator>();
+            geteffect.GenerateGetEffect(this.transform.position);
+
             Destroy(this.gameObject);
         }
     }

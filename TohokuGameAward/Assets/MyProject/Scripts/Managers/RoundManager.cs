@@ -31,6 +31,9 @@ public class RoundManager : MonoBehaviour
     private GameTimer m_gameTimer = null;
 
     [SerializeField]
+    private ScoreManager m_scoreManager = null;
+
+    [SerializeField]
     private DrawScoreText m_drawScoreText = null;
 
     [SerializeField]
@@ -41,6 +44,9 @@ public class RoundManager : MonoBehaviour
 
     [SerializeField]
     private RoundUIController m_roundUIController = null;
+
+    [SerializeField]
+    private SurviveScoreManager m_surviveScoreManager = null;
 
     public static int CurrentRound { get; private set; }
 
@@ -69,6 +75,7 @@ public class RoundManager : MonoBehaviour
         m_drawScoreText.SetDrawing(true);
         StartCoroutine(m_crownGenerator.GenerateStart());
         StartCoroutine(m_specialCrownGenerator.GenerateStartSpecialCrown());
+        m_surviveScoreManager.enabled = true;
     }
 
     /// <summary>
@@ -126,6 +133,7 @@ public class RoundManager : MonoBehaviour
             yield break;
         }
 
+        m_scoreManager.OffGetPoint();
         m_humanoidManager.SetOperable(false);
         m_cannonManager.SetOperable(false);
 

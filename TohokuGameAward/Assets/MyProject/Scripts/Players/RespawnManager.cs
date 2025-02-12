@@ -1,5 +1,5 @@
-﻿using UniRx;
-using Unity.VisualScripting;
+﻿using System;
+using UniRx;
 using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
@@ -12,6 +12,9 @@ public class RespawnManager : MonoBehaviour
 
     [SerializeField]
     private SoundEffectManager m_soundEffectManager = null;
+
+    [SerializeField]
+    private SurviveScoreManager m_surviveScoreManager = null;
 
     [SerializeField]
     private HumanoidData m_humanoidData = null;
@@ -114,6 +117,9 @@ public class RespawnManager : MonoBehaviour
         // リスポーン後の無敵時間を開始
         var humanoidInvisible = m_playerManager.HumanoidInstances[humanoidNum].GetComponent<HumanoidInvincible>();
         humanoidInvisible.StartInvincible();
+
+        //生きている時間で入るスコアをセットします。
+        m_surviveScoreManager.OffIsDead(humanoidNum);
     }
 
     /// <summary>
@@ -140,6 +146,9 @@ public class RespawnManager : MonoBehaviour
         // 各チームのスコアの増減
         ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentCannonTeamName(), m_scoreData.Params.HitHumanoidScore);
         ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(), m_scoreData.Params.DeathScore);
+
+        //生きている時間で入るスコアをリセットします。
+        m_surviveScoreManager.SetIsDead(m_deathHumanoidNum);
 
         deathHumanoid.transform.position = DeathPlayerPos;
     }

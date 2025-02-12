@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -13,6 +12,8 @@ public class ScoreManager : MonoBehaviour
 
     [SerializeField]
     private ScoreData m_scoreData = null;
+
+    private bool m_canGetPoint = true;
 
     private static int[] m_alphaRoundScore = new int[(int)RoundManager.RoundState.Max];
     private static int[] m_bravoRoundScore = new int[(int)RoundManager.RoundState.Max];
@@ -39,6 +40,11 @@ public class ScoreManager : MonoBehaviour
     /// <param name="newScore"> 追加するスコア値 </param>
     public void UpdateScore(string teamName, int newScore)
     {
+       if(!m_canGetPoint)
+        {
+            return;
+        }
+
         // アルファか、ブラボーかチームを調べます
         var alphaTeamName = TeamGenerator.TeamName[(int)TeamGenerator.TeamType.Alpha];
         if (alphaTeamName == teamName)
@@ -50,5 +56,10 @@ public class ScoreManager : MonoBehaviour
             m_bravoRoundScore[RoundManager.CurrentRound] += newScore;
         }
         m_drawScoreText.UpdateText();
+    }
+
+    public void OffGetPoint()
+    {
+        m_canGetPoint = false;
     }
 }
