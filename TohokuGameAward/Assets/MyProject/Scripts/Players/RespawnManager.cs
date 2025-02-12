@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 
 public class RespawnManager : MonoBehaviour
@@ -118,7 +119,7 @@ public class RespawnManager : MonoBehaviour
         humanoidInvisible.StartInvincible();
 
         //生きている時間で入るスコアをセットします。
-        m_surviveScoreManager.UpdateIsDead(humanoidNum, false);
+        m_surviveScoreManager.OffIsDead(humanoidNum);
     }
 
     /// <summary>
@@ -147,7 +148,7 @@ public class RespawnManager : MonoBehaviour
         ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(), m_scoreData.Params.DeathScore);
 
         //生きている時間で入るスコアをリセットします。
-        m_surviveScoreManager.UpdateIsDead(m_deathHumanoidNum, true);
+        m_surviveScoreManager.SetIsDead(m_deathHumanoidNum);
 
         deathHumanoid.transform.position = DeathPlayerPos;
     }

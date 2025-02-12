@@ -3,6 +3,15 @@
 public class SurviveScoreManager : MonoBehaviour
 {
     [SerializeField]
+    PlayerFlash m_playerFlash = null;
+
+    [SerializeField]
+    PlayerManager m_playerManager = null;
+
+    [SerializeField]
+    SurviveScoreText m_scoreText = null;
+
+    [SerializeField]
     RespawnManager m_respawnManager = null;
 
     [SerializeField]
@@ -53,6 +62,7 @@ public class SurviveScoreManager : MonoBehaviour
             if(m_scoreLevel[i] < m_scoreData.Params.AlivingScore.Length - 1)
             {
                 m_scoreLevel[i] += 1;
+                m_playerFlash.OnPerticle(i, m_scoreLevel[i]);
             }
 
             m_upgradeScoreTime[i] = 0;
@@ -63,10 +73,23 @@ public class SurviveScoreManager : MonoBehaviour
     {
         if (m_alivingTime[i] >= m_scoreData.Params.AliveScoreTime)
         {
-            ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(),
-                                              m_scoreData.Params.AlivingScore[m_scoreLevel[i]]);
+            int score = m_scoreData.Params.AlivingScore[m_scoreLevel[i]];
+            ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(),score);
+
+            m_scoreText.ShowScoreEffect(score, m_playerManager.HumanoidInstances[i].transform.position);
             m_alivingTime[i] = 0;
         }
+    }
+
+    public void SetIsDead(int Index)
+    {
+        m_isDead[Index] = true;
+    }
+
+    public void OffIsDead(int Index)
+    {
+        m_isDead[Index] = false;
+        m_playerFlash.OffPerticle(Index);
     }
 
     public void UpdateIsDead(int Index,bool isDead)
