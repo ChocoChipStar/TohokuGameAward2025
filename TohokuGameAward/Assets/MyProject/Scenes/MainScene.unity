@@ -971,6 +971,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1397684175313392933, guid: 2f1bc1f0cd0aad64cb8092483c6e4643,
         type: 3}
+      propertyPath: m_audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: bd3300da1cba28b479caee146d4e1ab5, type: 3}
+    - target: {fileID: 1397684175313392933, guid: 2f1bc1f0cd0aad64cb8092483c6e4643,
+        type: 3}
       propertyPath: m_audioClips.Array.data[4]
       value: 
       objectReference: {fileID: 8300000, guid: 048536cebaac8d545aaf4ffd3129aaf8, type: 3}
