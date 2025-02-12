@@ -28,16 +28,21 @@ public class GetCrownEffectGenerator : MonoBehaviour
 
     private IEnumerator DestroyEffect(ParticleSystem? effect = null)
     {
-        if(effect == null)
+        if (effect == null)
         {
             yield break;
         }
 
-        while (effect.isPlaying)
+        // 毎フレーム、effectが破棄されていないか確認する
+        while (effect != null && effect.gameObject != null && effect.isPlaying)
         {
             yield return null;
         }
 
-        Destroy(effect.gameObject);
+        // effect が null になっていないか最終確認
+        if (effect != null && effect.gameObject != null)
+        {
+            Destroy(effect.gameObject);
+        }
     }
 }
