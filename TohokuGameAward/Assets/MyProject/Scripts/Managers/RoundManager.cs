@@ -28,6 +28,9 @@ public class RoundManager : MonoBehaviour
     private GameTimer m_gameTimer = null;
 
     [SerializeField]
+    private ScoreManager m_scoreManager = null;
+
+    [SerializeField]
     private DrawScoreText m_drawScoreText = null;
 
     [SerializeField]
@@ -117,6 +120,7 @@ public class RoundManager : MonoBehaviour
             yield break;
         }
 
+        m_scoreManager.OffGetPoint();
         m_humanoidManager.SetOperable(false);
         m_cannonManager.SetOperable(false);
 

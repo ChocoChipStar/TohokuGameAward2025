@@ -7,10 +7,9 @@ public class CrownItem : MonoBehaviour
     private ScoreData m_scoreData = null;
 
     [SerializeField]
-    private GameObject m_scoreManager = null;
-
-    [SerializeField]
     private Type m_type = new Type();
+
+    private GameObject m_scoreManager = null;
 
     private bool m_isUpdateScore = false;
 
@@ -46,6 +45,9 @@ public class CrownItem : MonoBehaviour
 
             GetScoreText getScoreText = m_scoreManager.transform.GetComponent<GetScoreText>();
             getScoreText.ShowScoreEffect(m_score, this.transform.position);
+
+            GetCrownEffectGenerator geteffect = this.transform.parent.GetComponent<GetCrownEffectGenerator>();
+            geteffect.GenerateGetEffect(this.transform.position);
 
             Destroy(this.gameObject);
         }
