@@ -141,7 +141,7 @@ public class RespawnManager : MonoBehaviour
         m_effectManager.OnPlayEffect(humanoidPos, ConvertDirectionToAngle(CameraCenterPos - humanoidPos), EffectManager.Type.Death);
 
         // SE再生
-        m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.Death);
+        m_soundEffectManager.OnPlayOneShot((int)SoundEffectManager.MainScenePattern.Death);
 
         // 各チームのスコアの増減
         ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentCannonTeamName(), m_scoreData.Params.HitHumanoidScore);
