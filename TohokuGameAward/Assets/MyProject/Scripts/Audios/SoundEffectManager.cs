@@ -11,7 +11,12 @@ public class SoundEffectManager : MonoBehaviour
 
     public static SoundEffectManager Instance = null;
 
-    public enum SoundEffectName
+    public enum TitleScenePattern
+    {
+        Start
+    }
+
+    public enum MainScenePattern
     {
         Death,
         Explosion,
@@ -35,19 +40,19 @@ public class SoundEffectManager : MonoBehaviour
         }
     }
 
-    public void OnPlayOneShot(SoundEffectName seNum)
+    public void OnPlayOneShot(int patternNum)
     {
-        m_audioSource.PlayOneShot(m_audioClips[(int)seNum]);
+        m_audioSource.PlayOneShot(m_audioClips[patternNum]);
     }
 
-    public void OnPlay(SoundEffectName seNum)
+    public void OnPlay(int patternNum)
     {
-        m_audioSource.clip = m_audioClips[(int)seNum];
+        m_audioSource.clip = m_audioClips[patternNum];
         m_audioSource.loop = true;
         m_audioSource.Play();
     }
     
-    public void OnStop(SoundEffectName seNum)
+    public void OnStop()
     {
         m_audioSource.Stop();
     }
