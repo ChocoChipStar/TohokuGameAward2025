@@ -52,21 +52,21 @@ public class BombColliderScaleChange : MonoBehaviour
         {
             BoxInExplosion(other.gameObject);
         }
-        var parent = other.gameObject.transform.gameObject;
 
-        var HumanoidMover = parent.GetComponentInParent<HumanoidMover>();
-        if (HumanoidMover == null)
+        var parent = other.transform.parent.gameObject;
+        if(!TagManager.Instance.SearchedTagName(parent,TagManager.Type.Humanoid))
         {
             return;
         }
 
-        var humanoidInvincible = parent.GetComponentInParent<HumanoidInvincible>();
+        var HumanoidMover = parent.GetComponent<HumanoidMover>();
+        var humanoidInvincible = parent.GetComponent<HumanoidInvincible>();
         if (humanoidInvincible.IsInvincible)
         {
             return;
         }
 
-        var HumanoidBlow = parent.GetComponentInParent<HumanoidBlow>();
+        var HumanoidBlow = parent.GetComponent<HumanoidBlow>();
         HumanoidBlow.InitializeStartBlow(transform.position, HumanoidMover);
     }
 
