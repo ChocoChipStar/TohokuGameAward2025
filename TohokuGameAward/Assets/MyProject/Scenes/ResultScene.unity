@@ -941,6 +941,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: ResultAnimationCotroller_V2
       objectReference: {fileID: 0}
+    - target: {fileID: 5543217432049228001, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545311809730833407, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 305
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545311809730833407, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -85
+      objectReference: {fileID: 0}
     - target: {fileID: 8140123717981686182, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -991,11 +1006,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8467188483177645258, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 688.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467188483177645258, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -231.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8762799427496300106, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
         type: 3}
       propertyPath: m_TextAnim
       value: 
       objectReference: {fileID: 1341945884}
+    - target: {fileID: 8762799427496300106, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_alphaWinTextPos.x
+      value: 305
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762799427496300106, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_alphaWinTextPos.y
+      value: -85
+      objectReference: {fileID: 0}
     - target: {fileID: 8762799427496300106, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
         type: 3}
       propertyPath: m_playerAnimator.Array.data[0]
@@ -1016,6 +1051,11 @@ PrefabInstance:
       propertyPath: m_playerAnimator.Array.data[3]
       value: 
       objectReference: {fileID: 963983661}
+    - target: {fileID: 9065839795374906900, guid: 9ae98fbbbdf805a468c42c7783bc0b92,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
