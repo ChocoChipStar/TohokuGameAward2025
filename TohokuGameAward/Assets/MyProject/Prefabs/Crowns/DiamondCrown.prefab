@@ -29434,8 +29434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scoreData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
-  m_getParticleSystem: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd,
-    type: 3}
   m_type: 2
 --- !u!1001 &5870527547433695408
 PrefabInstance:
