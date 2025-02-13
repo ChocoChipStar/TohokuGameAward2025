@@ -474,8 +474,9 @@ MonoBehaviour:
   m_playerManager: {fileID: 0}
   m_particlePrefabs:
   - {fileID: 6132896386711413300, guid: fc7b414e316ce124c990d32ea0e14e61, type: 3}
-  - {fileID: 6132896386711413300, guid: fc7b414e316ce124c990d32ea0e14e61, type: 3}
-  - {fileID: 6132896386711413300, guid: fc7b414e316ce124c990d32ea0e14e61, type: 3}
+  - {fileID: 6132896386711413300, guid: d01aad4b6fe154e418e00fd15aa61a8c, type: 3}
+  - {fileID: 6132896386711413300, guid: 45fb0424a0297f74fbb6a078c49219a6, type: 3}
+  - {fileID: 6132896386711413300, guid: 7dad99c1e8daaf945889ba1ec1764f7c, type: 3}
   m_offsetPos: {x: 0, y: 0.5, z: 0}
 --- !u!114 &435620845773546369
 MonoBehaviour:
@@ -491,7 +492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreTextPrefab: {fileID: 7515244606363827441, guid: 104f63fc8d5173e41ac2e98e92c314fc,
     type: 3}
-  m_textOffset: {x: 1.5, y: 0, z: 0}
+  m_textOffset: {x: 1.5, y: 1.5, z: 0}
   m_moveTime: 2
   m_moveDistance: {x: 0, y: 20, z: 0}
   m_destroyDelay: 3
@@ -510,7 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreTextPrefab: {fileID: 7515244606363827441, guid: a9ba5364a858fce49add0e4dbfea96da,
     type: 3}
-  m_textOffset: {x: 1.5, y: 1, z: 0}
+  m_textOffset: {x: 1.5, y: 1.5, z: 0}
   m_moveTime: 2
   m_moveDistance: {x: 0, y: 20, z: 0}
   m_destroyDelay: 3
@@ -596,6 +597,6 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
