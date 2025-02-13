@@ -1467,6 +1467,7 @@ GameObject:
   - component: {fileID: 8281196702958521026}
   - component: {fileID: 9093886608387849261}
   - component: {fileID: 5736485550512547996}
+  - component: {fileID: 1197632526701246752}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1598,6 +1599,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1197632526701246752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6326777563655979556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07e4f337ace159b4899ed356cb5635d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_titleManager: {fileID: 6706621426356782102}
+  m_animator: {fileID: 5736485550512547996}
 --- !u!1 &7523736498713011599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1607,7 +1622,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 208496793920356530}
-  - component: {fileID: 2292679599153162202}
   - component: {fileID: 7230921053839213450}
   - component: {fileID: 4207034179997266477}
   - component: {fileID: 7240304035084252933}
@@ -1634,22 +1648,6 @@ Transform:
   - {fileID: 2889191359048384842}
   m_Father: {fileID: 6846235516378043091}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2292679599153162202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7523736498713011599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac25c579c0ff25343ac95d4ebfa793f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_explosionEffect: {fileID: 8769941521030665299}
-  m_explosionCollider: {fileID: 7230921053839213450}
-  m_explosionData: {fileID: 11400000, guid: f102a63ded24a2148b8f903ca47346e0, type: 2}
-  m_bombData: {fileID: 11400000, guid: fd568c11a7a5bf049b5a8a5c682aae47, type: 2}
 --- !u!135 &7230921053839213450
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2031,6 +2029,8 @@ GameObject:
   - component: {fileID: 1838616533272383614}
   - component: {fileID: 6706621426356782102}
   - component: {fileID: 5615996718274679955}
+  - component: {fileID: 5959362960894096286}
+  - component: {fileID: 8141243874216747584}
   m_Layer: 0
   m_Name: StartButtonAnim
   m_TagString: Untagged
@@ -2069,6 +2069,7 @@ MonoBehaviour:
   m_sceneChanger: {fileID: 0}
   m_soundEffectManager: {fileID: 0}
   m_animator: {fileID: 5736485550512547996}
+  m_inputData: {fileID: 8141243874216747584}
 --- !u!114 &5615996718274679955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2083,6 +2084,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_titleManager: {fileID: 6706621426356782102}
   m_animator: {fileID: 5736485550512547996}
+--- !u!114 &5959362960894096286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8619855332550563423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3456c0cbdc23ca0418e27d1416face96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_audioSource: {fileID: 0}
+  m_gainPercentage: 0
+--- !u!114 &8141243874216747584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8619855332550563423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3efc67d96a73b48bbc5120d98f949b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isOpreableKeyboard: 1
 --- !u!1 &9160967029284295971
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,12 +2392,6 @@ PrefabInstance:
 --- !u!4 &2889191359048384842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6395927455256757713, guid: 0f19b074ffbc0ed49824de4992794d00,
-    type: 3}
-  m_PrefabInstance: {fileID: 8131985911401039003}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &8769941521030665299 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 679912980123553992, guid: 0f19b074ffbc0ed49824de4992794d00,
     type: 3}
   m_PrefabInstance: {fileID: 8131985911401039003}
   m_PrefabAsset: {fileID: 0}

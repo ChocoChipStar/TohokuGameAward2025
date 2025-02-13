@@ -39,7 +39,7 @@ public class CrownItem : MonoBehaviour
         var parentObj = other.transform.parent.gameObject;
         if (TagManager.Instance.SearchedTagName(parentObj, TagManager.Type.Humanoid))
         {
-            SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Point);
+            SoundEffectManager.Instance.OnPlayOneShot((int)SoundEffectManager.MainScenePattern.Point);
             ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(), m_score);
             m_isUpdateScore = true;
 

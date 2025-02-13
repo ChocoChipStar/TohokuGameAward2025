@@ -7,10 +7,13 @@ public class TitleManager : MonoBehaviour
     private SceneChanger m_sceneChanger = null;
 
     [SerializeField]
-    private SoundEffectManager m_soundEffectManager = null;
+    private SoundFade m_soundFade = null;
 
     [SerializeField]
     private Animator m_animator = null;
+
+    [SerializeField]
+    private InputData m_inputData = null;
 
     private bool m_isGetStart = false;
 
@@ -36,10 +39,10 @@ public class TitleManager : MonoBehaviour
 
         for(int i = 0; i < Gamepad.all.Count; i++)
         {
-            var wasPressedStartButton = Gamepad.all[i].bButton.wasPressedThisFrame;
-
-            if(wasPressedStartButton)
+            if (m_inputData.WasPressedMenuInteractionInput(InputData.MenuInteractionInput.Decision,i))
             {
+                SoundEffectManager.Instance.OnPlayOneShot((int)SoundEffectManager.TitleScenePattern.Start);
+                m_soundFade.OnPlayFade();
                 m_animator.SetBool("wasPressedStartBottom", true);
             }
         }
@@ -48,7 +51,6 @@ public class TitleManager : MonoBehaviour
     private void GoNextScene()
     {
         m_isGetStart = true;
-        m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.Death);
         m_sceneChanger.LoadNextScene();
     }
 

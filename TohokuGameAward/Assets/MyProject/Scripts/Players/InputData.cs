@@ -246,10 +246,10 @@ public class InputData : MonoBehaviour
                 return Gamepad.all[playerNum].bButton.wasPressedThisFrame || Keyboard.current.spaceKey.wasPressedThisFrame;
 
             case MenuInteractionInput.SwitchLeft:
-                return Gamepad.all[playerNum].leftShoulder.wasPressedThisFrame;
+                return Gamepad.all[playerNum].leftShoulder.wasPressedThisFrame || Keyboard.current.leftArrowKey.wasPressedThisFrame;
 
             case MenuInteractionInput.SwitchRight:
-                return Gamepad.all[playerNum].rightShoulder.wasPressedThisFrame;
+                return Gamepad.all[playerNum].rightShoulder.wasPressedThisFrame || Keyboard.current.rightArrowKey.wasPressedThisFrame;
 
             default:
                 return false;
