@@ -66,7 +66,7 @@ public class CannonBombShoot : MonoBehaviour
         m_gaugeSlider.value = m_bombStockTime / m_cannonData.Params.MagazineMax;
         ChangeGaugeColor();
 
-        if (m_cannonCookingOffTime < 1.0f)
+        if (m_cannonCookingOffTime < m_cannonData.Params.CookingOffTime)
         {
             m_cannonCookingOffTime += Time.deltaTime;
             return;
