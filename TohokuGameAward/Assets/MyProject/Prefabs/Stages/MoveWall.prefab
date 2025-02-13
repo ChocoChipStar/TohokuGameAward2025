@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: -7329407779930475096}
   m_Layer: 0
   m_Name: MoveWall
-  m_TagString: Ground
+  m_TagString: Stand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
