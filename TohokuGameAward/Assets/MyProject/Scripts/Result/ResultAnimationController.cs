@@ -37,8 +37,8 @@ public class ResultAnimationController : MonoBehaviour
 
     private void CulculateTotalScore()
     {
-        //m_alphaScore = ScoreManager.AlphaRoundScore;
-        //m_bravoScore = ScoreManager.BravoRoundScore;
+        m_alphaScore = ScoreManager.AlphaRoundScore;
+        m_bravoScore = ScoreManager.BravoRoundScore;
         m_alphaTotalScore = 0;
         m_bravoTotalScore = 0;
 
