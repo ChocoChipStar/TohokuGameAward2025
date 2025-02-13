@@ -7,7 +7,7 @@ public class TutorialManager : MonoBehaviour
     private InputData m_inputData = null;
 
     [SerializeField]
-    private DrawTutorialImage m_imageChanger = null;
+    private DrawTutorialClip m_drawTutorialClip = null;
 
     [SerializeField]
     private SceneChanger m_sceneChanger = null;
@@ -27,22 +27,15 @@ public class TutorialManager : MonoBehaviour
             return;
         }
 
-        //if (Gamepad.current == null)
-        //{
-        //    return;
-        //}
-
-
-        var padCount = Gamepad.all.Count;
-        
+        var padCount = Gamepad.all.Count;    
         for (int i = 0; i < padCount; i++)
         {
-            if (m_imageChanger.IsIndexMax && !m_isGetStart)
+            if (m_drawTutorialClip.IsIndexMax && !m_isGetStart)
             {
                 if(m_inputData.WasPressedMenuInteractionInput(InputData.MenuInteractionInput.Decision,i))
                 {
                     m_isGetStart = true;
-                    m_soundEffectManager.OnPlayOneShot(SoundEffectManager.SoundEffectName.Death);
+                    m_soundEffectManager.OnPlayOneShot((int)SoundEffectManager.MainScenePattern.Death);
                     m_sceneChanger.LoadNextScene();
                     
                     return;
@@ -51,13 +44,13 @@ public class TutorialManager : MonoBehaviour
             
             if (m_inputData.WasPressedMenuInteractionInput(InputData.MenuInteractionInput.SwitchRight, i))
             {
-                m_imageChanger.SwitchNextImage();
+                m_drawTutorialClip.SwitchNextImage();
                 continue;
             }
 
             if (m_inputData.WasPressedMenuInteractionInput(InputData.MenuInteractionInput.SwitchLeft, i))
             {
-                m_imageChanger.SwitchPreviousImage();
+                m_drawTutorialClip.SwitchPreviousImage();
                 continue;
             }
         }
