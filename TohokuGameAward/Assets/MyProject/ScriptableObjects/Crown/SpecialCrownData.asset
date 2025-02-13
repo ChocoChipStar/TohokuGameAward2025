@@ -16,11 +16,11 @@ MonoBehaviour:
     type: 3}
   m_posData:
     m_generatePos:
-    - {x: 0, y: 1, z: 0}
-    - {x: 0, y: 2, z: 0}
-    - {x: 0, y: 3, z: 0}
-    - {x: 0, y: 4, z: 0}
+    - {x: -0.8, y: 11, z: 0}
+    - {x: 11, y: 10.5, z: 0}
+    - {x: -10, y: -1.7, z: 0}
+    - {x: 11, y: 4, z: 0}
     - {x: 0, y: 5, z: 0}
   m_paramsData:
     m_generateCountOneTime: 1
-    m_generateStartTime: 60
+    m_generateStartTime: 45
