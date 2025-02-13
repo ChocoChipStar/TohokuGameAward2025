@@ -22,18 +22,23 @@ public class HumanoidMover : MonoBehaviour
     [SerializeField]
     private HumanoidAnimator m_animator = null;
 
+    private Transform m_parentTrans = null;
+
     private float m_movementValue = 0.0f;
     private float m_stunExitTIme = 0.0f;
 
     private bool m_isStun = false;
     private bool m_isOperable = true;
 
-    private RaycastHit hitInfo;
-
     private const float FallingMinValue = 0.1f;
     private const float RayDistance = 0.6f;
 
     private static readonly Vector3 FixedRayStartPos = new Vector3(0.0f, 0.5f, 0.0f);
+
+    private void Awake()
+    {
+        m_parentTrans = this.transform.parent;
+    }
 
     private void Update()
     {
@@ -131,27 +136,26 @@ public class HumanoidMover : MonoBehaviour
 
         // 左側の発射位置からワールド下向きに飛ばすRayを作成
         var leftRay = new Ray(new Vector3(startPos.x - 0.2f, startPos.y, startPos.z), transform.up * -1);
+        if(Physics.Raycast(leftRay, out RaycastHit leftHitInfo, RayDistance))
+        {
+            if(IsHitGroundOrStand(leftHitInfo))
+            {
+                return true;
+            }
+        }
 
         // 右側の発射位置からワールド下向きに飛ばすRayを作成
         var rightRay = new Ray(new Vector3(startPos.x + 0.2f, startPos.y, startPos.z), transform.up * -1);
-
-        Debug.DrawRay(leftRay.origin, leftRay.direction, Color.red, 1.0f);
-        Debug.DrawRay(rightRay.origin, rightRay.direction, Color.blue, 1.0f);
-
-        // 作成したRayをRayDistance分照射し、何かしらと接触したか調べます
-        var isHitLeft = Physics.Raycast(leftRay, out hitInfo, RayDistance);
-        if(isHitLeft && IsHitGroundOrStand(hitInfo))
+        if (Physics.Raycast(rightRay, out RaycastHit rightHitInfo, RayDistance))
         {
-            return true;
-        }
-
-        var isHitRight = Physics.Raycast(rightRay, out hitInfo, RayDistance);
-        if(isHitRight && IsHitGroundOrStand(hitInfo))
-        {
-            return true;
+            if(IsHitGroundOrStand(rightHitInfo))
+            {
+                return true;
+            }
         }
         
-        this.transform.SetParent(null);
+        // 空中にいる場合は親子関係削除
+        this.transform.SetParent(m_parentTrans);
         return false;
     }
 
@@ -160,6 +164,9 @@ public class HumanoidMover : MonoBehaviour
         // Rayと接触したのが地面であれば
         if (TagManager.Instance.SearchedTagName(hitInfo.collider.gameObject, TagManager.Type.Ground))
         {
+            // 地面にいる場合は親子関係削除
+            this.transform.SetParent(m_parentTrans);
+
             m_animator.TransferableState(top: TopState.Falling);
             m_animator.TransferableState(under: UnderState.Falling);
             return true;
