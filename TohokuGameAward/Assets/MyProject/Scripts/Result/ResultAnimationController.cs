@@ -42,6 +42,15 @@ public class ResultAnimationController : MonoBehaviour
         m_alphaTotalScore = 0;
         m_bravoTotalScore = 0;
 
+        for (int i = 0; i < m_alphaScore.Length; i++)
+        {
+            m_alphaTotalScore += m_alphaScore[i];
+        }
+        for (int i = 0;i < m_bravoScore.Length;i++)
+        {
+            m_bravoTotalScore += m_bravoScore[i];
+        }
+
         if(m_alphaTotalScore == 0 && m_bravoTotalScore == 0)
         {
             int random = Random.Range(0, 2);
