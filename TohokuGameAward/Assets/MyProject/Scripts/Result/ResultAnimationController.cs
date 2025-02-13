@@ -44,7 +44,7 @@ public class ResultAnimationController : MonoBehaviour
 
         if(m_alphaTotalScore == 0 && m_bravoTotalScore == 0)
         {
-            int random = Random.Range(0, 1);
+            int random = Random.Range(0, 2);
             if(random == 1)
             {
                 m_alphaTotalScore += 10;
