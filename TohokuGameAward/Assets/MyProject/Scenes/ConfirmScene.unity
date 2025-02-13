@@ -260,6 +260,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ControllerManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3233591216025412413, guid: 4d584e8bb435ec544a0c33af439e1170,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6203388047095664699, guid: 4d584e8bb435ec544a0c33af439e1170,
         type: 3}
       propertyPath: m_playerManager
@@ -877,6 +882,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1263344171552740795, guid: 1557a8f547e698449b8ab8af6cbd6c49,
         type: 3}
+      propertyPath: m_audioSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263344171552740795, guid: 1557a8f547e698449b8ab8af6cbd6c49,
+        type: 3}
       propertyPath: m_audioClips.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -889,7 +899,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: cd7bb073211cf174ab04e8f8ad1c47cd, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1263344171552740795, guid: 1557a8f547e698449b8ab8af6cbd6c49,
         type: 3}
       propertyPath: m_audioSources.Array.data[0]
@@ -901,6 +911,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1305688837136986673, guid: 1557a8f547e698449b8ab8af6cbd6c49,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: cd7bb073211cf174ab04e8f8ad1c47cd, type: 3}
+    - target: {fileID: 5136075286855175553, guid: 1557a8f547e698449b8ab8af6cbd6c49,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5136075286855175553, guid: 1557a8f547e698449b8ab8af6cbd6c49,
         type: 3}
       propertyPath: m_audioClip
       value: 
@@ -1023,10 +1043,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2561843527547026999, guid: 6b2433e84fd7b87488e93fe954dea34e,
+        type: 3}
+      propertyPath: m_cannonPrefab
+      value: 
+      objectReference: {fileID: 8705550395945270090, guid: af12fdfb876140041b4d7b41789d4c91,
+        type: 3}
     - target: {fileID: 8274386607292376071, guid: 6b2433e84fd7b87488e93fe954dea34e,
         type: 3}
       propertyPath: m_Name
       value: PlayerManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274386607292376071, guid: 6b2433e84fd7b87488e93fe954dea34e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
