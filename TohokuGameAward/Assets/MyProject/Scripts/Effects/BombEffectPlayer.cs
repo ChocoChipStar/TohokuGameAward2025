@@ -47,7 +47,7 @@ public class BombEffectPlayer : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if(m_bombScaleChanger == null)
         {
