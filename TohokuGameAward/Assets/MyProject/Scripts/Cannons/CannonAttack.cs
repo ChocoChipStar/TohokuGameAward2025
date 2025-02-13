@@ -55,7 +55,7 @@ public class CannonAttack : MonoBehaviour
         var instance = Instantiate(m_bombPrefab, m_generatePosTrans.position, Quaternion.identity);
 
         // 爆弾発射SE再生
-        SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Cannon);
+        SoundEffectManager.Instance.OnPlayOneShot((int)SoundEffectManager.MainScenePattern.Cannon);
 
         // 発射口の冷却開始
         StartCoroutine(CookingOffCannon());

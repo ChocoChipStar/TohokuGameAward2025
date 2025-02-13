@@ -101,6 +101,6 @@ public class ExplosionManager : MonoBehaviour
         Invoke(nameof(InitializedExplosion), m_explosionData.Params.EffectEndTime);
 
         m_explosionEffect.Play();
-        SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Explosion);
+        SoundEffectManager.Instance.OnPlayOneShot((int)SoundEffectManager.MainScenePattern.Explosion);
     }
 }

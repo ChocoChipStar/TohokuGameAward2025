@@ -111,7 +111,7 @@ public class RoundManager : MonoBehaviour
         
         m_roundUIController.SetTeamUI(false);
 
-        SoundEffectManager.Instance.OnPlayOneShot(SoundEffectManager.SoundEffectName.Ready);
+        SoundEffectManager.Instance.OnPlayOneShot((int)SoundEffectManager.MainScenePattern.Ready);
         yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Ready, m_ReadytextDrawDelayTime));
 
         m_humanoidManager.SetOperable(true);
