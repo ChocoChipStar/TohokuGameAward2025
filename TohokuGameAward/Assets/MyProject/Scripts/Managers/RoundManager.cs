@@ -88,7 +88,7 @@ public class RoundManager : MonoBehaviour
             yield break;
         }
 
-       
+        BackGroundMusicManager.Instance.OnPlayOneShot(BackGroundMusicManager.MusicName.TeamAndRoll);
         if (CurrentRound == (int)RoundState.One)
         {
             // ラウンド1のみ行うシャッフルとチーム確認
@@ -111,6 +111,7 @@ public class RoundManager : MonoBehaviour
         
         m_roundUIController.SetTeamUI(false);
 
+        BackGroundMusicManager.Instance.StartVolumeFadeOut();
         SoundEffectManager.Instance.OnPlayOneShot((int)SoundEffectManager.MainScenePattern.Ready);
         yield return StartCoroutine(m_roundUIController.DrawRoundStartText(RoundUIController.TextType.Ready, m_ReadytextDrawDelayTime));
 

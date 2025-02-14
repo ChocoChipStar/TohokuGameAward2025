@@ -874,36 +874,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1263344171552740795, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-        type: 3}
-      propertyPath: m_audioSource
-      value: 
-      objectReference: {fileID: 1062168646}
-    - target: {fileID: 1263344171552740795, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-        type: 3}
-      propertyPath: m_audioClips.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1263344171552740795, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-        type: 3}
-      propertyPath: m_audioClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 83f0007e58847234c9cb0bbb5d530d8b, type: 3}
-    - target: {fileID: 1263344171552740795, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-        type: 3}
-      propertyPath: m_audioClips.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: a9167c2b159006543840eb3c70641418, type: 3}
-    - target: {fileID: 5136075286855175553, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-        type: 3}
-      propertyPath: m_Volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136075286855175553, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7770186318728607815, guid: 1557a8f547e698449b8ab8af6cbd6c49,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -964,12 +934,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1557a8f547e698449b8ab8af6cbd6c49, type: 3}
---- !u!82 &1062168646 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5136075286855175553, guid: 1557a8f547e698449b8ab8af6cbd6c49,
-    type: 3}
-  m_PrefabInstance: {fileID: 1062168645}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1092374003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1067,7 +1031,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: 339bbc157ea526f46aa6ab3759c227ee, type: 3}
+      objectReference: {fileID: 8300000, guid: 1ce613c41c71f2b498ea54fff41ca7fb, type: 3}
     - target: {fileID: 1397684175313392933, guid: 2f1bc1f0cd0aad64cb8092483c6e4643,
         type: 3}
       propertyPath: m_audioClips.Array.data[2]
