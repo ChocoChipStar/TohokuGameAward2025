@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_tutorialClips:
   - {fileID: 32900000, guid: 33640b133a37778469ef496c58acfe05, type: 3}
   - {fileID: 32900000, guid: 70608f792504a094ea5c5b7e05096fb5, type: 3}
-  - {fileID: 32900000, guid: 89d51ba446e9b5348bb9c3755668fecc, type: 3}
+  - {fileID: 32900000, guid: 274447c0c9147224fbf1081b4f2c2b2f, type: 3}
   m_thumbnailImage: {fileID: 1992036746}
 --- !u!114 &1716933436
 MonoBehaviour:
