@@ -29,6 +29,9 @@ public class ScoreData : ScriptableObject
         [SerializeField, Header("ヒューマノイド側が生き残った時間で入るスコア")]
         private int[] m_alivingScore = null;
 
+        [SerializeField, Header("生き残った時間で入るスコアの加算が始まるまでの時間")]
+        private float[] m_addScoreDelay = new float[HumanoidManager.HumanoidMax];
+
         [SerializeField, Header("スコアが入る間隔（秒）")]
         private float m_aliveScoreTime = 0;
 
@@ -40,6 +43,8 @@ public class ScoreData : ScriptableObject
         public int SilverScore { get { return m_silverScore; } private set { m_silverScore = value; } }
         public int GoldScore { get { return m_goldScore; } private set { m_goldScore = value; } }
         public int DiamondScore { get { return m_diamondScore; } private set { m_diamondScore = value; } }
+
+        public float[] AddScoreDelay { get { return m_addScoreDelay; } private set { m_addScoreDelay = value; } }
 
         public int[] AlivingScore { get { return m_alivingScore; } private set { m_alivingScore = value; } }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class SurviveScoreManager : MonoBehaviour
 {
@@ -17,22 +18,37 @@ public class SurviveScoreManager : MonoBehaviour
     [SerializeField]
     ScoreData m_scoreData = null;
 
-    private bool[] m_isDead = new bool [HumanoidManager.HumanoidMax];
+    private bool[] m_isAddScoreDelay = new bool[HumanoidManager.HumanoidMax];
 
-    private int[] m_scoreLevel = new int [HumanoidManager.HumanoidMax];
+    private bool[] m_isDead = new bool[HumanoidManager.HumanoidMax];
+
+    private int[] m_scoreLevel = new int[HumanoidManager.HumanoidMax];
 
     private float[] m_alivingTime = new float[HumanoidManager.HumanoidMax];
 
     private float[] m_upgradeScoreTime = new float[HumanoidManager.HumanoidMax];
 
+    void OnEnable()
+    {
+        for (int i = 0; i < HumanoidManager.HumanoidMax; i++)
+        {
+            StartCoroutine(SetScoreDelayTimer(i)); //ゲームスタート後指定秒間はポイントを加算しない。
+        }
+    }
     void Update()
     {
-        for(int i = 0; i < HumanoidManager.HumanoidMax; i++)
+        for (int i = 0; i < HumanoidManager.HumanoidMax; i++)
         {
-         
+
             if (!m_isDead[i])
             {
                 TimeUpdate();
+
+                if (m_isAddScoreDelay[i])
+                {
+                    continue;
+                }
+
                 ScoreUp(i);
                 AddAliveScore(i);
             }
@@ -47,19 +63,25 @@ public class SurviveScoreManager : MonoBehaviour
 
     private void TimeUpdate()
     {
-        for(int i = 0; i < HumanoidManager.HumanoidMax; i++)
+        for (int i = 0; i < HumanoidManager.HumanoidMax; i++)
         {
             m_alivingTime[i] += Time.deltaTime;
+
+            if (m_isAddScoreDelay[i])
+            {
+                continue;
+            }
+
             m_upgradeScoreTime[i] += Time.deltaTime;
         }
     }
 
     void ScoreUp(int i)
     {
-        if(m_scoreData.Params.UpgradeScoreTime < m_upgradeScoreTime[i])
+        if (m_scoreData.Params.UpgradeScoreTime < m_upgradeScoreTime[i])
         {
 
-            if(m_scoreLevel[i] < m_scoreData.Params.AlivingScore.Length - 1)
+            if (m_scoreLevel[i] < m_scoreData.Params.AlivingScore.Length - 1)
             {
                 m_scoreLevel[i] += 1;
                 m_playerFlash.OnPerticle(i, m_scoreLevel[i]);
@@ -74,7 +96,7 @@ public class SurviveScoreManager : MonoBehaviour
         if (m_alivingTime[i] >= m_scoreData.Params.AliveScoreTime)
         {
             int score = m_scoreData.Params.AlivingScore[m_scoreLevel[i]];
-            ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(),score);
+            ScoreManager.Instance.UpdateScore(TeamGenerator.Instance.GetCurrentHumanoidTeamName(), score);
 
             m_scoreText.ShowScoreEffect(score, m_playerManager.HumanoidInstances[i].transform.position);
             m_alivingTime[i] = 0;
@@ -88,16 +110,15 @@ public class SurviveScoreManager : MonoBehaviour
 
     public void OffIsDead(int Index)
     {
+        StartCoroutine(SetScoreDelayTimer(Index));
         m_isDead[Index] = false;
         m_playerFlash.OffPerticle(Index);
     }
 
-    public void UpdateIsDead(int Index,bool isDead)
+    private IEnumerator SetScoreDelayTimer(int Index)
     {
-        m_isDead[Index] = isDead;
+        m_isAddScoreDelay[Index] = true;
+        yield return new WaitForSeconds(m_scoreData.Params.AddScoreDelay[Index]);
+        m_isAddScoreDelay[Index] = false;
     }
 }
-//ヒューマノイドのisDeadを取得、IsDeadになったプレイヤーの数字をリセット
-//ヒューマノイドの死でboolをオフにし、数字をリセット
-//ヒューマノイドのリスポーン時にboolをオンにする。
-//死ぬとリセット(死ぬ処理の時に呼び出す）
