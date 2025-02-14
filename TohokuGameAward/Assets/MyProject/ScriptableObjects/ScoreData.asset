@@ -19,5 +19,8 @@ MonoBehaviour:
     m_goldScore: 60
     m_diamondScore: 300
     m_alivingScore: 00000000050000000f00000032000000
+    m_addScoreDelay:
+    - 10
+    - 10
     m_aliveScoreTime: 4
     m_upgradeScoreTime: 40
