@@ -59,8 +59,6 @@ public class PlayerManager : MonoBehaviour
     {
         if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
-            TeamGenerator.Instance.TeamAssignment();
-
             InitializeInstancesInfo(TeamGenerator.AlphaTeamNumber, TeamGenerator.BravoTeamNumber);
             GeneratingPlayer(HummanoidInfo, CannonInfo);
         }

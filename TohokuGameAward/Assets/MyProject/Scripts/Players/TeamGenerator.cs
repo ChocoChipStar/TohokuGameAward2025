@@ -39,7 +39,7 @@ public class TeamGenerator : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
+        if(RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
         {
             TeamAssignment();
         }
