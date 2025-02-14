@@ -56,18 +56,23 @@ public class PlayerFlash : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < m_spawnedParticle_one.Count; i++)
-        {
-                Destroy(m_spawnedParticle_one[i]);
-                
-        }
 
         if (HumanoidNum == 0)
         {
+            for (int i = 0; i < m_spawnedParticle_one.Count; i++)
+            {
+                Destroy(m_spawnedParticle_one[i]);
+
+            }
             m_spawnedParticle_one.Clear();
         }
         else
         {
+            for (int i = 0; i < m_spawnedParticle_two.Count; i++)
+            {
+                Destroy(m_spawnedParticle_two[i]);
+
+            }
             m_spawnedParticle_two.Clear();
         }
     }
