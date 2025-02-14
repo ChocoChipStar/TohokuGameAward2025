@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6955733826768083393}
   - component: {fileID: 8106374212742365842}
   - component: {fileID: 8892298653047174206}
+  - component: {fileID: 2762863471940581926}
+  - component: {fileID: 6032181322958919659}
   m_Layer: 0
   m_Name: CrownManager
   m_TagString: Untagged
@@ -60,3 +62,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_crownData: {fileID: 11400000, guid: dbb665d346346c840ab6a184f3bbe47d, type: 2}
+--- !u!114 &2762863471940581926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3505788212457664712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba912c77cf1c42468ab50d557f49338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effectPrefab: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd,
+    type: 3}
+--- !u!114 &6032181322958919659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3505788212457664712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45d2e2f16fb686448829e9db1d7f290d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_gameTimer: {fileID: 0}
