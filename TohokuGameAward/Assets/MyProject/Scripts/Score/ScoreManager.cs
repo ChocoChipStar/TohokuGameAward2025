@@ -23,6 +23,15 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
+        if(RoundManager.CurrentRound == (int)RoundManager.RoundState.One)
+        {
+            for(int i = 0; i < (int)RoundManager.RoundState.Max; i++)
+            {
+                m_alphaRoundScore[i] = 0;
+                m_bravoRoundScore[i] = 0;
+            }
+        }
+
         if(Instance == null)
         {
             Instance = this;
