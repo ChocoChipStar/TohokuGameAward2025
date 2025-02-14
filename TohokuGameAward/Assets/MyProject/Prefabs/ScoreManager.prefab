@@ -473,7 +473,6 @@ MonoBehaviour:
   m_surviveScoreManager: {fileID: 3248001058291220770}
   m_playerManager: {fileID: 0}
   m_particlePrefabs:
-  - {fileID: 6132896386711413300, guid: fc7b414e316ce124c990d32ea0e14e61, type: 3}
   - {fileID: 6132896386711413300, guid: d01aad4b6fe154e418e00fd15aa61a8c, type: 3}
   - {fileID: 6132896386711413300, guid: 45fb0424a0297f74fbb6a078c49219a6, type: 3}
   - {fileID: 6132896386711413300, guid: 7dad99c1e8daaf945889ba1ec1764f7c, type: 3}

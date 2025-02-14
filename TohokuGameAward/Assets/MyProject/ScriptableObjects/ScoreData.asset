@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: ScoreData
   m_EditorClassIdentifier: 
   m_paramsData:
-    m_hitHumanoidScore: 140
-    m_deathScore: -50
+    m_hitHumanoidScore: 200
+    m_deathScore: 0
     m_silverScore: 30
-    m_goldScore: 60
-    m_diamondScore: 300
-    m_alivingScore: 00000000050000000f00000032000000
+    m_goldScore: 80
+    m_diamondScore: 250
+    m_alivingScore: 050000001400000028000000
     m_addScoreDelay:
     - 10
     - 10
     m_aliveScoreTime: 4
-    m_upgradeScoreTime: 40
+    m_upgradeScoreTime: 25
