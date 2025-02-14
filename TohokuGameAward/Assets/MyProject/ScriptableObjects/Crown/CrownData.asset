@@ -22,7 +22,7 @@ MonoBehaviour:
     - {x: -5, y: 8.42, z: 0}
     - {x: -12.5, y: 4.5, z: 0}
     - {x: -4.5, y: 2, z: 0}
-    - {x: 7.5, y: 6, z: 0}
+    - {x: 7.5, y: 7, z: 0}
     - {x: -8.4, y: 9.3, z: 0}
   m_paramsData:
     m_generateCountOneTime: 5
