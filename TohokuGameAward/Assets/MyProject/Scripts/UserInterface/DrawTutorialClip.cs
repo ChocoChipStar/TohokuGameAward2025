@@ -41,7 +41,7 @@ public class DrawTutorialClip : MonoBehaviour
             m_isFirstClipStart = true;
             m_videoPlayer.clip = m_tutorialClips[0];
             m_videoPlayer.Play();
-            Invoke("DelayDisabledThumbnailImage", 0.5f);
+            Invoke("DelayDisabledThumbnailImage", 0.1f);
         }
     }
 
