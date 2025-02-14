@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_positionData:
     m_startPos:
-    - {x: -3, y: 1}
-    - {x: 3, y: 1}
+    - {x: -3.3, y: -1}
+    - {x: 4.2, y: -1}
     m_respawnPos:
-    - {x: -3, y: 1}
-    - {x: 3, y: 1}
+    - {x: -3.3, y: -1}
+    - {x: 4.2, y: -1}
   m_paramsData:
     m_moveSpeed: 2
     m_powerJump: 9
