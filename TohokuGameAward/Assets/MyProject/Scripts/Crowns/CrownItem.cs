@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class CrownItem : MonoBehaviour
 {
@@ -10,6 +9,8 @@ public class CrownItem : MonoBehaviour
     private Type m_type = new Type();
 
     private GameObject m_scoreManager = null;
+
+    private CrownDisabler m_disabler = null;
 
     private bool m_isUpdateScore = false;
 
@@ -26,6 +27,7 @@ public class CrownItem : MonoBehaviour
     {
         SetSelfScore();
         m_scoreManager = GameObject.Find("ScoreManager");
+        m_disabler = GetComponentInParent<CrownDisabler>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,6 +35,11 @@ public class CrownItem : MonoBehaviour
         if (other.transform.parent == null || m_isUpdateScore)
         {
             return; 
+        }
+
+    　　if(m_disabler.IsCantCrownGet)
+        {
+            return;
         }
 
         // 接触したヒューマノイドに点数を加算する
