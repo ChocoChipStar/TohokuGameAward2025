@@ -626,7 +626,7 @@ GameObject:
   - component: {fileID: 4812327706010050868}
   - component: {fileID: 3407648869939462235}
   - component: {fileID: 6337330170487826026}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cannon
   m_TagString: Cannon
   m_Icon: {fileID: 0}
@@ -780,7 +780,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8705550395945270090}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -789,7 +789,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 3
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 919438a3582430d49bd99ccdb97a2d12, type: 2}

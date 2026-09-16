@@ -19525,7 +19525,7 @@ GameObject:
   - component: {fileID: 223204812156447357}
   m_Layer: 0
   m_Name: SilverCrown
-  m_TagString: Untagged
+  m_TagString: Crown
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19631,8 +19631,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scoreData: {fileID: 11400000, guid: 86b0375909da35c4c9bc9c3936e98df9, type: 2}
-  m_getParticleSystem: {fileID: 8771972552311404799, guid: bbf9e36a48d6c5648a13889afab076fd,
-    type: 3}
   m_type: 0
 --- !u!114 &223204812156447357
 MonoBehaviour:
@@ -19731,7 +19729,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 23
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
